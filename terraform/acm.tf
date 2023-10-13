@@ -3,7 +3,6 @@ resource "aws_acm_certificate" "paradise_cakes" {
   validation_method = "DNS"
 }
 
-
 data "aws_route53_zone" "paradise_cakes" {
   name         = "paradisecakesbymegan.com"
   private_zone = false
