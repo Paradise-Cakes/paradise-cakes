@@ -1,0 +1,70 @@
+name: ci-release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "**"
+    paths-ignore:
+      - "**.md"
+      - ".github/workflows/ci-terraform.yml"
+      - "terraform/**"
+      - "catalog-info.yaml"
+
+defaults:
+  run:
+    shell: bash
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  ci:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials for us-east-1 - DEV
+        uses: aws-actions/configure-aws-credentials@v1.6.1
+        with:
+          role-to-assume: arn:aws:iam::132899756990:role/paradise-cakes-api-terraform-deployer
+          aws-region: us-east-1
+
+      - name: setup/node
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 18.18.1
+
+      - name: Install UI
+        run: npm install
+
+  deploy:
+    needs: [ci]
+    steps:
+      - name: Set GIT variables
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials for us-east-1 - DEV
+        uses: aws-actions/configure-aws-credentials@v1.6.1
+        with:
+          role-to-assume: arn:aws:iam::132899756990:role/paradise-cakes-api-terraform-deployer
+          aws-region: us-east-1
+
+      - name: setup/node
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 18.18.1
+
+      - name: Install UI
+        run: npm install
+
+      - name: Build UI
+        run: DEPLOY_ENV=VCS_SHORT_REF=${SHORT_SHA} npm run build
+
+      - name: Deploy UI
+        run: aws s3 sync dist/ s3://paradise-cakes-us-east-1
