@@ -3,21 +3,32 @@ resource "aws_s3_bucket" "paradise_cakes_bucket" {
   tags = {
     Name = "bucket for paradisecakesbymegan.com"
   }
-  acl    = "public-read"
-  POLICY = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [{
-    "Sid": "AddPerm",
-    "Effect": "Allow",
-    "Principal": "*",
-    "Action": ["s3:GetObject"],
-    "Resource": ["arn:aws:s3:::$paradisecakesbymegan.com/*"]
-  }]
-}
-POLICY
+  acl = "public-read"
   website {
     index_document = "index.html"
     error_document = "index.html"
+  }
+}
+
+resource "aws_s3_bucket_policy" "paradise_cakes_s3_policy" {
+  bucket = aws_s3_bucket.paradise_cakes_bucket.id
+  policy = data.aws_iam_policy_document.paradise_cakes_s3_policy.json
+}
+
+data "aws_iam_policy_document" "paradise_cakes_s3_policy" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = [
+      "s3:GetObject",
+    ]
+
+    resources = [
+      aws_s3_bucket.paradise_cakes_bucket.arn,
+      "${aws_s3_bucket.paradise_cakes_bucket.arn}/*",
+    ]
   }
 }

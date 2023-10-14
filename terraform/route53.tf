@@ -1,11 +1,10 @@
 data "aws_route53_zone" "zone" {
   name         = "paradisecakesbymegan.com"
   private_zone = false
-  most_recent  = true
 }
 
 resource "aws_route53_record" "paradise_cakes_record" {
-  zone_id = data.aws_route53_zone.zone_id
+  zone_id = data.aws_route53_zone.zone.zone_id
   name    = "paradisecakesbymegan.com"
   type    = "A"
   alias = {
