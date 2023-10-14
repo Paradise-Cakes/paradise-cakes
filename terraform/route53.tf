@@ -4,7 +4,7 @@ data "aws_route53_zone" "zone" {
   most_recent  = true
 }
 
-resouce "aws_route53_record" "paradise_cakes_record" {
+resource "aws_route53_record" "paradise_cakes_record" {
   zone_id = data.aws_route53_zone.zone_id
   name    = "paradisecakesbymegan.com"
   type    = "A"
