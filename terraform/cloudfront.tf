@@ -6,7 +6,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
       origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
-    domain_name = aws_s3_bucket.paradise_cakes_bucket.website_domain
+    domain_name = aws_s3_bucket.paradise_cakes_bucket.website_endpoint
     origin_id   = "paradisecakesbymegan.com"
   }
 
