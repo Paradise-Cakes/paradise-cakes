@@ -1,7 +1,3 @@
-data "aws_s3_bucket" "paradise_cakes_bucket" {
-  bucket = "paradisecakesbymegan.com"
-}
-
 resource "aws_s3_bucket" "paradise_cakes_bucket" {
   bucket = "paradisecakesbymegan.com"
   tags = {
