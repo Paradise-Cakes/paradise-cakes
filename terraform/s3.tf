@@ -1,20 +1,23 @@
 resource "aws_s3_bucket" "paradise_cakes_bucket" {
-  bucket = "paradise-cakes-us-east-1"
+  bucket = "paradisecakesbymegan.com"
   tags = {
     Name = "bucket for paradisecakesbymegan.com"
   }
-  force_destroy = true
-  acl           = "private"
-
-  versioning {
-    enabled = true
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
+  acl    = "public-read"
+  POLICY = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "AddPerm",
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": ["s3:GetObject"],
+    "Resource": ["arn:aws:s3:::$paradisecakesbymegan.com/*"]
+  }]
+}
+POLICY
+  website {
+    index_document = "index.html"
+    error_document = "index.html"
   }
 }
