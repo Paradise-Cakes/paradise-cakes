@@ -3,7 +3,6 @@ data "aws_s3_bucket" "paradise_cakes_bucket" {
 }
 
 resource "aws_s3_bucket" "paradise_cakes_bucket" {
-  count  = data.aws_s3_bucket.paradise_cakes_bucket == null ? 1 : 0
   bucket = "paradisecakesbymegan.com"
   tags = {
     Name = "bucket for paradisecakesbymegan.com"
