@@ -68,5 +68,8 @@ jobs:
       - name: Build UI
         run: DEPLOY_ENV=VCS_SHORT_REF=${SHORT_SHA} npm run build
 
+      - name: Invalidate Cache
+        run: aws cloudfront create-invalidation --distribution-id E3V13EEWPLKLVK --paths "/*"
+
       - name: Deploy UI
         run: aws s3 sync dist/ s3://paradisecakesbymegan.com
