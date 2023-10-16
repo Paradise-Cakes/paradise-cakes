@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import LogoSvg from "./assets/brand.svg";
+import Navbar from "./navigation/Navbar";
 
 function App() {
   return (
     <Grid container justifyContent="center" alignItems="center">
-      <img width="450px" height="253px" src={LogoSvg} />
+      <Navbar />
     </Grid>
   );
 }
