@@ -18,7 +18,7 @@ function Navbar() {
     <AppBar position="static" sx={{ backgroundColor: "#CDCBBC" }}>
       <Container maxWidth={"false"} sx={{ margin: 0, width: "100%" }}>
         <Toolbar disableGutters sx={{ width: "100%" }}>
-          <Hidden xsDown lgUp>
+          <Hidden smDown>
             <img
               src={AppBarLogo}
               width="120px"
@@ -37,7 +37,12 @@ function Navbar() {
           </Hidden>
           <Hidden smUp>
             <CgMenu
-              style={{ width: "25px", height: "25px", cursor: "pointer" }}
+              style={{
+                width: "25px",
+                height: "25px",
+                cursor: "pointer",
+                marginLeft: "auto",
+              }}
             />
           </Hidden>
         </Toolbar>
