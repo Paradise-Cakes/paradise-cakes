@@ -23,16 +23,19 @@ export default function NavDrawer() {
 
   return (
     <Drawer
+      hideBackdrop={true}
       anchor="right"
       open={drawerOpen}
       onClose={toggleDrawer(false)}
       PaperProps={{
         sx: {
           position: "absolute",
-          top: "63px",
           boxShadow: "none",
           width: "100%",
         },
+      }}
+      sx={{
+        top: "60px",
       }}
     >
       <List>

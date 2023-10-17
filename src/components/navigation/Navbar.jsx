@@ -49,7 +49,7 @@ export default function Navbar() {
                   height: "25px",
                   cursor: "pointer",
                 }}
-                onClick={() => setDrawerOpen(!drawerOpen)}
+                onClick={() => setDrawerOpen(false)}
               />
             ) : (
               <CgMenu
@@ -58,7 +58,7 @@ export default function Navbar() {
                   height: "25px",
                   cursor: "pointer",
                 }}
-                onClick={() => setDrawerOpen(!drawerOpen)}
+                onClick={() => setDrawerOpen(true)}
               />
             )}
           </Hidden>
