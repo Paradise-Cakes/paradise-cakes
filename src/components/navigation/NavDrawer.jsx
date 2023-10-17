@@ -22,20 +22,32 @@ export default function NavDrawer() {
   };
 
   return (
-    <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+    <Drawer
+      anchor="right"
+      open={drawerOpen}
+      onClose={toggleDrawer(false)}
+      PaperProps={{
+        sx: {
+          position: "absolute",
+          top: "63px",
+          boxShadow: "none",
+          width: "100%",
+        },
+      }}
+    >
       <List>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton sx={{ borderBottom: "1px dashed #DDAFAC" }}>
             <ListItemText primary="Cakes">Cakes</ListItemText>
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton sx={{ borderBottom: "1px dashed #DDAFAC" }}>
             <ListItemText primary="Cupcakes">Cupcakes</ListItemText>
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton sx={{ borderBottom: "1px dashed #DDAFAC" }}>
             <ListItemText primary="Flavors">Flavors</ListItemText>
           </ListItemButton>
         </ListItem>

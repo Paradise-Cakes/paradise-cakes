@@ -3,14 +3,14 @@ import AppBarLogo from "../../assets/brand.svg";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import { Button, Container, Toolbar, Hidden, Drawer } from "@mui/material";
-import { CgMenu } from "react-icons/cg";
+import { CgMenu, CgClose } from "react-icons/cg";
 import { DrawerContext } from "../../context/DrawerContext";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#CDCBBC" }}>
+    <AppBar position="relative" sx={{ backgroundColor: "#CDCBBC" }}>
       <Container maxWidth={"false"} sx={{ margin: 0, width: "100%" }}>
         <Toolbar disableGutters sx={{ width: "100%" }}>
           <Hidden smDown>
@@ -42,14 +42,25 @@ export default function Navbar() {
                 userSelect: "none",
               }}
             />
-            <CgMenu
-              style={{
-                width: "25px",
-                height: "25px",
-                cursor: "pointer",
-              }}
-              onClick={() => setDrawerOpen(!drawerOpen)}
-            />
+            {drawerOpen ? (
+              <CgClose
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setDrawerOpen(!drawerOpen)}
+              />
+            ) : (
+              <CgMenu
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setDrawerOpen(!drawerOpen)}
+              />
+            )}
           </Hidden>
         </Toolbar>
       </Container>
