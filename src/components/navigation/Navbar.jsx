@@ -1,19 +1,14 @@
-import React, { useState } from "react";
-import AppBarLogo from "../assets/brand.svg";
+import React, { useContext } from "react";
+import AppBarLogo from "../../assets/brand.svg";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import {
-  Button,
-  Container,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
-  Hidden,
-} from "@mui/material";
+import { Button, Container, Toolbar, Hidden, Drawer } from "@mui/material";
 import { CgMenu } from "react-icons/cg";
+import { DrawerContext } from "../../context/DrawerContext";
 
-function Navbar() {
+export default function Navbar() {
+  const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
+
   return (
     <AppBar position="static" sx={{ backgroundColor: "#CDCBBC" }}>
       <Container maxWidth={"false"} sx={{ margin: 0, width: "100%" }}>
@@ -53,6 +48,7 @@ function Navbar() {
                 height: "25px",
                 cursor: "pointer",
               }}
+              onClick={() => setDrawerOpen(!drawerOpen)}
             />
           </Hidden>
         </Toolbar>
@@ -60,4 +56,3 @@ function Navbar() {
     </AppBar>
   );
 }
-export default Navbar;

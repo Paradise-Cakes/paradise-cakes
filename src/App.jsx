@@ -1,11 +1,16 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import Navbar from "./navigation/Navbar";
+import Navbar from "./components/navigation/Navbar";
+import NavDrawer from "./components/navigation/NavDrawer";
+import { DrawerProvider } from "./context/DrawerContext";
 
 function App() {
   return (
     <Grid container justifyContent="center" alignItems="center">
-      <Navbar />
+      <DrawerProvider drawerOpen={false}>
+        <Navbar />
+        <NavDrawer />
+      </DrawerProvider>
     </Grid>
   );
 }
