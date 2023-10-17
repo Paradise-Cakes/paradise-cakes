@@ -38,24 +38,42 @@ export default function NavDrawer() {
         top: "60px",
       }}
     >
-      <List>
-        <ListItem>
-          <ListItemButton sx={{ borderBottom: "1px dashed #DDAFAC" }}>
+      <List sx={{ paddingTop: "0" }}>
+        <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
+          <ListItemButton
+            sx={{
+              borderBottom: "1px dashed #DDAFAC",
+              paddingTop: "16px",
+              paddingBottom: "16px",
+            }}
+          >
             <ListItemText primary="Cakes">Cakes</ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
-          <ListItemButton sx={{ borderBottom: "1px dashed #DDAFAC" }}>
+        <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
+          <ListItemButton
+            sx={{
+              borderBottom: "1px dashed #DDAFAC",
+              paddingTop: "16px",
+              paddingBottom: "16px",
+            }}
+          >
             <ListItemText primary="Cupcakes">Cupcakes</ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
-          <ListItemButton sx={{ borderBottom: "1px dashed #DDAFAC" }}>
+        <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
+          <ListItemButton
+            sx={{
+              borderBottom: "1px dashed #DDAFAC",
+              paddingTop: "16px",
+              paddingBottom: "16px",
+            }}
+          >
             <ListItemText primary="Flavors">Flavors</ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
-          <ListItemButton>
+        <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
+          <ListItemButton sx={{ paddingTop: "16px", paddingBottom: "16px" }}>
             <ListItemText primary="All Products">All Products</ListItemText>
           </ListItemButton>
         </ListItem>
