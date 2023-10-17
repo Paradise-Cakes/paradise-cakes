@@ -36,12 +36,22 @@ function Navbar() {
             </Box>
           </Hidden>
           <Hidden smUp>
+            <img
+              src={AppBarLogo}
+              width="120px"
+              style={{
+                marginTop: "4px",
+                marginLeft: "auto",
+                marginRight: "auto",
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+            />
             <CgMenu
               style={{
                 width: "25px",
                 height: "25px",
                 cursor: "pointer",
-                marginLeft: "auto",
               }}
             />
           </Hidden>
