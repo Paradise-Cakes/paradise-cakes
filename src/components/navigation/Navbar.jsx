@@ -2,19 +2,21 @@ import React, { useContext } from "react";
 import AppBarLogo from "../../assets/brand.svg";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { Button, Container, Toolbar, Hidden, Drawer } from "@mui/material";
+import { Button, Container, Toolbar, Hidden } from "@mui/material";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { DrawerContext } from "../../context/DrawerContext";
+import NavLink from "./NavLink";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
 
   return (
-    <AppBar position="relative" sx={{ backgroundColor: "#CDCBBC" }}>
+    <AppBar position="fixed" sx={{ backgroundColor: "#CDCBBC" }}>
       <Container maxWidth={"false"} sx={{ margin: 0, width: "100%" }}>
         <Toolbar disableGutters sx={{ width: "100%", display: "block" }}>
           <Hidden smDown>
             <div
+              id="here"
               style={{
                 textAlign: "center",
                 display: "block",
@@ -41,10 +43,10 @@ export default function Navbar() {
                 justifyContent: "space-between",
               }}
             >
-              <Button sx={{ color: "#fff" }}>Cakes</Button>
-              <Button sx={{ color: "#fff" }}>Cupcakes</Button>
-              <Button sx={{ color: "#fff" }}>Flavors</Button>
-              <Button sx={{ color: "#fff" }}>All Products</Button>
+              <NavLink title="Cakes" />
+              <NavLink title="Cupcakes" />
+              <NavLink title="Flavors" />
+              <NavLink title="All Products" />
             </Box>
           </Hidden>
           <Hidden smUp>
@@ -82,8 +84,6 @@ export default function Navbar() {
                   userSelect: "none",
                   marginLeft: "auto",
                   marginRight: "auto",
-                  position: "relative",
-                  top: "2.5px",
                 }}
               />
             </div>
