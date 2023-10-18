@@ -43,8 +43,14 @@ export default function Navbar() {
                 justifyContent: "space-between",
               }}
             >
-              <NavLink title="Shop" />
-              <NavLink title="Flavors" />
+              <NavLink
+                title="Shop"
+                drawerItems={["Cakes", "Cupcakes", "Pies", "Cookies"]}
+              />
+              <NavLink
+                title="Flavors"
+                drawerItems={["Lemon", "Red Velvet", "Chocolate", "Vanilla"]}
+              />
               <NavLink title="All Products" />
             </Box>
           </Hidden>

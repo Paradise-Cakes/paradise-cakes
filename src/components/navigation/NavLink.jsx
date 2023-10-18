@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import NavLinkDrawer from "./NavLinkDrawer";
 
-export default function NavLink({ title }) {
+export default function NavLink({ title, drawerItems }) {
   const [height, setHeight] = useState(0);
 
   const handleMouseEnter = () => {
-    setHeight(400);
+    setHeight(300);
   };
 
   const handleMouseLeave = () => {
@@ -20,7 +20,7 @@ export default function NavLink({ title }) {
       sx={{ color: "#fff", position: "static" }}
     >
       {title}
-      <NavLinkDrawer height={height} title={title} />
+      <NavLinkDrawer height={height} items={drawerItems} />
     </Button>
   );
 }
