@@ -43,8 +43,7 @@ export default function Navbar() {
                 justifyContent: "space-between",
               }}
             >
-              <NavLink title="Cakes" />
-              <NavLink title="Cupcakes" />
+              <NavLink title="Shop" />
               <NavLink title="Flavors" />
               <NavLink title="All Products" />
             </Box>
