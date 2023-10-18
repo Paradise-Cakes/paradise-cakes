@@ -12,18 +12,35 @@ export default function Navbar() {
   return (
     <AppBar position="relative" sx={{ backgroundColor: "#CDCBBC" }}>
       <Container maxWidth={"false"} sx={{ margin: 0, width: "100%" }}>
-        <Toolbar disableGutters sx={{ width: "100%" }}>
+        <Toolbar disableGutters sx={{ width: "100%", display: "block" }}>
           <Hidden smDown>
-            <img
-              src={AppBarLogo}
-              width="120px"
+            <div
               style={{
-                marginTop: "4px",
-                cursor: "pointer",
-                userSelect: "none",
+                textAlign: "center",
+                display: "block",
+                position: "relative",
+                top: "10px",
               }}
-            />
-            <Box sx={{ marginLeft: "auto", marginRight: "auto" }}>
+            >
+              <img
+                src={AppBarLogo}
+                width="120px"
+                style={{
+                  cursor: "pointer",
+                  userSelect: "none",
+                }}
+              />
+            </div>
+            <Box
+              sx={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                textAlign: "center",
+                display: "flex",
+                width: "600px",
+                justifyContent: "space-between",
+              }}
+            >
               <Button sx={{ color: "#fff" }}>Cakes</Button>
               <Button sx={{ color: "#fff" }}>Cupcakes</Button>
               <Button sx={{ color: "#fff" }}>Flavors</Button>
@@ -31,36 +48,45 @@ export default function Navbar() {
             </Box>
           </Hidden>
           <Hidden smUp>
-            <img
-              src={AppBarLogo}
-              width="120px"
+            <div
               style={{
-                marginTop: "4px",
-                marginLeft: "auto",
-                marginRight: "auto",
-                cursor: "pointer",
-                userSelect: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
-            />
-            {drawerOpen ? (
-              <CgClose
+            >
+              {drawerOpen ? (
+                <CgClose
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setDrawerOpen(false)}
+                />
+              ) : (
+                <CgMenu
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setDrawerOpen(true)}
+                />
+              )}
+              <img
+                src={AppBarLogo}
+                width="120px"
                 style={{
-                  width: "25px",
-                  height: "25px",
                   cursor: "pointer",
+                  userSelect: "none",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  position: "relative",
+                  top: "2.5px",
                 }}
-                onClick={() => setDrawerOpen(false)}
               />
-            ) : (
-              <CgMenu
-                style={{
-                  width: "25px",
-                  height: "25px",
-                  cursor: "pointer",
-                }}
-                onClick={() => setDrawerOpen(true)}
-              />
-            )}
+            </div>
           </Hidden>
         </Toolbar>
       </Container>

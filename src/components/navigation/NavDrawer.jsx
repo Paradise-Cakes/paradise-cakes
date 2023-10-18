@@ -24,7 +24,7 @@ export default function NavDrawer() {
   return (
     <Drawer
       hideBackdrop={true}
-      anchor="right"
+      anchor="left"
       open={drawerOpen}
       onClose={toggleDrawer(false)}
       PaperProps={{
@@ -35,7 +35,7 @@ export default function NavDrawer() {
         },
       }}
       sx={{
-        top: "60px",
+        top: "56px",
       }}
     >
       <List sx={{ paddingTop: "0" }}>
