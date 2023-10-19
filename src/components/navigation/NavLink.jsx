@@ -1,26 +1,33 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import NavLinkDrawer from "./NavLinkDrawer";
+import "./NavLink.css";
 
 export default function NavLink({ title, drawerItems }) {
-  const [height, setHeight] = useState(0);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleMouseEnter = () => {
-    setHeight(300);
+    setDrawerOpen(true);
   };
 
   const handleMouseLeave = () => {
-    setHeight(0);
+    setDrawerOpen(false);
   };
 
   return (
     <Button
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      sx={{ color: "#fff", position: "static" }}
+      sx={{ color: "#fff", position: "static", border: "1px solid green" }}
     >
       {title}
-      <NavLinkDrawer height={height} items={drawerItems} />
+      <div style={{ position: "relative" }}>
+        <ul style={{ position: "absolute" }} className="active">
+          <li>Hi</li>
+          <li>Hi</li>
+          <li>Hi</li>
+        </ul>
+      </div>
     </Button>
   );
 }

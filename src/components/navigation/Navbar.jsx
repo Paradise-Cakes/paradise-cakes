@@ -45,12 +45,13 @@ export default function Navbar() {
             >
               <NavLink
                 title="Shop"
-                drawerItems={["Cakes", "Cupcakes", "Pies", "Cookies"]}
+                drawerItems={[
+                  { itemName: "Cakes", img: "https://place-hold.it/150" },
+                  { itemName: "Cakes", img: "https://place-hold.it/150" },
+                  // { itemName: "Cakes", img: "https://place-hold.it/150" },
+                ]}
               />
-              <NavLink
-                title="Flavors"
-                drawerItems={["Lemon", "Red Velvet", "Chocolate", "Vanilla"]}
-              />
+              <NavLink title="Flavors" />
               <NavLink title="All Products" />
             </Box>
           </Hidden>
