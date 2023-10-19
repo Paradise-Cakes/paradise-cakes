@@ -31,13 +31,20 @@ export default function NavLink({ title, drawerItems }) {
             display: "flex",
             justifyContent: "space-evenly",
             alignItems: "center",
-            paddingLeft: "650px",
-            paddingRight: "650px",
             height: "200px",
+            border: "1px solid red",
+            width: "fit-content",
+            margin: "0 auto",
           }}
         >
           {drawerItems?.map((item) => (
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                padding: "0 32px",
+              }}
+            >
               <img src={item.img} />
               <div>{item.itemName}</div>
             </div>
