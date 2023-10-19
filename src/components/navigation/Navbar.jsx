@@ -47,12 +47,12 @@ export default function Navbar() {
                 title="Shop"
                 drawerItems={[
                   { itemName: "Cakes", img: "https://place-hold.it/150" },
-                  { itemName: "Cakes", img: "https://place-hold.it/150" },
-                  // { itemName: "Cakes", img: "https://place-hold.it/150" },
+                  { itemName: "Pies", img: "https://place-hold.it/150" },
+                  { itemName: "Cupcakes", img: "https://place-hold.it/150" },
+                  { itemName: "Cookies", img: "https://place-hold.it/150" },
                 ]}
               />
               <NavLink title="Flavors" />
-              <NavLink title="All Products" />
             </Box>
           </Hidden>
           <Hidden smUp>

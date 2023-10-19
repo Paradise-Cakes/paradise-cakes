@@ -1,12 +1,20 @@
-ul {
-  border: 1px solid red;
+.div {
   height: 0px;
   overflow: hidden;
-  transition: height 30s ease;
-  list-style: none;
+  transition: height 1s ease;
+  position: absolute;
+  top: 98px;
+  left: 0;
+  right: 0;
 }
 
 .active {
-  height: 500px;
-  overflow: auto;
+  height: 300px;
+  width: 100%;
+  background-color: #cdcbbc;
+  opacity: 80%;
+}
+
+.inactive {
+  visibility: hidden;
 }
