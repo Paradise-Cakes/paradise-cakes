@@ -71,5 +71,8 @@ jobs:
       - name: Invalidate Cache
         run: aws cloudfront create-invalidation --distribution-id E3V13EEWPLKLVK --paths "/*"
 
+      - name: Invalidate CSS Cache
+        run: aws cloudfront create-invalidation --distribution-id E3V13EEWPLKLVK --paths "/*.css"
+
       - name: Deploy UI
         run: aws s3 sync dist/ s3://paradisecakesbymegan.com
