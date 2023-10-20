@@ -11,9 +11,26 @@ export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: "#CDCBBC" }}>
-      <Container maxWidth={"false"} sx={{ margin: 0, width: "100%" }}>
-        <Toolbar disableGutters sx={{ width: "100%", display: "block" }}>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: "#CDCBBC",
+      }}
+    >
+      <Container
+        maxWidth={"false"}
+        sx={{
+          margin: 0,
+          width: "100%",
+        }}
+      >
+        <Toolbar
+          disableGutters
+          sx={{
+            width: "100%",
+            display: "block",
+          }}
+        >
           <Hidden smDown>
             <div
               id="here"
