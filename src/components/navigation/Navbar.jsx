@@ -68,7 +68,44 @@ export default function Navbar() {
                   { itemName: "Cupcakes", img: "https://place-hold.it/150" },
                   { itemName: "Cookies", img: "https://place-hold.it/150" },
                 ]}
-              />
+              >
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: "150px",
+                    height: "40px",
+                    backgroundColor: "#DDAFAC",
+                    color: "white",
+                    border: "1px solid #DDAFAC",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      backgroundColor: "#DDAFAC",
+                      color: "white",
+                      border: "1px solid #DDAFAC",
+                    },
+                  }}
+                >
+                  Shop All
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: "200px",
+                    height: "40px",
+                    backgroundColor: "#DDAFAC",
+                    color: "white",
+                    border: "1px solid #DDAFAC",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      backgroundColor: "#DDAFAC",
+                      color: "white",
+                      border: "1px solid #DDAFAC",
+                    },
+                  }}
+                >
+                  Order Delivery
+                </Button>
+              </NavLink>
 
               <NavLink title="Flavors" />
             </Box>

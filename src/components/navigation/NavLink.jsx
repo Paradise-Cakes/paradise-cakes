@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import "./NavLink.css";
 
-export default function NavLink({ title, drawerItems }) {
+export default function NavLink({ title, drawerItems, children }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleMouseEnter = () => {
@@ -14,17 +14,19 @@ export default function NavLink({ title, drawerItems }) {
   };
 
   return (
-    <Button
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      sx={{
-        color: "#fff",
-        position: "static",
-        width: "125px",
-        padding: "6px",
-      }}
-    >
-      {title}
+    <div>
+      <Button
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        sx={{
+          color: "#fff",
+          position: "static",
+          width: "125px",
+          padding: "6px",
+        }}
+      >
+        {title}
+      </Button>
       <div className={"div " + (drawerOpen ? "active" : "inactive")}>
         <div
           style={{
@@ -36,8 +38,9 @@ export default function NavLink({ title, drawerItems }) {
             margin: "0 auto",
           }}
         >
-          {drawerItems?.map((item) => (
+          {drawerItems?.map((item, index) => (
             <div
+              key={index}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -59,44 +62,9 @@ export default function NavLink({ title, drawerItems }) {
             marginTop: "32px",
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              width: "150px",
-              height: "40px",
-              backgroundColor: "#DDAFAC",
-              color: "white",
-              border: "1px solid #DDAFAC",
-              fontWeight: "bold",
-              "&:hover": {
-                backgroundColor: "#DDAFAC",
-                color: "white",
-                border: "1px solid #DDAFAC",
-              },
-            }}
-          >
-            Shop All
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              width: "200px",
-              height: "40px",
-              backgroundColor: "#DDAFAC",
-              color: "white",
-              border: "1px solid #DDAFAC",
-              fontWeight: "bold",
-              "&:hover": {
-                backgroundColor: "#DDAFAC",
-                color: "white",
-                border: "1px solid #DDAFAC",
-              },
-            }}
-          >
-            Order Delivery
-          </Button>
+          {children}
         </div>
       </div>
-    </Button>
+    </div>
   );
 }
