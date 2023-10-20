@@ -69,6 +69,7 @@ export default function Navbar() {
                   { itemName: "Cookies", img: "https://place-hold.it/150" },
                 ]}
               />
+
               <NavLink title="Flavors" />
             </Box>
           </Hidden>

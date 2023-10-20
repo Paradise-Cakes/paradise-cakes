@@ -32,7 +32,6 @@ export default function NavLink({ title, drawerItems }) {
             justifyContent: "space-evenly",
             alignItems: "center",
             height: "200px",
-            border: "1px solid red",
             width: "fit-content",
             margin: "0 auto",
           }}
