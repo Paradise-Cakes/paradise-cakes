@@ -15,5 +15,5 @@
 }
 
 .inactive {
-  visibility: hidden;
+  height: 0px;
 }
