@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import Navbar from "./components/navigation/Navbar";
-import NavDrawer from "./components/navigation/NavDrawer";
+import NavSideDrawer from "./components/navigation/NavSideDrawer";
 import { DrawerProvider } from "./context/DrawerContext";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <Grid container justifyContent="center" alignItems="center">
       <DrawerProvider drawerOpen={false}>
         <Navbar />
-        <NavDrawer />
+        <NavSideDrawer />
       </DrawerProvider>
     </Grid>
   );

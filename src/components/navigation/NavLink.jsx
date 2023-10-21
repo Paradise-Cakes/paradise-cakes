@@ -27,7 +27,11 @@ export default function NavLink({ title, drawerItems, children }) {
       >
         {title}
       </Button>
-      <div className={"div " + (drawerOpen ? "active" : "inactive")}>
+      <div
+        className={"div " + (drawerOpen ? "active" : "inactive")}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div
           style={{
             display: "flex",

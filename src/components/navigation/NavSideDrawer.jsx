@@ -47,7 +47,7 @@ export default function NavSideDrawer() {
               paddingBottom: "16px",
             }}
           >
-            <ListItemText primary="Shop">Shop</ListItemText>
+            <ListItemText primary="Shop" />
           </ListItemButton>
         </ListItem>
         <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
@@ -58,7 +58,7 @@ export default function NavSideDrawer() {
               paddingBottom: "16px",
             }}
           >
-            <ListItemText primary="Flavors">Flavors</ListItemText>
+            <ListItemText primary="Flavors" />
           </ListItemButton>
         </ListItem>
       </List>
