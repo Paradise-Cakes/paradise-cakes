@@ -107,7 +107,7 @@ export default function Navbar() {
                 </Button>
               </NavLink>
 
-              <NavLink title="Flavors" />
+              <NavLink title="About Me" />
             </Box>
           </Hidden>
           <Hidden smUp>

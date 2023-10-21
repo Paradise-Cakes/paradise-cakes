@@ -27,48 +27,50 @@ export default function NavLink({ title, drawerItems, children }) {
       >
         {title}
       </Button>
-      <div
-        className={"div " + (drawerOpen ? "active" : "inactive")}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
+      {drawerItems && (
         <div
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            height: "200px",
-            width: "fit-content",
-            margin: "0 auto",
-          }}
+          className={"div " + (drawerOpen ? "active" : "inactive")}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
-          {drawerItems?.map((item, index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "0 32px",
-              }}
-            >
-              <img src={item.img} />
-              <div>{item.itemName}</div>
-            </div>
-          ))}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              height: "200px",
+              width: "fit-content",
+              margin: "0 auto",
+            }}
+          >
+            {drawerItems?.map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "0 32px",
+                }}
+              >
+                <img src={item.img} />
+                <div>{item.itemName}</div>
+              </div>
+            ))}
+          </div>
+          <div
+            style={{
+              width: "500px",
+              display: "flex",
+              justifyContent: "space-around",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: "32px",
+            }}
+          >
+            {children}
+          </div>
         </div>
-        <div
-          style={{
-            width: "500px",
-            display: "flex",
-            justifyContent: "space-around",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "32px",
-          }}
-        >
-          {children}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

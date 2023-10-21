@@ -6,6 +6,7 @@
   left: 0;
   right: 0;
   background-color: rgb(205, 203, 188, 0.8);
+  backdrop-filter: blur(6px);
 }
 
 .active {

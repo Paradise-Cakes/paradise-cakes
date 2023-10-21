@@ -58,7 +58,7 @@ export default function NavSideDrawer() {
               paddingBottom: "16px",
             }}
           >
-            <ListItemText primary="Flavors" />
+            <ListItemText primary="About Me" />
           </ListItemButton>
         </ListItem>
       </List>
