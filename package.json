@@ -15,13 +15,14 @@
     "@fontsource/archivo-black": "^5.0.16",
     "@fontsource/bebas-neue": "^5.0.16",
     "@fontsource/playfair-display": "^5.0.16",
-    "@mui/material": "^5.14.13",
+    "@mui/material": "^5.14.14",
     "@mui/system": "^5.14.14",
     "react": "^18.2.0",
     "react-animate-height": "^3.2.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.17.0",
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
