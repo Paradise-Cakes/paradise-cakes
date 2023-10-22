@@ -27,14 +27,58 @@ export default function Shop() {
           CAKES
         </Typography>
       </Grid>
-      <Grid item container alignItems="center" justifyContent="space-between">
+      <Grid
+        item
+        container
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={5}
+      >
         <Grid item container justifyContent="center" xl={3} lg={4} md={6}>
           <Card sx={{ maxWidth: 500, borderRadius: "12px" }}>
             <CardActionArea>
               <CardMedia
                 component="img"
-                height="500"
-                width="500"
+                image="https://place-hold.it/500/666"
+              />
+
+              <CardContent
+                sx={{
+                  fontWeight: "800",
+                  fontSize: "1rem",
+                  textAlign: "center",
+                }}
+              >
+                <div>LEMON BLUEBERRY CAKE</div>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item container justifyContent="center" xl={3} lg={4} md={6}>
+          <Card sx={{ maxWidth: 500, borderRadius: "12px" }}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                image="https://place-hold.it/500/666"
+              />
+
+              <CardContent
+                sx={{
+                  fontWeight: "800",
+                  fontSize: "1rem",
+                  textAlign: "center",
+                }}
+              >
+                <div>LEMON BLUEBERRY CAKE</div>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item container justifyContent="center" xl={3} lg={4} md={6}>
+          <Card sx={{ maxWidth: 500, borderRadius: "12px" }}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
                 image="https://place-hold.it/500/666"
               />
 

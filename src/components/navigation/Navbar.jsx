@@ -15,7 +15,6 @@ export default function Navbar() {
       position="fixed"
       sx={{
         backgroundColor: "#CDCBBC",
-        height: "98px",
       }}
     >
       <Container
