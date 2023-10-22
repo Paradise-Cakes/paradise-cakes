@@ -124,6 +124,8 @@ export default function Navbar() {
                     width: "25px",
                     height: "25px",
                     cursor: "pointer",
+                    padding: "16px",
+                    position: "absolute",
                   }}
                   onClick={() => setDrawerOpen(false)}
                 />
