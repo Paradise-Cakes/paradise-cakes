@@ -68,8 +68,9 @@ export default function Shop() {
                   whiteSpace: "nowrap",
                 }}
               >
-                Flavorful and moist cake with a hint of spice, topped with
-                creamy frosting.
+                A delightful, moist dessert bursting with the natural sweetness
+                of carrots, complemented by warm spices and a luscious cream
+                cheese frosting.
               </Typography>
             </CardContent>
           </CardActionArea>
