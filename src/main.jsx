@@ -20,9 +20,9 @@ const THEME = createTheme({
     values: {
       xs: 0,
       sm: 600,
-      md: 1159,
-      lg: 1689,
-      xl: 2180,
+      md: 1300,
+      lg: 1612,
+      xl: 1936,
     },
   },
 });

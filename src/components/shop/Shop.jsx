@@ -5,49 +5,51 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { fontWeight } from "@mui/system";
 
 export default function Shop() {
   return (
     <Grid
       container
-      style={{
-        paddingTop: "256px",
-        paddingBottom: "256px",
-        paddingLeft: "256px",
-        paddingRight: "256px",
-        width: "100%",
+      sx={{
+        px: { xs: 2, md: 24 },
+        py: { xs: 12, md: 12, xl: 24 },
       }}
       spacing={5}
       justifyContent={"center"}
     >
-      <Grid item sx={{ width: "250px" }}>
+      <Grid item md={12} xl={2}>
         <Typography
           variant="h4"
           fontWeight={1000}
           sx={{
-            textAlign: "center",
             paddingBottom: "8px",
             paddingTop: "24px",
-            textAlign: "left",
+            textAlign: { xl: "left", xs: "center" },
           }}
         >
           CAKES
         </Typography>
-        <Typography sx={{ textAlign: "left" }}>
+        <Typography sx={{ textAlign: { xl: "left", md: "center" } }}>
           Indulge in my delectable selection of freshly baked cakes, made with
           the finest ingredients and crafted with care.
         </Typography>
       </Grid>
-      <Grid item>
-        <Card sx={{ maxWidth: 500, borderRadius: "12px" }}>
+      <Grid item sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
+        <Card
+          sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
+        >
           <CardActionArea>
-            <CardMedia component="img" image="https://place-hold.it/500/666" />
+            <CardMedia
+              component="img"
+              image="https://place-hold.it/500/666"
+              sx={{ maxWidth: "100%", height: "auto" }}
+            />
             <CardContent
               sx={{
                 fontWeight: "800",
                 fontSize: "1rem",
                 textAlign: "center",
+                height: "64px",
               }}
             >
               <Typography
@@ -57,7 +59,15 @@ export default function Shop() {
               >
                 CARROT CAKE
               </Typography>
-              <Typography variant="body2" component="div">
+              <Typography
+                variant="body2"
+                component="div"
+                sx={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Flavorful and moist cake with a hint of spice, topped with
                 creamy frosting.
               </Typography>
@@ -65,15 +75,22 @@ export default function Shop() {
           </CardActionArea>
         </Card>
       </Grid>
-      <Grid item>
-        <Card sx={{ maxWidth: 500, borderRadius: "12px" }}>
+      <Grid item sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
+        <Card
+          sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
+        >
           <CardActionArea>
-            <CardMedia component="img" image="https://place-hold.it/500/666" />
+            <CardMedia
+              component="img"
+              image="https://place-hold.it/500/666"
+              sx={{ maxWidth: "100%", height: "auto" }}
+            />
             <CardContent
               sx={{
                 fontWeight: "800",
                 fontSize: "1rem",
                 textAlign: "center",
+                height: "64px",
               }}
             >
               <Typography
@@ -83,22 +100,37 @@ export default function Shop() {
               >
                 CHOCOLATE CAKE
               </Typography>
-              <Typography variant="body2" component="div">
+              <Typography
+                variant="body2"
+                component="div"
+                sx={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Indulge in rich, velvety layers of cocoa goodness.
               </Typography>
             </CardContent>
           </CardActionArea>
         </Card>
       </Grid>
-      <Grid item>
-        <Card sx={{ maxWidth: 500, borderRadius: "12px" }}>
+      <Grid item sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
+        <Card
+          sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
+        >
           <CardActionArea>
-            <CardMedia component="img" image="https://place-hold.it/500/666" />
+            <CardMedia
+              component="img"
+              image="https://place-hold.it/500/666"
+              sx={{ maxWidth: "100%", height: "auto" }}
+            />
             <CardContent
               sx={{
                 fontWeight: "800",
                 fontSize: "1rem",
                 textAlign: "center",
+                height: "64px",
               }}
             >
               <Typography
@@ -108,7 +140,15 @@ export default function Shop() {
               >
                 RED VELVET CAKE
               </Typography>
-              <Typography variant="body2" component="div">
+              <Typography
+                variant="body2"
+                component="div"
+                sx={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 A cocoa-infused, scarlet sensation with creamy frosting.
               </Typography>
             </CardContent>
