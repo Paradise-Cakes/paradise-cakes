@@ -34,7 +34,7 @@ export default function Shop() {
           the finest ingredients and crafted with care.
         </Typography>
       </Grid>
-      <Grid item sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
+      <Grid item xs={12} sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
         <Card
           sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
         >
@@ -76,7 +76,7 @@ export default function Shop() {
           </CardActionArea>
         </Card>
       </Grid>
-      <Grid item sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
+      <Grid item xs={12} sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
         <Card
           sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
         >
@@ -116,7 +116,7 @@ export default function Shop() {
           </CardActionArea>
         </Card>
       </Grid>
-      <Grid item sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
+      <Grid item xs={12} sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
         <Card
           sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
         >
