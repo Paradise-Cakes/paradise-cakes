@@ -23,6 +23,7 @@ const THEME = createTheme({
       md: 1300,
       lg: 1612,
       xl: 1936,
+      xxl: 2525,
     },
   },
 });

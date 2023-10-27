@@ -1,161 +1,87 @@
 import React from "react";
-import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea } from "@mui/material";
+import Section from "./Section";
 import Grid from "@mui/material/Grid";
 
 export default function Shop() {
+  const cakeItems = [
+    {
+      title: "carrot cake",
+      description:
+        "A delightful, moist dessert bursting with the natural sweetness of carrots, complemented by warm spices and a luscious cream cheese frosting.",
+      image: "https://place-hold.it/500/666",
+    },
+    {
+      title: "chocolate cake",
+      description:
+        "Decadent, moist, and rich in flavor, chocolate cake is a delightful dessert that satisfies with its indulgent cocoa-infused layers and velvety smooth frosting.",
+      image: "https://place-hold.it/500/666",
+    },
+    {
+      title: "red velvet cake",
+      description:
+        "Rich and moist with a hint of cocoa, tinted red, and topped with smooth cream cheese frosting.",
+      image: "https://place-hold.it/500/666",
+    },
+    {
+      title: "classic vanilla cake",
+      description:
+        " A timeless classic with a simple, elegant flavor, perfect for any occasion.",
+      image: "https://place-hold.it/500/666",
+    },
+    {
+      title: "galaxy cake",
+      description:
+        "Embark on a cosmic journey with our stunning cake that's out of this world, with swirls of color and a taste that's truly stellar.",
+      image: "https://place-hold.it/500/666",
+    },
+    {
+      title: "strawberry ganache cake",
+      description:
+        "Indulge in a harmonious blend of rich, velvety chocolate ganache and the vibrant sweetness of fresh strawberries in every slice.",
+      image: "https://place-hold.it/500/666",
+    },
+  ];
+  const cupcakeItems = [
+    {
+      title: "vanilla cupcakes",
+      description:
+        "Made with a moist vanilla cake and topped with a smooth vanilla buttercream frosting.",
+      image: "https://place-hold.it/500/666",
+    },
+    {
+      title: "chocolate cupcakes",
+      description:
+        "Made with a moist chocolate cake and topped with a smooth chocolate buttercream frosting.",
+      image: "https://place-hold.it/500/666",
+    },
+    {
+      title: "strawberry cupcakes",
+      description:
+        "Bursting with fresh, fruity flavor, our strawberry-infused treats are a delightful twist on classic cupcakes.",
+      image: "https://place-hold.it/500/666",
+    },
+  ];
   return (
     <Grid
       container
       sx={{
-        px: { xs: 2, md: 24 },
-        py: { xs: 12, md: 12, xl: 24 },
+        px: { xs: 2, sm: 12, md: 24, xl: 36, xxl: 48 },
+        py: { xs: 6, sm: 12, md: 24 },
       }}
       spacing={5}
       justifyContent={"center"}
     >
-      <Grid item md={12} xl={2}>
-        <Typography
-          variant="h4"
-          fontWeight={1000}
-          sx={{
-            paddingBottom: "8px",
-            paddingTop: "24px",
-            textAlign: { xl: "left", xs: "center" },
-          }}
-        >
-          CAKES
-        </Typography>
-        <Typography sx={{ textAlign: { xl: "left", md: "center" } }}>
-          Indulge in my delectable selection of freshly baked cakes, made with
-          the finest ingredients and crafted with care.
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
-        <Card
-          sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
-        >
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              image="https://place-hold.it/500/666"
-              sx={{ maxWidth: "100%", height: "auto" }}
-            />
-            <CardContent
-              sx={{
-                fontWeight: "800",
-                fontSize: "1rem",
-                textAlign: "center",
-                height: "64px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ fontWeight: "bold" }}
-              >
-                CARROT CAKE
-              </Typography>
-              <Typography
-                variant="body2"
-                component="div"
-                sx={{
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                A delightful, moist dessert bursting with the natural sweetness
-                of carrots, complemented by warm spices and a luscious cream
-                cheese frosting.
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
-        <Card
-          sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
-        >
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              image="https://place-hold.it/500/666"
-              sx={{ maxWidth: "100%", height: "auto" }}
-            />
-            <CardContent
-              sx={{
-                fontWeight: "800",
-                fontSize: "1rem",
-                textAlign: "center",
-                height: "64px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ fontWeight: "bold" }}
-              >
-                CHOCOLATE CAKE
-              </Typography>
-              <Typography
-                variant="body2"
-                component="div"
-                sx={{
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Indulge in rich, velvety layers of cocoa goodness.
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={12} md={4} xl={3} sx={{ textAlign: "center" }}>
-        <Card
-          sx={{ borderRadius: "12px", maxWidth: "500px", margin: "0 auto" }}
-        >
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              image="https://place-hold.it/500/666"
-              sx={{ maxWidth: "100%", height: "auto" }}
-            />
-            <CardContent
-              sx={{
-                fontWeight: "800",
-                fontSize: "1rem",
-                textAlign: "center",
-                height: "64px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ fontWeight: "bold" }}
-              >
-                RED VELVET CAKE
-              </Typography>
-              <Typography
-                variant="body2"
-                component="div"
-                sx={{
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                A cocoa-infused, scarlet sensation with creamy frosting.
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Grid>
+      <Section
+        title="cakes"
+        description="Indulge in my delectable selection of freshly baked cakes, made with
+          the finest ingredients and crafted with care."
+        items={cakeItems}
+      />
+      <Section
+        title="cupcakes"
+        description="Explore our delectable cupcake collection: From classic flavors to creative concoctions, each bite is a miniature delight."
+        items={cupcakeItems}
+      />
     </Grid>
   );
 }
