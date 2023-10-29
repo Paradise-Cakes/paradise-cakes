@@ -16,6 +16,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Shop />} />
           <Route path="/about" element={<About />} />
+          <Route
+            path="/desserts/cakes/:dessertName/:dessertId"
+            element={<Shop />}
+          />
         </Routes>
       </DrawerProvider>
     </Grid>

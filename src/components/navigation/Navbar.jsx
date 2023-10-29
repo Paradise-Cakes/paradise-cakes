@@ -31,7 +31,7 @@ export default function Navbar() {
             display: "block",
           }}
         >
-          <Hidden smDown implementation="css">
+          <Hidden mdDown implementation="css">
             <div
               style={{
                 textAlign: "center",
@@ -109,7 +109,7 @@ export default function Navbar() {
               <NavLink title="About Me" />
             </Box>
           </Hidden>
-          <Hidden smUp implementation="css">
+          <Hidden mdUp implementation="css">
             <div
               style={{
                 display: "flex",
