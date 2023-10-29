@@ -6,6 +6,7 @@ import About from "./components/about/About";
 import Shop from "./components/shop/Shop";
 import { DrawerProvider } from "./context/DrawerContext";
 import { Route, Routes } from "react-router-dom";
+import DessertDetail from "./components/dessert/DessertDetail";
 
 function App() {
   return (
@@ -17,8 +18,8 @@ function App() {
           <Route path="/" element={<Shop />} />
           <Route path="/about" element={<About />} />
           <Route
-            path="/desserts/cakes/:dessertName/:dessertId"
-            element={<Shop />}
+            path="/desserts/cakes/:dessertId/:dessertName"
+            element={<DessertDetail />}
           />
         </Routes>
       </DrawerProvider>
