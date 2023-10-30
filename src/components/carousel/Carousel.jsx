@@ -5,7 +5,7 @@ import { height } from "@mui/system";
 
 export default function Carousel({ images }) {
   return (
-    <Grid item container>
+    <Grid item container justifyContent={"center"}>
       <Grid
         item
         xs={1.5}
@@ -23,6 +23,8 @@ export default function Carousel({ images }) {
             style={{
               borderRadius: "12px",
               margin: "8px",
+              maxWidth: "100%",
+              height: "auto",
             }}
             width={"100px"}
             height={"100px"}
@@ -30,7 +32,11 @@ export default function Carousel({ images }) {
         ))}
       </Grid>
       <Grid item sx={{ position: "relative" }}>
-        <img src={images[0]} style={{ borderRadius: "12px" }} alt="cake" />
+        <img
+          src={images[0]}
+          style={{ borderRadius: "12px", maxWidth: "100%", height: "auto" }}
+          alt="cake"
+        />
         <RiArrowRightSLine
           style={{
             width: "64px",

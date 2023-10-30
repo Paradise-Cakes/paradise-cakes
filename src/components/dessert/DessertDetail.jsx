@@ -16,15 +16,29 @@ export default function DessertDetail() {
     <Grid
       container
       sx={{
-        px: { xs: 2, md: 64 },
+        px: { xs: 2, lg: 0, xl: 0, xxl: 32 },
         py: { xs: 12, md: 18 },
+        border: "4px solid black",
       }}
     >
-      <Grid item container xs={12}>
-        <Grid item container xs={6}>
+      <Grid
+        item
+        container
+        xs={12}
+        sx={{
+          border: "1px solid orange",
+        }}
+        justifyContent={"center"}
+      >
+        <Grid item container md={6} sx={{ border: "1px solid red" }}>
           <Carousel images={images} />
         </Grid>
-        <Grid item container xs={3} sx={{ padding: "128px 0px" }}>
+        <Grid
+          item
+          container
+          xs={3}
+          sx={{ padding: "256px 32px", border: "1px solid blue" }}
+        >
           <Box>
             <Typography
               variant="h3"
