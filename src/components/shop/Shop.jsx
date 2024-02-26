@@ -65,7 +65,7 @@ export default function Shop() {
     {
       id: "123",
       name: "vanilla-cupcakes",
-      title: "vanilla cupcakes",
+      title: "vanilla cupcakesss",
       description:
         "Made with a moist vanilla cake and topped with a smooth vanilla buttercream frosting.",
       image: "https://place-hold.it/1000/666",
