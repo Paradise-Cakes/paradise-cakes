@@ -1,6 +1,7 @@
 import React from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, Button } from "@mui/material";
 import Carousel from "../carousel/Carousel";
+import _ from "lodash";
 
 export default function DessertDetail() {
   const name = "Carrot Cake";
@@ -36,7 +37,7 @@ export default function DessertDetail() {
         <Grid
           item
           container
-          xs={3}
+          xs={4}
           sx={{ padding: "256px 32px", border: "1px solid blue" }}
         >
           <Box>
@@ -47,9 +48,57 @@ export default function DessertDetail() {
             >
               {name.toUpperCase()}
             </Typography>
-            <Typography variant="body1" component="div">
-              {description}
+            <Typography component="div">{description}</Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "1rem", marginTop: "8px", marginBottom: "8px" }}
+            >
+              Select Size:
             </Typography>
+            <Grid container justifyContent="space-between">
+              <Grid item xs={5.8}>
+                <Button
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "18px",
+                    display: "block",
+                    border: "1px solid black",
+                    textAlign: "left",
+                    color: "black",
+                    height: "60px",
+                    width: "100%",
+                  }}
+                >
+                  <Box sx={{ marginBottom: "-8px", marginTop: "-8px" }}>
+                    <b>6 inch</b> - $30
+                  </Box>
+                  <Box sx={{ marginBottom: "-8px", marginTop: "-8px" }}>
+                    Serves groups of 8-12
+                  </Box>
+                </Button>
+              </Grid>
+              <Grid item xs={5.8}>
+                <Button
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "18px",
+                    display: "block",
+                    border: "1px solid black",
+                    textAlign: "left",
+                    color: "black",
+                    height: "60px",
+                    width: "100%",
+                  }}
+                >
+                  <Box sx={{ marginBottom: "-8px", marginTop: "-8px" }}>
+                    <b>10 inch</b> - $100
+                  </Box>
+                  <Box sx={{ marginBottom: "-8px", marginTop: "-8px" }}>
+                    Serves groups of 20-30
+                  </Box>
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         </Grid>
       </Grid>

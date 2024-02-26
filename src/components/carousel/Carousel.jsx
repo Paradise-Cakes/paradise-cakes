@@ -7,8 +7,8 @@ export default function Carousel({ images }) {
   return (
     <Grid item container justifyContent={"center"}>
       <Grid
-        item
         xs={1.5}
+        item
         sx={{
           display: "flex",
           justifyContent: "start",
