@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import "./NavLink.css";
+import { useNavigate } from "react-router-dom";
 
-export default function NavLink({ title, drawerItems, children }) {
+export default function NavLink({ title, drawerItems, buttons }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleMouseEnter = () => {
     setDrawerOpen(true);
   };
@@ -67,7 +68,31 @@ export default function NavLink({ title, drawerItems, children }) {
               marginTop: "32px",
             }}
           >
-            {children}
+            {buttons?.map((button, index) => (
+              <Button
+                key={index}
+                variant="contained"
+                sx={{
+                  width: "160px",
+                  height: "40px",
+                  backgroundColor: "#DDAFAC",
+                  color: "white",
+                  border: "1px solid #DDAFAC",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "#DDAFAC",
+                    color: "white",
+                    border: "1px solid #DDAFAC",
+                  },
+                }}
+                onClick={() => {
+                  navigate(button.link);
+                  setDrawerOpen(false);
+                }}
+              >
+                {button.title}
+              </Button>
+            ))}
           </div>
         </div>
       )}
