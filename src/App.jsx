@@ -7,6 +7,7 @@ import Shop from "./components/shop/Shop";
 import { DrawerProvider } from "./context/DrawerContext";
 import { Route, Routes } from "react-router-dom";
 import DessertDetail from "./components/dessert/DessertDetail";
+import CreateDessert from "./components/admin/CreateDessert";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Shop />} />
           <Route path="/about" element={<About />} />
+          <Route path="/admin/create-dessert" element={<CreateDessert />} />
           <Route
             path="/desserts/cakes/:dessertId/:dessertName"
             element={<DessertDetail />}
