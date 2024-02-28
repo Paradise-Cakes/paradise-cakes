@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Carousel from "../carousel/Carousel";
 import _ from "lodash";
+import QuantityButton from "../extras/QuantityButton";
 
 export default function DessertDetail() {
   const name = "Carrot Cake";
@@ -35,11 +36,12 @@ export default function DessertDetail() {
         border: "4px solid black",
       }}
       justifyContent="space-evenly"
+      spacing={3}
     >
-      <Grid item xs={7}>
+      <Grid item md={7}>
         <Carousel images={images} />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item md={4}>
         <Box>
           <Typography variant="h4" component="div" sx={{ fontWeight: "bold" }}>
             {name.toUpperCase()}
@@ -110,6 +112,26 @@ export default function DessertDetail() {
               </Box>
             </ToggleButton>
           </ToggleButtonGroup>
+        </Box>
+        <Box>
+          <Grid
+            container
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            <Grid item xs={3.25}>
+              <QuantityButton />
+            </Grid>
+            <Grid item xs={8}>
+              <Button
+                variant="contained"
+                color={"secondary"}
+                sx={{ width: "100%" }}
+              >
+                Add to Cart
+              </Button>
+            </Grid>
+          </Grid>
         </Box>
       </Grid>
     </Grid>

@@ -1,36 +1,37 @@
 import React from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, Hidden } from "@mui/material";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
-import { height } from "@mui/system";
 
 export default function Carousel({ images }) {
   return (
     <Grid item container justifyContent={"space-around"}>
-      <Grid
-        xs={1.5}
-        item
-        sx={{
-          display: "flex",
-          justifyContent: "start",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {images.map((img, index) => (
-          <img
-            key={index}
-            src={img}
-            style={{
-              borderRadius: "12px",
-              margin: "8px",
-              maxWidth: "100%",
-              height: "auto",
-            }}
-            width={"100px"}
-            height={"100px"}
-          />
-        ))}
-      </Grid>
+      <Hidden mdDown>
+        <Grid
+          xs={1.5}
+          item
+          sx={{
+            display: "flex",
+            justifyContent: "start",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              style={{
+                borderRadius: "12px",
+                margin: "8px",
+                maxWidth: "100%",
+                height: "auto",
+              }}
+              width={"100px"}
+              height={"100px"}
+            />
+          ))}
+        </Grid>
+      </Hidden>
       <Grid item sx={{ position: "relative" }}>
         <img
           src={images[0]}
