@@ -7,6 +7,10 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import Carousel from "../carousel/Carousel";
 import _ from "lodash";
 import QuantityButton from "../extras/QuantityButton";
@@ -26,6 +30,9 @@ export default function DessertDetail() {
   const handleSize = (event, newSize) => {
     setSize(newSize);
   };
+  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(30);
+  const [tabValue, setTabValue] = useState("details");
 
   return (
     <Grid
@@ -46,7 +53,22 @@ export default function DessertDetail() {
           <Typography variant="h4" component="div" sx={{ fontWeight: "bold" }}>
             {name.toUpperCase()}
           </Typography>
-          <Typography component="div">{description}</Typography>
+          <Box>
+            <TabContext value={tabValue}>
+              <Box>
+                <TabList onChange={(event, newValue) => setTabValue(newValue)}>
+                  <Tab label="Details" value="details" />
+                  <Tab label="Ingredients" value="ingredients" />
+                </TabList>
+                <TabPanel value="details">
+                  <Typography component="div">{description}</Typography>
+                </TabPanel>
+                <TabPanel value="ingredients">
+                  <Typography component="div">Cake ingredients here</Typography>
+                </TabPanel>
+              </Box>
+            </TabContext>
+          </Box>
           <Typography
             variant="h6"
             sx={{ fontSize: "1rem", marginTop: "8px", marginBottom: "8px" }}
@@ -54,6 +76,7 @@ export default function DessertDetail() {
             Select Size:
           </Typography>
           <ToggleButtonGroup
+            className="toggle-button-size"
             sx={{
               width: "100%",
               display: "flex",
@@ -74,6 +97,7 @@ export default function DessertDetail() {
                 width: "49%",
               }}
               value={"6 inch"}
+              onClick={() => setPrice(30)}
             >
               <Box
                 sx={{
@@ -104,6 +128,7 @@ export default function DessertDetail() {
                 width: "49%",
               }}
               value={"10 inch"}
+              onClick={() => setPrice(100)}
             >
               <Box
                 sx={{
@@ -132,7 +157,7 @@ export default function DessertDetail() {
             justifyContent={"space-between"}
           >
             <Grid item xs={3.25}>
-              <QuantityButton />
+              <QuantityButton quantity={quantity} setQuantity={setQuantity} />
             </Grid>
             <Grid item xs={8}>
               <Button
@@ -140,7 +165,7 @@ export default function DessertDetail() {
                 color={"secondary"}
                 sx={{ width: "100%" }}
               >
-                Add to Cart
+                Add to Cart - ${price * quantity}
               </Button>
             </Grid>
           </Grid>

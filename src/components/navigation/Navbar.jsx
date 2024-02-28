@@ -6,9 +6,11 @@ import { Button, Container, Toolbar, Hidden } from "@mui/material";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { DrawerContext } from "../../context/DrawerContext";
 import NavLink from "./NavLink";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
+  const navigate = useNavigate();
 
   return (
     <AppBar
@@ -32,7 +34,7 @@ export default function Navbar() {
           }}
         >
           <Hidden mdDown implementation="css">
-            <div
+            <Box
               style={{
                 textAlign: "center",
                 display: "block",
@@ -47,8 +49,9 @@ export default function Navbar() {
                   cursor: "pointer",
                   userSelect: "none",
                 }}
+                onClick={() => navigate("/")}
               />
-            </div>
+            </Box>
             <Box
               sx={{
                 marginLeft: "auto",

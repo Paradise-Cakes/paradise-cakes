@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Button, Box } from "@mui/material";
 import { MdAdd, MdRemove } from "react-icons/md";
 
-export default function QuantityButton() {
-  const [quantity, setQuantity] = useState(1);
-
+export default function QuantityButton({ quantity, setQuantity }) {
   const handleIncrement = () => {
     setQuantity((prev) => prev + 1);
   };

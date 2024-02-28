@@ -7,6 +7,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { DrawerContext } from "../../context/DrawerContext";
+import { Link } from "react-router-dom";
 
 export default function NavSideDrawer() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
@@ -41,6 +42,8 @@ export default function NavSideDrawer() {
       <List sx={{ paddingTop: "0" }}>
         <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
           <ListItemButton
+            component={Link}
+            to="/"
             sx={{
               borderBottom: "1px dashed #DDAFAC",
               paddingTop: "16px",

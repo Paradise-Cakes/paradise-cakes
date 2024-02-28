@@ -20,7 +20,3 @@ body {
 .MuiToggleButton-root {
   border: 1px solid gray !important;
 }
-
-.Mui-selected  {
-  border: 1px solid black !important;
-}
