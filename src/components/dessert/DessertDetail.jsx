@@ -71,7 +71,7 @@ export default function DessertDetail() {
                 textAlign: "left",
                 color: "black",
                 height: "60px",
-                width: "48%",
+                width: "49%",
               }}
               value={"6 inch"}
             >
@@ -95,7 +95,7 @@ export default function DessertDetail() {
                 textAlign: "left",
                 color: "black",
                 height: "60px",
-                width: "48%",
+                width: "49%",
               }}
               value={"10 inch"}
             >
