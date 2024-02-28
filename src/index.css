@@ -16,3 +16,11 @@ body {
 .css-udn1tz-MuiContainer-root {
   padding: 0 !important;
 }
+
+.MuiToggleButton-root {
+  border: 1px solid gray !important;
+}
+
+.Mui-selected  {
+  border: 1px solid black !important;
+}

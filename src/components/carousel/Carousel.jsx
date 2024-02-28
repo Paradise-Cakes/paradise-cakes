@@ -5,7 +5,7 @@ import { height } from "@mui/system";
 
 export default function Carousel({ images }) {
   return (
-    <Grid item container justifyContent={"center"}>
+    <Grid item container justifyContent={"space-around"}>
       <Grid
         xs={1.5}
         item
