@@ -83,7 +83,13 @@ export default function DessertDetail() {
               >
                 <b>6 inch</b> - $30
               </Box>
-              <Box sx={{ marginBottom: "-8px", marginTop: "-8px" }}>
+              <Box
+                sx={{
+                  marginBottom: "-8px",
+                  marginTop: "-8px",
+                  fontSize: "14px",
+                }}
+              >
                 Serves groups of 8-12
               </Box>
             </ToggleButton>
@@ -107,7 +113,13 @@ export default function DessertDetail() {
               >
                 <b>10 inch</b> - $100
               </Box>
-              <Box sx={{ marginBottom: "-8px", marginTop: "-8px" }}>
+              <Box
+                sx={{
+                  marginBottom: "-8px",
+                  marginTop: "-8px",
+                  fontSize: "14px",
+                }}
+              >
                 Serves groups of 20-30
               </Box>
             </ToggleButton>
