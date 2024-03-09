@@ -1,11 +1,11 @@
-.div {
+.NavLink {
   overflow: hidden;
   transition: height 1s ease;
   position: absolute;
   top: 98px;
   left: 0;
   right: 0;
-  background-color: rgb(205, 203, 188, 0.8);
+  background-color: #E6EFEECC;
   backdrop-filter: blur(6px);
 }
 

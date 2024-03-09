@@ -1,9 +1,5 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import ImageSlider from "../image-slider/ImageSlider";
 import Dessert from "../dessert/Dessert";
@@ -51,11 +47,10 @@ export default function Section({ title, description, items }) {
             justifyContent={"center"}
           >
             <Dessert
-              id={item.id}
-              name={item.name}
-              title={item.title}
-              description={item.description}
-              image={item.image}
+              id={item?.id}
+              name={item?.name}
+              description={item?.description}
+              image={item?.image}
             />
           </Grid>
         ))}

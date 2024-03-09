@@ -50,8 +50,8 @@ export default function DessertDetail() {
       </Grid>
       <Grid item md={4}>
         <Box>
-          <Typography variant="h4" component="div" sx={{ fontWeight: "bold" }}>
-            {name.toUpperCase()}
+          <Typography variant="h4" fontWeight={1000}>
+            {name?.toUpperCase()}
           </Typography>
           <Box>
             <TabContext value={tabValue}>
@@ -160,11 +160,7 @@ export default function DessertDetail() {
               <QuantityButton quantity={quantity} setQuantity={setQuantity} />
             </Grid>
             <Grid item xs={8}>
-              <Button
-                variant="contained"
-                color={"secondary"}
-                sx={{ width: "100%" }}
-              >
+              <Button variant="contained" sx={{ width: "100%" }}>
                 Add to Cart - ${price * quantity}
               </Button>
             </Grid>

@@ -6,12 +6,12 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function Dessert({ id, name, title, description, image }) {
+export default function Dessert({ id, name, description, image }) {
   const navigate = useNavigate();
+  console.log(name);
   return (
     <Card
       key={id}
-      name={name}
       sx={{
         borderRadius: "12px",
         margin: { xs: "0 auto", xxl: "24px 8px" },
@@ -38,7 +38,7 @@ export default function Dessert({ id, name, title, description, image }) {
           }}
         >
           <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
-            {title.toUpperCase()}
+            {name?.toUpperCase()}
           </Typography>
           <Typography
             variant="body2"

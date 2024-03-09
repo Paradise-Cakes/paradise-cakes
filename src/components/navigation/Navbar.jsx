@@ -16,7 +16,7 @@ export default function Navbar() {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "#CDCBBC",
+        backgroundColor: "#9CAFAF",
       }}
     >
       <Container

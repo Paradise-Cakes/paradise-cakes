@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import "./NavLink.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function NavLink({ title, drawerItems, buttons }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -15,22 +16,26 @@ export default function NavLink({ title, drawerItems, buttons }) {
   };
 
   return (
-    <div>
+    <Box>
       <Button
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         sx={{
-          color: "#fff",
+          color: "#555555",
           position: "static",
           width: "125px",
           padding: "6px",
+          fontWeight: "bolder",
+          fontSize: "14px",
         }}
+        component={Link}
+        to="/"
       >
         {title}
       </Button>
       {drawerItems && (
         <div
-          className={"div " + (drawerOpen ? "active" : "inactive")}
+          className={"NavLink " + (drawerOpen ? "active" : "inactive")}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -54,7 +59,9 @@ export default function NavLink({ title, drawerItems, buttons }) {
                 }}
               >
                 <img src={item.img} />
-                <div>{item.itemName}</div>
+                <div style={{ color: "#555555", fontWeight: "bolder" }}>
+                  {item.itemName}
+                </div>
               </div>
             ))}
           </div>
@@ -75,15 +82,6 @@ export default function NavLink({ title, drawerItems, buttons }) {
                 sx={{
                   width: "160px",
                   height: "40px",
-                  backgroundColor: "#DDAFAC",
-                  color: "white",
-                  border: "1px solid #DDAFAC",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#DDAFAC",
-                    color: "white",
-                    border: "1px solid #DDAFAC",
-                  },
                 }}
                 onClick={() => {
                   navigate(button.link);
@@ -96,6 +94,6 @@ export default function NavLink({ title, drawerItems, buttons }) {
           </div>
         </div>
       )}
-    </div>
+    </Box>
   );
 }
