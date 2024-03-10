@@ -6,9 +6,8 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function Dessert({ id, name, description, image }) {
+export default function Dessert({ id, name, description, image_url }) {
   const navigate = useNavigate();
-  console.log(name);
   return (
     <Card
       key={id}
@@ -20,13 +19,14 @@ export default function Dessert({ id, name, description, image }) {
         flexDirection: { xxl: "column" },
         justifyContent: { xxl: "center" },
         alignItems: { xxl: "center" },
+        boxShadow: 3,
       }}
       onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}
     >
       <CardActionArea>
         <CardMedia
           component="img"
-          image={image}
+          image={image_url}
           sx={{ maxWidth: "100%", height: "auto" }}
         />
         <CardContent

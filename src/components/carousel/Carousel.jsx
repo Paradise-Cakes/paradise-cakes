@@ -16,10 +16,10 @@ export default function Carousel({ images }) {
             alignItems: "center",
           }}
         >
-          {images.map((img, index) => (
+          {images?.map((i, index) => (
             <img
-              key={index}
-              src={img}
+              key={i.uri}
+              src={i.uri}
               style={{
                 borderRadius: "12px",
                 margin: "8px",
@@ -33,11 +33,14 @@ export default function Carousel({ images }) {
         </Grid>
       </Hidden>
       <Grid item sx={{ position: "relative" }}>
-        <img
-          src={images[0]}
-          style={{ borderRadius: "12px", maxWidth: "100%", height: "auto" }}
-          alt="cake"
-        />
+        {images && (
+          <img
+            src={images[0]?.uri}
+            style={{ borderRadius: "12px", maxWidth: "100%", height: "auto" }}
+            alt="cake"
+          />
+        )}
+
         <RiArrowRightSLine
           style={{
             width: "64px",

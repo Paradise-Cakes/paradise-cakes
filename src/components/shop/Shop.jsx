@@ -2,14 +2,11 @@ import React from "react";
 import Section from "./Section";
 import Grid from "@mui/material/Grid";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
+import _ from "lodash";
 
 export default function Shop() {
-  const getCakeDessertsQuery = useGetDesserts("cake");
-  const getCupcakeDessertsQuery = useGetDesserts("cupcake");
-
-  const { data: cakes, isLoading: isGetCakesLoading } = getCakeDessertsQuery;
-  const { data: cupcakes, isLoading: isGetCupcakesLoading } =
-    getCupcakeDessertsQuery;
+  const getDessertsQuery = useGetDesserts();
+  const { data: desserts, isLoading: isGetDessertsLoading } = getDessertsQuery;
 
   return (
     <Grid
@@ -25,12 +22,12 @@ export default function Shop() {
         title="cakes"
         description="Indulge in my delectable selection of freshly baked cakes, made with
           the finest ingredients and crafted with care."
-        items={cakes}
+        items={_.filter(desserts?.desserts, { dessert_type: "cake" })}
       />
       <Section
         title="cupcakes"
         description="Explore our delectable cupcake collection: From classic flavors to creative concoctions, each bite is a miniature delight."
-        items={cupcakes}
+        items={_.filter(desserts?.desserts, { dessert_type: "cupcake" })}
       />
     </Grid>
   );

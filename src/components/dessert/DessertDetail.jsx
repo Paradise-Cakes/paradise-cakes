@@ -14,24 +14,19 @@ import TabPanel from "@mui/lab/TabPanel";
 import Carousel from "../carousel/Carousel";
 import _ from "lodash";
 import QuantityButton from "../extras/QuantityButton";
+import { useGetDessertById } from "../../hooks/dessert/DessertHook";
+import { useParams } from "react-router-dom";
 
 export default function DessertDetail() {
-  const name = "Carrot Cake";
-  const description =
-    "A delightful, moist dessert bursting with the natural sweetness of carrots, complemented by warm spices and a luscious cream cheese frosting.";
-  const images = [
-    "https://place-hold.it/600/666",
-    "https://place-hold.it/600/666",
-    "https://place-hold.it/600/666",
-    "https://place-hold.it/600/666",
-  ];
+  const { dessertId } = useParams();
+  const getDessertQuery = useGetDessertById(dessertId);
+  const { data: dessert, isLoading: isGetDessertLoading } = getDessertQuery;
 
   const [size, setSize] = useState("6 inch");
   const handleSize = (event, newSize) => {
     setSize(newSize);
   };
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(30);
   const [tabValue, setTabValue] = useState("details");
 
   return (
@@ -40,18 +35,17 @@ export default function DessertDetail() {
       sx={{
         px: { xs: 2, lg: 0, xl: 0, xxl: 32 },
         py: { xs: 12, md: 18 },
-        border: "4px solid black",
       }}
       justifyContent="space-evenly"
       spacing={3}
     >
       <Grid item md={7}>
-        <Carousel images={images} />
+        <Carousel images={dessert?.dessert?.image_urls} />
       </Grid>
       <Grid item md={4}>
         <Box>
           <Typography variant="h4" fontWeight={1000}>
-            {name?.toUpperCase()}
+            {dessert?.dessert?.name.toUpperCase()}
           </Typography>
           <Box>
             <TabContext value={tabValue}>
@@ -61,7 +55,9 @@ export default function DessertDetail() {
                   <Tab label="Ingredients" value="ingredients" />
                 </TabList>
                 <TabPanel value="details">
-                  <Typography component="div">{description}</Typography>
+                  <Typography component="div">
+                    {dessert?.dessert?.description}
+                  </Typography>
                 </TabPanel>
                 <TabPanel value="ingredients">
                   <Typography component="div">Cake ingredients here</Typography>
@@ -161,7 +157,7 @@ export default function DessertDetail() {
             </Grid>
             <Grid item xs={8}>
               <Button variant="contained" sx={{ width: "100%" }}>
-                Add to Cart - ${price * quantity}
+                Add to Cart - ${dessert?.dessert?.price * quantity}
               </Button>
             </Grid>
           </Grid>

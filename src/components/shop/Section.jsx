@@ -36,9 +36,9 @@ export default function Section({ title, description, items }) {
         justifyContent={"left"}
         sx={{ display: { xxl: "none" } }}
       >
-        {items?.map((item, index) => (
+        {items?.map((item) => (
           <Grid
-            key={index}
+            key={item?.dessert_id}
             item
             sx={{ textAlign: "center" }}
             xs={12}
@@ -47,10 +47,10 @@ export default function Section({ title, description, items }) {
             justifyContent={"center"}
           >
             <Dessert
-              id={item?.id}
+              id={item?.dessert_id}
               name={item?.name}
               description={item?.description}
-              image={item?.image}
+              image_url={item?.image_urls[0].uri}
             />
           </Grid>
         ))}

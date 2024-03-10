@@ -26,12 +26,12 @@ export default function ImageSlider({ items }) {
     >
       {items?.map((item) => (
         <Dessert
-          key={item.id}
-          id={item.id}
+          key={item.dessert_id}
           name={item.name}
           title={item.title}
+          price={item.price}
           description={item.description}
-          image={item.image}
+          image_url={item.image}
         />
       ))}
     </Box>
