@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Typography,
@@ -12,7 +12,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Carousel from "../carousel/Carousel";
-import _ from "lodash";
+import _, { set } from "lodash";
 import QuantityButton from "../extras/QuantityButton";
 import { useGetDessertById } from "../../hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
@@ -23,11 +23,30 @@ export default function DessertDetail() {
   const { data: dessert, isLoading: isGetDessertLoading } = getDessertQuery;
 
   const [size, setSize] = useState("6 inch");
-  const handleSize = (event, newSize) => {
-    setSize(newSize);
+
+  const handleSizeChange = (event, newSize) => {
+    if (newSize !== null) {
+      setSize(newSize);
+    }
   };
+
   const [quantity, setQuantity] = useState(1);
   const [tabValue, setTabValue] = useState("details");
+  const [price, setPrice] = useState(0);
+
+  const calculatePrice = (currentSize, currentQuantity) => {
+    let basePrice = dessert?.dessert?.price || 0;
+    if (currentSize === "10 inch") {
+      return (basePrice + 50) * currentQuantity;
+    }
+    return basePrice * currentQuantity;
+  };
+
+  useEffect(() => {
+    if (dessert) {
+      setPrice(calculatePrice(size, quantity));
+    }
+  }, [dessert, size, quantity]);
 
   return (
     <Grid
@@ -80,7 +99,7 @@ export default function DessertDetail() {
             }}
             exclusive
             value={size}
-            onChange={handleSize}
+            onChange={handleSizeChange}
           >
             <ToggleButton
               sx={{
@@ -93,7 +112,6 @@ export default function DessertDetail() {
                 width: "49%",
               }}
               value={"6 inch"}
-              onClick={() => setPrice(30)}
             >
               <Box
                 sx={{
@@ -101,7 +119,7 @@ export default function DessertDetail() {
                   marginTop: "-8px",
                 }}
               >
-                <b>6 inch</b> - $30
+                <b>6 inch</b> - ${dessert?.dessert?.price}
               </Box>
               <Box
                 sx={{
@@ -124,7 +142,6 @@ export default function DessertDetail() {
                 width: "49%",
               }}
               value={"10 inch"}
-              onClick={() => setPrice(100)}
             >
               <Box
                 sx={{
@@ -132,7 +149,7 @@ export default function DessertDetail() {
                   marginTop: "-8px",
                 }}
               >
-                <b>10 inch</b> - $100
+                <b>10 inch</b> - ${dessert?.dessert?.price + 50}
               </Box>
               <Box
                 sx={{
@@ -157,7 +174,7 @@ export default function DessertDetail() {
             </Grid>
             <Grid item xs={8}>
               <Button variant="contained" sx={{ width: "100%" }}>
-                Add to Cart - ${dessert?.dessert?.price * quantity}
+                Add to Cart - ${price}
               </Button>
             </Grid>
           </Grid>
