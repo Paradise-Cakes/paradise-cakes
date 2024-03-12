@@ -31,7 +31,7 @@ export default function ImageSlider({ items }) {
           title={item.title}
           price={item.price}
           description={item.description}
-          image_url={item.image}
+          image_url={item?.image_urls[0].uri}
         />
       ))}
     </Box>

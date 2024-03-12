@@ -4,7 +4,7 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 export default function Carousel({ images }) {
   return (
-    <Grid item container justifyContent={"space-around"}>
+    <Grid item container>
       <Hidden mdDown>
         <Grid
           xs={1.5}
@@ -14,6 +14,7 @@ export default function Carousel({ images }) {
             justifyContent: "start",
             flexDirection: "column",
             alignItems: "center",
+            marginRight: "24px",
           }}
         >
           {images?.map((i, index) => (

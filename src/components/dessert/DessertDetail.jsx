@@ -52,16 +52,17 @@ export default function DessertDetail() {
     <Grid
       container
       sx={{
-        px: { xs: 2, lg: 0, xl: 0, xxl: 32 },
         py: { xs: 12, md: 18 },
+        border: "1px solid black",
+        maxWidth: "fit-content",
       }}
-      justifyContent="space-evenly"
-      spacing={3}
+      justifyContent="center"
+      spacing={12}
     >
-      <Grid item md={7}>
+      <Grid item sx={{ border: "1px solid red" }}>
         <Carousel images={dessert?.dessert?.image_urls} />
       </Grid>
-      <Grid item md={4}>
+      <Grid xs={4} item my={6} sx={{ border: "1px solid red" }}>
         <Box>
           <Typography variant="h4" fontWeight={1000}>
             {dessert?.dessert?.name.toUpperCase()}

@@ -20,6 +20,7 @@ export default function QuantityButton({ quantity, setQuantity }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        width: "fit-content",
       }}
       my={2}
     >
