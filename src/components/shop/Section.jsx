@@ -16,7 +16,7 @@ export default function Section({ title, description, items }) {
             sx={{
               paddingBottom: "8px",
               paddingTop: "24px",
-              textAlign: { md: "center", lg: "left" },
+              textAlign: { xs: "center", lg: "left" },
             }}
           >
             {title.toUpperCase()}

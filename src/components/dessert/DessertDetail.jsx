@@ -56,7 +56,7 @@ export default function DessertDetail() {
       }}
       maxWidth={"false"}
     >
-      <Grid container justifyContent="center" columnSpacing={12} rowSpacing={0}>
+      <Grid container justifyContent="center">
         <Grid item xs={12} sm={9} md={7}>
           <Carousel images={dessert?.dessert?.image_urls} />
         </Grid>

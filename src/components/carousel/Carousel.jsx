@@ -1,13 +1,15 @@
 import React from "react";
-import { Grid, Typography, Box, Hidden } from "@mui/material";
+import { Grid, Typography, Box, Hidden, useTheme } from "@mui/material";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 export default function Carousel({ images }) {
+  const theme = useTheme();
   return (
     <Grid item container>
-      <Hidden mdDown>
+      <Hidden lgDown>
         <Grid
-          md={2}
+          md={1.5}
+          lg={2}
           item
           sx={{
             display: "flex",
@@ -37,7 +39,8 @@ export default function Carousel({ images }) {
         item
         sx={{ position: "relative" }}
         xs={12}
-        md={9}
+        lg={7.5}
+        md={12}
         justifyContent="center"
       >
         {images && (
@@ -55,7 +58,7 @@ export default function Carousel({ images }) {
             position: "absolute",
             top: "50%",
             right: "0px",
-            color: "#CDCBBC",
+            color: theme.palette.primary.main,
           }}
         />
         <RiArrowLeftSLine
@@ -65,7 +68,7 @@ export default function Carousel({ images }) {
             position: "absolute",
             top: "50%",
             left: "0px",
-            color: "#CDCBBC",
+            color: theme.palette.primary.main,
           }}
         />
       </Grid>
