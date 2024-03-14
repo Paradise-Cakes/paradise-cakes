@@ -5,9 +5,9 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 export default function Carousel({ images }) {
   return (
     <Grid item container>
-      <Hidden lgDown>
+      <Hidden mdDown>
         <Grid
-          xs={1.5}
+          md={2}
           item
           sx={{
             display: "flex",
@@ -33,7 +33,13 @@ export default function Carousel({ images }) {
           ))}
         </Grid>
       </Hidden>
-      <Grid item sx={{ position: "relative" }} xs={12} justifyContent="center">
+      <Grid
+        item
+        sx={{ position: "relative" }}
+        xs={12}
+        md={9}
+        justifyContent="center"
+      >
         {images && (
           <img
             src={images[0]?.uri}

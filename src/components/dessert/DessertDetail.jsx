@@ -52,16 +52,15 @@ export default function DessertDetail() {
   return (
     <Container
       sx={{
-        border: "1px solid red",
         maxWidth: "1800px",
       }}
       maxWidth={"false"}
     >
-      <Grid container justifyContent="center" spacing={12}>
-        <Grid item md={12} lg={6}>
+      <Grid container justifyContent="center" columnSpacing={12} rowSpacing={0}>
+        <Grid item xs={12} sm={9} md={7}>
           <Carousel images={dessert?.dessert?.image_urls} />
         </Grid>
-        <Grid item my={6} md={7} lg={6}>
+        <Grid item my={6} xs={10} md={7} lg={4}>
           <Box>
             <Typography variant="h4" fontWeight={1000}>
               {dessert?.dessert?.name.toUpperCase()}
@@ -173,10 +172,10 @@ export default function DessertDetail() {
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <Grid item xs={3.25}>
+              <Grid item xs={2}>
                 <QuantityButton quantity={quantity} setQuantity={setQuantity} />
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={7}>
                 <Button variant="contained" sx={{ width: "100%" }}>
                   Add to Cart - ${price}
                 </Button>
