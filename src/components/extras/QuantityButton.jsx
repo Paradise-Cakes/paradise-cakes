@@ -16,7 +16,6 @@ export default function QuantityButton({ quantity, setQuantity }) {
   return (
     <Box
       sx={{
-        border: "1px solid black",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

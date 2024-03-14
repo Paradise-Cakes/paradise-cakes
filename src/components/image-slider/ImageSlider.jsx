@@ -8,7 +8,7 @@ export default function ImageSlider({ items }) {
       sx={{
         overflowX: "auto",
         position: "relative",
-        display: { xs: "none", xxl: "flex" },
+        display: { xs: "none" },
         width: "100%",
         flex: "1 0 auto",
         "&::-webkit-scrollbar": {

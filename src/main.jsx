@@ -16,16 +16,15 @@ const THEME = createTheme({
     fontWeightRegular: 400,
     fontWeightMedium: 500,
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 1300,
-      lg: 1612,
-      xl: 1936,
-      xxl: 2525,
-    },
-  },
+  // breakpoints: {
+  //   values: {
+  //     xs: 0,
+  //     sm: 600,
+  //     md: 1300,
+  //     lg: 1612,
+  //     xl: 1936,
+  //   },
+  // },
   palette: {
     primary: {
       main: "#9CAFAF",

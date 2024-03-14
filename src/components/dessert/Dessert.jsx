@@ -13,12 +13,6 @@ export default function Dessert({ id, name, description, image_url }) {
       key={id}
       sx={{
         borderRadius: "12px",
-        margin: { xs: "0 auto", xxl: "24px 8px" },
-        minWidth: { xxl: "500px" },
-        display: { xxl: "flex" },
-        flexDirection: { xxl: "column" },
-        justifyContent: { xxl: "center" },
-        alignItems: { xxl: "center" },
         boxShadow: 3,
       }}
       onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}

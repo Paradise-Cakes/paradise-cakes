@@ -16,6 +16,7 @@ import _, { set } from "lodash";
 import QuantityButton from "../extras/QuantityButton";
 import { useGetDessertById } from "../../hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
+import { Container } from "@mui/system";
 
 export default function DessertDetail() {
   const { dessertId } = useParams();
@@ -49,138 +50,141 @@ export default function DessertDetail() {
   }, [dessert, size, quantity]);
 
   return (
-    <Grid
-      container
+    <Container
       sx={{
-        py: { xs: 12, md: 18 },
-        border: "1px solid black",
-        maxWidth: "fit-content",
+        border: "1px solid red",
+        maxWidth: "1800px",
       }}
-      justifyContent="center"
-      spacing={12}
+      maxWidth={"false"}
     >
-      <Grid item sx={{ border: "1px solid red" }}>
-        <Carousel images={dessert?.dessert?.image_urls} />
-      </Grid>
-      <Grid xs={4} item my={6} sx={{ border: "1px solid red" }}>
-        <Box>
-          <Typography variant="h4" fontWeight={1000}>
-            {dessert?.dessert?.name.toUpperCase()}
-          </Typography>
+      <Grid container justifyContent="center" spacing={12}>
+        <Grid item md={12} lg={6}>
+          <Carousel images={dessert?.dessert?.image_urls} />
+        </Grid>
+        <Grid item my={6} md={7} lg={6}>
           <Box>
-            <TabContext value={tabValue}>
-              <Box>
-                <TabList onChange={(event, newValue) => setTabValue(newValue)}>
-                  <Tab label="Details" value="details" />
-                  <Tab label="Ingredients" value="ingredients" />
-                </TabList>
-                <TabPanel value="details">
-                  <Typography component="div">
-                    {dessert?.dessert?.description}
-                  </Typography>
-                </TabPanel>
-                <TabPanel value="ingredients">
-                  <Typography component="div">Cake ingredients here</Typography>
-                </TabPanel>
-              </Box>
-            </TabContext>
+            <Typography variant="h4" fontWeight={1000}>
+              {dessert?.dessert?.name.toUpperCase()}
+            </Typography>
+            <Box>
+              <TabContext value={tabValue}>
+                <Box>
+                  <TabList
+                    onChange={(event, newValue) => setTabValue(newValue)}
+                  >
+                    <Tab label="Details" value="details" />
+                    <Tab label="Ingredients" value="ingredients" />
+                  </TabList>
+                  <TabPanel value="details">
+                    <Typography component="div">
+                      {dessert?.dessert?.description}
+                    </Typography>
+                  </TabPanel>
+                  <TabPanel value="ingredients">
+                    <Typography component="div">
+                      Cake ingredients here
+                    </Typography>
+                  </TabPanel>
+                </Box>
+              </TabContext>
+            </Box>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "1rem", marginTop: "8px", marginBottom: "8px" }}
+            >
+              Select Size:
+            </Typography>
+            <ToggleButtonGroup
+              className="toggle-button-size"
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+              exclusive
+              value={size}
+              onChange={handleSizeChange}
+            >
+              <ToggleButton
+                sx={{
+                  textTransform: "none",
+                  fontSize: "18px",
+                  display: "block",
+                  textAlign: "left",
+                  color: "black",
+                  height: "60px",
+                  width: "49%",
+                }}
+                value={"6 inch"}
+              >
+                <Box
+                  sx={{
+                    marginBottom: "-8px",
+                    marginTop: "-8px",
+                  }}
+                >
+                  <b>6 inch</b> - ${dessert?.dessert?.price}
+                </Box>
+                <Box
+                  sx={{
+                    marginBottom: "-8px",
+                    marginTop: "-8px",
+                    fontSize: "14px",
+                  }}
+                >
+                  Serves groups of 8-12
+                </Box>
+              </ToggleButton>
+              <ToggleButton
+                sx={{
+                  textTransform: "none",
+                  fontSize: "18px",
+                  display: "block",
+                  textAlign: "left",
+                  color: "black",
+                  height: "60px",
+                  width: "49%",
+                }}
+                value={"10 inch"}
+              >
+                <Box
+                  sx={{
+                    marginBottom: "-8px",
+                    marginTop: "-8px",
+                  }}
+                >
+                  <b>10 inch</b> - ${dessert?.dessert?.price + 50}
+                </Box>
+                <Box
+                  sx={{
+                    marginBottom: "-8px",
+                    marginTop: "-8px",
+                    fontSize: "14px",
+                  }}
+                >
+                  Serves groups of 20-30
+                </Box>
+              </ToggleButton>
+            </ToggleButtonGroup>
           </Box>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: "1rem", marginTop: "8px", marginBottom: "8px" }}
-          >
-            Select Size:
-          </Typography>
-          <ToggleButtonGroup
-            className="toggle-button-size"
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-            exclusive
-            value={size}
-            onChange={handleSizeChange}
-          >
-            <ToggleButton
-              sx={{
-                textTransform: "none",
-                fontSize: "18px",
-                display: "block",
-                textAlign: "left",
-                color: "black",
-                height: "60px",
-                width: "49%",
-              }}
-              value={"6 inch"}
+          <Box>
+            <Grid
+              container
+              alignItems={"center"}
+              justifyContent={"space-between"}
             >
-              <Box
-                sx={{
-                  marginBottom: "-8px",
-                  marginTop: "-8px",
-                }}
-              >
-                <b>6 inch</b> - ${dessert?.dessert?.price}
-              </Box>
-              <Box
-                sx={{
-                  marginBottom: "-8px",
-                  marginTop: "-8px",
-                  fontSize: "14px",
-                }}
-              >
-                Serves groups of 8-12
-              </Box>
-            </ToggleButton>
-            <ToggleButton
-              sx={{
-                textTransform: "none",
-                fontSize: "18px",
-                display: "block",
-                textAlign: "left",
-                color: "black",
-                height: "60px",
-                width: "49%",
-              }}
-              value={"10 inch"}
-            >
-              <Box
-                sx={{
-                  marginBottom: "-8px",
-                  marginTop: "-8px",
-                }}
-              >
-                <b>10 inch</b> - ${dessert?.dessert?.price + 50}
-              </Box>
-              <Box
-                sx={{
-                  marginBottom: "-8px",
-                  marginTop: "-8px",
-                  fontSize: "14px",
-                }}
-              >
-                Serves groups of 20-30
-              </Box>
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
-        <Box>
-          <Grid
-            container
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
-            <Grid item xs={3.25}>
-              <QuantityButton quantity={quantity} setQuantity={setQuantity} />
+              <Grid item xs={3.25}>
+                <QuantityButton quantity={quantity} setQuantity={setQuantity} />
+              </Grid>
+              <Grid item xs={8}>
+                <Button variant="contained" sx={{ width: "100%" }}>
+                  Add to Cart - ${price}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <Button variant="contained" sx={{ width: "100%" }}>
-                Add to Cart - ${price}
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 }

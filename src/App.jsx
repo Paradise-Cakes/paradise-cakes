@@ -9,12 +9,18 @@ import { Route, Routes } from "react-router-dom";
 import DessertDetail from "./components/dessert/DessertDetail";
 import CreateDessert from "./components/admin/CreateDessert";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Container } from "@mui/system";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Grid container justifyContent="center" alignItems="center">
+    <Container
+      sx={{
+        my: { xs: 12, sm: 12, lg: 24 },
+      }}
+      maxWidth={"false"}
+    >
       <QueryClientProvider client={queryClient}>
         <DrawerProvider drawerOpen={false}>
           <Navbar />
@@ -30,7 +36,7 @@ function App() {
           </Routes>
         </DrawerProvider>
       </QueryClientProvider>
-    </Grid>
+    </Container>
   );
 }
 
