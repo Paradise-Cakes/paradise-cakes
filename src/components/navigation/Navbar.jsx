@@ -6,14 +6,14 @@ import { Container, Toolbar, Hidden } from "@mui/material";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { BsCart2 } from "react-icons/bs";
 import { DrawerContext } from "../../context/DrawerContext";
+import { CartContext } from "../../context/CartContext";
 import NavLink from "./NavLink";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "@emotion/react";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
+  const { setCartOpen } = useContext(CartContext);
   const navigate = useNavigate();
-  const theme = useTheme();
 
   return (
     <AppBar
@@ -134,6 +134,7 @@ export default function Navbar() {
                 width: "30px",
                 height: "30px",
               }}
+              onClick={() => setCartOpen(true)}
             />
           </Box>
         </Toolbar>

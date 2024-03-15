@@ -1,5 +1,5 @@
 html {
-  background-color: #E6EFEE;
+  background-color: #e6efee;
 }
 
 html * {
@@ -21,10 +21,21 @@ body {
   border: 1px solid #555555 !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #292929
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #292929;
 }
 
-p, li, td, th, span, a, div {
-  color: #555555
+p,
+li,
+td,
+th,
+span,
+a,
+div {
+  color: #555555;
 }

@@ -50,7 +50,6 @@ export default function Carousel({ images }) {
             alt="cake"
           />
         )}
-
         <RiArrowRightSLine
           style={{
             width: "64px",

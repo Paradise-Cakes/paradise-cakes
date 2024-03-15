@@ -41,6 +41,14 @@ const THEME = createTheme({
       main: "#DDAFAC",
       contrastText: "#000000",
     },
+    dark: {
+      main: "#292929",
+      contrastText: "#FFFFFF",
+    },
+    light: {
+      main: "#E6EFEE",
+      contrastText: "#000000",
+    },
   },
   // components: {
   //   MuiButton: {
