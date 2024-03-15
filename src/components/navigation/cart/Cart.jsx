@@ -31,8 +31,11 @@ export default function Cart() {
       anchor="right"
       open={cartOpen}
       onClose={toggleCart(false)}
+      sx={{
+        position: "relative",
+      }}
     >
-      <Container sx={{ width: "450px" }}>
+      <Container sx={{ width: { xs: "100vw", sm: "450px" } }}>
         <Box
           px={3}
           py={2}
@@ -40,7 +43,6 @@ export default function Cart() {
             display: "inline-flex",
             alignItems: "center",
             width: "100%",
-            position: "relative",
           }}
         >
           <CgClose
@@ -60,8 +62,11 @@ export default function Cart() {
               borderBottom: `4px solid ${theme.palette.dark.main}`,
               width: "80%",
               position: "absolute",
-              left: "50%",
-              transform: "translate(-50%, 0)",
+              top: "50px",
+              right: 0,
+              left: 0,
+              marginRight: "auto",
+              marginLeft: "auto",
             }}
           ></Box>
         </Box>
