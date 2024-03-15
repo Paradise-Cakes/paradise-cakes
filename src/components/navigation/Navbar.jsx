@@ -2,15 +2,18 @@ import React, { useContext } from "react";
 import AppBarLogo from "../../assets/brand.svg";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { Button, Container, Toolbar, Hidden } from "@mui/material";
+import { Container, Toolbar, Hidden } from "@mui/material";
 import { CgMenu, CgClose } from "react-icons/cg";
+import { BsCart2 } from "react-icons/bs";
 import { DrawerContext } from "../../context/DrawerContext";
 import NavLink from "./NavLink";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   return (
     <AppBar
@@ -119,6 +122,20 @@ export default function Navbar() {
               />
             </div>
           </Hidden>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "25%",
+              right: "1%",
+            }}
+          >
+            <BsCart2
+              style={{
+                width: "30px",
+                height: "30px",
+              }}
+            />
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
