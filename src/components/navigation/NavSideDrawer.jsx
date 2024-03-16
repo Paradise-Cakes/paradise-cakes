@@ -39,7 +39,7 @@ export default function NavSideDrawer() {
         },
       }}
       sx={{
-        top: "114px",
+        top: { xs: "110px", sm: "114px" },
       }}
     >
       <List sx={{ paddingTop: "0" }}>
