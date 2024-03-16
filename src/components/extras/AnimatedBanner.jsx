@@ -1,38 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Box, useTheme } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-
-const useStyles = makeStyles((theme) => ({
-  banner: {
-    position: "relative",
-    height: "50px",
-    overflow: "hidden",
-    backgroundColor: theme.palette.dark.main,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  message: {
-    position: "absolute",
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    transition: "transform 0.5s ease-in-out",
-    transform: "translateY(100%)",
-    color: "white",
-  },
-  messageEnter: {
-    transform: "translateY(0)",
-  },
-  messageExit: {
-    transform: "translateY(-200%)",
-  },
-}));
 
 export default function AnimatedBanner({ messages, cycleTime = 5000 }) {
   const [index, setIndex] = useState(0);
-  const classes = useStyles();
+  const theme = useTheme();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,22 +11,41 @@ export default function AnimatedBanner({ messages, cycleTime = 5000 }) {
     }, cycleTime);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [cycleTime, messages.length]);
 
   return (
-    <Box className={classes.banner}>
+    <Box
+      sx={{
+        position: "relative",
+        height: "50px",
+        overflow: "hidden",
+        backgroundColor: theme.palette.dark.main,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {messages.map((message, idx) => (
         <Typography
           key={idx}
           variant="h6"
           component="div"
-          className={`${classes.message} ${
-            idx === index
-              ? classes.messageEnter
-              : idx === (index - 1 + messages.length) % messages.length
-              ? classes.messageExit
-              : ""
-          }`}
+          sx={{
+            position: "absolute",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            transition: "transform 0.5s ease-in-out",
+            transform: "translateY(100%)",
+            color: "white",
+            ...(idx === index && {
+              transform: "translateY(0)",
+            }),
+            ...(idx === (index - 1 + messages.length) % messages.length && {
+              transform: "translateY(-200%)",
+            }),
+          }}
         >
           {message}
         </Typography>
