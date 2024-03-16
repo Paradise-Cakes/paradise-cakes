@@ -17,7 +17,6 @@
     "@fontsource/playfair-display": "^5.0.16",
     "@mui/lab": "^5.0.0-alpha.166",
     "@mui/material": "^5.14.14",
-    "@mui/styles": "^5.15.13",
     "@mui/system": "^5.14.14",
     "axios": "^1.6.7",
     "formik": "^2.4.5",
