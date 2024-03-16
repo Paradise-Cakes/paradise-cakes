@@ -10,6 +10,7 @@ import { CartContext } from "../../context/CartContext";
 import NavLink from "./NavLink";
 import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
+import AnimatedBanner from "../extras/AnimatedBanner";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
@@ -24,6 +25,12 @@ export default function Navbar() {
         backgroundColor: "#9CAFAF",
       }}
     >
+      <AnimatedBanner
+        messages={[
+          "Located in the Austin, TX area",
+          "Free shipping on orders $100+",
+        ]}
+      />
       <Container
         maxWidth={"false"}
         sx={{
@@ -151,8 +158,6 @@ export default function Navbar() {
                 }}
               />
             )}
-            {/* {console.log(cartItems.length)}
-            {console.log(cartItems)} */}
           </Box>
         </Toolbar>
       </Container>
