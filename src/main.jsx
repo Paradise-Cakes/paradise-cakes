@@ -50,53 +50,35 @@ const THEME = createTheme({
       contrastText: "#000000",
     },
   },
-  // components: {
-  //   MuiButton: {
-  //     styleOverrides: {
-  //       root: {
-  //         fontSize: "1rem",
-  //       },
-  //       // Primary variant
-  //       containedPrimary: {
-  //         backgroundColor: "#9CAFAF",
-  //         "&:hover": {
-  //           backgroundColor: "#8b9b9b",
-  //         },
-  //       },
-  //       // Alternate Primary variant
-  //       containedPrimaryAlt: {
-  //         backgroundColor: "#CBD8D8",
-  //         "&:hover": {
-  //           backgroundColor: "#b2c2c3",
-  //         },
-  //         color: "#000000", // Override text color for better contrast
-  //       },
-  //       // Secondary variant
-  //       containedSecondary: {
-  //         backgroundColor: "#C0D7D8",
-  //         "&:hover": {
-  //           backgroundColor: "#afc8c9",
-  //         },
-  //       },
-  //       // First Alternate Secondary variant
-  //       containedSecondaryAlt1: {
-  //         backgroundColor: "#CDCBBC",
-  //         "&:hover": {
-  //           backgroundColor: "#b8bdb1",
-  //         },
-  //       },
-  //       // Second Alternate Secondary variant
-  //       containedSecondaryAlt2: {
-  //         backgroundColor: "#DDAFAC",
-  //         "&:hover": {
-  //           backgroundColor: "#c99a93",
-  //         },
-  //       },
-  //       // Text and outlined variants can be added here similarly,
-  //       // using the same color scheme as above for consistency.
-  //     },
-  //   },
-  // },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        outlinedPrimary: {
+          borderColor: "#9CAFAF", // Example for primary variant
+          "&:hover": {
+            backgroundColor: "#9CAFAF",
+            color: "#FFFFFF",
+          },
+        },
+        outlinedSecondary: {
+          borderColor: "#CBD8D8", // Adjust as needed
+        },
+        // Add other color variants here following the same pattern
+        outlinedSuccess: {
+          borderColor: "#A3D8A3", // For success variant
+        },
+        outlinedError: {
+          borderColor: "#DDAFAC", // For error variant
+        },
+        outlinedWarning: {
+          borderColor: "#D8BFA3", // For warning variant
+        },
+        outlinedInfo: {
+          borderColor: "#A3BFD8", // For info variant
+        },
+      },
+    },
+  },
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(

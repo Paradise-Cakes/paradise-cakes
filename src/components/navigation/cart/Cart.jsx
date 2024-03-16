@@ -90,49 +90,24 @@ export default function Cart() {
             }}
           />
         </Box>
-        <Box
-          display="flex"
-          flexDirection={"column"}
-          justifyContent={"space-between"}
-          height={"100%"}
-        >
-          {cartItems?.map((item, index) => (
-            <Box
-              display="flex"
-              justifyContent={"center"}
-              key={item.dessert.dessert_id}
-            >
-              <CartItem item={item} />
-            </Box>
-          ))}
-          {cartItems.length === 0 && (
+        {cartItems.length > 0 && (
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"space-between"}
+            sx={{ height: "100%" }}
+          >
             <Box>
-              <Typography
-                variant="h6"
-                fontWeight={1000}
-                fontSize="1rem"
-                sx={{ textAlign: "center" }}
-              >
-                Your cart is empty, start shopping now!
-              </Typography>
-              <Button
-                color="dark"
-                variant="contained"
-                sx={{
-                  margin: "16px auto",
-                  display: "block",
-                  width: "fit-content",
-                }}
-                onClick={() => {
-                  navigate("/");
-                  setCartOpen(false);
-                }}
-              >
-                Shop All
-              </Button>
+              {cartItems?.map((item, index) => (
+                <Box
+                  display="flex"
+                  justifyContent={"center"}
+                  key={item.dessert.dessert_id}
+                >
+                  <CartItem item={item} />
+                </Box>
+              ))}
             </Box>
-          )}
-          {cartItems.length > 0 && (
             <Box
               display="flex"
               padding="1rem"
@@ -209,8 +184,36 @@ export default function Cart() {
                 ENTER ZIP CODE
               </Button>
             </Box>
-          )}
-        </Box>
+          </Box>
+        )}
+
+        {cartItems.length === 0 && (
+          <Box>
+            <Typography
+              variant="h6"
+              fontWeight={1000}
+              fontSize="1rem"
+              sx={{ textAlign: "center" }}
+            >
+              Your cart is empty, start shopping now!
+            </Typography>
+            <Button
+              color="dark"
+              variant="contained"
+              sx={{
+                margin: "16px auto",
+                display: "block",
+                width: "fit-content",
+              }}
+              onClick={() => {
+                navigate("/");
+                setCartOpen(false);
+              }}
+            >
+              Shop All
+            </Button>
+          </Box>
+        )}
       </Container>
     </Drawer>
   );
