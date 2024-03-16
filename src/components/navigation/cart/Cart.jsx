@@ -10,10 +10,11 @@ import {
 import { useContext } from "react";
 import { CartContext } from "../../../context/CartContext";
 import { CgClose } from "react-icons/cg";
+import CartItem from "./CartIem";
 
 export default function Cart() {
   const theme = useTheme();
-  const { cartOpen, setCartOpen } = useContext(CartContext);
+  const { cartOpen, setCartOpen, cartItems } = useContext(CartContext);
 
   const toggleCart = (open) => (event) => {
     if (
@@ -33,6 +34,11 @@ export default function Cart() {
       onClose={toggleCart(false)}
       sx={{
         position: "relative",
+      }}
+      PaperProps={{
+        sx: {
+          overflowX: "hidden",
+        },
       }}
     >
       <Container sx={{ width: { xs: "100vw", sm: "450px" } }}>
@@ -68,8 +74,17 @@ export default function Cart() {
               marginRight: "auto",
               marginLeft: "auto",
             }}
-          ></Box>
+          />
         </Box>
+        {cartItems?.map((item, index) => (
+          <Box
+            display="flex"
+            justifyContent={"center"}
+            key={item.dessert.dessert_id}
+          >
+            {item.quantity > 0 && <CartItem item={item} />}
+          </Box>
+        ))}
       </Container>
     </Drawer>
   );

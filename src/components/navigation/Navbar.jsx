@@ -2,18 +2,20 @@ import React, { useContext } from "react";
 import AppBarLogo from "../../assets/brand.svg";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { Container, Toolbar, Hidden } from "@mui/material";
+import { Container, Toolbar, Hidden, useTheme } from "@mui/material";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { BsCart2 } from "react-icons/bs";
 import { DrawerContext } from "../../context/DrawerContext";
 import { CartContext } from "../../context/CartContext";
 import NavLink from "./NavLink";
 import { useNavigate } from "react-router-dom";
+import { GoDotFill } from "react-icons/go";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
-  const { setCartOpen } = useContext(CartContext);
+  const { setCartOpen, cartItems } = useContext(CartContext);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   return (
     <AppBar
@@ -136,6 +138,18 @@ export default function Navbar() {
               }}
               onClick={() => setCartOpen(true)}
             />
+            {cartItems.length > 0 && (
+              <GoDotFill
+                style={{
+                  position: "absolute",
+                  width: "25px",
+                  height: "25px",
+                  color: `${theme.palette.error.main}`,
+                  top: "-4px",
+                  right: "-8px",
+                }}
+              />
+            )}
           </Box>
         </Toolbar>
       </Container>

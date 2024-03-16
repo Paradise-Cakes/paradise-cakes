@@ -25,7 +25,7 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <DrawerProvider drawerOpen={false}>
-          <CartProvider cartOpen={false}>
+          <CartProvider cartOpen={false} cartItems={[]}>
             <Navbar />
             <NavSideDrawer />
             <Cart />

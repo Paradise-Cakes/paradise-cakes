@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Grid,
   Typography,
@@ -17,11 +17,13 @@ import QuantityButton from "../extras/QuantityButton";
 import { useGetDessertById } from "../../hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
+import { CartContext } from "../../context/CartContext";
 
 export default function DessertDetail() {
   const { dessertId } = useParams();
   const getDessertQuery = useGetDessertById(dessertId);
   const { data: dessert, isLoading: isGetDessertLoading } = getDessertQuery;
+  const { cartItems, setCartItems, setCartOpen } = useContext(CartContext);
 
   const [size, setSize] = useState("6 inch");
 
@@ -41,6 +43,30 @@ export default function DessertDetail() {
       return (basePrice + 50) * currentQuantity;
     }
     return basePrice * currentQuantity;
+  };
+
+  const handleAddToCart = () => {
+    const cartItem = {
+      dessert: dessert?.dessert,
+      quantity: quantity,
+    };
+
+    if (_.find(cartItems, { dessert: dessert?.dessert })) {
+      // If the item is already in the cart, update the quantity
+      setCartItems((prev) => {
+        return prev.map((item) => {
+          if (item.dessert === dessert?.dessert) {
+            return { ...item, quantity: item.quantity + quantity };
+          }
+          return item;
+        });
+      });
+    } else {
+      setCartItems((prev) => {
+        return [...prev, cartItem];
+      });
+    }
+    setCartOpen(true);
   };
 
   useEffect(() => {
@@ -176,7 +202,11 @@ export default function DessertDetail() {
                 <QuantityButton quantity={quantity} setQuantity={setQuantity} />
               </Grid>
               <Grid item xs={7}>
-                <Button variant="contained" sx={{ width: "100%" }}>
+                <Button
+                  variant="contained"
+                  sx={{ width: "100%" }}
+                  onClick={handleAddToCart}
+                >
                   Add to Cart - ${price}
                 </Button>
               </Grid>
