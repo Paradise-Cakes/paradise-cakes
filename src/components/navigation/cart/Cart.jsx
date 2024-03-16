@@ -55,7 +55,7 @@ export default function Cart() {
         },
       }}
     >
-      <Container sx={{ height: "80%", width: { xs: "100vw", sm: "450px" } }}>
+      <Container sx={{ height: "90%", width: { xs: "100vw", sm: "450px" } }}>
         <Box
           px={3}
           py={2}
@@ -198,6 +198,16 @@ export default function Cart() {
                   </Typography>
                 </Box>
               </Box>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderRadius: "1rem",
+                  padding: "10px",
+                  marginTop: "1rem",
+                }}
+              >
+                ENTER ZIP CODE
+              </Button>
             </Box>
           )}
         </Box>
