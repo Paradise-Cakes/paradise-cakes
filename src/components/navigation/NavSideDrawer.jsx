@@ -7,10 +7,13 @@ import {
   ListItemText,
 } from "@mui/material";
 import { DrawerContext } from "../../context/DrawerContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material";
 
 export default function NavSideDrawer() {
+  const theme = useTheme();
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
+  const navigate = useNavigate();
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -30,35 +33,61 @@ export default function NavSideDrawer() {
       onClose={toggleDrawer(false)}
       PaperProps={{
         sx: {
-          position: "absolute",
+          position: "relative",
           boxShadow: "none",
           width: "100%",
         },
       }}
       sx={{
-        top: "56px",
+        top: "114px",
       }}
     >
       <List sx={{ paddingTop: "0" }}>
-        <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
+        <ListItem
+          sx={{ paddingTop: "0", paddingBottom: "0", width: "fit-content" }}
+        >
           <ListItemButton
-            component={Link}
-            to="/"
+            onClick={() => {
+              navigate("/");
+              setDrawerOpen(false);
+            }}
             sx={{
-              borderBottom: "1px dashed #DDAFAC",
               paddingTop: "16px",
               paddingBottom: "16px",
+              "& .MuiTypography-root": {
+                fontWeight: "1000",
+              },
+              "&:hover": {
+                backgroundColor: "white",
+                "& .MuiTypography-root": {
+                  color: theme.palette.primary.main,
+                },
+              },
             }}
           >
             <ListItemText primary="Shop" />
           </ListItemButton>
         </ListItem>
-        <ListItem sx={{ paddingTop: "0", paddingBottom: "0" }}>
+        <ListItem
+          sx={{
+            paddingTop: "0",
+            paddingBottom: "0",
+            width: "fit-content",
+          }}
+        >
           <ListItemButton
             sx={{
-              borderBottom: "1px dashed #DDAFAC",
               paddingTop: "16px",
               paddingBottom: "16px",
+              "& .MuiTypography-root": {
+                fontWeight: "1000",
+              },
+              "&:hover": {
+                backgroundColor: "white",
+                "& .MuiTypography-root": {
+                  color: theme.palette.primary.main,
+                },
+              },
             }}
           >
             <ListItemText primary="About Me" />
