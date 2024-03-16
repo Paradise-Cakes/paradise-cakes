@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import QuantityButton from "../../extras/QuantityButton";
 import { CgClose } from "react-icons/cg";

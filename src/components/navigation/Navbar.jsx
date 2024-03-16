@@ -135,6 +135,7 @@ export default function Navbar() {
               style={{
                 width: "30px",
                 height: "30px",
+                cursor: "pointer",
               }}
               onClick={() => setCartOpen(true)}
             />
@@ -150,6 +151,8 @@ export default function Navbar() {
                 }}
               />
             )}
+            {/* {console.log(cartItems.length)}
+            {console.log(cartItems)} */}
           </Box>
         </Toolbar>
       </Container>
