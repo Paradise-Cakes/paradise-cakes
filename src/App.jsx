@@ -19,7 +19,7 @@ function App() {
   return (
     <Container
       sx={{
-        my: { xs: 12, sm: 18, lg: 20 },
+        my: { xs: 16, sm: 16, md: 24 },
       }}
       maxWidth={"false"}
     >
