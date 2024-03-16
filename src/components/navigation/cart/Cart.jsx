@@ -6,13 +6,19 @@ import {
   Container,
   Box,
   useTheme,
+  Button,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import { useContext } from "react";
 import { CartContext } from "../../../context/CartContext";
 import { CgClose } from "react-icons/cg";
+import { IoLocationOutline } from "react-icons/io5";
 import CartItem from "./CartIem";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
+  const navigate = useNavigate();
   const theme = useTheme();
   const { cartOpen, setCartOpen, cartItems } = useContext(CartContext);
 
@@ -24,6 +30,14 @@ export default function Cart() {
       return;
     }
     setCartOpen(open);
+  };
+
+  const calculateCartSubtotal = () => {
+    let total = 0;
+    cartItems.forEach((item) => {
+      total += item.quantity * item.dessert.price;
+    });
+    return total;
   };
 
   return (
@@ -41,7 +55,7 @@ export default function Cart() {
         },
       }}
     >
-      <Container sx={{ width: { xs: "100vw", sm: "450px" } }}>
+      <Container sx={{ height: "80%", width: { xs: "100vw", sm: "450px" } }}>
         <Box
           px={3}
           py={2}
@@ -76,15 +90,117 @@ export default function Cart() {
             }}
           />
         </Box>
-        {cartItems?.map((item, index) => (
-          <Box
-            display="flex"
-            justifyContent={"center"}
-            key={item.dessert.dessert_id}
-          >
-            {item.quantity > 0 && <CartItem item={item} />}
-          </Box>
-        ))}
+        <Box
+          display="flex"
+          flexDirection={"column"}
+          justifyContent={"space-between"}
+          height={"100%"}
+        >
+          {cartItems?.map((item, index) => (
+            <Box
+              display="flex"
+              justifyContent={"center"}
+              key={item.dessert.dessert_id}
+            >
+              <CartItem item={item} />
+            </Box>
+          ))}
+          {cartItems.length === 0 && (
+            <Box>
+              <Typography
+                variant="h6"
+                fontWeight={1000}
+                fontSize="1rem"
+                sx={{ textAlign: "center" }}
+              >
+                Your cart is empty, start shopping now!
+              </Typography>
+              <Button
+                color="dark"
+                variant="contained"
+                sx={{
+                  margin: "16px auto",
+                  display: "block",
+                  width: "fit-content",
+                }}
+                onClick={() => {
+                  navigate("/");
+                  setCartOpen(false);
+                }}
+              >
+                Shop All
+              </Button>
+            </Box>
+          )}
+          {cartItems.length > 0 && (
+            <Box
+              display="flex"
+              padding="1rem"
+              flexDirection={"column"}
+              sx={{
+                borderTop: `1px solid ${theme.palette.light.main}`,
+                borderRadius: "0.5rem",
+                boxShadow: "20px 0 20px 0 rgba(0,0,0,0.1)",
+              }}
+              position={"relative"}
+            >
+              <Box
+                display="flex"
+                justifyContent={"space-between"}
+                width="100%"
+                alignItems="center"
+              >
+                <Typography variant="h6" fontSize="1rem">
+                  Delivery Zip
+                </Typography>
+                <TextField
+                  sx={{ width: "120px" }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <IoLocationOutline />
+                      </InputAdornment>
+                    ),
+                  }}
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]*",
+                  }}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    e.target.value = value.replace(/[^0-9]/g, "");
+                  }}
+                />
+              </Box>
+              <Box marginTop={"1rem"}>
+                <Box
+                  display={"flex"}
+                  justifyContent={"space-between"}
+                  alignItems={"center"}
+                >
+                  <Typography variant="h6" fontSize={"1rem"}>
+                    SHIPPING + HANDLING
+                  </Typography>
+                  <Typography variant="h6" fontSize={"1rem"}>
+                    TBD
+                  </Typography>
+                </Box>
+                <Box
+                  display={"flex"}
+                  justifyContent={"space-between"}
+                  alignItems={"center"}
+                >
+                  <Typography variant="h6" fontSize={"1rem"}>
+                    SUBTOTAL
+                  </Typography>
+                  <Typography variant="h6" fontSize={"1rem"}>
+                    ${calculateCartSubtotal().toFixed(2)}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          )}
+        </Box>
       </Container>
     </Drawer>
   );
