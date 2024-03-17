@@ -7,8 +7,8 @@ export const useGetDessertById = (dessert_id) => {
   });
 };
 
-export const useGetDesserts = () => {
-  return useQuery(["desserts"], () => getDesserts(), {
+export const useGetDesserts = (dessert_type) => {
+  return useQuery(["desserts", dessert_type], () => getDesserts(dessert_type), {
     select: (data) => data.data,
   });
 };

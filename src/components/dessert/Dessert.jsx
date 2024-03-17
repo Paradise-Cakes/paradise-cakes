@@ -3,10 +3,16 @@ import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, Box, Skeleton } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function Dessert({ id, name, description, image_url }) {
+export default function Dessert({
+  id,
+  name,
+  description,
+  image_url,
+  isCoverImageLoaded,
+}) {
   const navigate = useNavigate();
   return (
     <Card
@@ -18,11 +24,15 @@ export default function Dessert({ id, name, description, image_url }) {
       onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}
     >
       <CardActionArea>
-        <CardMedia
-          component="img"
-          image={image_url}
-          sx={{ maxWidth: "100%", height: "auto" }}
-        />
+        {isCoverImageLoaded ? (
+          <CardMedia
+            component="img"
+            image={image_url}
+            sx={{ maxWidth: "100%", height: "auto" }}
+          />
+        ) : (
+          <Skeleton variant="rectangular" width="100%" sx={{ pt: "100%" }} />
+        )}
         <CardContent
           sx={{
             fontWeight: "800",

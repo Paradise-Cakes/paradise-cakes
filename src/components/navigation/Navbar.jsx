@@ -28,7 +28,7 @@ export default function Navbar() {
       <AnimatedBanner
         messages={[
           "Located in the Austin, TX area",
-          "Free shipping on orders $100+",
+          "Free delivery on orders $100+",
         ]}
       />
       <Container
