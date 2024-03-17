@@ -51,7 +51,7 @@ export default function DessertDetail() {
       ...dessert?.dessert,
       id: dessertId,
       quantity: quantity,
-      price: price,
+      price: price / quantity,
       size: size,
     };
     const existingItem = cartItems.find(

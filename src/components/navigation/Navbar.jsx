@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import AppBarLogo from "../../assets/brand.svg";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { Container, Toolbar, Hidden, useTheme } from "@mui/material";
+import { Container, Toolbar, Hidden, useTheme, Button } from "@mui/material";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { BsCart2 } from "react-icons/bs";
 import { DrawerContext } from "../../context/DrawerContext";
@@ -136,15 +136,15 @@ export default function Navbar() {
               position: "absolute",
               top: "25%",
               right: "1%",
+              cursor: "pointer",
             }}
+            onClick={() => setCartOpen(true)}
           >
             <BsCart2
               style={{
                 width: "30px",
                 height: "30px",
-                cursor: "pointer",
               }}
-              onClick={() => setCartOpen(true)}
             />
             {cartItems.length > 0 && (
               <GoDotFill
