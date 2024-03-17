@@ -3,7 +3,11 @@ import { Button, Box } from "@mui/material";
 import { MdAdd, MdRemove } from "react-icons/md";
 import { CartContext } from "../../context/CartContext";
 
-export default function QuantityButton({ quantity, setQuantity, cartItem }) {
+export default function QuantityButton({
+  quantity,
+  setQuantity,
+  cartItem = null,
+}) {
   const { setCartItems } = useContext(CartContext);
 
   const handleIncrement = () => {
@@ -12,10 +16,7 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
     if (cartItem) {
       setCartItems((prev) => {
         return prev.map((item) => {
-          if (
-            item.dessert.dessert_id === cartItem.dessert.dessert_id &&
-            item.size === cartItem.size
-          ) {
+          if (item.id === cartItem.id && item.size === cartItem.size) {
             return { ...item, quantity: item.quantity + 1 };
           }
           return item;
@@ -29,13 +30,10 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
       setQuantity((prev) => prev - 1);
     }
     // Update the quantity in the cart
-    if (cartItem && quantity > 1) {
+    if (cartItem) {
       setCartItems((prev) => {
         return prev.map((item) => {
-          if (
-            item.dessert.dessert_id === cartItem.dessert.dessert_id &&
-            item.size === cartItem.size
-          ) {
+          if (item.id === cartItem.id && item.size === cartItem.size) {
             return { ...item, quantity: item.quantity - 1 };
           }
           return item;
@@ -48,9 +46,7 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
     if (quantity === 0) {
       setCartItems((prev) => {
         return prev.filter(
-          (item) =>
-            item.dessert.dessert_id !== cartItem.dessert.dessert_id ||
-            item.size !== cartItem.size
+          (item) => item.id !== cartItem.id || item.size !== cartItem.size
         );
       });
     }

@@ -4,18 +4,16 @@ import QuantityButton from "../../extras/QuantityButton";
 import { CgClose } from "react-icons/cg";
 import { CartContext } from "../../../context/CartContext";
 
-export default function CartItem({ item }) {
+export default function CartItem({ id, name, size, price, itemQuantity }) {
   const theme = useTheme();
-  const [quantity, setQuantity] = useState(item.quantity);
+  const [quantity, setQuantity] = useState(itemQuantity);
   const { setCartItems } = useContext(CartContext);
 
   // remove the item from the cart that matches the size and dessert
   const handleRemove = () => {
     setCartItems((prev) => {
       return prev.filter(
-        (cartItem) =>
-          cartItem.dessert.dessert_id !== item.dessert.dessert_id ||
-          cartItem.size !== item.size
+        (cartItem) => cartItem.id !== id || cartItem.size !== size
       );
     });
   };
@@ -47,17 +45,16 @@ export default function CartItem({ item }) {
       </Box>
       <Box>
         <Typography variant="h6" fontWeight={1000} fontSize="1rem">
-          {item.dessert.name} - {item.size}
+          {name} - {size}
         </Typography>
         <Typography variant="h6" fontSize="1rem">
-          ${item.dessert.price * quantity}
+          ${price * quantity}
         </Typography>
         <QuantityButton
           quantity={quantity}
           setQuantity={setQuantity}
-          cartItem={item}
+          cartItem={{ id, name, size, price }}
         />
-        {console.log(quantity)}
         <CgClose
           style={{
             cursor: "pointer",

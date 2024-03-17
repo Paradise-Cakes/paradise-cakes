@@ -48,24 +48,19 @@ export default function DessertDetail() {
 
   const handleAddToCart = () => {
     const cartItem = {
-      dessert: dessert?.dessert,
+      ...dessert?.dessert,
+      id: dessertId,
       quantity: quantity,
       price: price,
+      size: size,
     };
-
     const existingItem = cartItems.find(
-      (item) =>
-        item.dessert.dessert_id === dessert?.dessert?.dessert_id &&
-        item.size === size
+      (item) => item.dessert_id === dessertId && item.size === size
     );
-
     if (existingItem) {
       setCartItems((prev) => {
         return prev.map((item) => {
-          if (
-            item.dessert.dessert_id === dessert?.dessert?.dessert_id &&
-            item.size === size
-          ) {
+          if (item.dessert_id === dessertId && item.size === size) {
             return { ...item, quantity: item.quantity + quantity };
           }
           return item;
@@ -73,7 +68,7 @@ export default function DessertDetail() {
       });
     } else {
       setCartItems((prev) => {
-        return [...prev, { ...cartItem, size: size }];
+        return [...prev, cartItem];
       });
     }
     setCartOpen(true);
