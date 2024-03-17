@@ -35,7 +35,7 @@ export default function Cart() {
   const calculateCartSubtotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
-      total += item.quantity * item.dessert.price;
+      total += item.quantity * item.dessert.prices.base;
     });
     return total;
   };
@@ -102,7 +102,7 @@ export default function Cart() {
                 <Box
                   display="flex"
                   justifyContent={"center"}
-                  key={item.dessert.dessert_id}
+                  key={`${item.dessert.dessert_id} - ${index}`}
                 >
                   <CartItem item={item} />
                 </Box>

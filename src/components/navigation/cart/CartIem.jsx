@@ -9,11 +9,15 @@ export default function CartItem({ item }) {
   const [quantity, setQuantity] = useState(item.quantity);
   const { setCartItems } = useContext(CartContext);
 
+  // remove the item from the cart that matches the size and dessert
   const handleRemove = () => {
     setCartItems((prev) => {
-      return prev.filter((cartItem) => cartItem.dessert !== item.dessert);
+      return prev.filter(
+        (cartItem) =>
+          cartItem.dessert.dessert_id !== item.dessert.dessert_id ||
+          cartItem.size !== item.size
+      );
     });
-    setQuantity(0);
   };
 
   return (
@@ -43,7 +47,7 @@ export default function CartItem({ item }) {
       </Box>
       <Box>
         <Typography variant="h6" fontWeight={1000} fontSize="1rem">
-          {item.dessert.name}
+          {item.dessert.name} - {item.size}
         </Typography>
         <Typography variant="h6" fontSize="1rem">
           ${item.dessert.price * quantity}
@@ -53,6 +57,7 @@ export default function CartItem({ item }) {
           setQuantity={setQuantity}
           cartItem={item}
         />
+        {console.log(quantity)}
         <CgClose
           style={{
             cursor: "pointer",

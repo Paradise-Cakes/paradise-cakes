@@ -26,11 +26,12 @@ export default function DessertDetail() {
   const { data: dessert, isLoading: isGetDessertLoading } = getDessertQuery;
   const { cartItems, setCartItems, setCartOpen } = useContext(CartContext);
 
-  const [size, setSize] = useState("6 inch");
+  const [size, setSize] = useState();
 
   const handleSizeChange = (event, newSize) => {
     if (newSize !== null) {
       setSize(newSize);
+      setQuantity(1);
     }
   };
 
@@ -38,25 +39,33 @@ export default function DessertDetail() {
   const [tabValue, setTabValue] = useState("details");
   const [price, setPrice] = useState(0);
 
-  const calculatePrice = (currentSize, currentQuantity) => {
-    let basePrice = dessert?.dessert?.price || 0;
-    if (currentSize === "10 inch") {
-      return (basePrice + 50) * currentQuantity;
-    }
-    return basePrice * currentQuantity;
+  const calculatePrice = (quantity) => {
+    const selectedSize = dessert?.dessert?.prices.find(
+      (price) => price.size === size
+    );
+    return selectedSize?.base * quantity;
   };
 
   const handleAddToCart = () => {
     const cartItem = {
       dessert: dessert?.dessert,
       quantity: quantity,
+      price: price,
     };
 
-    if (_.find(cartItems, { dessert: dessert?.dessert })) {
-      // If the item is already in the cart, update the quantity
+    const existingItem = cartItems.find(
+      (item) =>
+        item.dessert.dessert_id === dessert?.dessert?.dessert_id &&
+        item.size === size
+    );
+
+    if (existingItem) {
       setCartItems((prev) => {
         return prev.map((item) => {
-          if (item.dessert === dessert?.dessert) {
+          if (
+            item.dessert.dessert_id === dessert?.dessert?.dessert_id &&
+            item.size === size
+          ) {
             return { ...item, quantity: item.quantity + quantity };
           }
           return item;
@@ -64,7 +73,7 @@ export default function DessertDetail() {
       });
     } else {
       setCartItems((prev) => {
-        return [...prev, cartItem];
+        return [...prev, { ...cartItem, size: size }];
       });
     }
     setCartOpen(true);
@@ -72,9 +81,15 @@ export default function DessertDetail() {
 
   useEffect(() => {
     if (dessert) {
-      setPrice(calculatePrice(size, quantity));
+      setPrice(calculatePrice(quantity));
     }
   }, [dessert, size, quantity]);
+
+  useEffect(() => {
+    if (dessert) {
+      setSize(dessert?.dessert?.prices[0].size);
+    }
+  }, [dessert]);
 
   return (
     <Container
@@ -125,78 +140,51 @@ export default function DessertDetail() {
               >
                 Select Size:
               </Typography>
-              <ToggleButtonGroup
-                className="toggle-button-size"
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-                exclusive
-                value={size}
-                onChange={handleSizeChange}
-              >
-                <ToggleButton
+              {dessert?.dessert?.prices.length > 1 && (
+                <ToggleButtonGroup
+                  className="toggle-button-size"
                   sx={{
-                    textTransform: "none",
-                    fontSize: "18px",
-                    display: "block",
-                    textAlign: "left",
-                    color: "black",
-                    height: "60px",
-                    width: "49%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
                   }}
-                  value={"6 inch"}
+                  exclusive
+                  value={size}
+                  onChange={handleSizeChange}
                 >
-                  <Box
-                    sx={{
-                      marginBottom: "-8px",
-                      marginTop: "-8px",
-                    }}
-                  >
-                    <b>6 inch</b> - ${dessert?.dessert?.price}
-                  </Box>
-                  <Box
-                    sx={{
-                      marginBottom: "-8px",
-                      marginTop: "-8px",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Serves groups of 8-12
-                  </Box>
-                </ToggleButton>
-                <ToggleButton
-                  sx={{
-                    textTransform: "none",
-                    fontSize: "18px",
-                    display: "block",
-                    textAlign: "left",
-                    color: "black",
-                    height: "60px",
-                    width: "49%",
-                  }}
-                  value={"10 inch"}
-                >
-                  <Box
-                    sx={{
-                      marginBottom: "-8px",
-                      marginTop: "-8px",
-                    }}
-                  >
-                    <b>10 inch</b> - ${dessert?.dessert?.price + 50}
-                  </Box>
-                  <Box
-                    sx={{
-                      marginBottom: "-8px",
-                      marginTop: "-8px",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Serves groups of 20-30
-                  </Box>
-                </ToggleButton>
-              </ToggleButtonGroup>
+                  {dessert?.dessert?.prices.map((price) => (
+                    <ToggleButton
+                      key={price.base}
+                      sx={{
+                        textTransform: "none",
+                        fontSize: "18px",
+                        display: "block",
+                        textAlign: "center",
+                        color: "black",
+                        height: "60px",
+                        width: "49%",
+                      }}
+                      value={price.size}
+                    >
+                      <Box
+                        sx={{
+                          marginBottom: "-8px",
+                          marginTop: "-8px",
+                        }}
+                      >
+                        <b>{price.size}</b> - ${price.base}
+                      </Box>
+                      <Box
+                        sx={{
+                          marginBottom: "-8px",
+                          marginTop: "-8px",
+                          fontSize: "14px",
+                        }}
+                      ></Box>
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+              )}
             </Box>
             <Box>
               <Grid

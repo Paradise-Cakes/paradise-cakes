@@ -12,7 +12,10 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
     if (cartItem) {
       setCartItems((prev) => {
         return prev.map((item) => {
-          if (item.dessert === cartItem.dessert) {
+          if (
+            item.dessert.dessert_id === cartItem.dessert.dessert_id &&
+            item.size === cartItem.size
+          ) {
             return { ...item, quantity: item.quantity + 1 };
           }
           return item;
@@ -29,7 +32,10 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
     if (cartItem && quantity > 1) {
       setCartItems((prev) => {
         return prev.map((item) => {
-          if (item.dessert === cartItem.dessert) {
+          if (
+            item.dessert.dessert_id === cartItem.dessert.dessert_id &&
+            item.size === cartItem.size
+          ) {
             return { ...item, quantity: item.quantity - 1 };
           }
           return item;
@@ -41,7 +47,11 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
   useEffect(() => {
     if (quantity === 0) {
       setCartItems((prev) => {
-        return prev.filter((item) => item.dessert !== cartItem.dessert);
+        return prev.filter(
+          (item) =>
+            item.dessert.dessert_id !== cartItem.dessert.dessert_id ||
+            item.size !== cartItem.size
+        );
       });
     }
   }, [quantity]);
