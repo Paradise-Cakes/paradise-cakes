@@ -66,7 +66,9 @@ export default function Section({
           >
             {title.toUpperCase()}
           </Typography>
-          <Typography sx={{ textAlign: { md: "center", lg: "left" } }}>
+          <Typography
+            sx={{ textAlign: { xs: "center", md: "center", lg: "left" } }}
+          >
             {description}
           </Typography>
         </Grid>
