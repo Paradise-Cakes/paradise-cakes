@@ -4,8 +4,14 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 export default function Carousel({ images }) {
   const theme = useTheme();
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+
+  const handleImageChange = (index) => {
+    setCurrentImageIndex(index);
+  };
+
   return (
-    <Grid item container>
+    <Grid item container sx={{ userSelect: "none" }}>
       <Hidden lgDown>
         <Grid
           md={1.5}
@@ -28,9 +34,15 @@ export default function Carousel({ images }) {
                 margin: "8px",
                 maxWidth: "100%",
                 height: "auto",
+                cursor: "pointer",
+                border:
+                  index === currentImageIndex
+                    ? `5px solid ${theme.palette.error.main}`
+                    : "",
               }}
               width={"100px"}
               height={"100px"}
+              onClick={() => handleImageChange(index)}
             />
           ))}
         </Grid>
@@ -45,7 +57,7 @@ export default function Carousel({ images }) {
       >
         {images && (
           <img
-            src={images[0]?.uri}
+            src={images[currentImageIndex]?.uri}
             style={{ borderRadius: "12px", maxWidth: "100%", height: "auto" }}
             alt="cake"
           />
@@ -58,6 +70,10 @@ export default function Carousel({ images }) {
             top: "50%",
             right: "0px",
             color: theme.palette.primary.main,
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            handleImageChange((currentImageIndex + 1) % images.length);
           }}
         />
         <RiArrowLeftSLine
@@ -68,6 +84,12 @@ export default function Carousel({ images }) {
             top: "50%",
             left: "0px",
             color: theme.palette.primary.main,
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            handleImageChange(
+              (currentImageIndex - 1 + images.length) % images.length
+            );
           }}
         />
       </Grid>
