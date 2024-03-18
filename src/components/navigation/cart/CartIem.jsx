@@ -4,7 +4,14 @@ import QuantityButton from "../../extras/QuantityButton";
 import { CgClose } from "react-icons/cg";
 import { CartContext } from "../../../context/CartContext";
 
-export default function CartItem({ id, name, size, price, itemQuantity }) {
+export default function CartItem({
+  id,
+  name,
+  size,
+  price,
+  itemQuantity,
+  coverImage,
+}) {
   const theme = useTheme();
   const [quantity, setQuantity] = useState(itemQuantity);
   const { setCartItems } = useContext(CartContext);
@@ -33,7 +40,7 @@ export default function CartItem({ id, name, size, price, itemQuantity }) {
     >
       <Box>
         <img
-          src="https://placehold.co/687"
+          src={coverImage}
           style={{
             width: "100px",
             height: "100%",

@@ -110,6 +110,7 @@ export default function Cart() {
                     size={item.size}
                     price={item.price}
                     itemQuantity={item.quantity}
+                    coverImage={item.image_urls[0].uri}
                   />
                 </Box>
               ))}
