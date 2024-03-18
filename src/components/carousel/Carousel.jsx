@@ -1,8 +1,15 @@
 import React from "react";
-import { Grid, Typography, Box, Hidden, useTheme } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Box,
+  Hidden,
+  useTheme,
+  Skeleton,
+} from "@mui/material";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
-export default function Carousel({ images }) {
+export default function Carousel({ images, areImagesLoaded }) {
   const theme = useTheme();
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
@@ -25,26 +32,35 @@ export default function Carousel({ images }) {
             marginRight: "24px",
           }}
         >
-          {images?.map((i, index) => (
-            <img
-              key={i.uri}
-              src={i.uri}
-              style={{
-                borderRadius: "12px",
-                margin: "8px",
-                maxWidth: "100%",
-                height: "auto",
-                cursor: "pointer",
-                border:
-                  index === currentImageIndex
-                    ? `5px solid ${theme.palette.error.main}`
-                    : "",
-              }}
-              width={"100px"}
-              height={"100px"}
-              onClick={() => handleImageChange(index)}
-            />
-          ))}
+          {areImagesLoaded
+            ? images?.map((i, index) => (
+                <img
+                  key={i.uri}
+                  src={i.uri}
+                  style={{
+                    borderRadius: "12px",
+                    margin: "8px",
+                    maxWidth: "100%",
+                    height: "auto",
+                    cursor: "pointer",
+                    border:
+                      index === currentImageIndex
+                        ? `5px solid ${theme.palette.error.main}`
+                        : "",
+                  }}
+                  width={"100px"}
+                  height={"100px"}
+                  onClick={() => handleImageChange(index)}
+                />
+              ))
+            : images?.map((i, index) => (
+                <Skeleton
+                  key={i.uri}
+                  variant="rectangular"
+                  width="100%"
+                  sx={{ pt: "100%", margin: "8px", borderRadius: "12px" }}
+                />
+              ))}
         </Grid>
       </Hidden>
       <Grid
@@ -55,11 +71,17 @@ export default function Carousel({ images }) {
         md={12}
         justifyContent="center"
       >
-        {images && (
+        {areImagesLoaded ? (
           <img
             src={images[currentImageIndex]?.uri}
             style={{ borderRadius: "12px", maxWidth: "100%", height: "auto" }}
             alt="cake"
+          />
+        ) : (
+          <Skeleton
+            variant="rectangular"
+            width="100%"
+            sx={{ pt: "100%", borderRadius: "12px" }}
           />
         )}
         <RiArrowRightSLine

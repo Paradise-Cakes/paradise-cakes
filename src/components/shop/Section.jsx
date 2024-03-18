@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Skeleton, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import ImageSlider from "../image-slider/ImageSlider";
 import Dessert from "../dessert/Dessert";
@@ -48,7 +48,6 @@ export default function Section({
     <Container sx={{ marginBottom: "3.5rem" }} maxWidth="false">
       <Grid
         container
-        spacing={3}
         sx={{
           paddingLeft: "3rem",
           paddingRight: "3rem",
@@ -67,7 +66,10 @@ export default function Section({
             {title.toUpperCase()}
           </Typography>
           <Typography
-            sx={{ textAlign: { xs: "center", md: "center", lg: "left" } }}
+            sx={{
+              textAlign: { xs: "center", md: "center", lg: "left" },
+              marginRight: "1.5rem",
+            }}
           >
             {description}
           </Typography>
@@ -92,8 +94,10 @@ export default function Section({
             lg={9}
             sm={12}
             sx={{
-              justifyContent: { md: "center", lg: "left" },
+              justifyContent: { md: "center", lg: "flex-start" },
+              marginTop: { sm: "0.25rem", lg: "0" },
             }}
+            spacing={5}
           >
             {items?.map((item) => (
               <Grid

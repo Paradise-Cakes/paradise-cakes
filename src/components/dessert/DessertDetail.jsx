@@ -20,11 +20,26 @@ import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
 import { CartContext } from "../../context/CartContext";
 
+// A function to preload a single image
+function preloadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = resolve;
+    img.onerror = reject;
+  });
+}
+
 export default function DessertDetail() {
   const { dessertId } = useParams();
   const getDessertQuery = useGetDessertById(dessertId);
-  const { data: dessert, isLoading: isGetDessertLoading } = getDessertQuery;
+  const {
+    data: dessert,
+    isLoading: isGetDessertLoading,
+    isSuccess: isGetDessertSuccess,
+  } = getDessertQuery;
   const { cartItems, setCartItems, setCartOpen } = useContext(CartContext);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   const [size, setSize] = useState();
 
@@ -86,6 +101,17 @@ export default function DessertDetail() {
     }
   }, [dessert]);
 
+  // Effect to preload images once data is fetched
+  useEffect(() => {
+    if (isGetDessertSuccess && dessert?.dessert?.image_urls && !imagesLoaded) {
+      Promise.all(
+        dessert?.dessert?.image_urls.map((img) => preloadImage(img.uri))
+      )
+        .then(() => setImagesLoaded(true))
+        .catch((error) => console.error("Error preloading images", error));
+    }
+  }, [isGetDessertSuccess, dessert]);
+
   return (
     <Container
       sx={{
@@ -100,7 +126,10 @@ export default function DessertDetail() {
       ) : (
         <Grid container justifyContent="center">
           <Grid item xs={12} sm={9} md={7}>
-            <Carousel images={dessert?.dessert?.image_urls} />
+            <Carousel
+              images={dessert?.dessert?.image_urls}
+              areImagesLoaded={imagesLoaded}
+            />
           </Grid>
           <Grid item my={6} xs={10} md={7} lg={4}>
             <Box>

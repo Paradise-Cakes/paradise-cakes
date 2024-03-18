@@ -3,8 +3,8 @@ import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea, Box, Skeleton } from "@mui/material";
-import { useParams, useNavigate } from "react-router-dom";
+import { CardActionArea, Skeleton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Dessert({
   id,
