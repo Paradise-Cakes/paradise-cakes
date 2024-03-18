@@ -7,6 +7,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   CircularProgress,
+  useTheme,
 } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -32,6 +33,7 @@ function preloadImage(src) {
 
 export default function DessertDetail() {
   const { dessertId } = useParams();
+  const theme = useTheme();
   const getDessertQuery = useGetDessertById(dessertId);
   const {
     data: dessert,
@@ -136,27 +138,18 @@ export default function DessertDetail() {
               <Typography variant="h4" fontWeight={1000}>
                 {dessert?.dessert?.name.toUpperCase()}
               </Typography>
-              <Box>
-                <TabContext value={tabValue}>
-                  <Box>
-                    <TabList
-                      onChange={(event, newValue) => setTabValue(newValue)}
-                    >
-                      <Tab label="Details" value="details" />
-                      <Tab label="Ingredients" value="ingredients" />
-                    </TabList>
-                    <TabPanel value="details">
-                      <Typography component="div">
-                        {dessert?.dessert?.description}
-                      </Typography>
-                    </TabPanel>
-                    <TabPanel value="ingredients">
-                      <Typography component="div">
-                        Cake ingredients here
-                      </Typography>
-                    </TabPanel>
-                  </Box>
-                </TabContext>
+              <Box
+                display={"flex"}
+                justifyContent="space-between"
+                width={"100%"}
+              >
+                <Box>
+                  <Button sx={{ marginRight: "1.5rem" }}>Details</Button>
+                  <Button sx={{ marginRight: "1.5rem" }}>Ingredients</Button>
+                  <Typography component="div" padding={"8px"}>
+                    {dessert?.dessert?.description}
+                  </Typography>
+                </Box>
               </Box>
               <Typography
                 variant="h6"

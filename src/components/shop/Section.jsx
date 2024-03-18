@@ -69,6 +69,7 @@ export default function Section({
             sx={{
               textAlign: { xs: "center", md: "center", lg: "left" },
               marginRight: "1.5rem",
+              marginBottom: { xs: "1.5rem", md: "0" },
             }}
           >
             {description}
