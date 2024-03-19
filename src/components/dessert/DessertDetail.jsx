@@ -8,6 +8,7 @@ import {
   ToggleButtonGroup,
   CircularProgress,
   useTheme,
+  Link,
 } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -20,6 +21,8 @@ import { useGetDessertById } from "../../hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
 import { CartContext } from "../../context/CartContext";
+import { IngredientsContext } from "../../context/IngredientsContext";
+import Ingredients from "./Ingredients";
 
 // A function to preload a single image
 function preloadImage(src) {
@@ -41,8 +44,9 @@ export default function DessertDetail() {
     isSuccess: isGetDessertSuccess,
   } = getDessertQuery;
   const { cartItems, setCartItems, setCartOpen } = useContext(CartContext);
+  const { ingredientsOpen, setIngredientsOpen } =
+    useContext(IngredientsContext);
   const [imagesLoaded, setImagesLoaded] = useState(false);
-
   const [size, setSize] = useState();
 
   const handleSizeChange = (event, newSize) => {
@@ -144,9 +148,32 @@ export default function DessertDetail() {
                 width={"100%"}
               >
                 <Box>
-                  <Button sx={{ marginRight: "1.5rem" }}>Details</Button>
-                  <Button sx={{ marginRight: "1.5rem" }}>Ingredients</Button>
-                  <Typography component="div" padding={"8px"}>
+                  <Button
+                    sx={{
+                      marginRight: "1.5rem",
+                      borderBottom: `2px solid ${theme.palette.primary.main}`,
+                      borderRadius: 0,
+                    }}
+                  >
+                    Details
+                  </Button>
+
+                  <Button
+                    sx={{
+                      marginRight: "1.5rem",
+                      borderBottom: `2px solid blue`,
+                      borderRadius: 0,
+                      color: "blue",
+                    }}
+                    onClick={() => setIngredientsOpen(true)}
+                  >
+                    Ingredients
+                  </Button>
+                  <Ingredients ingredients={dessert?.dessert?.ingredients} />
+                  <Typography
+                    component="div"
+                    sx={{ padding: "2rem 0", fontSize: "1rem" }}
+                  >
                     {dessert?.dessert?.description}
                   </Typography>
                 </Box>

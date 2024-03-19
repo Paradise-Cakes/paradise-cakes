@@ -12,6 +12,7 @@ import DessertDetail from "./components/dessert/DessertDetail";
 import CreateDessert from "./components/admin/CreateDessert";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Container } from "@mui/system";
+import { IngredientsProvider } from "./context/IngredientsContext";
 
 const queryClient = new QueryClient();
 
@@ -26,18 +27,23 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <DrawerProvider drawerOpen={false}>
           <CartProvider cartOpen={false} cartItems={[]}>
-            <Navbar />
-            <NavSideDrawer />
-            <Cart />
-            <Routes>
-              <Route path="/" element={<Shop />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/admin/create-dessert" element={<CreateDessert />} />
-              <Route
-                path="/desserts/cakes/:dessertId/:dessertName"
-                element={<DessertDetail />}
-              />
-            </Routes>
+            <IngredientsProvider ingredientsOpen={false}>
+              <Navbar />
+              <NavSideDrawer />
+              <Cart />
+              <Routes>
+                <Route path="/" element={<Shop />} />
+                <Route path="/about" element={<About />} />
+                <Route
+                  path="/admin/create-dessert"
+                  element={<CreateDessert />}
+                />
+                <Route
+                  path="/desserts/cakes/:dessertId/:dessertName"
+                  element={<DessertDetail />}
+                />
+              </Routes>
+            </IngredientsProvider>
           </CartProvider>
         </DrawerProvider>
       </QueryClientProvider>
