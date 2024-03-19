@@ -104,7 +104,7 @@ export default function Ingredients({ ingredients }) {
             Have a food allergy? Request a custom order below!
           </Typography>
           <Button color="info" variant="contained" sx={{width: "fit-content", margin: "0 auto"}}>Custom Order</Button>
-        </Box>"
+        </Box>
       </Container>
     </Drawer>
   );
