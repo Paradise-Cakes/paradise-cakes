@@ -35,7 +35,7 @@ const THEME = createTheme({
     },
     info: {
       main: "#A3BFD8",
-      contrastText: "#000000",
+      contrastText: "#FFFFFF",
     },
     error: {
       main: "#DDAFAC",
