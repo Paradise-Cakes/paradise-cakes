@@ -33,17 +33,21 @@ export default function AnimatedBanner({ messages, cycleTime = 5000 }) {
           sx={{
             position: "absolute",
             width: "100%",
+            height: "100%",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            transition: "transform 0.5s ease-in-out",
+            transition: "transform 1s ease-in-out, opacity 1s ease-in-out",
             transform: "translateY(100%)",
+            opacity: 0, // Set initial opacity to 0
+
             color: "white",
             ...(idx === index && {
               transform: "translateY(0)",
             }),
             ...(idx === (index - 1 + messages.length) % messages.length && {
-              transform: "translateY(-200%)",
+              transform: "translateY(0)",
+              opacity: 1, // Set opacity to 1 when message is in view
             }),
           }}
         >

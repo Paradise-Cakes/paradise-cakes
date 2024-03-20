@@ -29,6 +29,7 @@ export default function Navbar() {
         messages={[
           "Located in the Austin, TX area",
           "Free delivery on orders $100+",
+          "Custom orders available",
         ]}
       />
       <Container
@@ -83,9 +84,10 @@ export default function Navbar() {
                   { itemName: "Cookies", img: "https://place-hold.it/150" },
                 ]}
                 buttons={[{ title: "Shop All", link: "/" }]}
+                toLink={"/"}
               />
-
-              <NavLink title="About Me" />
+              <NavLink title="Custom Order" toLink={"/custom-order"} />
+              <NavLink title="About Me" toLink={"/about-me"} />
             </Box>
           </Hidden>
           <Hidden mdUp implementation="css">

@@ -4,7 +4,7 @@ import "./NavLink.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function NavLink({ title, drawerItems, buttons }) {
+export default function NavLink({ title, drawerItems, buttons, toLink }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const handleMouseEnter = () => {
@@ -23,13 +23,13 @@ export default function NavLink({ title, drawerItems, buttons }) {
         sx={{
           color: "#555555",
           position: "static",
-          width: "125px",
+          width: "fit-content",
           padding: "6px",
           fontWeight: "bolder",
           fontSize: "14px",
         }}
         component={Link}
-        to="/"
+        to={toLink}
       >
         {title}
       </Button>

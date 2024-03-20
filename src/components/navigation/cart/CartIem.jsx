@@ -43,7 +43,7 @@ export default function CartItem({
           src={coverImage}
           style={{
             width: "100px",
-            height: "100%",
+            height: "100px",
             borderRadius: "4px",
             display: "block",
             marginRight: "1rem",

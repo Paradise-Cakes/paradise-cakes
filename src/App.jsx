@@ -13,6 +13,7 @@ import CreateDessert from "./components/admin/CreateDessert";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Container } from "@mui/system";
 import { IngredientsProvider } from "./context/IngredientsContext";
+import CustomOrderForm from "./components/forms/custom-order/CustomOrderForm";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,7 @@ function App() {
               <Cart />
               <Routes>
                 <Route path="/" element={<Shop />} />
-                <Route path="/about" element={<About />} />
+                <Route path="/about-me" element={<About />} />
                 <Route
                   path="/admin/create-dessert"
                   element={<CreateDessert />}
@@ -42,6 +43,7 @@ function App() {
                   path="/desserts/cakes/:dessertId/:dessertName"
                   element={<DessertDetail />}
                 />
+                <Route path="/custom-order" element={<CustomOrderForm />} />
               </Routes>
             </IngredientsProvider>
           </CartProvider>
