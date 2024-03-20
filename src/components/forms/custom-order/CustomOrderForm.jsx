@@ -19,9 +19,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 export default function CustomOrderForm() {
   const formik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
-      phone_number: "",
+      customer_first_name: "",
+      customer_last_name: "",
+      customer_email: "",
+      customer_phone_number: "",
       description: "",
       delivery_date: null,
     },
@@ -53,18 +54,31 @@ export default function CustomOrderForm() {
           sx={{ maxWidth: "500px" }}
           onSubmit={formik.handleSubmit}
         >
-          <TextField fullWidth label="Name" sx={{ marginTop: "1rem" }} />
+          <TextField 
+            fullWidth 
+            label="First Name" 
+            sx={{ marginTop: "1rem" }} 
+            value={formik.values.customer_first_name}
+            onChange={(e) => formik.setFieldValue("customer_first_name", e.target.value)}
+          />
+          <TextField 
+            fullWidth 
+            label="Last Name" 
+            sx={{ marginTop: "1rem" }}
+            value={formik.values.customer_last_name} 
+            onChange={(e) => formik.setFieldValue("customer_last_name", e.target.value)}
+          />
           <TextField
             fullWidth
             label="Email"
             type="email"
             sx={{ marginTop: "1rem", marginBottom: "1rem" }}
-            value={formik.values.email}
-            onChange={(e) => formik.setFieldValue("email", e.target.value)}
+            value={formik.values.customer_email}
+            onChange={(e) => formik.setFieldValue("customer_email", e.target.value)}
           />
           <PhoneNumberInput
-            value={formik.values.phone_number}
-            onChange={(value) => formik.setFieldValue("phone_number", value)}
+            value={formik.values.customer_phone_number}
+            onChange={(value) => formik.setFieldValue("customer_phone_number", value)}
           />
           <TextField
             fullWidth
