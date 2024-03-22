@@ -10,6 +10,7 @@ import {
 import { CgClose } from "react-icons/cg";
 import { IngredientsContext } from "../../context/IngredientsContext";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 export default function Ingredients({ ingredients }) {
   const theme = useTheme();
@@ -66,8 +67,9 @@ export default function Ingredients({ ingredients }) {
     >
       <Container
         sx={{
-          height: "100%",
+          height: "90%",
           width: { xs: "100%", sm: "500px", md: "600px" },
+          overflowY: "auto",
         }}
       >
         <Box
@@ -75,6 +77,7 @@ export default function Ingredients({ ingredients }) {
             display: "flex",
             flexDirection: "column",
             width: "100%",
+            height: "100%",
           }}
         >
           <CgClose
@@ -138,6 +141,8 @@ export default function Ingredients({ ingredients }) {
             color="info"
             variant="contained"
             sx={{ width: "fit-content", margin: "0 auto" }}
+            component={Link}
+            to="/custom-order"
           >
             Custom Order
           </Button>
