@@ -17,7 +17,7 @@ import { AccountContext } from "../../context/AccountContext";
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
   const { setCartOpen, cartItems } = useContext(CartContext);
-  const { accountModalOpen, setAccountModalOpen } = useContext(AccountContext);
+  const { signInModalOpen, setSignInModalOpen } = useContext(AccountContext);
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -148,7 +148,7 @@ export default function Navbar() {
               justifyContent: "space-between",
             }}
           >
-            <Box onClick={() => setAccountModalOpen(true)}>
+            <Box onClick={() => setSignInModalOpen(true)}>
               <VscAccount
                 style={{
                   width: "30px",

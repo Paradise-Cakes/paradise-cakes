@@ -16,6 +16,7 @@ import { Container } from "@mui/system";
 import { IngredientsProvider } from "./context/IngredientsContext";
 import CustomOrderForm from "./components/forms/custom-order/CustomOrderForm";
 import SignIn from "./components/navigation/auth/SignIn";
+import SignUp from "./components/navigation/auth/SignUp";
 
 const queryClient = new QueryClient();
 
@@ -29,12 +30,13 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <DrawerProvider drawerOpen={false}>
-          <AccountProvider accountModalOpen={false}>
+          <AccountProvider signInModalOpen={false} signUpModalOpen={false}>
             <CartProvider cartOpen={false} cartItems={[]}>
               <IngredientsProvider ingredientsOpen={false}>
                 <Navbar />
                 <NavSideDrawer />
                 <SignIn />
+                <SignUp />
                 <Cart />
                 <Routes>
                   <Route path="/" element={<Shop />} />

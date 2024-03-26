@@ -9,26 +9,26 @@ import {
 } from "@mui/material";
 import { AccountContext } from "../../../context/AccountContext";
 import { CgClose } from "react-icons/cg";
-import { useFormik } from "formik";
 import SignInForm from "../../forms/auth/SignInForm";
 
 export default function SignIn() {
   const theme = useTheme();
-  const { accountModalOpen, setAccountModalOpen } = useContext(AccountContext);
-  const toggleAccountModal = (open) => (event) => {
+  const { signInModalOpen, setSignInModalOpen, setSignUpModalOpen } =
+    useContext(AccountContext);
+  const toggleSignInModal = (open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
-    setAccountModalOpen(open);
+    setSignInModalOpen(open);
   };
 
   return (
     <Modal
-      open={accountModalOpen}
-      onClose={toggleAccountModal(false)}
+      open={signInModalOpen}
+      onClose={toggleSignInModal(false)}
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -56,7 +56,7 @@ export default function SignIn() {
               right: "1.5rem",
               cursor: "pointer",
             }}
-            onClick={toggleAccountModal(false)}
+            onClick={toggleSignInModal(false)}
           />
           <Typography variant="h5" textAlign={"center"} fontWeight={1000}>
             SIGN IN
@@ -97,6 +97,10 @@ export default function SignIn() {
               fontSize: "1rem",
               fontWeight: "800",
               marginTop: "1rem",
+            }}
+            onClick={() => {
+              setSignInModalOpen(false);
+              setSignUpModalOpen(true);
             }}
           >
             Create Account
