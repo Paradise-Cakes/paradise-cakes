@@ -7,6 +7,7 @@ import About from "./components/about/About";
 import Shop from "./components/shop/Shop";
 import { DrawerProvider } from "./context/DrawerContext";
 import { CartProvider } from "./context/CartContext";
+import { AccountProvider } from "./context/AccountContext";
 import { Route, Routes } from "react-router-dom";
 import DessertDetail from "./components/dessert/DessertDetail";
 import CreateDessert from "./components/admin/CreateDessert";
@@ -14,6 +15,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Container } from "@mui/system";
 import { IngredientsProvider } from "./context/IngredientsContext";
 import CustomOrderForm from "./components/forms/custom-order/CustomOrderForm";
+import SignIn from "./components/navigation/auth/SignIn";
 
 const queryClient = new QueryClient();
 
@@ -27,26 +29,29 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <DrawerProvider drawerOpen={false}>
-          <CartProvider cartOpen={false} cartItems={[]}>
-            <IngredientsProvider ingredientsOpen={false}>
-              <Navbar />
-              <NavSideDrawer />
-              <Cart />
-              <Routes>
-                <Route path="/" element={<Shop />} />
-                <Route path="/about-me" element={<About />} />
-                <Route
-                  path="/admin/create-dessert"
-                  element={<CreateDessert />}
-                />
-                <Route
-                  path="/desserts/cakes/:dessertId/:dessertName"
-                  element={<DessertDetail />}
-                />
-                <Route path="/custom-order" element={<CustomOrderForm />} />
-              </Routes>
-            </IngredientsProvider>
-          </CartProvider>
+          <AccountProvider accountModalOpen={false}>
+            <CartProvider cartOpen={false} cartItems={[]}>
+              <IngredientsProvider ingredientsOpen={false}>
+                <Navbar />
+                <NavSideDrawer />
+                <SignIn />
+                <Cart />
+                <Routes>
+                  <Route path="/" element={<Shop />} />
+                  <Route path="/about-me" element={<About />} />
+                  <Route
+                    path="/admin/create-dessert"
+                    element={<CreateDessert />}
+                  />
+                  <Route
+                    path="/desserts/cakes/:dessertId/:dessertName"
+                    element={<DessertDetail />}
+                  />
+                  <Route path="/custom-order" element={<CustomOrderForm />} />
+                </Routes>
+              </IngredientsProvider>
+            </CartProvider>
+          </AccountProvider>
         </DrawerProvider>
       </QueryClientProvider>
     </Container>

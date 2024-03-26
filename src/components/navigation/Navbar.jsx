@@ -11,10 +11,13 @@ import NavLink from "./NavLink";
 import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import AnimatedBanner from "../extras/AnimatedBanner";
+import { VscAccount } from "react-icons/vsc";
+import { AccountContext } from "../../context/AccountContext";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
   const { setCartOpen, cartItems } = useContext(CartContext);
+  const { accountModalOpen, setAccountModalOpen } = useContext(AccountContext);
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -139,15 +142,29 @@ export default function Navbar() {
               top: "25%",
               right: "1%",
               cursor: "pointer",
+              display: "flex",
+              width: "80px",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
-            onClick={() => setCartOpen(true)}
           >
-            <BsCart2
-              style={{
-                width: "30px",
-                height: "30px",
-              }}
-            />
+            <Box onClick={() => setAccountModalOpen(true)}>
+              <VscAccount
+                style={{
+                  width: "30px",
+                  height: "30px",
+                }}
+              />
+            </Box>
+            <Box onClick={() => setCartOpen(true)}>
+              <BsCart2
+                style={{
+                  width: "30px",
+                  height: "30px",
+                }}
+              />
+            </Box>
+
             {cartItems.length > 0 && (
               <GoDotFill
                 style={{
