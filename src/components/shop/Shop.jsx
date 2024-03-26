@@ -25,14 +25,14 @@ export default function Shop() {
         title="cakes"
         description="Indulge in my delectable selection of freshly baked cakes, made with
           the finest ingredients and crafted with care."
-        items={cakes?.desserts}
+        items={cakes}
         isSectionLoading={isGetCakesLoading}
         isGetSectionSuccess={isGetCakesSuccess}
       />
       <Section
         title="cupcakes"
         description="Explore our delectable cupcake collection: From classic flavors to creative concoctions, each bite is a miniature delight."
-        items={cupcakes?.desserts}
+        items={cupcakes}
         isSectionLoading={isGetCupcakesLoading}
         isGetSectionSuccess={isGetCupcakesSuccess}
       />

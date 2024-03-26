@@ -61,15 +61,13 @@ export default function DessertDetail() {
   const [price, setPrice] = useState(0);
 
   const calculatePrice = (quantity) => {
-    const selectedSize = dessert?.dessert?.prices.find(
-      (price) => price.size === size
-    );
+    const selectedSize = dessert.prices.find((price) => price.size === size);
     return selectedSize?.base * quantity;
   };
 
   const handleAddToCart = () => {
     const cartItem = {
-      ...dessert?.dessert,
+      ...dessert,
       id: dessertId,
       quantity: quantity,
       price: price / quantity,
@@ -103,16 +101,14 @@ export default function DessertDetail() {
 
   useEffect(() => {
     if (dessert) {
-      setSize(dessert?.dessert?.prices[0].size);
+      setSize(dessert.prices[0].size);
     }
   }, [dessert]);
 
   // Effect to preload images once data is fetched
   useEffect(() => {
-    if (isGetDessertSuccess && dessert?.dessert?.image_urls && !imagesLoaded) {
-      Promise.all(
-        dessert?.dessert?.image_urls.map((img) => preloadImage(img.uri))
-      )
+    if (isGetDessertSuccess && dessert?.image_urls && !imagesLoaded) {
+      Promise.all(dessert?.image_urls.map((img) => preloadImage(img.uri)))
         .then(() => setImagesLoaded(true))
         .catch((error) => console.error("Error preloading images", error));
     }
@@ -133,14 +129,14 @@ export default function DessertDetail() {
         <Grid container justifyContent="center">
           <Grid item xs={12} sm={9} md={7}>
             <Carousel
-              images={dessert?.dessert?.image_urls}
+              images={dessert.image_urls}
               areImagesLoaded={imagesLoaded}
             />
           </Grid>
           <Grid item my={6} xs={10} md={7} lg={4}>
             <Box>
               <Typography variant="h4" fontWeight={1000}>
-                {dessert?.dessert?.name.toUpperCase()}
+                {dessert.name.toUpperCase()}
               </Typography>
               <Box
                 display={"flex"}
@@ -169,12 +165,12 @@ export default function DessertDetail() {
                   >
                     Ingredients
                   </Button>
-                  <Ingredients ingredients={dessert?.dessert?.ingredients} />
+                  <Ingredients ingredients={dessert.ingredients} />
                   <Typography
                     component="div"
                     sx={{ padding: "2rem 0", fontSize: "1rem" }}
                   >
-                    {dessert?.dessert?.description}
+                    {dessert.description}
                   </Typography>
                 </Box>
               </Box>
@@ -184,7 +180,7 @@ export default function DessertDetail() {
               >
                 Select Size:
               </Typography>
-              {dessert?.dessert?.prices.length > 1 && (
+              {dessert.prices.length > 1 && (
                 <ToggleButtonGroup
                   className="toggle-button-size"
                   sx={{
@@ -196,7 +192,7 @@ export default function DessertDetail() {
                   value={size}
                   onChange={handleSizeChange}
                 >
-                  {dessert?.dessert?.prices.map((price) => (
+                  {dessert.prices.map((price) => (
                     <ToggleButton
                       key={price.base}
                       sx={{
