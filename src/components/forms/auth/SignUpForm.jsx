@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   Box,
   Button,
@@ -9,8 +9,10 @@ import {
   TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { AccountContext } from "../../../context/AccountContext";
 
 export default function SignUpForm() {
+  const { setConfirmationCodeModalOpen, setSignUpModalOpen } = useContext(AccountContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -19,6 +21,8 @@ export default function SignUpForm() {
     },
     onSubmit: (values) => {
       console.log(values);
+      setConfirmationCodeModalOpen(true);
+      setSignUpModalOpen(false);
     },
   });
 

@@ -17,6 +17,7 @@ import { IngredientsProvider } from "./context/IngredientsContext";
 import CustomOrderForm from "./components/forms/custom-order/CustomOrderForm";
 import SignIn from "./components/navigation/auth/SignIn";
 import SignUp from "./components/navigation/auth/SignUp";
+import ConfirmationCode from "./components/navigation/auth/ConfirmationCode";
 
 const queryClient = new QueryClient();
 
@@ -30,12 +31,13 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <DrawerProvider drawerOpen={false}>
-          <AccountProvider signInModalOpen={false} signUpModalOpen={false}>
+          <AccountProvider signInModalOpen={false} signUpModalOpen={false} confirmationCodeModalOpen={false}>
             <CartProvider cartOpen={false} cartItems={[]}>
               <IngredientsProvider ingredientsOpen={false}>
                 <Navbar />
                 <NavSideDrawer />
                 <SignIn />
+                <ConfirmationCode />
                 <SignUp />
                 <Cart />
                 <Routes>
