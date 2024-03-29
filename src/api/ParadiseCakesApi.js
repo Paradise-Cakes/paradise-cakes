@@ -14,26 +14,46 @@ export const getDesserts = async (dessert_type) => {
 };
 
 export const postSignUp = async (payload) => {
-  const response = await axios.post(`${API_URL}/signup`, payload);
+  const response = await axios.post(`${API_URL}/signup`, payload, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
   return response;
 }
 
 export const postConfirmSignUp = async (payload) => {
-  const response = await axios.post(`${API_URL}/confirm_signup`, payload);
+  const response = await axios.post(`${API_URL}/confirm_signup`, payload, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
   return response;
 }
 
 export const postResendConfirmationCode = async (payload) => {
-  const response = await axios.post(`${API_URL}/resend_confirmation_code`, payload);
+  const response = await axios.post(`${API_URL}/resend_confirmation_code`, payload, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
   return response;
 }
 
 export const postSignIn = async (payload) => {
-  const response = await axios.post(`${API_URL}/signin`, payload);
+  const response = await axios.post(`${API_URL}/signin`, payload, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
   return response;
 }
 
 export const postForgotPassword = async (payload) => {
-  const response = await axios.post(`${API_URL}/forgot_password`, payload);
+  const response = await axios.post(`${API_URL}/forgot_password`, payload, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
   return response;
 }

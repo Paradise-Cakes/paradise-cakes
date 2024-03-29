@@ -10,19 +10,49 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { AccountContext } from "../../../context/AccountContext";
+import { signUpSchema } from "../../../schema";
+import { usePostSignUp } from "../../../hooks/auth/AuthHook";
 
 export default function SignUpForm() {
   const { setConfirmationCodeModalOpen, setSignUpModalOpen } = useContext(AccountContext);
+  const postSignUpQuery = usePostSignUp();
+
+  const {
+    mutateAsync: postSignUp,
+    isLoading: isPostSignUpLoading,
+    error: postSignUpError
+  } = postSignUpQuery;
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      receiveEmails: false,
+      // receiveEmails: false,
     },
-    onSubmit: (values) => {
-      console.log(values);
-      setConfirmationCodeModalOpen(true);
-      setSignUpModalOpen(false);
+    validationSchema: signUpSchema,
+    validate: async (values) => {
+      const errors = {};
+
+      if (!values.email) {
+        errors.name = "email required";
+      }
+      if (!values.password) {
+        errors.description = "password required";
+      }
+      return errors;
+    },
+    onSubmit: async (values) => {
+      try {
+        await postSignUp({
+          signUp: values
+        }).then((response) => {
+          console.log(response);
+          setConfirmationCodeModalOpen(true);
+          setSignUpModalOpen(false);
+        })
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
@@ -72,7 +102,7 @@ export default function SignUpForm() {
         value={formik.values.password}
         onChange={(e) => formik.setFieldValue("password", e.target.value)}
       />
-      <FormGroup>
+      {/*      <FormGroup>
         <FormControlLabel
           sx={{ alignItems: "flex-start", marginTop: "1rem" }}
           control={
@@ -86,7 +116,8 @@ export default function SignUpForm() {
           }
           label="By creating an account, you agree to receive emails about your order. You can unsubscribe at any time."
         />
-      </FormGroup>
+      </FormGroup> */}
+
       <Button
         variant="contained"
         fullWidth

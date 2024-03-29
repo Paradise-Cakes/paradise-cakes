@@ -1,21 +1,23 @@
 import { useMutation, useQueryClient } from "react-query";
 import { postSignUp, postConfirmSignUp, 
-	postResendConfrimationCode, postSignIn,
+	postResendConfirmationCode, postSignIn,
 	postForgotPassword
 } from "../../api/ParadiseCakesApi";
-import * as paradiseCakesApi from "../api/ParadiseCakesApi";
+import * as paradiseCakesApi from "../../api/ParadiseCakesApi";
 
 export const usePostSignUp = () => {
   const queryClient = useQueryClient();
-  return useMutation(({ userCreds }) =>
-    paradiseCakesApi.postSignUp(userCreds),
+  return useMutation(({ signUp }) => {
+  	console.log("Hello")
+  	console.log(signUp)
+  	return paradiseCakesApi.postSignUp(signUp),
     {
       onSuccess: () => {
         console.log("SUCCESS")
       }
     }
-  );
-};
+  });
+}
 
 export const usePostConfirmSignUp = () => {
 	const queryClient = useQueryClient();
