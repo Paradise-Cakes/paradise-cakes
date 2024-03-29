@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -14,13 +14,14 @@ import { signUpSchema } from "../../../schema";
 import { usePostSignUp } from "../../../hooks/auth/AuthHook";
 
 export default function SignUpForm() {
-  const { setConfirmationCodeModalOpen, setSignUpModalOpen } = useContext(AccountContext);
+  const { setConfirmationCodeModalOpen, setSignUpModalOpen, setEmail } =
+    useContext(AccountContext);
   const postSignUpQuery = usePostSignUp();
 
   const {
     mutateAsync: postSignUp,
     isLoading: isPostSignUpLoading,
-    error: postSignUpError
+    error: postSignUpError,
   } = postSignUpQuery;
 
   const formik = useFormik({
@@ -44,12 +45,12 @@ export default function SignUpForm() {
     onSubmit: async (values) => {
       try {
         await postSignUp({
-          signUp: values
+          signUp: values,
         }).then((response) => {
-          console.log(response);
           setConfirmationCodeModalOpen(true);
           setSignUpModalOpen(false);
-        })
+          setEmail(values.email);
+        });
       } catch (error) {
         console.error(error);
       }

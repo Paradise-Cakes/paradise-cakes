@@ -4,7 +4,9 @@ export const AccountContext = createContext();
 export const AccountProvider = ({ children }) => {
   const [signInModalOpen, setSignInModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
-  const [confirmationCodeModalOpen, setConfirmationCodeModalOpen] = useState(false);
+  const [confirmationCodeModalOpen, setConfirmationCodeModalOpen] =
+    useState(false);
+  const [email, setEmail] = useState("");
   return (
     <AccountContext.Provider
       value={{
@@ -13,7 +15,9 @@ export const AccountProvider = ({ children }) => {
         signUpModalOpen,
         setSignUpModalOpen,
         confirmationCodeModalOpen,
-        setConfirmationCodeModalOpen
+        setConfirmationCodeModalOpen,
+        email,
+        setEmail,
       }}
     >
       {children}

@@ -1,31 +1,56 @@
-import React from "react";
-import {
-	Box,
-	Button,
-	TextField
-} from "@mui/material";
+import React, { useContext } from "react";
+import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
+import { AccountContext } from "../../../context/AccountContext";
+import { confirmationCodeSchema } from "../../../schema";
+import { usePostConfirmationCode } from "../../../hooks/auth/AuthHook";
 
 export default function ConfirmationCodeForm() {
-	const formik = useFormik({
-		initialValues: {
-			confirmationCode: "",
-		},
-		onSubmit: (values) => {
-			console.log(values);
-		}
-	});
+  const { setConfirmationCodeModalOpen, email } = useContext(AccountContext);
+  const postConfirmationCodeQuery = usePostConfirmationCode();
 
-	return (
-		<Box
-			component="form"
-			sx={{paddingTop: "0.5rem", paddingBottom: "0.5rem"}}
-			onSubmit={formik.handleSubmit}
-		>
-			<TextField 
-				fullWidth
-				inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', maxLength:6 }}
-				label="Verification Code"
+  const {
+    mutateAsync: postConfirmationCode,
+    isLoading: isPostConfirmationCodeLoading,
+    error: postConfirmationCodeError,
+  } = postConfirmationCodeQuery;
+
+  const formik = useFormik({
+    initialValues: {
+      confirmation_code: "",
+    },
+    validationSchema: confirmationCodeSchema,
+    validate: async (values) => {
+      const errors = {};
+
+      if (!values.confirmation_code) {
+        errors.confirmation_code = "confirmation code required";
+      }
+      return errors;
+    },
+    onSubmit: async (values) => {
+      try {
+        await postConfirmationCode({
+          userCreds: { ...values, email: email },
+        }).then((response) => {
+          setConfirmationCodeModalOpen(false);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
+
+  return (
+    <Box
+      component="form"
+      sx={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}
+      onSubmit={formik.handleSubmit}
+    >
+      <TextField
+        fullWidth
+        inputProps={{ inputMode: "numeric", pattern: "[0-9]*", maxLength: 6 }}
+        label="Verification Code"
         sx={{
           margin: "1rem 0",
           "& .MuiOutlinedInput-root": {
@@ -39,10 +64,12 @@ export default function ConfirmationCodeForm() {
             },
           },
         }}
-        value={formik.values.confirmationCode}
-        onChange={(e) => formik.setFieldValue("confirmationCode")}
-			/>
-			<Button 
+        value={formik.values.confirmation_code}
+        onChange={(e) =>
+          formik.setFieldValue("confirmation_code", e.target.value)
+        }
+      />
+      <Button
         variant="contained"
         fullWidth
         sx={{
@@ -51,10 +78,10 @@ export default function ConfirmationCodeForm() {
           fontSize: "1rem",
           fontWeight: "800",
         }}
-				type="submit"
-			>
-			Confirm
-			</Button>
-		</Box>
-	)
+        type="submit"
+      >
+        Confirm
+      </Button>
+    </Box>
+  );
 }
