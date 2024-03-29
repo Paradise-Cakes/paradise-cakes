@@ -62,7 +62,7 @@ export default function SignUp() {
             CREATE AN ACCOUNT
           </Typography>
           <SignUpForm />
-          <Typography sx={{ textAlign: "center", fontSize: "1.2rem" }}>
+          <Typography sx={{ textAlign: "center", fontSize: "1rem" }}>
             Already have an account?{" "}
             <span
               style={{ fontWeight: "800", cursor: "pointer" }}

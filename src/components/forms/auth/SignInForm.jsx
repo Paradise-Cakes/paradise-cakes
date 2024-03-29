@@ -1,12 +1,34 @@
 import React from "react";
 import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
+import { signInSchema } from "../../../schema";
+import LoadingButton from "../../extras/LoadingButton";
+import { usePostSignIn } from "../../../hooks/auth/AuthHook";
 
 export default function SignInForm() {
+  const postSignInQuery = usePostSignIn();
+
+  const {
+    mutateAsync: postSignIn,
+    isLoading: isPostSignInLoading,
+    error: postSignInError,
+  } = postSignInQuery;
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+    },
+    validationSchema: signInSchema,
+    validate: async (values) => {
+      const errors = {};
+      if (!values.email) {
+        errors.email = "email required";
+      }
+      if (!values.password) {
+        errors.password = "password required";
+      }
+      return errors;
     },
     onSubmit: (values) => {
       console.log(values);
@@ -23,6 +45,9 @@ export default function SignInForm() {
         fullWidth
         label="email"
         type="email"
+        onBlur={formik.handleBlur}
+        error={formik.touched.email && Boolean(formik.errors.email)}
+        helperText={formik.touched.email && formik.errors.email}
         sx={{
           margin: "1rem 0",
           "& .MuiOutlinedInput-root": {
@@ -42,6 +67,10 @@ export default function SignInForm() {
       <TextField
         fullWidth
         label="password"
+        type="password"
+        onBlur={formik.handleBlur}
+        error={formik.touched.password && Boolean(formik.errors.password)}
+        helperText={formik.touched.password && formik.errors.password}
         sx={{
           margin: "1rem 0",
           "& .MuiOutlinedInput-root": {
@@ -55,11 +84,10 @@ export default function SignInForm() {
             },
           },
         }}
-        type="password"
         value={formik.values.password}
         onChange={(e) => formik.setFieldValue("password", e.target.value)}
       />
-      <Button
+      {/* <Button
         variant="contained"
         fullWidth
         sx={{
@@ -71,7 +99,8 @@ export default function SignInForm() {
         type="submit"
       >
         Sign In
-      </Button>
+      </Button> */}
+      <LoadingButton isLoading={isPostSignInLoading}>Sign In</LoadingButton>
     </Box>
   );
 }

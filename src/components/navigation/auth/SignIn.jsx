@@ -42,7 +42,7 @@ export default function SignIn() {
           backgroundColor: "white",
           borderRadius: "10px",
           border: "1px solid black",
-          padding: "2.5rem",
+          padding: "3rem",
           position: "relative",
         }}
       >

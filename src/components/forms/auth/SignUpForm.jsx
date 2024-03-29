@@ -33,24 +33,22 @@ export default function SignUpForm() {
     validationSchema: signUpSchema,
     validate: async (values) => {
       const errors = {};
-
       if (!values.email) {
-        errors.name = "email required";
+        errors.email = "email required";
       }
       if (!values.password) {
-        errors.description = "password required";
+        errors.password = "password required";
       }
       return errors;
     },
     onSubmit: async (values) => {
       try {
-        await postSignUp({
+        const response = await postSignUp({
           signUp: values,
-        }).then((response) => {
-          setConfirmationCodeModalOpen(true);
-          setSignUpModalOpen(false);
-          setEmail(values.email);
         });
+        setConfirmationCodeModalOpen(true);
+        setSignUpModalOpen(false);
+        setEmail(values.email);
       } catch (error) {
         console.error(error);
       }
@@ -67,6 +65,9 @@ export default function SignUpForm() {
         fullWidth
         label="email"
         type="email"
+        onBlur={formik.handleBlur}
+        error={formik.touched.email && Boolean(formik.errors.email)}
+        helperText={formik.touched.email && formik.errors.email}
         sx={{
           margin: "1rem 0",
           "& .MuiOutlinedInput-root": {
@@ -86,6 +87,10 @@ export default function SignUpForm() {
       <TextField
         fullWidth
         label="password"
+        type="password"
+        onBlur={formik.handleBlur}
+        error={formik.touched.password && Boolean(formik.errors.password)}
+        helperText={formik.touched.password && formik.errors.password}
         sx={{
           margin: "1rem 0",
           "& .MuiOutlinedInput-root": {
@@ -99,11 +104,10 @@ export default function SignUpForm() {
             },
           },
         }}
-        type="password"
         value={formik.values.password}
         onChange={(e) => formik.setFieldValue("password", e.target.value)}
       />
-      {/*      <FormGroup>
+      {/* <FormGroup>
         <FormControlLabel
           sx={{ alignItems: "flex-start", marginTop: "1rem" }}
           control={

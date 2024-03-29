@@ -30,11 +30,10 @@ export default function ConfirmationCodeForm() {
     },
     onSubmit: async (values) => {
       try {
-        await postConfirmationCode({
+        const response = await postConfirmationCode({
           userCreds: { ...values, email: email },
-        }).then((response) => {
-          setConfirmationCodeModalOpen(false);
         });
+        setConfirmationCodeModalOpen(false);
       } catch (error) {
         console.error(error);
       }
