@@ -1,11 +1,15 @@
-import React from "react";
-import { Box, Button, TextField } from "@mui/material";
+import React, { useContext } from "react";
+import { Box, Button, TextField, Snackbar } from "@mui/material";
 import { useFormik } from "formik";
 import { signInSchema } from "../../../schema";
 import LoadingButton from "../../extras/LoadingButton";
 import { usePostSignIn } from "../../../hooks/auth/AuthHook";
+import { useNavigate } from "react-router-dom";
+import { AccountContext } from "../../../context/AccountContext";
 
 export default function SignInForm() {
+  const { setSignInModalOpen } = useContext(AccountContext);
+  const navigate = useNavigate();
   const postSignInQuery = usePostSignIn();
 
   const {
@@ -30,8 +34,16 @@ export default function SignInForm() {
       }
       return errors;
     },
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const response = await postSignIn({
+          userCreds: values,
+        });
+        setSignInModalOpen(false);
+        navigate("/");
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
@@ -87,19 +99,6 @@ export default function SignInForm() {
         value={formik.values.password}
         onChange={(e) => formik.setFieldValue("password", e.target.value)}
       />
-      {/* <Button
-        variant="contained"
-        fullWidth
-        sx={{
-          height: "45px",
-          textTransform: "none",
-          fontSize: "1rem",
-          fontWeight: "800",
-        }}
-        type="submit"
-      >
-        Sign In
-      </Button> */}
       <LoadingButton isLoading={isPostSignInLoading}>Sign In</LoadingButton>
     </Box>
   );
