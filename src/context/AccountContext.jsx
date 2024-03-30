@@ -6,6 +6,7 @@ export const AccountProvider = ({ children }) => {
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const [confirmationCodeModalOpen, setConfirmationCodeModalOpen] =
     useState(false);
+  const [loggedInModalOpen, setLoggedInModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   return (
     <AccountContext.Provider
@@ -16,6 +17,8 @@ export const AccountProvider = ({ children }) => {
         setSignUpModalOpen,
         confirmationCodeModalOpen,
         setConfirmationCodeModalOpen,
+        loggedInModalOpen,
+        setLoggedInModalOpen,
         email,
         setEmail,
       }}

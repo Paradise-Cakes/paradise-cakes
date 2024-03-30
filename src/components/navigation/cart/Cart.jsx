@@ -186,6 +186,7 @@ export default function Cart() {
                   borderRadius: "1rem",
                   padding: "10px",
                   marginTop: "1rem",
+                  fontWeight: "800",
                 }}
               >
                 ENTER ZIP CODE
@@ -211,6 +212,7 @@ export default function Cart() {
                 margin: "16px auto",
                 display: "block",
                 width: "fit-content",
+                fontWeight: "800",
               }}
               onClick={() => {
                 navigate("/");

@@ -1,20 +1,15 @@
-import React, { useContext } from "react"
-import {
-	Container,
-	Box,
-	Typography,
-	useTheme,
-	Modal
-} from "@mui/material"
+import React, { useContext } from "react";
+import { Container, Box, Typography, useTheme, Modal } from "@mui/material";
 import { AccountContext } from "../../../context/AccountContext";
 import { CgClose } from "react-icons/cg";
-import ConfirmationCodeForm from "../../forms/auth/ConfirmationCodeForm"
+import ConfirmationCodeForm from "../../forms/auth/ConfirmationCodeForm";
 
 export default function ConfirmationCode() {
-	const theme = useTheme();
-	const { confirmationCodeModalOpen, setConfirmationCodeModalOpen } = useContext(AccountContext);
+  const theme = useTheme();
+  const { confirmationCodeModalOpen, setConfirmationCodeModalOpen, email } =
+    useContext(AccountContext);
 
-	const toggleConfirmationCodeModal = (open) => (event) => {
+  const toggleConfirmationCodeModal = (open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -25,28 +20,28 @@ export default function ConfirmationCode() {
   };
 
   return (
-  	<Modal
-  		open={confirmationCodeModalOpen}
-  		onClose={toggleConfirmationCodeModal(false)}
+    <Modal
+      open={confirmationCodeModalOpen}
+      onClose={toggleConfirmationCodeModal(false)}
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
-  	>
-  		<Box
+    >
+      <Box
         sx={{
           width: "420px",
-          height: "200px",
+          height: "fit-content",
           backgroundColor: "white",
           borderRadius: "10px",
           border: "1px solid black",
           padding: "2.5rem",
           position: "relative",
         }}
-  		>
-  			<Box>
-  				<CgClose 
+      >
+        <Box>
+          <CgClose
             style={{
               height: "24px",
               width: "24px",
@@ -56,16 +51,27 @@ export default function ConfirmationCode() {
               cursor: "pointer",
             }}
             onClick={toggleConfirmationCodeModal(false)}
-  				/>
-  				<Typography variant="h5" textAlign="center" fontWeight={1000} sx={{marginBottom: "1rem"}}>
-  					VERIFICATION
-  				</Typography>
-  				<Typography variant="body2" textAlign="center">
-  					Please verify the code that was sent to your email.
-  				</Typography>
-  				<ConfirmationCodeForm />
-  			</Box>
-  		</Box>
-  	</Modal>
-  )
+          />
+          <Typography
+            variant="h5"
+            textAlign="center"
+            fontWeight={1000}
+            sx={{ marginBottom: "1rem" }}
+          >
+            VERIFICATION
+          </Typography>
+          <Typography variant="body2" textAlign="center">
+            We sent a code to {email}. Please enter the code below to continue.
+          </Typography>
+          <ConfirmationCodeForm />
+          <Typography variant="body2" marginTop={"1rem"} textAlign={"center"}>
+            Didn't receive a code?{" "}
+            <span style={{ color: "blue", cursor: "pointer" }}>
+              Click to resend
+            </span>
+          </Typography>
+        </Box>
+      </Box>
+    </Modal>
+  );
 }

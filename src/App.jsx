@@ -18,6 +18,7 @@ import CustomOrderForm from "./components/forms/custom-order/CustomOrderForm";
 import SignIn from "./components/navigation/auth/SignIn";
 import SignUp from "./components/navigation/auth/SignUp";
 import ConfirmationCode from "./components/navigation/auth/ConfirmationCode";
+import LoggedInModal from "./components/navigation/auth/LoggedInModal";
 
 const queryClient = new QueryClient();
 
@@ -31,13 +32,18 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <DrawerProvider drawerOpen={false}>
-          <AccountProvider signInModalOpen={false} signUpModalOpen={false} confirmationCodeModalOpen={false}>
+          <AccountProvider
+            signInModalOpen={false}
+            signUpModalOpen={false}
+            confirmationCodeModalOpen={false}
+          >
             <CartProvider cartOpen={false} cartItems={[]}>
               <IngredientsProvider ingredientsOpen={false}>
                 <Navbar />
                 <NavSideDrawer />
                 <SignIn />
                 <ConfirmationCode />
+                <LoggedInModal />
                 <SignUp />
                 <Cart />
                 <Routes>

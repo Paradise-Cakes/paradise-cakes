@@ -44,6 +44,10 @@ const THEME = createTheme({
     dark: {
       main: "#292929",
       contrastText: "#FFFFFF",
+      "&:hover": {
+        backgroundColor: "#FFFFFF",
+        color: "#292929",
+      },
     },
     light: {
       main: "#E6EFEE",

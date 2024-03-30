@@ -38,7 +38,7 @@ export default function SignUp() {
       <Box
         sx={{
           width: "420px",
-          height: "450px",
+          height: "fit-content",
           backgroundColor: "white",
           borderRadius: "10px",
           border: "1px solid black",

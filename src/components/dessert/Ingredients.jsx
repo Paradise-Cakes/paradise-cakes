@@ -140,7 +140,7 @@ export default function Ingredients({ ingredients }) {
           <Button
             color="info"
             variant="contained"
-            sx={{ width: "fit-content", margin: "0 auto" }}
+            sx={{ width: "fit-content", margin: "0 auto", fontWeight: 800 }}
             component={Link}
             to="/custom-order"
           >

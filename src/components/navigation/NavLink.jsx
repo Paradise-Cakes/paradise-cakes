@@ -25,7 +25,7 @@ export default function NavLink({ title, drawerItems, buttons, toLink }) {
           position: "static",
           width: "fit-content",
           padding: "6px",
-          fontWeight: "bolder",
+          fontWeight: "800",
           fontSize: "14px",
         }}
         component={Link}
@@ -82,6 +82,7 @@ export default function NavLink({ title, drawerItems, buttons, toLink }) {
                 sx={{
                   width: "160px",
                   height: "40px",
+                  fontWeight: "800",
                 }}
                 onClick={() => {
                   navigate(button.link);

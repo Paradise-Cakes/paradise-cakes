@@ -149,6 +149,7 @@ export default function DessertDetail() {
                       marginRight: "1.5rem",
                       borderBottom: `2px solid ${theme.palette.primary.main}`,
                       borderRadius: 0,
+                      fontWeight: 800,
                     }}
                   >
                     Details
@@ -160,6 +161,7 @@ export default function DessertDetail() {
                       borderBottom: `2px solid blue`,
                       borderRadius: 0,
                       color: "blue",
+                      fontWeight: 800,
                     }}
                     onClick={() => setIngredientsOpen(true)}
                   >
@@ -241,7 +243,7 @@ export default function DessertDetail() {
                 <Grid item xs={7}>
                   <Button
                     variant="contained"
-                    sx={{ width: "100%" }}
+                    sx={{ width: "100%", fontWeight: 800 }}
                     onClick={handleAddToCart}
                   >
                     Add to Cart - ${price}

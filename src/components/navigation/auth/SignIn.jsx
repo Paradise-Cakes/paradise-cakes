@@ -7,7 +7,7 @@ import {
   Modal,
   useTheme,
   Snackbar,
-  Alert
+  Alert,
 } from "@mui/material";
 import { AccountContext } from "../../../context/AccountContext";
 import { CgClose } from "react-icons/cg";
@@ -40,7 +40,7 @@ export default function SignIn() {
       <Box
         sx={{
           width: "420px",
-          height: "580px",
+          height: "fit-content",
           backgroundColor: "white",
           borderRadius: "10px",
           border: "1px solid black",

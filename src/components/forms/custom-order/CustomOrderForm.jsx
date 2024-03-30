@@ -54,19 +54,23 @@ export default function CustomOrderForm() {
           sx={{ maxWidth: "500px" }}
           onSubmit={formik.handleSubmit}
         >
-          <TextField 
-            fullWidth 
-            label="First Name" 
-            sx={{ marginTop: "1rem" }} 
-            value={formik.values.customer_first_name}
-            onChange={(e) => formik.setFieldValue("customer_first_name", e.target.value)}
-          />
-          <TextField 
-            fullWidth 
-            label="Last Name" 
+          <TextField
+            fullWidth
+            label="First Name"
             sx={{ marginTop: "1rem" }}
-            value={formik.values.customer_last_name} 
-            onChange={(e) => formik.setFieldValue("customer_last_name", e.target.value)}
+            value={formik.values.customer_first_name}
+            onChange={(e) =>
+              formik.setFieldValue("customer_first_name", e.target.value)
+            }
+          />
+          <TextField
+            fullWidth
+            label="Last Name"
+            sx={{ marginTop: "1rem" }}
+            value={formik.values.customer_last_name}
+            onChange={(e) =>
+              formik.setFieldValue("customer_last_name", e.target.value)
+            }
           />
           <TextField
             fullWidth
@@ -74,11 +78,15 @@ export default function CustomOrderForm() {
             type="email"
             sx={{ marginTop: "1rem", marginBottom: "1rem" }}
             value={formik.values.customer_email}
-            onChange={(e) => formik.setFieldValue("customer_email", e.target.value)}
+            onChange={(e) =>
+              formik.setFieldValue("customer_email", e.target.value)
+            }
           />
           <PhoneNumberInput
             value={formik.values.customer_phone_number}
-            onChange={(value) => formik.setFieldValue("customer_phone_number", value)}
+            onChange={(value) =>
+              formik.setFieldValue("customer_phone_number", value)
+            }
           />
           <TextField
             fullWidth
@@ -110,7 +118,12 @@ export default function CustomOrderForm() {
             variant="contained"
             color="success"
             type="submit"
-            sx={{ marginTop: "1rem", width: { xs: "100%", sm: "fit-content" } }}
+            sx={{
+              fontWeight: 800,
+              marginTop: "1rem",
+              width: { xs: "100%", sm: "fit-content" },
+              color: "white",
+            }}
           >
             Place Order
           </Button>

@@ -22,6 +22,7 @@ export default function LoadingButton({ isLoading, children }) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            fontWeight: "800",
           }}
         >
           <CircularProgress size={24} color="inherit" />
@@ -30,5 +31,5 @@ export default function LoadingButton({ isLoading, children }) {
         children
       )}
     </Button>
-  )
+  );
 }
