@@ -19,6 +19,7 @@ import SignIn from "./components/navigation/auth/SignIn";
 import SignUp from "./components/navigation/auth/SignUp";
 import ConfirmationCode from "./components/navigation/auth/ConfirmationCode";
 import LoggedInModal from "./components/navigation/auth/LoggedInModal";
+import AccountDashboard from "./components/account/AccountDashboard";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ function App() {
                     element={<DessertDetail />}
                   />
                   <Route path="/custom-order" element={<CustomOrderForm />} />
+                  <Route path="/account" element={<AccountDashboard />} />
                 </Routes>
               </IngredientsProvider>
             </CartProvider>
