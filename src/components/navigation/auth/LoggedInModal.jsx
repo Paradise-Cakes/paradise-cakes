@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import { Box, Button, Typography, Modal, useTheme } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 import { AccountContext } from "../../../context/AccountContext";
+import { useNavigate } from "react-router-dom";
 
 export default function LoggedInModal() {
   const { loggedInModalOpen, setLoggedInModalOpen } =
     useContext(AccountContext);
-  console.log(loggedInModalOpen);
   const theme = useTheme();
+  const navigate = useNavigate();
   return (
     <Modal
       open={loggedInModalOpen}
@@ -56,10 +57,15 @@ export default function LoggedInModal() {
             height: "45px",
             fontWeight: "800",
           }}
+          onClick={() => setLoggedInModalOpen(false)}
         >
           CLOSE
         </Button>
         <Button
+          onClick={() => {
+            setLoggedInModalOpen(false);
+            navigate("/account");
+          }}
           variant="outlined"
           fullWidth
           color="primary"

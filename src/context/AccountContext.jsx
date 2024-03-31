@@ -8,6 +8,7 @@ export const AccountProvider = ({ children }) => {
     useState(false);
   const [loggedInModalOpen, setLoggedInModalOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <AccountContext.Provider
       value={{
@@ -21,6 +22,8 @@ export const AccountProvider = ({ children }) => {
         setLoggedInModalOpen,
         email,
         setEmail,
+        password,
+        setPassword,
       }}
     >
       {children}

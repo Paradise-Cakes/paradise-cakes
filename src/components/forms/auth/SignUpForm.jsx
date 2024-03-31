@@ -7,6 +7,8 @@ import {
   FormControlLabel,
   FormGroup,
   TextField,
+  Typography,
+  useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { AccountContext } from "../../../context/AccountContext";
@@ -17,11 +19,15 @@ import { GoEyeClosed } from "react-icons/go";
 import LoadingButton from "../../extras/LoadingButton";
 
 export default function SignUpForm() {
-  const { setConfirmationCodeModalOpen, setSignUpModalOpen, setEmail } =
-    useContext(AccountContext);
+  const {
+    setConfirmationCodeModalOpen,
+    setSignUpModalOpen,
+    setEmail,
+    setPassword,
+  } = useContext(AccountContext);
   const postSignUpQuery = usePostSignUp();
   const [passwordType, setPasswordType] = useState("password");
-
+  const theme = useTheme();
   const {
     mutateAsync: postSignUp,
     isLoading: isPostSignUpLoading,
@@ -54,13 +60,14 @@ export default function SignUpForm() {
       return errors;
     },
     onSubmit: async (values) => {
+      setEmail(values.email);
+      setPassword(values.password);
       try {
         const response = await postSignUp({
           signUp: values,
         });
         setConfirmationCodeModalOpen(true);
         setSignUpModalOpen(false);
-        setEmail(values.email);
       } catch (error) {
         console.error(error);
       }
@@ -73,6 +80,15 @@ export default function SignUpForm() {
       sx={{ paddingTop: "1.5rem", paddingBottom: "1.5rem" }}
       onSubmit={formik.handleSubmit}
     >
+      {postSignUpError && (
+        <Typography
+          textAlign={"center"}
+          sx={{ color: theme.palette.error.main }}
+          marginBottom={"1rem"}
+        >
+          {postSignUpError?.response?.data?.detail}
+        </Typography>
+      )}
       <TextField
         fullWidth
         label="first name"
@@ -122,7 +138,10 @@ export default function SignUpForm() {
         label="email"
         type="email"
         onBlur={formik.handleBlur}
-        error={formik.touched.email && Boolean(formik.errors.email)}
+        error={
+          (formik.touched.email && Boolean(formik.errors.email)) ||
+          Boolean(postSignUpError)
+        }
         helperText={formik.touched.email && formik.errors.email}
         sx={{
           margin: "1rem 0",

@@ -25,7 +25,7 @@ export const usePostConfirmationCode = () => {
 export const usePostResendConfirmationCode = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    ({ userCreds }) => paradiseCakesApi.postResendConfirmationCode(userCreds),
+    ({ email }) => paradiseCakesApi.postResendConfirmationCode(email),
     {
       onSuccess: () => {
         console.log("SUCCESS");

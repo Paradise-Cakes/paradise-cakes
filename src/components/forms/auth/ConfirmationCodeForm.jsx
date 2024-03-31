@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  useTheme,
+  CircularProgress,
+} from "@mui/material";
 import { useFormik } from "formik";
 import { AccountContext } from "../../../context/AccountContext";
 import { confirmationCodeSchema } from "../../../schema";
@@ -12,16 +19,19 @@ export function matchIsNumeric(text) {
   const isString = _.isString(text);
   return (isNumber || (isString && text !== "")) && !isNaN(Number(text));
 }
-
 const validateChar = (value, index) => {
-  console.log("validateChar", value, index);
   return matchIsNumeric(value);
 };
 
 export default function ConfirmationCodeForm() {
-  const { setConfirmationCodeModalOpen, setLoggedInModalOpen, email } =
-    useContext(AccountContext);
+  const {
+    setConfirmationCodeModalOpen,
+    setLoggedInModalOpen,
+    email,
+    password,
+  } = useContext(AccountContext);
   const postConfirmationCodeQuery = usePostConfirmationCode();
+  const theme = useTheme();
 
   const {
     mutateAsync: postConfirmationCode,
@@ -45,7 +55,7 @@ export default function ConfirmationCodeForm() {
     onSubmit: async (values) => {
       try {
         const response = await postConfirmationCode({
-          userCreds: { ...values, email: email },
+          userCreds: { ...values, email: email, password: password },
         });
         setConfirmationCodeModalOpen(false);
         setLoggedInModalOpen(true);
@@ -59,8 +69,19 @@ export default function ConfirmationCodeForm() {
     <Box
       component="form"
       sx={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}
-      onSubmit={formik.handleSubmit}
     >
+      {isPostConfirmationCodeLoading && (
+        <CircularProgress sx={{ display: "block", margin: "1rem auto" }} />
+      )}
+      {postConfirmationCodeError && (
+        <Typography
+          marginBottom={"1rem"}
+          sx={{ color: theme.palette.error.main }}
+          textAlign={"center"}
+        >
+          {postConfirmationCodeError?.response?.data?.detail}
+        </Typography>
+      )}
       <MuiOtpInput
         value={formik.values.confirmation_code}
         onChange={(value) => {

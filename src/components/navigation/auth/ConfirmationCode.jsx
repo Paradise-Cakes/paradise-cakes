@@ -3,11 +3,19 @@ import { Container, Box, Typography, useTheme, Modal } from "@mui/material";
 import { AccountContext } from "../../../context/AccountContext";
 import { CgClose } from "react-icons/cg";
 import ConfirmationCodeForm from "../../forms/auth/ConfirmationCodeForm";
+import { usePostResendConfirmationCode } from "../../../hooks/auth/AuthHook";
 
 export default function ConfirmationCode() {
   const theme = useTheme();
   const { confirmationCodeModalOpen, setConfirmationCodeModalOpen, email } =
     useContext(AccountContext);
+
+  const postResendConfirmationCodeQuery = usePostResendConfirmationCode();
+  const {
+    mutateAsync: postResendConfirmationCode,
+    isLoading: isPostResendConfirmationCodeLoading,
+    error: postResendConfirmationCodeError,
+  } = postResendConfirmationCodeQuery;
 
   const toggleConfirmationCodeModal = (open) => (event) => {
     if (
@@ -66,7 +74,18 @@ export default function ConfirmationCode() {
           <ConfirmationCodeForm />
           <Typography variant="body2" marginTop={"1rem"} textAlign={"center"}>
             Didn't receive a code?{" "}
-            <span style={{ color: "blue", cursor: "pointer" }}>
+            <span
+              style={{ color: "blue", cursor: "pointer" }}
+              onClick={async () => {
+                try {
+                  await postResendConfirmationCode({
+                    email: { email: email },
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+            >
               Click to resend
             </span>
           </Typography>

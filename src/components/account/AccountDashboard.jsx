@@ -11,15 +11,29 @@ import {
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountDashboard() {
   const [value, setValue] = useState("dashboard");
-
+  const navigate = useNavigate();
   return (
-    <Container maxWidth="false" sx={{ maxWidth: "1500px" }}>
+    <Container
+      maxWidth="false"
+      sx={{
+        maxWidth: "1500px",
+      }}
+    >
       <TabContext value={value}>
-        <Grid container spacing={6}>
-          <Grid item xs={12} sm={4} md={3.5}>
+        <Grid
+          container
+          justifyContent={"center"}
+          spacing={5}
+          sx={{
+            paddingLeft: "2rem",
+            paddingRight: "2rem",
+          }}
+        >
+          <Grid item xs={12} md={4}>
             <Paper elevation={0} sx={{ padding: 4, borderRadius: "8px" }}>
               <Typography variant="h6" gutterBottom>
                 My Account
@@ -29,7 +43,6 @@ export default function AccountDashboard() {
               </Typography>
               <TabList
                 onChange={(e, newValue) => setValue(newValue)}
-                aria-label="simple tabs example"
                 sx={{ marginBottom: 2 }}
                 orientation="vertical"
                 indicatorColor="white"
@@ -48,8 +61,11 @@ export default function AccountDashboard() {
             </Paper>
           </Grid>
 
-          <Grid item xs={12} sm={8} md={8}>
-            <TabPanel value="dashboard">
+          <Grid item xs={12} md={8}>
+            <TabPanel
+              value="dashboard"
+              sx={{ paddingTop: "0", paddingRight: 0, paddingLeft: 0 }}
+            >
               <Paper
                 elevation={0}
                 sx={{ padding: 4, marginBottom: 2, borderRadius: "8px" }}
@@ -82,6 +98,24 @@ export default function AccountDashboard() {
                 <Divider sx={{ marginBottom: 2 }} />
                 <Typography>No order history</Typography>
               </Paper>
+            </TabPanel>
+            <TabPanel value="order_history">
+              <Typography variant="h5" fontWeight={1000} marginBottom={"1rem"}>
+                ORDER HISTORY
+              </Typography>
+              <Typography>
+                No previous orders found -{" "}
+                <span
+                  style={{
+                    cursor: "pointer",
+                    fontWeight: "1000",
+                    color: "blue",
+                  }}
+                  onClick={() => navigate("/")}
+                >
+                  shop today!
+                </span>
+              </Typography>
             </TabPanel>
           </Grid>
         </Grid>
