@@ -21,8 +21,10 @@ export default function SignInForm() {
   const {
     setSignInModalOpen,
     setConfirmationCodeModalOpen,
+    setLoggedInModalOpen,
     setEmail,
     setPassword,
+    setLoggedIn,
   } = useContext(AccountContext);
   const navigate = useNavigate();
   const postSignInQuery = usePostSignIn();
@@ -64,6 +66,8 @@ export default function SignInForm() {
           userCreds: values,
         });
         setSignInModalOpen(false);
+        setLoggedInModalOpen(true);
+        setLoggedIn(true);
         navigate("/");
       } catch (error) {
         console.error(error);

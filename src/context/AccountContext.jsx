@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 export const AccountContext = createContext();
 
 export const AccountProvider = ({ children }) => {
@@ -9,6 +9,16 @@ export const AccountProvider = ({ children }) => {
   const [loggedInModalOpen, setLoggedInModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(
+    localStorage.getItem("loggedIn") !== null
+      ? JSON.parse(localStorage.getItem("loggedIn"))
+      : false
+  );
+
+  useEffect(() => {
+    localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
+  }, [loggedIn]);
+
   return (
     <AccountContext.Provider
       value={{
@@ -24,6 +34,8 @@ export const AccountProvider = ({ children }) => {
         setEmail,
         password,
         setPassword,
+        loggedIn,
+        setLoggedIn,
       }}
     >
       {children}
