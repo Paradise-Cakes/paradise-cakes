@@ -57,3 +57,12 @@ export const usePostForgotPassword = () => {
     }
   );
 };
+
+export const usePostLogout = () => {
+  const queryClient = useQueryClient();
+  return useMutation(() => paradiseCakesApi.postLogout, {
+    onSuccess: () => {
+      console.log("LOGGED OUT");
+    },
+  });
+};

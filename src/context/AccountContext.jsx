@@ -14,10 +14,28 @@ export const AccountProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("loggedIn"))
       : false
   );
+  const [firstName, setFirstName] = useState(
+    localStorage.getItem("firstName") !== null
+      ? JSON.parse(localStorage.getItem("firstName"))
+      : ""
+  );
+  const [lastName, setLastName] = useState(
+    localStorage.getItem("lastName") !== null
+      ? JSON.parse(localStorage.getItem("lastName"))
+      : ""
+  );
 
   useEffect(() => {
     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
   }, [loggedIn]);
+
+  useEffect(() => {
+    localStorage.setItem("firstName", JSON.stringify(firstName));
+  }, [firstName]);
+
+  useEffect(() => {
+    localStorage.setItem("lastName", JSON.stringify(lastName));
+  }, [lastName]);
 
   return (
     <AccountContext.Provider
@@ -36,6 +54,10 @@ export const AccountProvider = ({ children }) => {
         setPassword,
         loggedIn,
         setLoggedIn,
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
       }}
     >
       {children}

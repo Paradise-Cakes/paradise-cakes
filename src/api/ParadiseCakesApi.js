@@ -61,3 +61,8 @@ export const postForgotPassword = async (payload) => {
   });
   return response;
 };
+
+export const postLogout = async () => {
+  const response = await axios.post(`${API_URL}/logout`);
+  return response;
+};

@@ -91,7 +91,20 @@ export default function ConfirmationCodeForm() {
         autoFocus
         onComplete={formik.handleSubmit}
         validateChar={validateChar}
+        TextFieldsProps={{
+          type: "tel",
+        }}
       />
+      <Button
+        fullWidth
+        variant="contained"
+        color="primary"
+        onClick={formik.handleSubmit}
+        sx={{ marginTop: "1rem" }}
+        type="submit"
+      >
+        Confirm
+      </Button>
     </Box>
   );
 }

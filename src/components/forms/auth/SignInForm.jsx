@@ -25,6 +25,8 @@ export default function SignInForm() {
     setEmail,
     setPassword,
     setLoggedIn,
+    setFirstName,
+    setLastName,
   } = useContext(AccountContext);
   const navigate = useNavigate();
   const postSignInQuery = usePostSignIn();
@@ -65,9 +67,12 @@ export default function SignInForm() {
         const response = await postSignIn({
           userCreds: values,
         });
+        console.log(response);
         setSignInModalOpen(false);
         setLoggedInModalOpen(true);
         setLoggedIn(true);
+        setFirstName(response.data.given_name);
+        setLastName(response.data.family_name);
         navigate("/");
       } catch (error) {
         console.error(error);

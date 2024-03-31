@@ -134,6 +134,7 @@ export default function Navbar() {
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
+                onClick={() => navigate("/")}
               />
             </div>
           </Hidden>
