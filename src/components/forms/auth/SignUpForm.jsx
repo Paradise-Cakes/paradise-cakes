@@ -136,7 +136,6 @@ export default function SignUpForm() {
       <TextField
         fullWidth
         label="email"
-        type="email"
         onBlur={formik.handleBlur}
         error={
           (formik.touched.email && Boolean(formik.errors.email)) ||

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -16,6 +16,8 @@ import {
 } from "../../../hooks/auth/AuthHook";
 import { useNavigate } from "react-router-dom";
 import { AccountContext } from "../../../context/AccountContext";
+import { GoEye } from "react-icons/go";
+import { GoEyeClosed } from "react-icons/go";
 
 export default function SignInForm() {
   const {
@@ -37,7 +39,7 @@ export default function SignInForm() {
     isLoading: isPostSignInLoading,
     error: postSignInError,
   } = postSignInQuery;
-
+  const [passwordType, setPasswordType] = useState("password");
   const {
     mutateAsync: postResendConfirmationCode,
     isLoading: isPostResendConfirmationCodeLoading,
@@ -143,7 +145,7 @@ export default function SignInForm() {
       <TextField
         fullWidth
         label="password"
-        type="password"
+        type={passwordType}
         onBlur={formik.handleBlur}
         error={
           (formik.touched.password && Boolean(formik.errors.password)) ||
@@ -165,6 +167,28 @@ export default function SignInForm() {
         }}
         value={formik.values.password}
         onChange={(e) => formik.setFieldValue("password", e.target.value)}
+        InputProps={{
+          endAdornment: (
+            <Box
+              onClick={() =>
+                setPasswordType(
+                  passwordType === "password" ? "text" : "password"
+                )
+              }
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {passwordType === "password" ? (
+                <GoEyeClosed style={{ fontSize: "1.5rem" }} />
+              ) : (
+                <GoEye style={{ fontSize: "1.5rem" }} />
+              )}
+            </Box>
+          ),
+        }}
       />
       <LoadingButton isLoading={isPostSignInLoading}>Sign In</LoadingButton>
     </Box>
