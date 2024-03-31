@@ -23,12 +23,15 @@ export default function AccountDashboard() {
   const postLogoutQuery = usePostLogout();
   const { mutateAsync: postLogout, isLoading: postLogoutLoading } =
     postLogoutQuery;
-  const { setLoggedIn, firstName, lastName } = useContext(AccountContext);
+  const { setLoggedIn, firstName, lastName, setFirstName, setLastName } =
+    useContext(AccountContext);
 
   const handleLogout = async () => {
     try {
       await postLogout();
       setLoggedIn(false);
+      setFirstName("");
+      setLastName("");
       navigate("/");
     } catch (error) {
       console.error(error);

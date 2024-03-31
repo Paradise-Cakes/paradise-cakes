@@ -29,6 +29,9 @@ export default function ConfirmationCodeForm() {
     setLoggedInModalOpen,
     email,
     password,
+    setFirstName,
+    setLastName,
+    setLoggedIn,
   } = useContext(AccountContext);
   const postConfirmationCodeQuery = usePostConfirmationCode();
   const theme = useTheme();
@@ -57,6 +60,10 @@ export default function ConfirmationCodeForm() {
         const response = await postConfirmationCode({
           userCreds: { ...values, email: email, password: password },
         });
+        console.log(response);
+        setFirstName(response.data.given_name);
+        setLastName(response.data.family_name);
+        setLoggedIn(true);
         setConfirmationCodeModalOpen(false);
         setLoggedInModalOpen(true);
       } catch (error) {
