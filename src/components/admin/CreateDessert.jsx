@@ -1,17 +1,21 @@
 import React from "react";
-import { Grid, TextField, Typography } from "@mui/material";
+import {Box, TextField, Typography, Container} from "@mui/material";
 
 export default function CreateDessert() {
-  return (
-    <Grid container spacing={2} my={12} mx={5}>
-      <Grid item xs={12}>
-        <Typography variant="h4">Create Dessert</Typography>
-      </Grid>
-      <Grid item container spacing={2}>
-        <Grid item xs={4}>
-          <TextField label="Name" fullWidth />
-        </Grid>
-      </Grid>
-    </Grid>
-  );
+	return (
+		<Container sx={{border: "2px solid red"}}>
+			<Box px={8} sx={{paddingTop: {xs: "1rem"}}}>
+				<Typography
+					variant="h4"
+					sx={{textAlign: {xs: "center", sm: "start"}}}
+				>
+					New Dessert
+				</Typography>
+				<Box component={"form"} sx={{maxWidth: "400px"}}>
+					<TextField fullWidth label={"Name"} sx={{marginTop: "1rem"}}/>
+					<TextField fullWidth label={"Description"} multiline sx={{marginTop: "1rem"}} rows={4}/>
+				</Box>
+			</Box>
+		</Container>
+	);
 }
