@@ -4,12 +4,9 @@ import DessertForm from "../forms/dessert/DessertForm";
 
 export default function CreateDessert() {
   return (
-    <Container>
+    <Container maxWidth={"false"}>
       <Box px={8} sx={{ paddingTop: { xs: "1rem" } }}>
-        <Typography
-          variant="h4"
-          sx={{ textAlign: { xs: "center", sm: "start" } }}
-        >
+        <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
           New Dessert
         </Typography>
         <DessertForm />
