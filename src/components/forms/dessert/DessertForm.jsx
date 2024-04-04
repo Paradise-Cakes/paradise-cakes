@@ -11,10 +11,11 @@ import {
   Button,
   useTheme,
   Autocomplete,
+  Grid,
 } from "@mui/material";
 import { IoAddCircle } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import Dropzone from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 
 export default function DessertForm() {
   const [sizes, setSizes] = useState([]);
@@ -29,13 +30,19 @@ export default function DessertForm() {
           price: "",
         },
       ],
+      image_urls: [],
     },
     onSubmit: (values) => {
       console.log(values);
     },
   });
   const theme = useTheme();
-
+  const onDrop = (acceptedFiles) => {
+    // Assuming you want to keep previous files and add new ones
+    const newFiles = formik.values.image_urls.concat(acceptedFiles);
+    formik.setFieldValue("image_urls", newFiles);
+  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const handleSizeChange = (index) => (e) => {
     const updatedPrices = formik.values.prices.map((item, i) =>
       i === index ? { ...item, size: e.target.value } : item
@@ -83,18 +90,17 @@ export default function DessertForm() {
   }, [formik.values.dessert_type]);
 
   return (
-    <Box
+    <Grid
+      container
       component={"form"}
       sx={{
-        maxWidth: "1200px",
         margin: "0 auto",
+        justifyContent: { xs: "center", lg: "space-between" },
       }}
       onSubmit={formik.handleSubmit}
       display={"flex"}
-      justifyContent={"space-between"}
-      alignItems={"center"}
     >
-      <Box>
+      <Grid item lg={3} md={6} sm={8} xs={12}>
         <TextField fullWidth label={"Name"} sx={{ marginTop: "1rem" }} />
         <TextField
           fullWidth
@@ -194,44 +200,140 @@ export default function DessertForm() {
             </Box>
           ))}
         </Box>
-        <Button
-          type="submit"
-          color="success"
-          variant="contained"
+      </Grid>
+      <Grid
+        item
+        container
+        lg={9}
+        md={12}
+        sm={12}
+        sx={{
+          display: "flex",
+          marginTop: "2rem",
+          justifyContent: "center",
+        }}
+      >
+        <Grid
+          item
+          {...getRootProps()}
           sx={{
-            marginTop: "2rem",
-            width: "250px",
+            border: "2px dashed black",
+            width: "400px",
+            height: "400px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: theme.palette.grey[500],
+            },
+            marginRight: "2rem",
+            marginLeft: "2rem",
+            marginBottom: "2rem",
           }}
         >
-          ADD
-        </Button>
-      </Box>
-      <Box>
-        <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-          {({ getRootProps, getInputProps }) => (
+          <input {...getInputProps()} />
+          <Typography variant="h6">Drag and drop an image here</Typography>
+          <IoAddCircle style={{ width: "50px", height: "50px" }} />
+        </Grid>
+        <Grid
+          item
+          display={"flex"}
+          flexWrap={"wrap"}
+          alignContent={"flex-start"}
+          sx={{ width: "400px", height: "400px" }}
+        >
+          {formik.values.image_urls.length === 0 ? (
             <Box
-              {...getRootProps()}
               sx={{
-                border: "2px dashed black",
-                width: "500px",
-                height: "500px",
                 display: "flex",
-                flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                cursor: "pointer",
-                "&:hover": {
-                  backgroundColor: theme.palette.grey[500],
-                },
+                border: `5px dashed ${theme.palette.warning.main}`,
+                width: "100%",
+                height: "100%",
               }}
             >
-              <input {...getInputProps()} />
-              <Typography variant="h6">Drag and drop an image here</Typography>
-              <IoAddCircle style={{ width: "50px", height: "50px" }} />
+              <Typography variant="h6" textAlign={"center"}>
+                Upload images to display here
+              </Typography>
             </Box>
+          ) : (
+            formik.values.image_urls.map((file, index) => (
+              <Box
+                key={index}
+                sx={{
+                  position: "relative",
+                  borderRadius: "12px",
+                  marginRight: "1rem",
+                  width: "150px",
+                  height: "150px",
+                  marginBottom: "5rem",
+                }}
+              >
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={file.name}
+                  style={{ width: "150px", height: "150px", display: "block" }}
+                />
+                <IoCloseCircleSharp
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    right: "0",
+                    width: "30px",
+                    height: "30px",
+                    color: theme.palette.error.main,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    const newFiles = formik.values.image_urls.filter(
+                      (item, i) => i !== index && item
+                    );
+                    formik.setFieldValue("image_urls", newFiles);
+                  }}
+                />
+                <FormControl fullWidth>
+                  <Select
+                    labelId="img-order-label"
+                    value={index}
+                    sx={{ marginTop: "0.5rem" }}
+                    onChange={(e) => {
+                      const newIndex = e.target.value;
+                      const newFiles = formik.values.image_urls.map((item, i) =>
+                        i === index
+                          ? formik.values.image_urls[newIndex]
+                          : i === newIndex
+                          ? file
+                          : item
+                      );
+                      formik.setFieldValue("image_urls", newFiles);
+                    }}
+                  >
+                    {formik.values.image_urls.map((_, i) => (
+                      <MenuItem key={i} value={i}>
+                        {i + 1}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            ))
           )}
-        </Dropzone>
-      </Box>
-    </Box>
+        </Grid>
+      </Grid>
+      <Button
+        type="submit"
+        color="success"
+        variant="contained"
+        sx={{
+          marginTop: "2rem",
+          width: "250px",
+        }}
+      >
+        ADD
+      </Button>
+    </Grid>
   );
 }
