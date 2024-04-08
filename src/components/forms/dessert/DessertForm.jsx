@@ -12,14 +12,29 @@ import {
   useTheme,
   Autocomplete,
   Grid,
+  Chip
 } from "@mui/material";
 import { IoAddCircle } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
+import { usePostDessertImage, usePostDessert } from "../../../hooks/dessert/DessertHook";
+import {useNavigate} from "react-router-dom";
 
 export default function DessertForm() {
+  const navigate = useNavigate();
   const [sizes, setSizes] = useState([]);
-  const formik = useFormik({
+  const [dessertId, setDessertID] = useState();
+  const {
+    mutateAsync: postDessertImage,
+    isLoading: isPostDessertImageLoading,
+    error: postDessertImageError,
+  } = usePostDessertImage(dessertId);
+  const {
+    mutateAsync: postDessert,
+    isLoading: isPostDessertLoading,
+    error: postDessertError,
+  } = usePostDessert()
+  const dessertForm = useFormik({
     initialValues: {
       name: "",
       description: "",
@@ -27,57 +42,90 @@ export default function DessertForm() {
       prices: [
         {
           size: "",
-          price: "",
+          base: "",
         },
       ],
+      ingredients: [],
+    },
+    onSubmit: async (values) => {
+      try {
+        console.log(values)
+        const response = await postDessert({ dessert: values });
+        navigate("/");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
+  const imagesForm = useFormik({
+    initialValues: {
       image_urls: [],
     },
     onSubmit: (values) => {
       console.log(values);
+      for (let i = 0; i < values.image_urls.length; i++) {
+        const formData = new FormData();
+        formData.append("image", values.image_urls[i]);
+        postDessertImage.mutateAsync({ dessertImage: formData });
+      }
     },
   });
+
   const theme = useTheme();
   const onDrop = (acceptedFiles) => {
     // Assuming you want to keep previous files and add new ones
-    const newFiles = formik.values.image_urls.concat(acceptedFiles);
-    formik.setFieldValue("image_urls", newFiles);
+    const newFiles = imagesForm.values.image_urls.concat(acceptedFiles);
+    imagesForm.setFieldValue("image_urls", newFiles);
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const handleSizeChange = (index) => (e) => {
-    const updatedPrices = formik.values.prices.map((item, i) =>
+    const updatedPrices = dessertForm.values.prices.map((item, i) =>
       i === index ? { ...item, size: e.target.value } : item
     );
-    formik.setFieldValue("prices", updatedPrices);
+    dessertForm.setFieldValue("prices", updatedPrices);
   };
 
   const handlePriceChange = (index) => (e) => {
-    const updatedPrices = formik.values.prices.map((item, i) =>
-      i === index ? { ...item, price: e.target.value } : item
+    const updatedPrices = dessertForm.values.prices.map((item, i) =>
+      i === index ? { ...item, base: e.target.value } : item
     );
-    formik.setFieldValue("prices", updatedPrices);
+    dessertForm.setFieldValue("prices", updatedPrices);
   };
 
   const handleAddPrice = () => {
-    formik.setFieldValue("prices", [
-      ...formik.values.prices,
+    dessertForm.setFieldValue("prices", [
+      ...dessertForm.values.prices,
       {
         size: "",
-        price: "",
+        base: "",
       },
     ]);
   };
 
   const handleRemovePrice = (index) => (e) => {
-    if (formik.values.prices.length > 1) {
-      const updatedPrices = formik.values.prices.filter(
+    if (dessertForm.values.prices.length > 1) {
+      const updatedPrices = dessertForm.values.prices.filter(
         (item, i) => i !== index && item
       );
-      formik.setFieldValue("prices", updatedPrices);
+      dessertForm.setFieldValue("prices", updatedPrices);
     }
   };
 
+  const handleKeyDownIngredient = (event, newValue) => {
+    if (event.key === 'Enter' && newValue && !dessertForm.values.ingredients.includes(newValue)) {
+      event.preventDefault();
+      dessertForm.setFieldValue('ingredients', [...dessertForm.values.ingredients, newValue]);
+    }
+  };
+
+  const handleDeleteIngredient = (itemToDelete) => {
+    const newItems = dessertForm.values.ingredients.filter((item) => item !== itemToDelete);
+    dessertForm.setFieldValue('ingredients', newItems);
+  };
+
+
   useEffect(() => {
-    const dessertType = formik.values.dessert_type;
+    const dessertType = dessertForm.values.dessert_type;
     if (dessertType === "cake") {
       setSizes(["6 inch", "8 inch", "10 inch"]);
     } else if (dessertType === "cupcake") {
@@ -87,7 +135,7 @@ export default function DessertForm() {
     } else if (dessertType === "pie") {
       setSizes(["9 inch"]);
     }
-  }, [formik.values.dessert_type]);
+  }, [dessertForm.values.dessert_type]);
 
   return (
     <Grid
@@ -97,17 +145,18 @@ export default function DessertForm() {
         margin: "0 auto",
         justifyContent: { xs: "center", lg: "space-between" },
       }}
-      onSubmit={formik.handleSubmit}
+      onSubmit={dessertForm.handleSubmit}
       display={"flex"}
     >
       <Grid item lg={3} md={6} sm={8} xs={12}>
-        <TextField fullWidth label={"Name"} sx={{ marginTop: "1rem" }} />
+        <TextField fullWidth label={"Name"} sx={{ marginTop: "1rem" }} onChange={(e) => dessertForm.setFieldValue("name", e.target.value)} />
         <TextField
           fullWidth
           label={"Description"}
           multiline
           sx={{ marginTop: "1rem" }}
           rows={4}
+          onChange={(e) => dessertForm.setFieldValue("description", e.target.value)}
         />
         <FormControl fullWidth sx={{ marginTop: "1rem" }}>
           <InputLabel id="dessert-type">Dessert Type</InputLabel>
@@ -115,9 +164,9 @@ export default function DessertForm() {
             fullWidth
             label={"Dessert Type"}
             labelId="dessert-type"
-            value={formik.values.dessert_type}
+            value={dessertForm.values.dessert_type}
             onChange={(e) =>
-              formik.setFieldValue("dessert_type", e.target.value)
+              dessertForm.setFieldValue("dessert_type", e.target.value)
             }
           >
             <MenuItem value={"cake"}>Cake</MenuItem>
@@ -133,9 +182,28 @@ export default function DessertForm() {
           freeSolo
           options={[]}
           getOptionLabel={(option) => option}
+          inputValue={dessertForm.values.currentInputValue || ""}
+          onInputChange={(event, newValue) => {
+            dessertForm.setFieldValue('currentInputValue', newValue);
+          }}
+          onKeyDown={handleKeyDownIngredient}
           renderInput={(params) => (
             <TextField {...params} variant="standard" label="Ingredients" />
           )}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip
+                variant="outlined"
+                label={option}
+                {...getTagProps({ index })}
+                onDelete={() => handleDeleteIngredient(option)}
+              />
+            ))
+          }
+          value={dessertForm.values.ingredients}
+          onChange={(event, newValue) => {
+            dessertForm.setFieldValue('ingredients', newValue);
+          }}
         />
         <Box sx={{ marginTop: "1.5rem" }}>
           <Box
@@ -156,7 +224,7 @@ export default function DessertForm() {
               onClick={handleAddPrice}
             />
           </Box>
-          {formik.values.prices.map((p, index) => (
+          {dessertForm.values.prices.map((p, index) => (
             <Box key={index} sx={{ display: "flex", alignItems: "center" }}>
               <FormControl
                 sx={{
@@ -170,7 +238,7 @@ export default function DessertForm() {
                   fullWidth
                   label={"Size"}
                   labelId="dessert-size"
-                  value={formik.values.prices[index].size}
+                  value={dessertForm.values.prices[index].size}
                   onChange={handleSizeChange(index)}
                 >
                   {sizes.map((size) => (
@@ -184,7 +252,7 @@ export default function DessertForm() {
                 label={"Price"}
                 type="tel"
                 sx={{ marginTop: "1rem", width: "150px" }}
-                value={formik.values.prices[index].price}
+                value={dessertForm.values.prices[index].base}
                 onChange={handlePriceChange(index)}
               />
               <IoCloseCircleSharp
@@ -244,7 +312,7 @@ export default function DessertForm() {
           alignContent={"flex-start"}
           sx={{ width: "400px", height: "400px" }}
         >
-          {formik.values.image_urls.length === 0 ? (
+          {imagesForm.values.image_urls.length === 0 ? (
             <Box
               sx={{
                 display: "flex",
@@ -260,7 +328,7 @@ export default function DessertForm() {
               </Typography>
             </Box>
           ) : (
-            formik.values.image_urls.map((file, index) => (
+            imagesForm.values.image_urls.map((file, index) => (
               <Box
                 key={index}
                 sx={{
@@ -288,10 +356,10 @@ export default function DessertForm() {
                     cursor: "pointer",
                   }}
                   onClick={() => {
-                    const newFiles = formik.values.image_urls.filter(
+                    const newFiles = imagesForm.values.image_urls.filter(
                       (item, i) => i !== index && item
                     );
-                    formik.setFieldValue("image_urls", newFiles);
+                    imagesForm.setFieldValue("image_urls", newFiles);
                   }}
                 />
                 <FormControl fullWidth>
@@ -301,17 +369,18 @@ export default function DessertForm() {
                     sx={{ marginTop: "0.5rem" }}
                     onChange={(e) => {
                       const newIndex = e.target.value;
-                      const newFiles = formik.values.image_urls.map((item, i) =>
+                      const newFiles = imagesForm.values.image_urls.map((item, i) =>
                         i === index
-                          ? formik.values.image_urls[newIndex]
+                          ? imagesForm.values.image_urls[newIndex]
                           : i === newIndex
                           ? file
                           : item
                       );
-                      formik.setFieldValue("image_urls", newFiles);
+                      imagesForm.setFieldValue("image_urls", newFiles);
+                      imagesForm.handleSubmit(); // Call handleSubmit function here
                     }}
                   >
-                    {formik.values.image_urls.map((_, i) => (
+                    {imagesForm.values.image_urls.map((_, i) => (
                       <MenuItem key={i} value={i}>
                         {i + 1}
                       </MenuItem>
