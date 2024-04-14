@@ -22,3 +22,22 @@ export const signInSchema = object({
 export const confirmationCodeSchema = object({
   confirmation_code: number().required(),
 });
+
+export const dessertSchema = object({
+  name: string().required(),
+  description: string().required(),
+  dessert_type: string().required("dessert type required"),
+  prices: array().of(
+    object({
+      size: string()
+        .required("size required")
+        .min(1, "At least one size is required"),
+      base: number()
+        .required("price required")
+        .min(1, "At least one price is required"),
+    })
+  ),
+  ingredients: array()
+    .of(string().required("Each ingredient must have a name"))
+    .min(1, "At least one ingredient is required"),
+});

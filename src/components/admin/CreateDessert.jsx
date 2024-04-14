@@ -6,15 +6,15 @@ export default function CreateDessert() {
   return (
     <Container
       maxWidth="xl"
-      sx={{
-        border: {
-          xs: "1px solid red",
-          sm: "1px solid blue",
-          md: "1px solid green",
-          lg: "1px solid orange",
-          xl: "1px solid purple",
-        },
-      }}
+      // sx={{
+      //   border: {
+      //     xs: "1px solid red",
+      //     sm: "1px solid blue",
+      //     md: "1px solid green",
+      //     lg: "1px solid orange",
+      //     xl: "1px solid purple",
+      //   },
+      // }}
     >
       <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>
         <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>

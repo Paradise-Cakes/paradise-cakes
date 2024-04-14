@@ -12,28 +12,33 @@ import {
   useTheme,
   Autocomplete,
   Grid,
-  Chip
+  Chip,
+  FormHelperText,
 } from "@mui/material";
 import { IoAddCircle } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
-import { usePostDessertImage, usePostDessert } from "../../../hooks/dessert/DessertHook";
-import {useNavigate} from "react-router-dom";
+import {
+  usePostDessertImage,
+  usePostDessert,
+} from "../../../hooks/dessert/DessertHook";
+import { useNavigate } from "react-router-dom";
+import { dessertSchema } from "../../../schema";
+import _ from "lodash";
 
 export default function DessertForm() {
   const navigate = useNavigate();
   const [sizes, setSizes] = useState([]);
-  const [dessertId, setDessertID] = useState();
   const {
     mutateAsync: postDessertImage,
     isLoading: isPostDessertImageLoading,
     error: postDessertImageError,
-  } = usePostDessertImage(dessertId);
+  } = usePostDessertImage();
   const {
     mutateAsync: postDessert,
     isLoading: isPostDessertLoading,
     error: postDessertError,
-  } = usePostDessert()
+  } = usePostDessert();
   const dessertForm = useFormik({
     initialValues: {
       name: "",
@@ -46,27 +51,30 @@ export default function DessertForm() {
         },
       ],
       ingredients: [],
-    },
-    onSubmit: async (values) => {
-      try {
-        console.log(values)
-        const response = await postDessert({ dessert: values });
-        navigate("/");
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  });
-  const imagesForm = useFormik({
-    initialValues: {
       image_urls: [],
     },
-    onSubmit: (values) => {
-      console.log(values);
-      for (let i = 0; i < values.image_urls.length; i++) {
-        const formData = new FormData();
-        formData.append("image", values.image_urls[i]);
-        postDessertImage.mutateAsync({ dessertImage: formData });
+    validationSchema: dessertSchema,
+    onSubmit: async (values) => {
+      try {
+        console.log(_.omit(values, ["image_urls"]));
+        const response = await postDessert({
+          dessert: _.omit(values, ["image_urls"]),
+        }).then((res) => {
+          for (let i = 0; i < values.image_urls.length; i++) {
+            console.log(values.image_urls[i]);
+            const formData = new FormData();
+            formData.append("file", values.image_urls[i]);
+            formData.append("position", i);
+            // formData.append("dessert_id", res.data.dessert_id);
+            postDessertImage({
+              dessertImageData: formData,
+              dessert_id: res.data.dessert_id,
+            });
+          }
+        });
+        // navigate("/");
+      } catch (error) {
+        console.error(error);
       }
     },
   });
@@ -74,8 +82,8 @@ export default function DessertForm() {
   const theme = useTheme();
   const onDrop = (acceptedFiles) => {
     // Assuming you want to keep previous files and add new ones
-    const newFiles = imagesForm.values.image_urls.concat(acceptedFiles);
-    imagesForm.setFieldValue("image_urls", newFiles);
+    const newFiles = dessertForm.values.image_urls.concat(acceptedFiles);
+    dessertForm.setFieldValue("image_urls", newFiles);
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const handleSizeChange = (index) => (e) => {
@@ -112,17 +120,25 @@ export default function DessertForm() {
   };
 
   const handleKeyDownIngredient = (event, newValue) => {
-    if (event.key === 'Enter' && newValue && !dessertForm.values.ingredients.includes(newValue)) {
+    if (
+      event.key === "Enter" &&
+      newValue &&
+      !dessertForm.values.ingredients.includes(newValue)
+    ) {
       event.preventDefault();
-      dessertForm.setFieldValue('ingredients', [...dessertForm.values.ingredients, newValue]);
+      dessertForm.setFieldValue("ingredients", [
+        ...dessertForm.values.ingredients,
+        newValue,
+      ]);
     }
   };
 
   const handleDeleteIngredient = (itemToDelete) => {
-    const newItems = dessertForm.values.ingredients.filter((item) => item !== itemToDelete);
-    dessertForm.setFieldValue('ingredients', newItems);
+    const newItems = dessertForm.values.ingredients.filter(
+      (item) => item !== itemToDelete
+    );
+    dessertForm.setFieldValue("ingredients", newItems);
   };
-
 
   useEffect(() => {
     const dessertType = dessertForm.values.dessert_type;
@@ -149,14 +165,32 @@ export default function DessertForm() {
       display={"flex"}
     >
       <Grid item lg={3} md={6} sm={8} xs={12}>
-        <TextField fullWidth label={"Name"} sx={{ marginTop: "1rem" }} onChange={(e) => dessertForm.setFieldValue("name", e.target.value)} />
+        <TextField
+          fullWidth
+          label={"Name"}
+          sx={{ marginTop: "1rem" }}
+          onChange={(e) => dessertForm.setFieldValue("name", e.target.value)}
+          onBlur={dessertForm.handleBlur}
+          error={dessertForm.touched.name && Boolean(dessertForm.errors.name)}
+          helperText={dessertForm.touched.name && dessertForm.errors.name}
+        />
         <TextField
           fullWidth
           label={"Description"}
           multiline
           sx={{ marginTop: "1rem" }}
           rows={4}
-          onChange={(e) => dessertForm.setFieldValue("description", e.target.value)}
+          onChange={(e) =>
+            dessertForm.setFieldValue("description", e.target.value)
+          }
+          onBlur={dessertForm.handleBlur}
+          error={
+            dessertForm.touched.description &&
+            Boolean(dessertForm.errors.description)
+          }
+          helperText={
+            dessertForm.touched.description && dessertForm.errors.description
+          }
         />
         <FormControl fullWidth sx={{ marginTop: "1rem" }}>
           <InputLabel id="dessert-type">Dessert Type</InputLabel>
@@ -168,12 +202,23 @@ export default function DessertForm() {
             onChange={(e) =>
               dessertForm.setFieldValue("dessert_type", e.target.value)
             }
+            onBlur={dessertForm.handleBlur}
+            error={
+              dessertForm.touched.dessert_type &&
+              Boolean(dessertForm.errors.dessert_type)
+            }
           >
             <MenuItem value={"cake"}>Cake</MenuItem>
             <MenuItem value={"cupcake"}>Cupcake</MenuItem>
             <MenuItem value={"cookie"}>Cookie</MenuItem>
             <MenuItem value={"pie"}>Pie</MenuItem>
           </Select>
+          {dessertForm.touched.dessert_type &&
+            dessertForm.errors.dessert_type && (
+              <FormHelperText error>
+                {dessertForm.errors.dessert_type}
+              </FormHelperText>
+            )}
         </FormControl>
         <Autocomplete
           sx={{ marginTop: "1rem" }}
@@ -184,12 +229,26 @@ export default function DessertForm() {
           getOptionLabel={(option) => option}
           inputValue={dessertForm.values.currentInputValue || ""}
           onInputChange={(event, newValue) => {
-            dessertForm.setFieldValue('currentInputValue', newValue);
+            dessertForm.setFieldValue("currentInputValue", newValue);
           }}
           onKeyDown={handleKeyDownIngredient}
           renderInput={(params) => (
-            <TextField {...params} variant="standard" label="Ingredients" />
+            <TextField
+              {...params}
+              variant="standard"
+              label="Ingredients"
+              placeholder="Add ingredient"
+              error={
+                dessertForm.touched.ingredients &&
+                Boolean(dessertForm.errors.ingredients)
+              }
+              helperText={
+                dessertForm.touched.ingredients &&
+                dessertForm.errors.ingredients
+              }
+            />
           )}
+          onBlur={dessertForm.handleBlur}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <Chip
@@ -202,7 +261,7 @@ export default function DessertForm() {
           }
           value={dessertForm.values.ingredients}
           onChange={(event, newValue) => {
-            dessertForm.setFieldValue('ingredients', newValue);
+            dessertForm.setFieldValue("ingredients", newValue);
           }}
         />
         <Box sx={{ marginTop: "1.5rem" }}>
@@ -232,6 +291,10 @@ export default function DessertForm() {
                   width: "150px",
                   marginRight: "1.5rem",
                 }}
+                error={Boolean(
+                  dessertForm.touched.prices?.[index]?.size &&
+                    dessertForm.errors.prices?.[index]?.size
+                )}
               >
                 <InputLabel id="dessert-size">Size</InputLabel>
                 <Select
@@ -240,6 +303,9 @@ export default function DessertForm() {
                   labelId="dessert-size"
                   value={dessertForm.values.prices[index].size}
                   onChange={handleSizeChange(index)}
+                  onBlur={() =>
+                    dessertForm.setFieldTouched(`prices[${index}].size`)
+                  }
                 >
                   {sizes.map((size) => (
                     <MenuItem key={size} value={size}>
@@ -247,6 +313,12 @@ export default function DessertForm() {
                     </MenuItem>
                   ))}
                 </Select>
+                {dessertForm.touched?.prices?.[index]?.size &&
+                  dessertForm.errors?.prices?.[index]?.size && (
+                    <FormHelperText error>
+                      {dessertForm.errors?.prices[index]?.size}
+                    </FormHelperText>
+                  )}
               </FormControl>
               <TextField
                 label={"Price"}
@@ -254,6 +326,17 @@ export default function DessertForm() {
                 sx={{ marginTop: "1rem", width: "150px" }}
                 value={dessertForm.values.prices[index].base}
                 onChange={handlePriceChange(index)}
+                onBlur={() =>
+                  dessertForm.setFieldTouched(`prices[${index}].base`)
+                }
+                error={Boolean(
+                  dessertForm.touched.prices?.[index]?.base &&
+                    dessertForm.errors.prices?.[index]?.base
+                )}
+                helperText={
+                  dessertForm.touched.prices?.[index]?.base &&
+                  dessertForm.errors.prices?.[index]?.base
+                }
               />
               <IoCloseCircleSharp
                 style={{
@@ -312,7 +395,7 @@ export default function DessertForm() {
           alignContent={"flex-start"}
           sx={{ width: "400px", height: "400px" }}
         >
-          {imagesForm.values.image_urls.length === 0 ? (
+          {dessertForm.values.image_urls.length === 0 ? (
             <Box
               sx={{
                 display: "flex",
@@ -328,7 +411,7 @@ export default function DessertForm() {
               </Typography>
             </Box>
           ) : (
-            imagesForm.values.image_urls.map((file, index) => (
+            dessertForm.values.image_urls.map((file, index) => (
               <Box
                 key={index}
                 sx={{
@@ -356,10 +439,10 @@ export default function DessertForm() {
                     cursor: "pointer",
                   }}
                   onClick={() => {
-                    const newFiles = imagesForm.values.image_urls.filter(
+                    const newFiles = dessertForm.values.image_urls.filter(
                       (item, i) => i !== index && item
                     );
-                    imagesForm.setFieldValue("image_urls", newFiles);
+                    dessertForm.setFieldValue("image_urls", newFiles);
                   }}
                 />
                 <FormControl fullWidth>
@@ -369,18 +452,19 @@ export default function DessertForm() {
                     sx={{ marginTop: "0.5rem" }}
                     onChange={(e) => {
                       const newIndex = e.target.value;
-                      const newFiles = imagesForm.values.image_urls.map((item, i) =>
-                        i === index
-                          ? imagesForm.values.image_urls[newIndex]
-                          : i === newIndex
-                          ? file
-                          : item
+                      const newFiles = dessertForm.values.image_urls.map(
+                        (item, i) =>
+                          i === index
+                            ? dessertForm.values.image_urls[newIndex]
+                            : i === newIndex
+                            ? file
+                            : item
                       );
-                      imagesForm.setFieldValue("image_urls", newFiles);
-                      imagesForm.handleSubmit(); // Call handleSubmit function here
+                      dessertForm.setFieldValue("image_urls", newFiles);
+                      // dessertForm.handleSubmit(); // Call handleSubmit function here
                     }}
                   >
-                    {imagesForm.values.image_urls.map((_, i) => (
+                    {dessertForm.values.image_urls.map((_, i) => (
                       <MenuItem key={i} value={i}>
                         {i + 1}
                       </MenuItem>
