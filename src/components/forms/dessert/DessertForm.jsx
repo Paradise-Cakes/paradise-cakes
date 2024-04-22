@@ -25,6 +25,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { dessertSchema } from "../../../schema";
 import _ from "lodash";
+import axios from "axios";
 
 export default function DessertForm() {
   const navigate = useNavigate();
@@ -56,25 +57,39 @@ export default function DessertForm() {
     validationSchema: dessertSchema,
     onSubmit: async (values) => {
       try {
-        console.log(_.omit(values, ["image_urls"]));
-        const response = await postDessert({
+        const dessertResponse = await postDessert({
           dessert: _.omit(values, ["image_urls"]),
-        }).then((res) => {
-          for (let i = 0; i < values.image_urls.length; i++) {
-            console.log(values.image_urls[i]);
-            const formData = new FormData();
-            formData.append("file", values.image_urls[i]);
-            formData.append("position", i);
-            // formData.append("dessert_id", res.data.dessert_id);
-            postDessertImage({
-              dessertImageData: formData,
-              dessert_id: res.data.dessert_id,
-            });
-          }
         });
+
+        for (let i = 0; i < values.image_urls.length; i++) {
+          console.log(values.image_urls[i].type);
+          const imageResponse = await postDessertImage({
+            dessert_id: dessertResponse.data.dessert_id,
+            dessertImageData: {
+              file_type: values.image_urls[i].type,
+              position: i + 1,
+            },
+          });
+
+          let uploadUrl = imageResponse.data.upload_url;
+          try {
+            const uploadResponse = await axios.put(
+              uploadUrl,
+              values.image_urls[i],
+              {
+                headers: {
+                  "Content-Type": values.image_urls[i].type,
+                },
+              }
+            );
+            console.log(uploadResponse);
+          } catch (uploadError) {
+            console.error("Upload error:", uploadError);
+          }
+        }
         // navigate("/");
       } catch (error) {
-        console.error(error);
+        console.error("Error during submission:", error);
       }
     },
   });

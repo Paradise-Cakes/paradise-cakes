@@ -70,21 +70,17 @@ export const postLogout = async () => {
 export const postDessertImage = async (dessert_id, payload) => {
   const response = await axios.post(
     `${API_URL}/desserts/${dessert_id}/images`,
-    payload,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
+    payload
   );
   return response;
 };
 
 export const postDessert = async (payload) => {
-  const response = await axios.post(`${API_URL}/desserts`, payload, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await axios.post(`${API_URL}/desserts`, payload);
+  return response;
+};
+
+export const getDessertImagesById = async (dessert_id) => {
+  const response = await axios.get(`${API_URL}/desserts/${dessert_id}/images`);
   return response;
 };

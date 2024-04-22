@@ -33,3 +33,13 @@ export const usePostDessert = () => {
     onSuccess: () => console.log("SUCCESS"),
   });
 };
+
+export const getDessertImagesById = (dessert_id) => {
+  return useQuery(
+    ["dessert_images", dessert_id],
+    () => getDessertImagesById(dessert_id),
+    {
+      select: (data) => data.data,
+    }
+  );
+};
