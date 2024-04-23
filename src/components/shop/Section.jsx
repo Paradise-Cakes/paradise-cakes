@@ -29,9 +29,9 @@ export default function Section({
     if (isGetSectionSuccess) {
       const preloadPromises = items?.map((item) => {
         // If there are image URLs, use Promise.race to preload the first image
-        if (item?.image_urls?.length) {
+        if (item?.images?.length) {
           return Promise.race(
-            item.image_urls.map((img) => preloadImage(img.uri))
+            item?.images?.map((img) => preloadImage(img.url))
           );
         }
         return Promise.resolve(); // Return a resolved promise if no image URLs
@@ -109,11 +109,12 @@ export default function Section({
                 md={5}
                 justifyContent={"center"}
               >
+                {console.log(item)}
                 <Dessert
                   id={item?.dessert_id}
                   name={item?.name}
                   description={item?.description}
-                  image_url={item?.image_urls[0].uri}
+                  image_url={item?.images[0]?.url}
                   isCoverImageLoaded={coverImageLoaded}
                 />
               </Grid>
