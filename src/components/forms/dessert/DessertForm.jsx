@@ -27,7 +27,7 @@ import { dessertSchema } from "../../../schema";
 import _ from "lodash";
 import axios from "axios";
 
-export default function DessertForm() {
+export default function DessertForm(dessert, onSubmit) {
   const navigate = useNavigate();
   const [sizes, setSizes] = useState([]);
   const {
@@ -42,16 +42,16 @@ export default function DessertForm() {
   } = usePostDessert();
   const dessertForm = useFormik({
     initialValues: {
-      name: "",
-      description: "",
-      dessert_type: "",
-      prices: [
+      name: dessert?.name || "",
+      description: dessert?.description || "",
+      dessert_type: dessert?.dessert_type || "",
+      prices: dessert?.prices || [
         {
           size: "",
           base: "",
         },
       ],
-      ingredients: [],
+      ingredients: dessert?.ingredients || [],
       image_urls: [],
     },
     validationSchema: dessertSchema,
@@ -62,7 +62,7 @@ export default function DessertForm() {
         });
 
         for (let i = 0; i < values.image_urls.length; i++) {
-          console.log(values.image_urls[i].type);
+          console.log(values.image_urls[i]);
           const imageResponse = await postDessertImage({
             dessert_id: dessertResponse.data.dessert_id,
             dessertImageData: {

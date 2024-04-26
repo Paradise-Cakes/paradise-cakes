@@ -107,8 +107,8 @@ export default function DessertDetail() {
 
   // Effect to preload images once data is fetched
   useEffect(() => {
-    if (isGetDessertSuccess && dessert?.image_urls && !imagesLoaded) {
-      Promise.all(dessert?.image_urls.map((img) => preloadImage(img.uri)))
+    if (isGetDessertSuccess && dessert?.images && !imagesLoaded) {
+      Promise.all(dessert?.images.map((img) => preloadImage(img.url)))
         .then(() => setImagesLoaded(true))
         .catch((error) => console.error("Error preloading images", error));
     }
@@ -128,10 +128,7 @@ export default function DessertDetail() {
       ) : (
         <Grid container justifyContent="center">
           <Grid item xs={12} sm={9} md={7}>
-            <Carousel
-              images={dessert.image_urls}
-              areImagesLoaded={imagesLoaded}
-            />
+            <Carousel images={dessert.images} areImagesLoaded={imagesLoaded} />
           </Grid>
           <Grid item my={6} xs={10} md={7} lg={4}>
             <Box>

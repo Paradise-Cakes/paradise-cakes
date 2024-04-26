@@ -35,8 +35,8 @@ export default function Carousel({ images, areImagesLoaded }) {
           {areImagesLoaded
             ? images?.map((i, index) => (
                 <img
-                  key={i.uri}
-                  src={i.uri}
+                  key={i.image_id}
+                  src={i.url}
                   style={{
                     borderRadius: "12px",
                     margin: "8px",
@@ -55,7 +55,7 @@ export default function Carousel({ images, areImagesLoaded }) {
               ))
             : images?.map((i, index) => (
                 <Skeleton
-                  key={i.uri}
+                  key={i.url}
                   variant="rectangular"
                   width="100%"
                   sx={{ pt: "100%", margin: "8px", borderRadius: "12px" }}
@@ -73,7 +73,7 @@ export default function Carousel({ images, areImagesLoaded }) {
       >
         {areImagesLoaded ? (
           <img
-            src={images[currentImageIndex]?.uri}
+            src={images[currentImageIndex]?.url}
             style={{ borderRadius: "12px", maxWidth: "100%", height: "auto" }}
             alt="cake"
           />

@@ -4,18 +4,7 @@ import DessertForm from "../forms/dessert/DessertForm";
 
 export default function CreateDessert() {
   return (
-    <Container
-      maxWidth="xl"
-      // sx={{
-      //   border: {
-      //     xs: "1px solid red",
-      //     sm: "1px solid blue",
-      //     md: "1px solid green",
-      //     lg: "1px solid orange",
-      //     xl: "1px solid purple",
-      //   },
-      // }}
-    >
+    <Container maxWidth="xl">
       <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>
         <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
           New Dessert

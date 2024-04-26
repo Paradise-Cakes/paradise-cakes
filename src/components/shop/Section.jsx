@@ -75,7 +75,6 @@ export default function Section({
             {description}
           </Typography>
         </Grid>
-        {/* <ImageSlider items={items} /> */}
         {isSectionLoading ? (
           <Box
             sx={{
