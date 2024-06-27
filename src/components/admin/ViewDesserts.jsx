@@ -29,6 +29,7 @@ export default function ViewDesserts() {
     isLoading: isGetPiesLoading,
     isSuccess: isGetPiesSuccess,
   } = getPiesQuery;
+  console.log(cakes);
   return (
     <Container maxWidth="xl">
       <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>

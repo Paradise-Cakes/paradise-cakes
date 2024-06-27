@@ -21,6 +21,7 @@ import ConfirmationCode from "./components/navigation/auth/ConfirmationCode";
 import LoggedInModal from "./components/navigation/auth/LoggedInModal";
 import AccountDashboard from "./components/account/AccountDashboard";
 import ViewDesserts from "./components/admin/ViewDesserts";
+import EditDessert from "./components/admin/EditDessert";
 
 const queryClient = new QueryClient();
 
@@ -52,8 +53,12 @@ function App() {
                   <Route path="/" element={<Shop />} />
                   <Route path="/about-me" element={<About />} />
                   <Route
-                    path="/admin/create-dessert"
+                    path="/admin/desserts/create"
                     element={<CreateDessert />}
+                  />
+                  <Route
+                    path="/admin/edit-dessert/:dessertId"
+                    element={<EditDessert />}
                   />
                   <Route path="/admin/desserts" element={<ViewDesserts />} />
                   <Route

@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea, Skeleton, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDeleteDessert } from "../../hooks/dessert/DessertHook";
 
 export default function Dessert({
   id,
@@ -14,6 +15,12 @@ export default function Dessert({
   isCoverImageLoaded,
   inAdminView = false,
 }) {
+  const deleteDessertQuery = useDeleteDessert(id);
+  const {
+    mutateAsync: deleteDessert,
+    isLoading: isDeleteDessertLoading,
+    error: deleteDessertError,
+  } = deleteDessertQuery;
   const navigate = useNavigate();
   return (
     <Card
@@ -78,10 +85,15 @@ export default function Dessert({
             sx={{
               marginRight: "1rem",
             }}
+            onClick={(event) => navigate(`/admin/edit-dessert/${id}`)}
           >
             Edit
           </Button>
-          <Button variant="contained" color="error">
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => deleteDessert()}
+          >
             Remove
           </Button>
         </Box>

@@ -18,28 +18,11 @@ import {
 import { IoAddCircle } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
-import {
-  usePostDessertImage,
-  usePostDessert,
-} from "../../../hooks/dessert/DessertHook";
-import { useNavigate } from "react-router-dom";
 import { dessertSchema } from "../../../schema";
 import _ from "lodash";
-import axios from "axios";
 
-export default function DessertForm(dessert, onSubmit) {
-  const navigate = useNavigate();
+export default function DessertForm({ dessert, onSubmit }) {
   const [sizes, setSizes] = useState([]);
-  const {
-    mutateAsync: postDessertImage,
-    isLoading: isPostDessertImageLoading,
-    error: postDessertImageError,
-  } = usePostDessertImage();
-  const {
-    mutateAsync: postDessert,
-    isLoading: isPostDessertLoading,
-    error: postDessertError,
-  } = usePostDessert();
   const dessertForm = useFormik({
     initialValues: {
       name: dessert?.name || "",
@@ -52,53 +35,27 @@ export default function DessertForm(dessert, onSubmit) {
         },
       ],
       ingredients: dessert?.ingredients || [],
-      image_urls: [],
+      images:
+        _.map(dessert?.images, (image) => ({
+          ..._.omit(image, "file_type"),
+          type: image.file_type,
+        })) || [],
     },
     validationSchema: dessertSchema,
     onSubmit: async (values) => {
-      try {
-        const dessertResponse = await postDessert({
-          dessert: _.omit(values, ["image_urls"]),
-        });
+      const images = _.map(values.images, (image) => ({
+        ..._.omit(image, "type"),
+        file_type: image.type,
+      }));
 
-        for (let i = 0; i < values.image_urls.length; i++) {
-          console.log(values.image_urls[i]);
-          const imageResponse = await postDessertImage({
-            dessert_id: dessertResponse.data.dessert_id,
-            dessertImageData: {
-              file_type: values.image_urls[i].type,
-              position: i + 1,
-            },
-          });
-
-          let uploadUrl = imageResponse.data.upload_url;
-          try {
-            const uploadResponse = await axios.put(
-              uploadUrl,
-              values.image_urls[i],
-              {
-                headers: {
-                  "Content-Type": values.image_urls[i].type,
-                },
-              }
-            );
-            console.log(uploadResponse);
-          } catch (uploadError) {
-            console.error("Upload error:", uploadError);
-          }
-        }
-        // navigate("/");
-      } catch (error) {
-        console.error("Error during submission:", error);
-      }
+      onSubmit({ ...values, images });
     },
   });
 
   const theme = useTheme();
   const onDrop = (acceptedFiles) => {
-    // Assuming you want to keep previous files and add new ones
-    const newFiles = dessertForm.values.image_urls.concat(acceptedFiles);
-    dessertForm.setFieldValue("image_urls", newFiles);
+    const newFiles = dessertForm.values?.images?.concat(acceptedFiles);
+    dessertForm.setFieldValue("images", newFiles);
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const handleSizeChange = (index) => (e) => {
@@ -188,6 +145,7 @@ export default function DessertForm(dessert, onSubmit) {
           onBlur={dessertForm.handleBlur}
           error={dessertForm.touched.name && Boolean(dessertForm.errors.name)}
           helperText={dessertForm.touched.name && dessertForm.errors.name}
+          value={dessertForm.values.name}
         />
         <TextField
           fullWidth
@@ -206,6 +164,7 @@ export default function DessertForm(dessert, onSubmit) {
           helperText={
             dessertForm.touched.description && dessertForm.errors.description
           }
+          value={dessertForm.values.description}
         />
         <FormControl fullWidth sx={{ marginTop: "1rem" }}>
           <InputLabel id="dessert-type">Dessert Type</InputLabel>
@@ -410,7 +369,7 @@ export default function DessertForm(dessert, onSubmit) {
           alignContent={"flex-start"}
           sx={{ width: "400px", height: "400px" }}
         >
-          {dessertForm.values.image_urls.length === 0 ? (
+          {dessertForm.values?.images?.length === 0 ? (
             <Box
               sx={{
                 display: "flex",
@@ -426,82 +385,99 @@ export default function DessertForm(dessert, onSubmit) {
               </Typography>
             </Box>
           ) : (
-            dessertForm.values.image_urls.map((file, index) => (
-              <Box
-                key={index}
-                sx={{
-                  position: "relative",
-                  borderRadius: "12px",
-                  marginRight: "1rem",
-                  width: "150px",
-                  height: "150px",
-                  marginBottom: "5rem",
-                }}
-              >
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt={file.name}
-                  style={{ width: "150px", height: "150px", display: "block" }}
-                />
-                <IoCloseCircleSharp
-                  style={{
-                    position: "absolute",
-                    top: "0",
-                    right: "0",
-                    width: "30px",
-                    height: "30px",
-                    color: theme.palette.error.main,
-                    cursor: "pointer",
+            dessertForm.values?.images?.map((file, index) => {
+              console.log(file);
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    position: "relative",
+                    borderRadius: "12px",
+                    marginRight: "1rem",
+                    width: "150px",
+                    height: "150px",
+                    marginBottom: "5rem",
                   }}
-                  onClick={() => {
-                    const newFiles = dessertForm.values.image_urls.filter(
-                      (item, i) => i !== index && item
-                    );
-                    dessertForm.setFieldValue("image_urls", newFiles);
-                  }}
-                />
-                <FormControl fullWidth>
-                  <Select
-                    labelId="img-order-label"
-                    value={index}
-                    sx={{ marginTop: "0.5rem" }}
-                    onChange={(e) => {
-                      const newIndex = e.target.value;
-                      const newFiles = dessertForm.values.image_urls.map(
-                        (item, i) =>
-                          i === index
-                            ? dessertForm.values.image_urls[newIndex]
-                            : i === newIndex
-                            ? file
-                            : item
-                      );
-                      dessertForm.setFieldValue("image_urls", newFiles);
-                      // dessertForm.handleSubmit(); // Call handleSubmit function here
+                >
+                  <img
+                    src={file.url || URL.createObjectURL(file)}
+                    alt={file.name}
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      display: "block",
                     }}
-                  >
-                    {dessertForm.values.image_urls.map((_, i) => (
-                      <MenuItem key={i} value={i}>
-                        {i + 1}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-            ))
+                  />
+                  <IoCloseCircleSharp
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      right: "0",
+                      width: "30px",
+                      height: "30px",
+                      color: theme.palette.error.main,
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      const newFiles = dessertForm.values?.images?.filter(
+                        (item, i) => i !== index && item
+                      );
+                      dessertForm.setFieldValue("images", newFiles);
+                    }}
+                  />
+                  <FormControl fullWidth>
+                    <Select
+                      labelId="img-order-label"
+                      value={index}
+                      sx={{ marginTop: "0.5rem" }}
+                      onChange={(e) => {
+                        const newIndex = e.target.value;
+                        const newFiles = dessertForm.values?.images?.map(
+                          (item, i) =>
+                            i === index
+                              ? dessertForm.values?.images[newIndex]
+                              : i === newIndex
+                              ? file
+                              : item
+                        );
+                        dessertForm.setFieldValue("images", newFiles);
+                      }}
+                    >
+                      {dessertForm.values?.images?.map((_, i) => (
+                        <MenuItem key={i} value={i}>
+                          {i + 1}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              );
+            })
           )}
         </Grid>
       </Grid>
-      <Button
-        type="submit"
-        color="success"
-        variant="contained"
-        sx={{
-          marginTop: "2rem",
-          width: "250px",
-        }}
-      >
-        ADD
-      </Button>
+      {!dessert ? (
+        <Button
+          type="submit"
+          color="success"
+          variant="contained"
+          sx={{
+            marginTop: "2rem",
+            width: "250px",
+          }}
+        >
+          Add
+        </Button>
+      ) : (
+        <Button
+          type="submit"
+          color="info"
+          variant="contained"
+          sx={{ marginTop: "2rem", width: "250px" }}
+        >
+          Save
+        </Button>
+      )}
     </Grid>
   );
 }

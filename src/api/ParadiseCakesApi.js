@@ -80,7 +80,15 @@ export const postDessert = async (payload) => {
   return response;
 };
 
-export const getDessertImagesById = async (dessert_id) => {
-  const response = await axios.get(`${API_URL}/desserts/${dessert_id}/images`);
+export const patchDessert = async (dessert_id, payload) => {
+  const response = await axios.patch(
+    `${API_URL}/desserts/${dessert_id}`,
+    payload
+  );
+  return response;
+};
+
+export const deleteDessert = async (dessert_id) => {
+  const response = await axios.delete(`${API_URL}/desserts/${dessert_id}`);
   return response;
 };
