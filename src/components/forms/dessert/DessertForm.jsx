@@ -21,7 +21,7 @@ import { useDropzone } from "react-dropzone";
 import { dessertSchema } from "../../../schema";
 import _ from "lodash";
 
-export default function DessertForm({ dessert, onSubmit }) {
+export default function DessertForm({ dessert, onSubmitForm }) {
   const [sizes, setSizes] = useState([]);
   const dessertForm = useFormik({
     initialValues: {
@@ -36,19 +36,17 @@ export default function DessertForm({ dessert, onSubmit }) {
       ],
       ingredients: dessert?.ingredients || [],
       images:
-        _.map(dessert?.images, (image) => ({
-          ..._.omit(image, "file_type"),
-          type: image.file_type,
-        })) || [],
+        // _.map(dessert?.images, (image) => {
+        //   return {
+        //     ..._.omit(image, "file_type"),
+        //     type: image.file_type,
+        //   };
+        // }) || [],
+        dessert?.images || [],
     },
     validationSchema: dessertSchema,
     onSubmit: async (values) => {
-      const images = _.map(values.images, (image) => ({
-        ..._.omit(image, "type"),
-        file_type: image.type,
-      }));
-
-      onSubmit({ ...values, images });
+      onSubmitForm(values);
     },
   });
 
@@ -386,7 +384,6 @@ export default function DessertForm({ dessert, onSubmit }) {
             </Box>
           ) : (
             dessertForm.values?.images?.map((file, index) => {
-              console.log(file);
               return (
                 <Box
                   key={index}

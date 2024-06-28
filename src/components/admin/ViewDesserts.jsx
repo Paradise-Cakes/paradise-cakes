@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, Typography, Container, Grid } from "@mui/material";
+import { Box, Typography, Container, Grid, Button } from "@mui/material";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import Dessert from "../dessert/Dessert";
 import { CircularProgress } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function ViewDesserts() {
   const getCakesQuery = useGetDesserts("cake");
@@ -29,14 +30,22 @@ export default function ViewDesserts() {
     isLoading: isGetPiesLoading,
     isSuccess: isGetPiesSuccess,
   } = getPiesQuery;
-  console.log(cakes);
   return (
     <Container maxWidth="xl">
       <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>
         <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
           My Desserts
         </Typography>
-        <Typography variant="h6" sx={{ textAlign: "center" }} gutterBottom>
+        <Button
+          color="success"
+          variant="contained"
+          sx={{ display: "block", margin: "0 auto", width: "fit-content" }}
+          component={Link}
+          to="/admin/desserts/create"
+        >
+          New Dessert
+        </Button>
+        <Typography variant="h6" sx={{ textAlign: "left" }} gutterBottom>
           Cakes
         </Typography>
         {isGetCakesLoading ? (

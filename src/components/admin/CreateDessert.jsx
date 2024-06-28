@@ -31,25 +31,20 @@ export default function CreateDessert() {
       });
 
       for (let i = 0; i < values.images.length; i++) {
-        console.log(values.images[i]);
         const imageResponse = await postDessertImage({
           dessert_id: dessertResponse.data.dessert_id,
           dessertImageData: {
-            file_type: values.images[i].file_type,
+            file_type: values.images[i].type,
             position: i + 1,
           },
         });
-
         let uploadUrl = imageResponse.data.upload_url;
-        console.log(uploadUrl);
-        console.log(values.images[i]);
         try {
-          const uploadResponse = await axios.put(uploadUrl, values.images[i], {
+          await axios.put(uploadUrl, values.images[i], {
             headers: {
-              "Content-Type": values.images[i].file_type,
+              "Content-Type": values.images[i].type,
             },
           });
-          console.log(uploadResponse);
         } catch (uploadError) {
           console.error("Upload error:", uploadError);
         }
@@ -66,7 +61,7 @@ export default function CreateDessert() {
         <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
           New Dessert
         </Typography>
-        <DessertForm onSubmit={createDessert} />
+        <DessertForm onSubmitForm={createDessert} />
       </Box>
     </Container>
   );
