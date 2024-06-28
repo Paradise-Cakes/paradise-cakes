@@ -28,6 +28,18 @@ export default function Shop() {
         items={_.filter(desserts, { dessert_type: "cupcake" })}
         isLoading={isGetDessertsLoading}
       />
+      <Section
+        title="cookies"
+        description="Eat my cupcakes plz."
+        items={_.filter(desserts, { dessert_type: "cookie" })}
+        isLoading={isGetDessertsLoading}
+      />
+      <Section
+        title="pies"
+        description="I swear to god if you don't try my pies..."
+        items={_.filter(desserts, { dessert_type: "pie" })}
+        isLoading={isGetDessertsLoading}
+      />
     </Container>
   );
 }

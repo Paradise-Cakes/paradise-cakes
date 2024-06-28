@@ -90,7 +90,7 @@ export default function Carousel({ images, areImagesLoaded }) {
             height: "64px",
             position: "absolute",
             top: "50%",
-            right: "0px",
+            right: "50px",
             color: theme.palette.primary.main,
             cursor: "pointer",
           }}

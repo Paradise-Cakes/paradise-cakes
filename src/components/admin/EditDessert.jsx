@@ -53,7 +53,11 @@ export default function EditDessert() {
           Edit Dessert
         </Typography>
         {!isDessertLoading && (
-          <DessertForm onSubmitForm={updateDessert} dessert={dessert} />
+          <DessertForm
+            onSubmitForm={updateDessert}
+            dessert={dessert}
+            isPatchLoading={isPatchDessertLoading}
+          />
         )}
       </Box>
     </Container>

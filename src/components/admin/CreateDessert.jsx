@@ -61,7 +61,10 @@ export default function CreateDessert() {
         <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
           New Dessert
         </Typography>
-        <DessertForm onSubmitForm={createDessert} />
+        <DessertForm
+          onSubmitForm={createDessert}
+          isPostLoading={isPostDessertImageLoading}
+        />
       </Box>
     </Container>
   );

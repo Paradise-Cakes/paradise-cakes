@@ -20,8 +20,14 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
 import { dessertSchema } from "../../../schema";
 import _ from "lodash";
+import { CircularProgress } from "@mui/material";
 
-export default function DessertForm({ dessert, onSubmitForm }) {
+export default function DessertForm({
+  dessert,
+  onSubmitForm,
+  isPostLoading,
+  isPatchLoading,
+}) {
   const [sizes, setSizes] = useState([]);
   const dessertForm = useFormik({
     initialValues: {
@@ -35,14 +41,7 @@ export default function DessertForm({ dessert, onSubmitForm }) {
         },
       ],
       ingredients: dessert?.ingredients || [],
-      images:
-        // _.map(dessert?.images, (image) => {
-        //   return {
-        //     ..._.omit(image, "file_type"),
-        //     type: image.file_type,
-        //   };
-        // }) || [],
-        dessert?.images || [],
+      images: dessert?.images || [],
     },
     validationSchema: dessertSchema,
     onSubmit: async (values) => {
@@ -463,7 +462,7 @@ export default function DessertForm({ dessert, onSubmitForm }) {
             width: "250px",
           }}
         >
-          Add
+          {isPostLoading ? <CircularProgress /> : "Create"}
         </Button>
       ) : (
         <Button
@@ -472,7 +471,7 @@ export default function DessertForm({ dessert, onSubmitForm }) {
           variant="contained"
           sx={{ marginTop: "2rem", width: "250px" }}
         >
-          Save
+          {isPatchLoading ? <CircularProgress /> : "Update"}
         </Button>
       )}
     </Grid>
