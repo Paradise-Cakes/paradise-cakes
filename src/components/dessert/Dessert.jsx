@@ -33,15 +33,11 @@ export default function Dessert({
       onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}
     >
       <CardActionArea>
-        {isCoverImageLoaded ? (
-          <CardMedia
-            component="img"
-            image={image_url}
-            sx={{ maxWidth: "100%", height: "auto" }}
-          />
-        ) : (
-          <Skeleton variant="rectangular" width="100%" sx={{ pt: "100%" }} />
-        )}
+        <CardMedia
+          component="img"
+          image={image_url}
+          sx={{ maxWidth: "100%", height: "auto" }}
+        />
         <CardContent
           sx={{
             fontWeight: "800",

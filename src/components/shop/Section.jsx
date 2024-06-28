@@ -6,44 +6,12 @@ import Dessert from "../dessert/Dessert";
 import { Container } from "@mui/system";
 import { CircularProgress, Box } from "@mui/material";
 
-// A function to preload a single image
-function preloadImage(src) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = src;
-    img.onload = resolve;
-    img.onerror = reject;
-  });
-}
-
 export default function Section({
   title,
   description,
   items,
-  isGetSectionSuccess,
   isSectionLoading,
 }) {
-  const [coverImageLoaded, setCoverImageLoaded] = useState(false);
-
-  useEffect(() => {
-    if (isGetSectionSuccess) {
-      const preloadPromises = items?.map((item) => {
-        // If there are image URLs, use Promise.race to preload the first image
-        if (item?.images?.length) {
-          return Promise.race(
-            item?.images?.map((img) => preloadImage(img.url))
-          );
-        }
-        return Promise.resolve(); // Return a resolved promise if no image URLs
-      });
-
-      // Wait for all first images from all items to be preloaded
-      Promise.all(preloadPromises)
-        .then(() => setCoverImageLoaded(true))
-        .catch((error) => console.error("Error preloading images", error));
-    }
-  }, [isGetSectionSuccess, items]);
-
   return (
     <Container sx={{ marginBottom: "3.5rem" }} maxWidth="false">
       <Grid
@@ -108,13 +76,11 @@ export default function Section({
                 md={5}
                 justifyContent={"center"}
               >
-                {console.log(item)}
                 <Dessert
                   id={item?.dessert_id}
                   name={item?.name}
                   description={item?.description}
                   image_url={item?.images[0]?.url}
-                  isCoverImageLoaded={coverImageLoaded}
                 />
               </Grid>
             ))}

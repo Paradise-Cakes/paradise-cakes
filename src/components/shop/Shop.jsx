@@ -6,18 +6,12 @@ import _ from "lodash";
 import { Box, Container, maxWidth } from "@mui/system";
 
 export default function Shop() {
-  const getCakesQuery = useGetDesserts("cake");
-  const getCupcakesQuery = useGetDesserts("cupcake");
+  const getDessertsQuery = useGetDesserts();
   const {
-    data: cakes,
-    isLoading: isGetCakesLoading,
-    isSuccess: isGetCakesSuccess,
-  } = getCakesQuery;
-  const {
-    data: cupcakes,
-    isLoading: isGetCupcakesLoading,
-    isSuccess: isGetCupcakesSuccess,
-  } = getCupcakesQuery;
+    data: desserts,
+    isLoading: isGetDessertsLoading,
+    isSuccess: isGetDessertsSuccess,
+  } = getDessertsQuery;
 
   return (
     <Container sx={{ maxWidth: "2000px" }} maxWidth="false">
@@ -25,16 +19,14 @@ export default function Shop() {
         title="cakes"
         description="Indulge in my delectable selection of freshly baked cakes, made with
           the finest ingredients and crafted with care."
-        items={cakes}
-        isSectionLoading={isGetCakesLoading}
-        isGetSectionSuccess={isGetCakesSuccess}
+        items={_.filter(desserts, { dessert_type: "cake" })}
+        isLoading={isGetDessertsLoading}
       />
       <Section
         title="cupcakes"
         description="Explore our delectable cupcake collection: From classic flavors to creative concoctions, each bite is a miniature delight."
-        items={cupcakes}
-        isSectionLoading={isGetCupcakesLoading}
-        isGetSectionSuccess={isGetCupcakesSuccess}
+        items={_.filter(desserts, { dessert_type: "cupcake" })}
+        isLoading={isGetDessertsLoading}
       />
     </Container>
   );
