@@ -15,8 +15,8 @@ export const useGetDessertById = (dessert_id) => {
   });
 };
 
-export const useGetDesserts = (dessert_type) => {
-  return useQuery(["desserts", dessert_type], () => getDesserts(dessert_type), {
+export const useGetDesserts = () => {
+  return useQuery(["desserts"], () => getDesserts(), {
     select: (data) => data.data,
   });
 };
@@ -51,7 +51,7 @@ export const useDeleteDessert = (dessert_id) => {
   const queryClient = useQueryClient();
   return useMutation(() => deleteDessert(dessert_id), {
     onSuccess: () => {
-      queryClient.invalidateQueries(["dessert", dessert_id]);
+      queryClient.invalidateQueries(["desserts"]);
       console.log("SUCCESS");
     },
   });

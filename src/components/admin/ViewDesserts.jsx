@@ -6,30 +6,12 @@ import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function ViewDesserts() {
-  const getCakesQuery = useGetDesserts("cake");
-  const getCupcakesQuery = useGetDesserts("cupcake");
-  const getCookiesQiery = useGetDesserts("cookie");
-  const getPiesQuery = useGetDesserts("pie");
+  const getDessertsQuery = useGetDesserts();
   const {
-    data: cakes,
-    isLoading: isGetCakesLoading,
-    isSuccess: isGetCakesSuccess,
-  } = getCakesQuery;
-  const {
-    data: cupcakes,
-    isLoading: isGetCupcakesLoading,
-    isSuccess: isGetCupcakesSuccess,
-  } = getCupcakesQuery;
-  const {
-    data: cookies,
-    isLoading: isGetCookiesLoading,
-    isSuccess: isGetCookiesSuccess,
-  } = getCookiesQiery;
-  const {
-    data: pies,
-    isLoading: isGetPiesLoading,
-    isSuccess: isGetPiesSuccess,
-  } = getPiesQuery;
+    data: desserts,
+    isLoading: isGetDessertsLoading,
+    isSuccess: isGetDessertsSuccess,
+  } = getDessertsQuery;
   return (
     <Container maxWidth="xl">
       <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>
@@ -46,9 +28,9 @@ export default function ViewDesserts() {
           New Dessert
         </Button>
         <Typography variant="h6" sx={{ textAlign: "left" }} gutterBottom>
-          Cakes
+          Desserts
         </Typography>
-        {isGetCakesLoading ? (
+        {isGetDessertsLoading ? (
           <Box
             sx={{
               display: "flex",
@@ -72,9 +54,9 @@ export default function ViewDesserts() {
             }}
             spacing={5}
           >
-            {cakes?.map((cake) => (
+            {desserts?.map((dessert) => (
               <Grid
-                key={cake?.dessert_id}
+                key={dessert?.dessert_id}
                 item
                 sx={{ textAlign: "center" }}
                 xs={12}
@@ -82,10 +64,10 @@ export default function ViewDesserts() {
                 justifyContent={"center"}
               >
                 <Dessert
-                  id={cake?.dessert_id}
-                  name={cake?.name}
-                  description={cake?.description}
-                  image_url={cake?.images[0]?.url}
+                  id={dessert?.dessert_id}
+                  name={dessert?.name}
+                  description={dessert?.description}
+                  image_url={dessert?.images[0]?.url}
                   isCoverImageLoaded={true}
                   inAdminView={true}
                 />
