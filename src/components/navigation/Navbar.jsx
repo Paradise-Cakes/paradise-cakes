@@ -13,6 +13,8 @@ import { GoDotFill } from "react-icons/go";
 import AnimatedBanner from "../extras/AnimatedBanner";
 import { VscAccount } from "react-icons/vsc";
 import { AccountContext } from "../../context/AccountContext";
+import { useGetDesserts } from "../../hooks/dessert/DessertHook";
+import _ from "lodash";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
@@ -21,6 +23,12 @@ export default function Navbar() {
     useContext(AccountContext);
   const navigate = useNavigate();
   const theme = useTheme();
+  const getDessertsQuery = useGetDesserts();
+  const {
+    data: desserts,
+    isLoading: isGetDessertsLoading,
+    isSuccess: isGetDessertsSuccess,
+  } = getDessertsQuery;
 
   return (
     <AppBar
@@ -29,6 +37,7 @@ export default function Navbar() {
         backgroundColor: "#9CAFAF",
       }}
     >
+      {console.log(desserts)}
       <AnimatedBanner
         messages={[
           "Located in the Austin, TX area",
@@ -79,17 +88,36 @@ export default function Navbar() {
                 justifyContent: "space-between",
               }}
             >
-              <NavLink
-                title="Shop"
-                drawerItems={[
-                  { itemName: "Cakes", img: "https://place-hold.it/150" },
-                  { itemName: "Pies", img: "https://place-hold.it/150" },
-                  { itemName: "Cupcakes", img: "https://place-hold.it/150" },
-                  { itemName: "Cookies", img: "https://place-hold.it/150" },
-                ]}
-                buttons={[{ title: "Shop All", link: "/" }]}
-                toLink={"/"}
-              />
+              {!isGetDessertsLoading && (
+                <NavLink
+                  title="Shop"
+                  drawerItems={[
+                    {
+                      itemName: "Cakes",
+                      img: _.filter(desserts, { dessert_type: "cake" })[0]
+                        .images[0].url,
+                    },
+                    {
+                      itemName: "Cupcakes",
+                      img: _.filter(desserts, { dessert_type: "cupcake" })[0]
+                        .images[0].url,
+                    },
+                    {
+                      itemName: "Cookies",
+                      img: _.filter(desserts, { dessert_type: "cookie" })[0]
+                        .images[0].url,
+                    },
+                    {
+                      itemName: "Pies",
+                      img: _.filter(desserts, { dessert_type: "pie" })[0]
+                        .images[0].url,
+                    },
+                  ]}
+                  buttons={[{ title: "Shop All", link: "/" }]}
+                  toLink={"/"}
+                />
+              )}
+
               <NavLink title="Custom Order" toLink={"/custom-order"} />
               <NavLink title="About Me" toLink={"/about-me"} />
             </Box>

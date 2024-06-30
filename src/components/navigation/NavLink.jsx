@@ -58,7 +58,16 @@ export default function NavLink({ title, drawerItems, buttons, toLink }) {
                   padding: "0 32px",
                 }}
               >
-                <img src={item.img} />
+                <img
+                  src={item.img}
+                  height="150px"
+                  width={"150px"}
+                  style={{
+                    borderRadius: "12px",
+                    boxShadow: 3,
+                    marginBottom: "8px",
+                  }}
+                />
                 <div style={{ color: "#555555", fontWeight: "bolder" }}>
                   {item.itemName}
                 </div>
