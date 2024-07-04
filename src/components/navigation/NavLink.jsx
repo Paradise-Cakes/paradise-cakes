@@ -26,7 +26,7 @@ export default function NavLink({ title, drawerItems, buttons, toLink }) {
           width: "fit-content",
           padding: "6px",
           fontWeight: "800",
-          fontSize: "14px",
+          fontSize: "1rem",
         }}
         component={Link}
         to={toLink}

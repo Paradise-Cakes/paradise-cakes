@@ -3,7 +3,7 @@ html {
 }
 
 html * {
-  font-family: "Archivo Black";
+  font-family: "Bebas Neue";
 }
 
 body {
@@ -38,4 +38,13 @@ span,
 a,
 div {
   color: #555555;
+}
+
+#order-now-btn #order-now-arrow {
+  transform: rotate(0deg);
+  transition: transform 0.3s;
+}
+
+#order-now-btn:hover #order-now-arrow {
+  transform: rotate(90deg);
 }

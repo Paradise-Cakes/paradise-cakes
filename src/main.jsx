@@ -4,13 +4,16 @@ import App from "./App.jsx";
 import "@fontsource/playfair-display";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/400-italic.css";
+import "@fontsource/dancing-script/400.css";
+import "@fontsource/bebas-neue/400.css";
+import "@fontsource/pacifico/400.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const THEME = createTheme({
   typography: {
-    fontFamily: `"Archivo Black", "Roboto", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"Bebas Neue", "Archivo Black", "Roboto", "Helvetica", "Arial", sans-serif`,
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,
