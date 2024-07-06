@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea, Skeleton, Button, Box } from "@mui/material";
+import { CardActionArea, Skeleton, Button, Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDeleteDessert } from "../../hooks/dessert/DessertHook";
 
@@ -12,10 +12,10 @@ export default function Dessert({
   name,
   description,
   image_url,
-  isCoverImageLoaded,
   inAdminView = false,
 }) {
   const deleteDessertQuery = useDeleteDessert(id);
+  const theme = useTheme();
   const {
     mutateAsync: deleteDessert,
     isLoading: isDeleteDessertLoading,
@@ -29,6 +29,7 @@ export default function Dessert({
         borderRadius: "12px",
         boxShadow: 3,
         position: "relative",
+        border: `2px solid ${theme.palette.primary.main}`,
       }}
       onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}
     >

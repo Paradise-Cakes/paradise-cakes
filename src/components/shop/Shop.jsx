@@ -1,29 +1,35 @@
 import React, { useState } from "react";
-import Section from "./Section";
 import Grid from "@mui/material/Grid";
-import { useGetDesserts } from "../../hooks/dessert/DessertHook";
+import {
+  useGetDesserts,
+  useGetDisplayImages,
+} from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
-import { Box, Container, maxWidth } from "@mui/system";
+import { Box, Container } from "@mui/system";
 import { Button, useTheme, CircularProgress } from "@mui/material";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Dessert from "../dessert/Dessert";
-import Megan from "../../assets/Megan2.png";
 
 function CustomTabPanel(props) {
   const { children, value, dessertType, ...other } = props;
 
   return (
-    <div
+    <Container
+      sx={{
+        marginTop: "3.5rem",
+        marginBottom: "3.5rem",
+        display: value === dessertType ? "block" : "none",
+      }}
+      maxWidth="false"
       role="tabpanel"
-      hidden={value !== dessertType}
       id={`simple-tabpanel-${dessertType}`}
       aria-labelledby={`simple-tab-${dessertType}`}
       {...other}
     >
-      {value === dessertType && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
+      {value === dessertType && children}
+    </Container>
   );
 }
 
@@ -34,6 +40,12 @@ export default function Shop() {
     isLoading: isGetDessertsLoading,
     isSuccess: isGetDessertsSuccess,
   } = getDessertsQuery;
+  const getDisplayImagesQuery = useGetDisplayImages();
+  const {
+    data: displayImages,
+    isLoading: isGetDisplayImagesLoading,
+    isSuccess: isGetDisplayImagesSuccess,
+  } = getDisplayImagesQuery;
   const theme = useTheme();
   const [value, setValue] = useState("cake");
 
@@ -42,7 +54,7 @@ export default function Shop() {
   };
 
   return (
-    <Container sx={{ maxWidth: "2000px" }} maxWidth="false">
+    <Container maxWidth="false">
       <h1
         style={{
           fontFamily: "Pacifico",
@@ -54,7 +66,7 @@ export default function Shop() {
         Desserts Made from Scratch
       </h1>
       <h2 style={{ textAlign: "center", marginBottom: "-1rem" }}>
-        The perfect dessert everytime, made for you.
+        The perfect dessert every time, made for you.
       </h2>
       <h2 style={{ textAlign: "center" }}>Place an order today!</h2>
       <Button
@@ -86,14 +98,77 @@ export default function Shop() {
         </Box>
       </Button>
       <Box
-        display={"flex"}
-        justifyContent={"center"}
-        sx={{ marginTop: "2rem", marginBottom: "2rem" }}
+        sx={{
+          marginTop: "2rem",
+          marginBottom: "2rem",
+          overflow: "hidden",
+          border: "10px solid green",
+          width: "100%",
+          position: "relative",
+        }}
       >
-        <img
-          src={Megan}
-          style={{ height: "450px", width: "600px", borderRadius: "1rem" }}
-        />
+        <Box
+          sx={{
+            display: "flex",
+            border: "1px solid red",
+            width: "100%",
+            height: "500px",
+            position: "relative",
+          }}
+        >
+          {/* {_.map(displayImages, (image, index) => (
+            <Box
+              key={index}
+              sx={{
+                borderRadius: "1rem",
+                border: `10px solid ${theme.palette.primary.main}`,
+                width: "fit-content",
+                position: "absolute",
+                animation: "scroller 10s linear infinite",
+                marginLeft: `${index * 500}px`, // Adjust the margin as needed
+                "@keyframes scroller": {
+                  "0%": { left: `calc(40% - ${index * 500}px)` }, // Adjust start position
+                  "100%": { left: `calc(-40% - ${index * 500}px)` }, // Adjust end position
+                },
+              }}
+            >
+              <img
+                src={image}
+                alt={`Display ${index}`}
+                style={{
+                  borderRadius: "1rem",
+                }}
+              />
+            </Box>
+          ))} */}
+
+          {_.map(_.reverse(displayImages), (image, index) => (
+            <Box
+              key={index}
+              sx={{
+                borderRadius: "1rem",
+                border: `10px solid ${theme.palette.error.main}`,
+                width: "fit-content",
+                position: "absolute",
+                animation: "scrollerd 10s linear infinite",
+                marginRight: `${index * 500}px`, // Adjust the margin as needed
+                "@keyframes scrollerd": {
+                  "0%": { right: `calc(0% - ${index * 500}px)` }, // Adjust start position
+                  "100%": { right: `calc(40% - ${index * 500}px)` }, // Adjust end position
+                },
+                // left: `calc(0% + ${index * 500}px)`,
+              }}
+            >
+              <img
+                src={image}
+                alt={`Display ${index}`}
+                style={{
+                  borderRadius: "1rem",
+                }}
+              />
+            </Box>
+          ))}
+        </Box>
       </Box>
       <Box>
         <h2 style={{ textAlign: "center" }}>What I make</h2>
@@ -134,34 +209,12 @@ export default function Shop() {
       {isGetDessertsLoading ? (
         <CircularProgress sx={{ display: "block", margin: "5rem auto" }} />
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <Box>
           {_.map(_.uniqBy(desserts, "dessert_type"), (dessert) => (
-            <CustomTabPanel
-              key={dessert.dessert_type}
-              value={value}
-              dessertType={dessert.dessert_type}
-            >
-              <Grid container spacing={5} justifyContent={"center"}>
+            <CustomTabPanel value={value} dessertType={dessert.dessert_type}>
+              <Grid container spacing={10} justifyContent={"center"}>
                 {_.filter(desserts, { dessert_type: value })?.map((d) => (
-                  <Grid
-                    key={d?.dessert_id}
-                    item
-                    sx={{
-                      textAlign: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    lg={4}
-                  >
+                  <Grid key={d?.dessert_id} item xl={3}>
                     <Dessert
                       id={d?.dessert_id}
                       name={d?.name}

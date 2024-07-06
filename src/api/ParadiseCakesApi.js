@@ -11,6 +11,11 @@ export const getDesserts = async () => {
   return response;
 };
 
+export const getDisplayImages = async () => {
+  const response = await axios.get(`${API_URL}/display-images`);
+  return response;
+};
+
 export const postSignUp = async (payload) => {
   const response = await axios.post(`${API_URL}/signup`, payload, {
     headers: {

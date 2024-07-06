@@ -6,6 +6,7 @@ import {
   postDessert,
   patchDessert,
   deleteDessert,
+  getDisplayImages,
 } from "../../api/ParadiseCakesApi";
 import { useQueryClient } from "react-query";
 
@@ -17,6 +18,12 @@ export const useGetDessertById = (dessert_id) => {
 
 export const useGetDesserts = () => {
   return useQuery(["desserts"], () => getDesserts(), {
+    select: (data) => data.data,
+  });
+};
+
+export const useGetDisplayImages = () => {
+  return useQuery(["displayImages"], () => getDisplayImages(), {
     select: (data) => data.data,
   });
 };
