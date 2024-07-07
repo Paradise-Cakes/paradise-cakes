@@ -5,12 +5,15 @@ import {
   useGetDisplayImages,
 } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
-import { Box, Container } from "@mui/system";
+import { border, Box, Container } from "@mui/system";
 import { Button, useTheme, CircularProgress } from "@mui/material";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Dessert from "../dessert/Dessert";
+import LemonBlueberryCake from "../../assets/lemonbluecake.jpeg";
+import { GiFlour } from "react-icons/gi";
+import { MdDeliveryDining } from "react-icons/md";
 
 function CustomTabPanel(props) {
   const { children, value, dessertType, ...other } = props;
@@ -55,21 +58,165 @@ export default function Shop() {
 
   return (
     <Container maxWidth="false">
-      <h1
-        style={{
-          fontFamily: "Pacifico",
-          fontSize: "3rem",
-          textAlign: "center",
-          marginBottom: "0",
-        }}
-      >
-        Desserts Made from Scratch
-      </h1>
-      <h2 style={{ textAlign: "center", marginBottom: "-1rem" }}>
+      <Box>
+        <Grid
+          container
+          sx={{
+            flexWrap: { md: "wrap", lg: "nowrap" },
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Grid
+            item
+            container
+            sx={{
+              marginLeft: "1rem",
+              marginRight: "1rem",
+            }}
+            xl={8}
+            display={"flex"}
+            flexWrap={"nowrap"}
+          >
+            <Grid item sx={{ marginRight: "1rem" }}>
+              <img
+                src={"https://placehold.co/1200x1600"}
+                style={{
+                  borderRadius: "1rem",
+                  width: "100%",
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <img
+                src={"https://placehold.co/1200x1600"}
+                style={{
+                  borderRadius: "1rem",
+                  width: "100%",
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            container
+            xl={4}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box>
+              <h1
+                style={{
+                  fontSize: "3rem",
+                  marginBottom: "0",
+                  textAlign: "center",
+                  marginRight: "1rem",
+                }}
+              >
+                Desserts Made from Scratch
+              </h1>
+              <h3
+                style={{
+                  marginTop: ".5rem",
+                  fontSize: "1.25rem",
+                  textAlign: "center",
+                  marginLeft: "1rem",
+                  marginRight: "1rem",
+                }}
+              >
+                The perfect dessert everytime, made for you. Place an order
+                today!
+              </h3>
+              <Button
+                color="primary"
+                variant="contained"
+                sx={{
+                  borderRadius: "1rem",
+                  fontSize: "1.25rem",
+                  display: "block",
+                  margin: "0 auto",
+                  width: "10rem",
+                }}
+              >
+                Order Now
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+      <Box>
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "2.25rem",
+            marginTop: "5rem",
+            marginBottom: "2.5rem",
+          }}
+        >
+          Why order from paradise cakes?
+        </h2>
+        <Grid container justifyContent={"space-evenly"}>
+          <Grid item>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                maxWidth: "250px",
+              }}
+            >
+              <GiFlour style={{ width: "50px", height: "50px" }} />
+              <h3>Homemade</h3>
+              <h4 style={{ textAlign: "center", marginTop: "0" }}>
+                All my desserts are made from scratch with high quality
+                ingredients.
+              </h4>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                maxWidth: "250px",
+              }}
+            >
+              <MdDeliveryDining style={{ width: "50px", height: "50px" }} />
+              <h3>Local Delivery</h3>
+              <h4 style={{ textAlign: "center", marginTop: "0" }}>
+                Delivery is available in the greater Austin, TX area.
+              </h4>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                maxWidth: "250px",
+              }}
+            >
+              <MdDeliveryDining style={{ width: "50px", height: "50px" }} />
+              <h3>Customized Desserts</h3>
+              <h4 style={{ textAlign: "center", marginTop: "0" }}>
+                Personalize your cake to suit any occasion or preference!
+              </h4>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+      {/* <h2 style={{ textAlign: "center", marginBottom: "-1rem" }}>
         The perfect dessert every time, made for you.
       </h2>
-      <h2 style={{ textAlign: "center" }}>Place an order today!</h2>
-      <Button
+      <h2 style={{ textAlign: "center" }}>Place an order today!</h2> */}
+      {/* <Button
         id="order-now-btn"
         color="primary"
         variant="contained"
@@ -96,84 +243,11 @@ export default function Shop() {
             }}
           />
         </Box>
-      </Button>
-      <Box
-        sx={{
-          marginTop: "2rem",
-          marginBottom: "2rem",
-          overflow: "hidden",
-          border: "10px solid green",
-          width: "100%",
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            border: "1px solid red",
-            width: "100%",
-            height: "500px",
-            position: "relative",
-          }}
-        >
-          {/* {_.map(displayImages, (image, index) => (
-            <Box
-              key={index}
-              sx={{
-                borderRadius: "1rem",
-                border: `10px solid ${theme.palette.primary.main}`,
-                width: "fit-content",
-                position: "absolute",
-                animation: "scroller 10s linear infinite",
-                marginLeft: `${index * 500}px`, // Adjust the margin as needed
-                "@keyframes scroller": {
-                  "0%": { left: `calc(40% - ${index * 500}px)` }, // Adjust start position
-                  "100%": { left: `calc(-40% - ${index * 500}px)` }, // Adjust end position
-                },
-              }}
-            >
-              <img
-                src={image}
-                alt={`Display ${index}`}
-                style={{
-                  borderRadius: "1rem",
-                }}
-              />
-            </Box>
-          ))} */}
-
-          {_.map(_.reverse(displayImages), (image, index) => (
-            <Box
-              key={index}
-              sx={{
-                borderRadius: "1rem",
-                border: `10px solid ${theme.palette.error.main}`,
-                width: "fit-content",
-                position: "absolute",
-                animation: "scrollerd 10s linear infinite",
-                marginRight: `${index * 500}px`, // Adjust the margin as needed
-                "@keyframes scrollerd": {
-                  "0%": { right: `calc(0% - ${index * 500}px)` }, // Adjust start position
-                  "100%": { right: `calc(40% - ${index * 500}px)` }, // Adjust end position
-                },
-                // left: `calc(0% + ${index * 500}px)`,
-              }}
-            >
-              <img
-                src={image}
-                alt={`Display ${index}`}
-                style={{
-                  borderRadius: "1rem",
-                }}
-              />
-            </Box>
-          ))}
-        </Box>
-      </Box>
-      <Box>
+      </Button> */}
+      {/* <Box>
         <h2 style={{ textAlign: "center" }}>What I make</h2>
-      </Box>
-      <Box>
+      </Box> */}
+      {/* <Box>
         <Tabs
           value={value}
           onChange={handleTabChange}
@@ -205,8 +279,8 @@ export default function Shop() {
             )
           )}
         </Tabs>
-      </Box>
-      {isGetDessertsLoading ? (
+      </Box> */}
+      {/* {isGetDessertsLoading ? (
         <CircularProgress sx={{ display: "block", margin: "5rem auto" }} />
       ) : (
         <Box>
@@ -227,7 +301,7 @@ export default function Shop() {
             </CustomTabPanel>
           ))}
         </Box>
-      )}
+      )} */}
     </Container>
   );
 }
