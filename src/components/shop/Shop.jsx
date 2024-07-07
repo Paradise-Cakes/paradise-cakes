@@ -60,20 +60,31 @@ export default function Shop() {
   };
   const scrollContainerRef = useRef(null);
 
-  const handleScrollRight = () => {
-    const scrollAmount = 800;
+  const handleScrollLeft = () => {
+    const scrollAmount = 800; // Adjust this value as needed
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: scrollAmount,
+      const { scrollRight, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      const maxScrollRight = scrollWidth - clientWidth;
+      const newScrollRight = Math.min(
+        scrollRight + scrollAmount,
+        maxScrollRight
+      );
+      scrollContainerRef.current.scrollTo({
+        left: newScrollRight,
         behavior: "smooth",
       });
     }
   };
-  const handleScrollLeft = () => {
-    const scrollAmount = -800;
+  const handleScrollRight = () => {
+    const scrollAmount = 800; // Adjust this value as needed
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: scrollAmount,
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      const maxScrollLeft = scrollWidth - clientWidth;
+      const newScrollLeft = Math.min(scrollLeft + scrollAmount, maxScrollLeft);
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
         behavior: "smooth",
       });
     }
