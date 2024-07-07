@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import {
   useGetDesserts,
@@ -14,6 +14,9 @@ import Dessert from "../dessert/Dessert";
 import LemonBlueberryCake from "../../assets/lemonbluecake.jpeg";
 import { GiFlour } from "react-icons/gi";
 import { MdDeliveryDining } from "react-icons/md";
+import { BsCake2 } from "react-icons/bs";
+import { FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft } from "react-icons/fa";
 
 function CustomTabPanel(props) {
   const { children, value, dessertType, ...other } = props;
@@ -55,6 +58,81 @@ export default function Shop() {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+  const scrollContainerRef = useRef(null);
+
+  const handleScrollRight = () => {
+    const scrollAmount = 800;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScrollLeft = () => {
+    const scrollAmount = -800;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const [isRightButtonVisible, setIsRightButtonVisible] = useState(true);
+  const [isLeftButtonVisible, setIsLeftButtonVisible] = useState(false);
+
+  const checkRightScrollPosition = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      // If scrollLeft + clientWidth >= scrollWidth, we are at the end
+      if (scrollLeft + clientWidth >= scrollWidth) {
+        setIsRightButtonVisible(false);
+      } else {
+        setIsRightButtonVisible(true);
+      }
+    }
+  };
+
+  const checkLeftScrollPosition = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft } = scrollContainerRef.current;
+      if (scrollLeft === 0) {
+        setIsLeftButtonVisible(false);
+      } else {
+        setIsLeftButtonVisible(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.addEventListener(
+        "scroll",
+        checkRightScrollPosition
+      );
+      scrollContainerRef.current.addEventListener(
+        "scroll",
+        checkLeftScrollPosition
+      );
+    }
+    // Cleanup the event listener on component unmount
+    return () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.removeEventListener(
+          "scroll",
+          checkRightScrollPosition
+        );
+      }
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.removeEventListener(
+          "scroll",
+          checkLeftScrollPosition
+        );
+      }
+    };
+  }, []);
 
   return (
     <Container maxWidth="false">
@@ -146,12 +224,15 @@ export default function Shop() {
           </Grid>
         </Grid>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          padding: "4rem",
+        }}
+      >
         <h2
           style={{
             textAlign: "center",
             fontSize: "2.25rem",
-            marginTop: "5rem",
             marginBottom: "2.5rem",
           }}
         >
@@ -203,7 +284,7 @@ export default function Shop() {
                 maxWidth: "250px",
               }}
             >
-              <MdDeliveryDining style={{ width: "50px", height: "50px" }} />
+              <BsCake2 style={{ width: "50px", height: "50px" }} />
               <h3>Customized Desserts</h3>
               <h4 style={{ textAlign: "center", marginTop: "0" }}>
                 Personalize your cake to suit any occasion or preference!
@@ -211,6 +292,67 @@ export default function Shop() {
             </Box>
           </Grid>
         </Grid>
+      </Box>
+      <Box sx={{ position: "relative" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "2.25rem",
+            marginTop: "5rem",
+            marginBottom: "2.5rem",
+          }}
+        >
+          Some of my work
+        </h2>
+        <Box
+          sx={{
+            display: "flex",
+            overflowX: "auto",
+            paddingBottom: "1rem",
+          }}
+          ref={scrollContainerRef}
+        >
+          {_.map(displayImages, (image) => (
+            <img
+              src={image}
+              style={{
+                border: "1px solid black",
+                borderRadius: "1rem",
+                margin: "0 0.5rem",
+              }}
+            />
+          ))}
+          {isRightButtonVisible && (
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                position: "absolute",
+                opacity: "0.8",
+                right: "0",
+                top: "40%",
+              }}
+              onClick={handleScrollRight}
+            >
+              <FaAngleRight style={{ width: "50px", height: "50px" }} />
+            </Button>
+          )}
+          {isLeftButtonVisible && (
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                position: "absolute",
+                opacity: "0.8",
+                left: "0",
+                top: "40%",
+              }}
+              onClick={handleScrollLeft}
+            >
+              <FaAngleLeft style={{ width: "50px", height: "50px" }} />
+            </Button>
+          )}
+        </Box>
       </Box>
       {/* <h2 style={{ textAlign: "center", marginBottom: "-1rem" }}>
         The perfect dessert every time, made for you.
