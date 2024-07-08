@@ -11,7 +11,6 @@ import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Dessert from "../dessert/Dessert";
-import LemonBlueberryCake from "../../assets/lemonbluecake.jpeg";
 import { GiFlour } from "react-icons/gi";
 import { MdDeliveryDining } from "react-icons/md";
 import { BsCake2 } from "react-icons/bs";

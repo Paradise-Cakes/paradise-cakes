@@ -33,7 +33,7 @@ const THEME = createTheme({
       contrastText: "#000000",
     },
     warning: {
-      main: "#D8BFA3",
+      main: "#CDCBBC",
       contrastText: "#000000",
     },
     info: {

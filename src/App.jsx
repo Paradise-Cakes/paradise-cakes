@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import Navbar from "./components/navigation/Navbar";
 import NavSideDrawer from "./components/navigation/NavSideDrawer";
 import Cart from "./components/navigation/cart/Cart";
@@ -22,6 +22,7 @@ import LoggedInModal from "./components/navigation/auth/LoggedInModal";
 import AccountDashboard from "./components/account/AccountDashboard";
 import ViewDesserts from "./components/admin/ViewDesserts";
 import EditDessert from "./components/admin/EditDessert";
+import Footer from "./components/footer/Footer";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,10 @@ function App() {
     <Container
       sx={{
         my: { xs: 16, sm: 16, md: 24 },
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100vh",
       }}
       maxWidth={"false"}
     >
@@ -73,6 +78,7 @@ function App() {
           </AccountProvider>
         </DrawerProvider>
       </QueryClientProvider>
+      <Footer />
     </Container>
   );
 }
