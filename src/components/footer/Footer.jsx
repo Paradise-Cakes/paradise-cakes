@@ -10,7 +10,7 @@ export default function Footer() {
       <Grid
         container
         sx={{
-          height: "60px",
+          height: "100px",
           borderTop: "2px solid black",
           marginTop: "10rem",
           backgroundColor: `${theme.palette.warning.main}`,
@@ -18,9 +18,10 @@ export default function Footer() {
           justifyContent: "space-between",
           alignItems: "center",
           padding: "0 1rem",
+          flexWrap: "nowrap",
         }}
       >
-        <Grid item>
+        <Grid item sx={{ width: "367px" }}>
           <a
             href="https://www.instagram.com/megs.soup/"
             target="_blank"
@@ -29,14 +30,20 @@ export default function Footer() {
             <FaInstagram size={24} />
           </a>
         </Grid>
-        <Grid item>
+        <Grid item sx={{ width: "367px", textAlign: "center" }}>
           <img
             src={Logo}
             alt="Paradise Cakes logo"
-            style={{ width: "60px", height: "29px" }}
+            style={{
+              width: "60px",
+              height: "29px",
+            }}
           />
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          sx={{ width: "367px", textAlign: { xs: "center", sm: "end" } }}
+        >
           <p>
             &copy; {new Date().getFullYear()} Paradise Cakes. All rights
             reserved.
