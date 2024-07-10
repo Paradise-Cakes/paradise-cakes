@@ -34,10 +34,10 @@ export default function NavSideDrawer() {
       }}
     >
       <List sx={{ paddingTop: "0" }}>
-        <DrawerItem toLink={"/home"} text={"home"} />
+        <DrawerItem toLink={"/"} text={"home"} />
         <DrawerItem toLink={"/shop"} text={"shop"} />
         <DrawerItem toLink={"/custom-order"} text={"custom order"} />
-        <DrawerItem toLink={"/about"} text={"about me"} />
+        <DrawerItem toLink={"/about-me"} text={"about me"} />
       </List>
     </Drawer>
   );
