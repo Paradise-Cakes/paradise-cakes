@@ -37,7 +37,6 @@ export default function Navbar() {
         backgroundColor: "#9CAFAF",
       }}
     >
-      {console.log(desserts)}
       <AnimatedBanner
         messages={[
           "Located in the Austin, TX area",
