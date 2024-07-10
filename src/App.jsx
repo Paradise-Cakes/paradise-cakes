@@ -4,7 +4,7 @@ import Navbar from "./components/navigation/Navbar";
 import NavSideDrawer from "./components/navigation/NavSideDrawer";
 import Cart from "./components/navigation/cart/Cart";
 import About from "./components/about/About";
-import Shop from "./components/shop/Shop";
+import Home from "./components/home/Home";
 import { DrawerProvider } from "./context/DrawerContext";
 import { CartProvider } from "./context/CartContext";
 import { AccountProvider } from "./context/AccountContext";
@@ -30,7 +30,7 @@ function App() {
   return (
     <Container
       sx={{
-        my: { xs: 16, sm: 16, md: 24 },
+        mt: { xs: 16, sm: 16, md: 24 },
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -55,7 +55,7 @@ function App() {
                 <SignUp />
                 <Cart />
                 <Routes>
-                  <Route path="/" element={<Shop />} />
+                  <Route path="/" element={<Home />} />
                   <Route path="/about-me" element={<About />} />
                   <Route
                     path="/admin/desserts/create"

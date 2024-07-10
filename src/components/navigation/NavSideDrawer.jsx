@@ -65,7 +65,7 @@ export default function NavSideDrawer() {
               },
             }}
           >
-            <ListItemText primary="Shop" />
+            <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
         <ListItem

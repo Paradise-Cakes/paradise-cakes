@@ -38,7 +38,7 @@ function CustomTabPanel(props) {
   );
 }
 
-export default function Shop() {
+export default function Home() {
   const getDessertsQuery = useGetDesserts();
   const {
     data: desserts,

@@ -90,7 +90,7 @@ export default function Navbar() {
             >
               {!isGetDessertsLoading && (
                 <NavLink
-                  title="Shop"
+                  title="Home"
                   drawerItems={[
                     {
                       itemName: "Cakes",
@@ -113,8 +113,8 @@ export default function Navbar() {
                         .images[0].url,
                     },
                   ]}
-                  buttons={[{ title: "Shop All", link: "/" }]}
-                  toLink={"/"}
+                  buttons={[{ title: "Shop All", link: "/shop" }]}
+                  toLink={"/shop"}
                 />
               )}
 

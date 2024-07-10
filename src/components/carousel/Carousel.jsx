@@ -65,10 +65,9 @@ export default function Carousel({ images, areImagesLoaded }) {
       </Hidden>
       <Grid
         item
-        sx={{ position: "relative" }}
-        xs={12}
-        lg={7.5}
-        md={12}
+        sx={{
+          position: "relative",
+        }}
         justifyContent="center"
       >
         {areImagesLoaded ? (
@@ -84,36 +83,40 @@ export default function Carousel({ images, areImagesLoaded }) {
             sx={{ pt: "100%", borderRadius: "12px" }}
           />
         )}
-        <RiArrowRightSLine
-          style={{
-            width: "64px",
-            height: "64px",
-            position: "absolute",
-            top: "50%",
-            right: "50px",
-            color: theme.palette.primary.main,
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            handleImageChange((currentImageIndex + 1) % images.length);
-          }}
-        />
-        <RiArrowLeftSLine
-          style={{
-            width: "64px",
-            height: "64px",
-            position: "absolute",
-            top: "50%",
-            left: "0px",
-            color: theme.palette.primary.main,
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            handleImageChange(
-              (currentImageIndex - 1 + images.length) % images.length
-            );
-          }}
-        />
+        {images?.length > 1 && (
+          <Box>
+            <RiArrowRightSLine
+              style={{
+                width: "64px",
+                height: "64px",
+                position: "absolute",
+                top: "50%",
+                right: "0px",
+                color: theme.palette.primary.main,
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                handleImageChange((currentImageIndex + 1) % images.length);
+              }}
+            />
+            <RiArrowLeftSLine
+              style={{
+                width: "64px",
+                height: "64px",
+                position: "absolute",
+                top: "50%",
+                left: "0px",
+                color: theme.palette.primary.main,
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                handleImageChange(
+                  (currentImageIndex - 1 + images.length) % images.length
+                );
+              }}
+            />
+          </Box>
+        )}
       </Grid>
     </Grid>
   );

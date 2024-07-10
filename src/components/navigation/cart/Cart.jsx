@@ -215,7 +215,7 @@ export default function Cart() {
                 fontWeight: "800",
               }}
               onClick={() => {
-                navigate("/");
+                navigate("/shop");
                 setCartOpen(false);
               }}
             >
