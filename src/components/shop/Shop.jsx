@@ -364,6 +364,43 @@ export default function Shop() {
           )}
         </Box>
       </Box>
+      <Box>
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "2.25rem",
+            marginTop: "5rem",
+            marginBottom: "2.5rem",
+          }}
+        >
+          Shop my bestsellers
+        </h2>
+        <Grid
+          container
+          display={"flex"}
+          justifyContent={"space-evenly"}
+          alignItems={"center"}
+          spacing={3}
+          width={"100%"}
+        >
+          {_.map(_.shuffle(_.slice(desserts, 0, 3)), (d) => (
+            <Grid item xs={8} sm={3} md={3} lg={3} xl={3}>
+              <Dessert
+                key={d.dessert_id}
+                id={d.dessert_id}
+                name={d.name}
+                description={d.description}
+                image_url={d.images[0]?.url}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <Box
+          display={"flex"}
+          justifyContent={"space-evenly"}
+          alignItems={"center"}
+        ></Box>
+      </Box>
       {/* <h2 style={{ textAlign: "center", marginBottom: "-1rem" }}>
         The perfect dessert every time, made for you.
       </h2>

@@ -44,9 +44,19 @@ export default function Dessert({
             fontWeight: "800",
             fontSize: "1rem",
             textAlign: "center",
+            borderTop: `2px solid ${theme.palette.primary.main}`,
           }}
         >
-          <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              fontWeight: "bold",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
             {name?.toUpperCase()}
           </Typography>
           <Typography
