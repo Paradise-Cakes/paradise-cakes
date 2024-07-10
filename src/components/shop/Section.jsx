@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import ImageSlider from "../image-slider/ImageSlider";
 import Dessert from "../dessert/Dessert";
 import { Container } from "@mui/system";
 import { CircularProgress, Box } from "@mui/material";
@@ -13,7 +12,10 @@ export default function Section({
   isSectionLoading,
 }) {
   return (
-    <Container sx={{ marginBottom: "3.5rem" }} maxWidth="false">
+    <Container
+      sx={{ marginBottom: "8rem", marginTop: "3rem" }}
+      maxWidth="false"
+    >
       <Grid
         container
         sx={{
