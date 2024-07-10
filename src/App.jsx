@@ -5,6 +5,7 @@ import NavSideDrawer from "./components/navigation/NavSideDrawer";
 import Cart from "./components/navigation/cart/Cart";
 import About from "./components/about/About";
 import Home from "./components/home/Home";
+import Shop from "./components/shop/Shop";
 import { DrawerProvider } from "./context/DrawerContext";
 import { CartProvider } from "./context/CartContext";
 import { AccountProvider } from "./context/AccountContext";
@@ -56,6 +57,7 @@ function App() {
                 <Cart />
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/shop" element={<Shop />} />
                   <Route path="/about-me" element={<About />} />
                   <Route
                     path="/admin/desserts/create"

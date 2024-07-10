@@ -88,9 +88,11 @@ export default function Navbar() {
                 justifyContent: "space-between",
               }}
             >
-              {!isGetDessertsLoading && (
+              <NavLink title="Home" toLink={"/"} />
+              {!isGetDessertsLoading ? (
                 <NavLink
-                  title="Home"
+                  title="Shop"
+                  toLink={"/shop"}
                   drawerItems={[
                     {
                       itemName: "Cakes",
@@ -114,10 +116,10 @@ export default function Navbar() {
                     },
                   ]}
                   buttons={[{ title: "Shop All", link: "/shop" }]}
-                  toLink={"/shop"}
                 />
+              ) : (
+                <NavLink title="Shop" toLink={"/shop"} />
               )}
-
               <NavLink title="Custom Order" toLink={"/custom-order"} />
               <NavLink title="About Me" toLink={"/about-me"} />
             </Box>

@@ -324,6 +324,7 @@ export default function Home() {
         >
           {_.map(displayImages, (image) => (
             <img
+              key={image}
               src={image}
               style={{
                 border: "1px solid black",
@@ -384,9 +385,8 @@ export default function Home() {
           width={"100%"}
         >
           {_.map(_.shuffle(_.slice(desserts, 0, 3)), (d) => (
-            <Grid item xs={8} sm={3} md={3} lg={3} xl={3}>
+            <Grid key={d.dessert_id} item xs={8} sm={3} md={3} lg={3} xl={3}>
               <Dessert
-                key={d.dessert_id}
                 id={d.dessert_id}
                 name={d.name}
                 description={d.description}
