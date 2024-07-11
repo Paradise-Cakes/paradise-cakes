@@ -11,17 +11,17 @@ export const AccountProvider = ({ children }) => {
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(
     localStorage.getItem("loggedIn") !== null
-      ? JSON.parse(localStorage.getItem("loggedIn"))
+      ? localStorage.getItem("loggedIn")
       : false
   );
   const [firstName, setFirstName] = useState(
     localStorage.getItem("firstName") !== null
-      ? JSON.parse(localStorage.getItem("firstName"))
+      ? localStorage.getItem("firstName")
       : ""
   );
   const [lastName, setLastName] = useState(
     localStorage.getItem("lastName") !== null
-      ? JSON.parse(localStorage.getItem("lastName"))
+      ? localStorage.getItem("lastName")
       : ""
   );
 

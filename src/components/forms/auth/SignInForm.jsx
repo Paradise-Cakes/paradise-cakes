@@ -138,6 +138,7 @@ export default function SignInForm() {
               border: "2px solid black",
             },
           },
+          "& .MuiInputBase-input": { fontFamily: "Montserrat" },
         }}
         value={formik.values.email}
         onChange={(e) => formik.setFieldValue("email", e.target.value)}
@@ -164,6 +165,7 @@ export default function SignInForm() {
               border: "2px solid black",
             },
           },
+          "& .MuiInputBase-input": { fontFamily: "Montserrat" },
         }}
         value={formik.values.password}
         onChange={(e) => formik.setFieldValue("password", e.target.value)}
