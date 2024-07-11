@@ -46,7 +46,7 @@ export default function NavLink({ title, drawerItems, buttons, toLink }) {
               alignItems: "center",
               height: "200px",
               width: "fit-content",
-              margin: "0 auto",
+              margin: "2rem auto",
             }}
           >
             {drawerItems?.map((item, index) => (
@@ -71,9 +71,7 @@ export default function NavLink({ title, drawerItems, buttons, toLink }) {
                     }}
                   />
                 </Button>
-                <div style={{ color: "#555555", fontWeight: "bolder" }}>
-                  {item.itemName}
-                </div>
+                <h3>{item.itemName}</h3>
               </div>
             ))}
           </div>

@@ -5,12 +5,12 @@
   top: 98px;
   left: 0;
   right: 0;
-  background-color: #E6EFEECC;
+  background-color: #e6efeecc;
   backdrop-filter: blur(6px);
 }
 
 .active {
-  height: 300px;
+  height: 325px;
   width: 100%;
 }
 

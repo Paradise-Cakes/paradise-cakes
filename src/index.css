@@ -2,11 +2,20 @@ html {
   background-color: #e6efee;
 }
 
-html * {
+h1,
+h2,
+h3 {
   font-family: "Bebas Neue";
 }
 
+h4,
+h5,
+h6 {
+  font-family: "Montserrat";
+}
+
 body {
+  font-family: "Montserrat";
   margin: 0;
   padding: 0;
 }

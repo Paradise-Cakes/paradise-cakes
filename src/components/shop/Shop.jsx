@@ -4,7 +4,7 @@ import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import Section from "./Section";
 import _ from "lodash";
 import { Link, Element, scroller } from "react-scroll";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link as RouterLink } from "react-router-dom";
 
 export default function Shop() {
   const location = useLocation();
@@ -21,9 +21,10 @@ export default function Shop() {
       scroller.scrollTo(location.hash.substring(1), {
         smooth: "easeInOut",
         offset: -225,
+        duration: 250,
       });
     }
-  });
+  }, [location]);
 
   return (
     <Box>
@@ -44,54 +45,54 @@ export default function Shop() {
           justifyContent: "center",
         }}
       >
-        <Link to="cakes" smooth={true} offset={-225} duration={500}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "black",
-              borderRadius: "1rem",
-              margin: "0 1rem",
-            }}
-          >
-            Cakes
-          </Button>
-        </Link>
-        <Link to="cupcakes" smooth={true} offset={-225} duration={500}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "black",
-              borderRadius: "1rem",
-              margin: "0 1rem",
-            }}
-          >
-            Cupcakes
-          </Button>
-        </Link>
-        <Link to="cookies" smooth={true} offset={-225} duration={500}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "black",
-              borderRadius: "1rem",
-              margin: "0 1rem",
-            }}
-          >
-            Cookies
-          </Button>
-        </Link>
-        <Link to="pies" smooth={true} offset={-225} duration={500}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "black",
-              borderRadius: "1rem",
-              margin: "0 1rem",
-            }}
-          >
-            Pies
-          </Button>
-        </Link>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "black",
+            borderRadius: "1rem",
+            margin: "0 1rem",
+          }}
+          component={RouterLink}
+          to="/shop#cakes"
+        >
+          Cakes
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "black",
+            borderRadius: "1rem",
+            margin: "0 1rem",
+          }}
+          component={RouterLink}
+          to="/shop#cupcakes"
+        >
+          Cupcakes
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "black",
+            borderRadius: "1rem",
+            margin: "0 1rem",
+          }}
+          component={RouterLink}
+          to="/shop#cookies"
+        >
+          Cookies
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "black",
+            borderRadius: "1rem",
+            margin: "0 1rem",
+          }}
+          component={RouterLink}
+          to="/shop#pies"
+        >
+          Pies
+        </Button>
       </Box>
       {!isGetDessertsLoading && isGetDessertsSuccess ? (
         <Box>

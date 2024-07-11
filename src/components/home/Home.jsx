@@ -205,7 +205,7 @@ export default function Home() {
               >
                 Desserts Made from Scratch
               </h1>
-              <h3
+              <h4
                 style={{
                   marginTop: ".5rem",
                   fontSize: "1.25rem",
@@ -216,7 +216,7 @@ export default function Home() {
               >
                 The perfect dessert everytime, made for you. Place an order
                 today!
-              </h3>
+              </h4>
               <Button
                 color="primary"
                 variant="contained"

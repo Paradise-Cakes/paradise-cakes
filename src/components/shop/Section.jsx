@@ -40,6 +40,8 @@ export default function Section({
               textAlign: { xs: "center", md: "center", lg: "left" },
               marginRight: "1.5rem",
               marginBottom: { xs: "1.5rem", md: "0" },
+              fontSize: "1.25rem",
+              fontFamily: "Montserrat",
             }}
           >
             {description}

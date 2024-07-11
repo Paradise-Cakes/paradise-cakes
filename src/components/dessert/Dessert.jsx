@@ -60,12 +60,13 @@ export default function Dessert({
             {name?.toUpperCase()}
           </Typography>
           <Typography
-            variant="body2"
+            variant="body"
             component="div"
             sx={{
               textOverflow: "ellipsis",
               overflow: "hidden",
               whiteSpace: "nowrap",
+              fontWeight: "400",
             }}
           >
             {description}
