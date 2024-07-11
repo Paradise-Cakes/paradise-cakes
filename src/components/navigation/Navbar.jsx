@@ -94,22 +94,22 @@ export default function Navbar() {
                   toLink={"/shop"}
                   drawerItems={[
                     {
-                      itemName: "Cakes",
+                      itemName: "cakes",
                       img: _.filter(desserts, { dessert_type: "cake" })[0]
                         .images[0].url,
                     },
                     {
-                      itemName: "Cupcakes",
+                      itemName: "cupcakes",
                       img: _.filter(desserts, { dessert_type: "cupcake" })[0]
                         .images[0].url,
                     },
                     {
-                      itemName: "Cookies",
+                      itemName: "cookies",
                       img: _.filter(desserts, { dessert_type: "cookie" })[0]
                         .images[0].url,
                     },
                     {
-                      itemName: "Pies",
+                      itemName: "pies",
                       img: _.filter(desserts, { dessert_type: "pie" })[0]
                         .images[0].url,
                     },
