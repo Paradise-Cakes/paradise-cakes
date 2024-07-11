@@ -24,6 +24,7 @@ import AccountDashboard from "./components/account/AccountDashboard";
 import ViewDesserts from "./components/admin/ViewDesserts";
 import EditDessert from "./components/admin/EditDessert";
 import Footer from "./components/footer/Footer";
+import NotFound from "./components/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,7 @@ function App() {
                   />
                   <Route path="/custom-order" element={<CustomOrderForm />} />
                   <Route path="/account" element={<AccountDashboard />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </IngredientsProvider>
             </CartProvider>
