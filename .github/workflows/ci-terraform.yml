@@ -39,7 +39,9 @@ jobs:
         id: tf-init-dev
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
-          terraform init -backend-config="key=paradise-cakes-dev.tfstate"
+          terraform init \
+            --backend-config="bucket=paradise-cakes-dev-tfstate" \
+            --backend-config="key=paradise-cakes-dev.tfstate"
 
       - name: Terraform Plan - DEV
         id: tf-plan-dev
