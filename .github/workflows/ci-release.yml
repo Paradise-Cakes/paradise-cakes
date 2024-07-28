@@ -40,7 +40,7 @@ jobs:
       - name: Install UI
         run: npm install
 
-  deploy:
+  deploy-dev:
     needs: [ci]
     runs-on: ubuntu-latest
     steps:
@@ -54,6 +54,41 @@ jobs:
       - name: Configure AWS credentials for us-east-1 - DEV
         uses: aws-actions/configure-aws-credentials@v1.6.1
         with:
+          role-to-assume: arn:aws:iam::010526276358:role/paradise-cakes-api-development-terraform-deployer
+          aws-region: us-east-1
+
+      - name: setup/node
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 18.18.1
+
+      - name: Install UI - DEV
+        run: npm install
+
+      - name: Build UI - DEV
+        run: DEPLOY_ENV=VCS_SHORT_REF=${SHORT_SHA} npm run build
+
+      - name: Invalidate Cache - DEV
+        run: aws cloudfront create-invalidation --distribution-id E3V13EEWPLKLVB --paths "/*"
+
+      - name: Deploy UI - DEV
+        run: aws s3 sync dist/ s3://paradisecakesbymegan.dev
+
+  deploy-prod:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set GIT variables
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials for us-east-1 - PROD
+        uses: aws-actions/configure-aws-credentials@v1.6.1
+        with:
           role-to-assume: arn:aws:iam::132899756990:role/paradise-cakes-api-terraform-deployer
           aws-region: us-east-1
 
@@ -62,14 +97,14 @@ jobs:
         with:
           node-version: 18.18.1
 
-      - name: Install UI
+      - name: Install UI - PROD
         run: npm install
 
-      - name: Build UI
+      - name: Build UI - PROD
         run: DEPLOY_ENV=VCS_SHORT_REF=${SHORT_SHA} npm run build
 
-      - name: Invalidate Cache
+      - name: Invalidate Cache - PROD
         run: aws cloudfront create-invalidation --distribution-id E3V13EEWPLKLVK --paths "/*"
 
-      - name: Deploy UI
+      - name: Deploy UI - PROD
         run: aws s3 sync dist/ s3://paradisecakesbymegan.com

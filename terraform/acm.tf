@@ -1,10 +1,10 @@
 resource "aws_acm_certificate" "paradise_cakes" {
-  domain_name       = "paradisecakesbymegan.com"
+  domain_name       = var.environment == "prod" ? "paradisecakesbymegan.com" : "paradisecakesbymegan.dev"
   validation_method = "DNS"
 }
 
 data "aws_route53_zone" "paradise_cakes" {
-  name         = "paradisecakesbymegan.com"
+  name         = var.environment == "prod" ? "paradisecakesbymegan.com" : "paradisecakesbymegan.dev"
   private_zone = false
 }
 
