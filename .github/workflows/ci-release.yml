@@ -72,7 +72,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id E3V13EEWPLKLVB --paths "/*"
 
       - name: Deploy UI - DEV
-        run: aws s3 sync dist/ s3://paradisecakesbymegan.dev
+        run: aws s3 sync dist/ s3://dev.paradisecakesbymegan.com
 
   deploy-prod:
     if: ${{ github.ref == 'refs/heads/main' }}

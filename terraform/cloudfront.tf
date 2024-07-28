@@ -7,7 +7,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
     domain_name = aws_s3_bucket.paradise_cakes_bucket.website_endpoint
-    origin_id   = var.environment == "prod" ? "paradisecakesbymegan.com" : "paradisecakesbymegan.dev"
+    origin_id   = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
   }
 
   enabled             = true
@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
     compress               = true
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = var.environment == "prod" ? "paradisecakesbymegan.com" : "paradisecakesbymegan.dev"
+    target_origin_id       = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
     min_ttl                = 0
     default_ttl            = 86400
     max_ttl                = 31536000
@@ -38,7 +38,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
     response_page_path    = "/index.html"
   }
 
-  aliases = var.environment == "prod" ? ["paradisecakesbymegan.com"] : ["paradisecakesbymegan.dev"]
+  aliases = var.environment == "prod" ? ["paradisecakesbymegan.com"] : ["dev.paradisecakesbymegan.com"]
 
   restrictions {
     geo_restriction {
