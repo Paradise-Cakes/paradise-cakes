@@ -1,9 +1,21 @@
 resource "aws_acm_certificate" "paradise_cakes" {
-  domain_name       = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
+  count             = var.environment == "prod" ? 1 : 0
+  domain_name       = "paradisecakesbymegan.com"
+  validation_method = "DNS"
+}
+
+resource "aws_acm_certificate" "paradise_cakes_dev" {
+  count             = var.environment == "prod" ? 0 : 1
+  domain_name       = "dev.paradisecakesbymegan.com"
   validation_method = "DNS"
 }
 
 resource "aws_acm_certificate_validation" "paradise_cakes" {
-  certificate_arn         = aws_acm_certificate.paradise_cakes.arn
-  validation_record_fqdns = [for record in aws_route53_record.paradise_cakes : record.fqdn]
+  count           = var.environment == "prod" ? 1 : 0
+  certificate_arn = aws_acm_certificate.paradise_cakes[0].arn
+}
+
+resource "aws_acm_certificate_validation" "paradise_cakes_dev" {
+  count           = var.environment == "prod" ? 0 : 1
+  certificate_arn = aws_acm_certificate.paradise_cakes_dev[0].arn
 }
