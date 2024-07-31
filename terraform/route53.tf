@@ -16,13 +16,12 @@ resource "aws_route53_record" "paradise_cakes" {
 }
 
 data "aws_route53_zone" "paradise_cakes" {
-  count = var.environment == "prod" ? 0 : 1
-  name  = "paradisecakesbymegan.com"
+  name = "paradisecakesbymegan.com"
 }
 
 resource "aws_route53_record" "paradise_cakes_dev" {
   count   = var.environment == "prod" ? 0 : 1
-  zone_id = data.aws_route53_zone.paradise_cakes[0].zone_id
+  zone_id = data.aws_route53_zone.paradise_cakes.zone_id
   name    = "dev.paradisecakesbymegan.com"
   type    = "A"
   alias {
