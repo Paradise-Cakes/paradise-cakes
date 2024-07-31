@@ -47,7 +47,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.paradise_cakes.arn
+    acm_certificate_arn = var.environment == "prod" ? aws_acm_certificate.paradise_cakes[0].arn : aws_acm_certificate.paradise_cakes_dev[0].arn
     ssl_support_method  = "sni-only"
   }
 }
