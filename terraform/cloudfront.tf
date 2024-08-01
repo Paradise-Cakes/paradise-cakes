@@ -6,6 +6,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
       origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
+
     domain_name = aws_s3_bucket.paradise_cakes_bucket.website_endpoint
     origin_id   = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
   }
@@ -47,7 +48,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = var.environment == "prod" ? aws_acm_certificate.paradise_cakes[0].arn : aws_acm_certificate.paradise_cakes_dev[0].arn
+    acm_certificate_arn = aws_acm_certificate.paradise_cakes.arn
     ssl_support_method  = "sni-only"
   }
 }
