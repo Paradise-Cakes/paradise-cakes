@@ -36,3 +36,21 @@ resource "aws_iam_role_policy" "route53_access_policy" {
     ]
   })
 }
+
+resource "aws_iam_role_policy" "prod_assume_dev_role_policy" {
+  count = var.environment == "prod" ? 0 : 1
+  name  = "AssumeDevRolePolicy"
+  role  = "YourProdRoleName" # Replace with your actual role name
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = "sts:AssumeRole",
+        Resource = "arn:aws:iam::${var.dev_aws_account_id}:role/pc_dev_cross_account_access"
+      }
+    ]
+  })
+}
+
