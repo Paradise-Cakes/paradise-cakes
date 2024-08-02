@@ -3,7 +3,7 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::${var.dev_aws_account_id}:role/pc_dev_cross_account_access"
+    role_arn = format("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id)
   }
 }
 
