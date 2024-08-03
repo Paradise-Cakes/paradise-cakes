@@ -43,6 +43,7 @@ resource "aws_route53_record" "paradise_cakes_dev" {
   }
 }
 
+
 # data "aws_route53_zone" "paradise_cakes_dev" {
 #   # provider = aws.dev
 #   name = "dev.paradisecakesbymegan.com"
