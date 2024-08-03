@@ -1,11 +1,11 @@
-provider "aws" {
-  alias  = "dev"
-  region = "us-east-1"
+# provider "aws" {
+#   alias  = "dev"
+#   region = "us-east-1"
 
-  assume_role {
-    role_arn = format("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id)
-  }
-}
+#   assume_role {
+#     role_arn = format("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id)
+#   }
+# }
 
 data "aws_route53_zone" "paradise_cakes" {
   count = var.environment == "prod" ? 1 : 0
@@ -44,8 +44,8 @@ resource "aws_route53_record" "paradise_cakes_dev" {
 }
 
 data "aws_route53_zone" "paradise_cakes_dev" {
-  provider = aws.dev
-  name     = "dev.paradisecakesbymegan.com"
+  # provider = aws.dev
+  name = "dev.paradisecakesbymegan.com"
 }
 
 resource "aws_route53_record" "paradise_cakes_dev_ns" {
