@@ -1,5 +1,7 @@
 data "aws_iam_role" "pc_dev_terraform_deployer" {
-  name = "paradise-cakes-api-development-terraform-deployer"
+  count      = var.environment == "prod" ? 0 : 1
+  name       = "paradise-cakes-api-development-terraform-deployer"
+  depends_on = [aws_iam_role.cross_account_access_dev[0]]
 }
 
 resource "aws_iam_role" "cross_account_access_dev" {
