@@ -1,4 +1,9 @@
-resource "aws_iam_role" "cross_account_access" {
+data "aws_iam_role" "pc_dev_terraform_deployer" {
+  count = var.environment == "prod" ? 0 : 1
+  name  = "paradise-cakes-api-development-terraform-deployer"
+}
+
+resource "aws_iam_role" "cross_account_access_dev" {
   count = var.environment == "prod" ? 0 : 1
   name  = "pc_dev_cross_account_access"
 
@@ -8,7 +13,7 @@ resource "aws_iam_role" "cross_account_access" {
       {
         Effect = "Allow",
         Principal = {
-          AWS = "arn:aws:iam::${var.prod_aws_account_id}:root"
+          AWS = ["arn:aws:iam::${var.prod_aws_account_id}:root", "${data.aws_iam_role.pc_dev_terraform_deployer[0].arn}"]
         },
         Action = "sts:AssumeRole"
       }
@@ -16,10 +21,11 @@ resource "aws_iam_role" "cross_account_access" {
   })
 }
 
+
 resource "aws_iam_role_policy" "route53_access_policy" {
   count = var.environment == "prod" ? 0 : 1
   name  = "Route53AccessPolicy"
-  role  = aws_iam_role.cross_account_access[0].id
+  role  = aws_iam_role.cross_account_access_dev[0].name
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -36,21 +42,3 @@ resource "aws_iam_role_policy" "route53_access_policy" {
     ]
   })
 }
-
-resource "aws_iam_role_policy" "prod_assume_dev_role_policy" {
-  count = var.environment == "prod" ? 0 : 1
-  name  = "AssumeDevRolePolicy"
-  role  = "YourProdRoleName" # Replace with your actual role name
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect   = "Allow",
-        Action   = "sts:AssumeRole",
-        Resource = "arn:aws:iam::${var.dev_aws_account_id}:role/pc_dev_cross_account_access"
-      }
-    ]
-  })
-}
-
