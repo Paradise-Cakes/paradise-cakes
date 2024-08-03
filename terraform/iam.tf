@@ -24,7 +24,7 @@ resource "aws_iam_role" "cross_account_access_dev" {
 
 resource "aws_iam_role_policy" "route53_access_policy" {
   count = var.environment == "prod" ? 0 : 1
-  name  = "Route53AccessPolicy"
+  name  = "route53_access_policy"
   role  = aws_iam_role.cross_account_access_dev[0].name
 
   policy = jsonencode({
