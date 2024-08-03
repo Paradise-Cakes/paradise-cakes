@@ -3,7 +3,8 @@ data "aws_iam_role" "pc_dev_terraform_deployer" {
 }
 
 resource "aws_iam_role" "cross_account_access_dev" {
-  name = "pc_dev_cross_account_access"
+  count = var.environment == "prod" ? 0 : 1
+  name  = "pc_dev_cross_account_access"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
