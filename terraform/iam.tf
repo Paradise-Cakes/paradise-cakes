@@ -14,7 +14,7 @@ resource "aws_iam_role" "cross_account_access_dev" {
       {
         Effect = "Allow",
         Principal = {
-          AWS = ["arn:aws:iam::${var.prod_aws_account_id}:root", "${data.aws_iam_role.pc_dev_terraform_deployer.arn}"]
+          AWS = ["arn:aws:iam::${var.prod_aws_account_id}:root", "${data.aws_iam_role.pc_dev_terraform_deployer[0].arn}"]
         },
         Action = "sts:AssumeRole"
       }
