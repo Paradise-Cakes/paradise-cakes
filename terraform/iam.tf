@@ -21,7 +21,6 @@ resource "aws_iam_role" "cross_account_access_dev" {
   })
 }
 
-
 resource "aws_iam_role_policy" "route53_access_policy" {
   count = var.environment == "prod" ? 0 : 1
   name  = "route53_access_policy"
