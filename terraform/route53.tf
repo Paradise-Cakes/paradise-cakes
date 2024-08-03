@@ -43,21 +43,21 @@ resource "aws_route53_record" "paradise_cakes_dev" {
   }
 }
 
-data "aws_route53_zone" "paradise_cakes_dev" {
-  # provider = aws.dev
-  name = "dev.paradisecakesbymegan.com"
-}
+# data "aws_route53_zone" "paradise_cakes_dev" {
+#   # provider = aws.dev
+#   name = "dev.paradisecakesbymegan.com"
+# }
 
-resource "aws_route53_record" "paradise_cakes_dev_ns" {
-  count   = var.environment == "prod" ? 1 : 0
-  zone_id = data.aws_route53_zone.paradise_cakes[0].zone_id
-  name    = "dev.paradisecakesbymegan.com"
-  type    = "NS"
+# resource "aws_route53_record" "paradise_cakes_dev_ns" {
+#   count   = var.environment == "prod" ? 1 : 0
+#   zone_id = data.aws_route53_zone.paradise_cakes[0].zone_id
+#   name    = "dev.paradisecakesbymegan.com"
+#   type    = "NS"
 
-  records = [
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[0],
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[1],
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[2],
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[3],
-  ]
-}
+#   records = [
+#     data.aws_route53_zone.paradise_cakes_dev.name_servers[0],
+#     data.aws_route53_zone.paradise_cakes_dev.name_servers[1],
+#     data.aws_route53_zone.paradise_cakes_dev.name_servers[2],
+#     data.aws_route53_zone.paradise_cakes_dev.name_servers[3],
+#   ]
+# }
