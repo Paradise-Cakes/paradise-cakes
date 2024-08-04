@@ -32,7 +32,8 @@ resource "aws_iam_policy" "route53_access" {
         Action = [
           "route53:ListHostedZones",
           "route53:GetHostedZone",
-          "route53:ListResourceRecordSets"
+          "route53:ListResourceRecordSets",
+          "route53:ListTagsForResource",
         ],
         Resource = "*"
       }
