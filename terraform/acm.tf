@@ -4,5 +4,6 @@ resource "aws_acm_certificate" "paradise_cakes" {
 }
 
 resource "aws_acm_certificate_validation" "paradise_cakes" {
-  certificate_arn = aws_acm_certificate.paradise_cakes.arn
+  certificate_arn         = aws_acm_certificate.paradise_cakes.arn
+  validation_record_fqdns = [for record in aws_route53_record.paradise_cakes : record.fqdn]
 }
