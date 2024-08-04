@@ -70,9 +70,9 @@ resource "aws_route53_record" "paradise_cakes_dev_ns" {
   type    = "NS"
 
   records = [
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[0],
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[1],
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[2],
-    data.aws_route53_zone.paradise_cakes_dev.name_servers[3],
+    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[0],
+    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[1],
+    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[2],
+    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[3],
   ]
 }
