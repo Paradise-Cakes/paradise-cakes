@@ -57,7 +57,8 @@ resource "aws_route53_record" "paradise_cakes" {
 
 
 data "aws_route53_zone" "paradise_cakes_dev" {
-  name = "dev.paradisecakesbymegan.com"
+  count = var.environment == "prod" ? 0 : 1
+  name  = "dev.paradisecakesbymegan.com"
 }
 
 resource "aws_route53_record" "paradise_cakes_dev_ns" {
