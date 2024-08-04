@@ -1,9 +1,9 @@
 provider "aws" {
-  alias  = var.environment == "dev" ? "dev" : "prod"
+  alias  = "dev"
   region = "us-east-1"
 
   assume_role {
-    role_arn = var.environment == "dev" ? format("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id) : null
+    role_arn = var.environment == "dev" ? ("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id) : ""
   }
 }
 
