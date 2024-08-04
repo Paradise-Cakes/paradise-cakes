@@ -8,12 +8,7 @@
 # }
 
 data "aws_route53_zone" "paradise_cakes" {
-  name         = "paradisecakesbymegan.com"
-  private_zone = false
-}
-
-data "aws_route53_zone" "paradise_cakes_dev" {
-  name         = "dev.paradisecakesbymegan.com"
+  name         = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
   private_zone = false
 }
 
@@ -23,7 +18,7 @@ resource "aws_route53_record" "paradise_cakes" {
       name    = dvo.resource_record_name
       record  = dvo.resource_record_value
       type    = dvo.resource_record_type
-      zone_id = dvo.domain_name == "paradisecakesbymegan.com" ? data.aws_route53_zone.paradise_cakes.zone_id : data.aws_route53_zone.paradise_cakes_dev.zone_id
+      zone_id = data.aws_route53_zone.paradise_cakes.zone_id
     }
   }
 
