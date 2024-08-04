@@ -8,13 +8,11 @@
 # }
 
 data "aws_route53_zone" "paradise_cakes" {
-  count        = var.environment == "prod" ? 1 : 0
   name         = "paradisecakesbymegan.com"
   private_zone = false
 }
 
 data "aws_route53_zone" "paradise_cakes_dev" {
-  count        = var.environment == "prod" ? 0 : 1
   name         = "dev.paradisecakesbymegan.com"
   private_zone = false
 }
