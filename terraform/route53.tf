@@ -1,5 +1,5 @@
 provider "aws" {
-  alias  = "dev"
+  alias  = var.environment == "dev" ? "dev" : "prod"
   region = "us-east-1"
 
   assume_role {
