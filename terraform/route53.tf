@@ -62,6 +62,7 @@ resource "aws_route53_record" "paradise_cakes_dev_ns" {
   zone_id = data.aws_route53_zone.paradise_cakes.zone_id
   name    = "dev.paradisecakesbymegan.com"
   type    = "NS"
+  ttl     = 300
 
   records = [
     "ns-1757.awsdns-27.co.uk",
