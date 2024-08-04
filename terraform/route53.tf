@@ -1,11 +1,11 @@
-provider "aws" {
-  alias  = "dev"
-  region = "us-east-1"
+# provider "aws" {
+#   alias  = "dev"
+#   region = "us-east-1"
 
-  assume_role {
-    role_arn = var.environment == "dev" ? format("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id) : ""
-  }
-}
+#   assume_role {
+#     role_arn = var.environment == "dev" ? format("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id) : ""
+#   }
+# }
 
 data "aws_route53_zone" "paradise_cakes" {
   name         = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
@@ -57,12 +57,6 @@ resource "aws_route53_record" "paradise_cakes" {
 # }
 
 
-data "aws_route53_zone" "paradise_cakes_dev" {
-  provider = aws.dev
-  count    = var.environment == "prod" ? 0 : 1
-  name     = "dev.paradisecakesbymegan.com"
-}
-
 resource "aws_route53_record" "paradise_cakes_dev_ns" {
   count   = var.environment == "prod" ? 1 : 0
   zone_id = data.aws_route53_zone.paradise_cakes.zone_id
@@ -70,9 +64,9 @@ resource "aws_route53_record" "paradise_cakes_dev_ns" {
   type    = "NS"
 
   records = [
-    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[0],
-    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[1],
-    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[2],
-    data.aws_route53_zone.paradise_cakes_dev[0].name_servers[3],
+    "ns-1757.awsdns-27.co.uk",
+    "ns-1270.awsdns-30.org",
+    "ns-820.awsdns-38.net",
+    "ns-222.awsdns-27.com",
   ]
 }
