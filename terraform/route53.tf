@@ -1,5 +1,4 @@
 provider "aws" {
-  alias  = "dev"
   region = "us-east-1"
 
   assume_role {
@@ -58,8 +57,7 @@ resource "aws_route53_record" "paradise_cakes" {
 
 
 data "aws_route53_zone" "paradise_cakes_dev" {
-  provider = aws.dev
-  name     = "dev.paradisecakesbymegan.com"
+  name = "dev.paradisecakesbymegan.com"
 }
 
 resource "aws_route53_record" "paradise_cakes_dev_ns" {
