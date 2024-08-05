@@ -39,7 +39,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
     response_page_path    = "/index.html"
   }
 
-  aliases = var.environment == "prod" ? ["paradisecakesbymegan.com"] : ["dev.paradisecakesbymegan.com"]
+  aliases = var.environment == "prod" ? ["paradisecakesbymegan.com", "www.paradisecakesbymegan.com"] : ["dev.paradisecakesbymegan.com", "www.dev.paradisecakesbymegan.com"]
 
   restrictions {
     geo_restriction {
