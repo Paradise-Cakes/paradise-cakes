@@ -1,6 +1,8 @@
 resource "aws_acm_certificate" "paradise_cakes" {
   domain_name       = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
   validation_method = "DNS"
+
+  subject_alternative_names = [var.environment == "prod" ? "www.paradisecakesbymegan.com" : "www.dev.paradisecakesbymegan.com"]
 }
 
 resource "aws_acm_certificate_validation" "paradise_cakes" {
