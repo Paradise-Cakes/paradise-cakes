@@ -3,7 +3,7 @@ data "aws_route53_zone" "paradise_cakes" {
   private_zone = false
 }
 
-resource "aws_route53_record" "paradise_cakes" {
+resource "aws_route53_record" "paradise_cakes_validation_record" {
   for_each = {
     for dvo in aws_acm_certificate.paradise_cakes.domain_validation_options : dvo.domain_name => {
       name    = dvo.resource_record_name
@@ -21,7 +21,7 @@ resource "aws_route53_record" "paradise_cakes" {
   zone_id         = each.value.zone_id
 }
 
-resource "aws_route53_record" "paradise_cakes" {
+resource "aws_route53_record" "paradise_cakes_main" {
   zone_id = data.aws_route53_zone.paradise_cakes.zone_id
   name    = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
   type    = "A"
