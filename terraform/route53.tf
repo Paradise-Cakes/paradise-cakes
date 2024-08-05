@@ -47,3 +47,12 @@ resource "aws_route53_record" "paradise_cakes_dev_ns" {
     "ns-222.awsdns-27.com",
   ]
 }
+
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.paradise_cakes.zone_id
+  name    = var.environment == "prod" ? "www.paradisecakesbymegan.com" : "www.dev.paradisecakesbymegan.com"
+  type    = "CNAME"
+  ttl     = 300
+
+  records = var.environment == "prod" ? ["paradisecakesbymegan.com"] : ["dev.paradisecakesbymegan.com"]
+}
