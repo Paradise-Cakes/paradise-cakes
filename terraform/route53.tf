@@ -1,12 +1,3 @@
-# provider "aws" {
-#   alias  = "dev"
-#   region = "us-east-1"
-
-#   assume_role {
-#     role_arn = var.environment == "dev" ? format("arn:aws:iam::%s:role/pc_dev_cross_account_access", var.dev_aws_account_id) : ""
-#   }
-# }
-
 data "aws_route53_zone" "paradise_cakes" {
   name         = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
   private_zone = false
@@ -30,32 +21,17 @@ resource "aws_route53_record" "paradise_cakes" {
   zone_id         = each.value.zone_id
 }
 
-# resource "aws_route53_record" "paradise_cakes" {
-#   count   = var.environment == "prod" ? 1 : 0
-#   zone_id = data.aws_route53_zone.paradise_cakes[0].zone_id
-#   name    = "paradisecakesbymegan.com"
-#   type    = "A"
+resource "aws_route53_record" "paradise_cakes" {
+  zone_id = data.aws_route53_zone.paradise_cakes.zone_id
+  name    = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
+  type    = "A"
 
-#   alias {
-#     name                   = aws_cloudfront_distribution.pc_cloud_distribution.domain_name
-#     zone_id                = aws_cloudfront_distribution.pc_cloud_distribution.hosted_zone_id
-#     evaluate_target_health = false
-#   }
-# }
-
-# resource "aws_route53_record" "paradise_cakes_dev" {
-#   count   = var.environment == "prod" ? 0 : 1
-#   zone_id = data.aws_route53_zone.paradise_cakes_dev[0].zone_id
-#   name    = "dev.paradisecakesbymegan.com"
-#   type    = "A"
-
-#   alias {
-#     name                   = aws_cloudfront_distribution.pc_cloud_distribution.domain_name
-#     zone_id                = aws_cloudfront_distribution.pc_cloud_distribution.hosted_zone_id
-#     evaluate_target_health = false
-#   }
-# }
-
+  alias {
+    name                   = aws_cloudfront_distribution.pc_cloud_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.pc_cloud_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
 
 resource "aws_route53_record" "paradise_cakes_dev_ns" {
   count   = var.environment == "prod" ? 1 : 0
