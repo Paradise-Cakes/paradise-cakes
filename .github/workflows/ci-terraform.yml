@@ -47,8 +47,6 @@ jobs:
         id: tf-plan-dev
         env:
           TF_VAR_environment: "dev"
-          TF_VAR_prod_aws_account_id: "132899756990"
-          TF_VAR_dev_aws_account_id: "010526276358"
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform plan --out tfplan.out
@@ -87,8 +85,6 @@ jobs:
         id: tf-plan-prod
         env:
           TF_VAR_environment: "prod"
-          TF_VAR_dev_aws_account_id: "010526276358"
-          TF_VAR_prod_aws_account_id: "132899756990"
         run: |
           cd ${GITHUB_WORKSPACE}/terraform
           terraform plan --out tfplan.out

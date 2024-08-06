@@ -66,7 +66,7 @@ jobs:
         run: npm install
 
       - name: Build UI - DEV
-        run: DEPLOY_ENV=VCS_SHORT_REF=${SHORT_SHA} npm run build
+        run: VITE_DEPLOY_ENV=dev npm run build
 
       - name: Invalidate Cache - DEV
         run: aws cloudfront create-invalidation --distribution-id E23JX3089IKKMA --paths "/*"
@@ -101,7 +101,7 @@ jobs:
         run: npm install
 
       - name: Build UI - PROD
-        run: DEPLOY_ENV=VCS_SHORT_REF=${SHORT_SHA} npm run build
+        run: VITE_DEPLOY_ENV=prod npm run build
 
       - name: Invalidate Cache - PROD
         run: aws cloudfront create-invalidation --distribution-id E1L6S8P894D6WX --paths "/*"
