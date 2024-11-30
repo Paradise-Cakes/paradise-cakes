@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Grid from "@mui/material/Grid";
-import {
-  useGetDesserts,
-  useGetDisplayImages,
-} from "../../hooks/dessert/DessertHook";
+import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
 import { border, Box, Container } from "@mui/system";
 import { Button, useTheme, CircularProgress } from "@mui/material";
@@ -45,12 +42,6 @@ export default function Home() {
     isLoading: isGetDessertsLoading,
     isSuccess: isGetDessertsSuccess,
   } = getDessertsQuery;
-  const getDisplayImagesQuery = useGetDisplayImages();
-  const {
-    data: displayImages,
-    isLoading: isGetDisplayImagesLoading,
-    isSuccess: isGetDisplayImagesSuccess,
-  } = getDisplayImagesQuery;
   const theme = useTheme();
   const [value, setValue] = useState("cake");
 
@@ -322,17 +313,6 @@ export default function Home() {
           }}
           ref={scrollContainerRef}
         >
-          {_.map(displayImages, (image) => (
-            <img
-              key={image}
-              src={image}
-              style={{
-                border: "1px solid black",
-                borderRadius: "1rem",
-                margin: "0 0.5rem",
-              }}
-            />
-          ))}
           {isRightButtonVisible && (
             <Button
               variant="contained"
