@@ -92,28 +92,30 @@ export default function Navbar() {
                 <NavLink
                   title="Shop"
                   toLink={"/shop"}
-                  drawerItems={[
-                    {
-                      itemName: "cakes",
-                      img: _.filter(desserts, { dessert_type: "cake" })[0]
-                        .images[0].url,
-                    },
-                    {
-                      itemName: "cupcakes",
-                      img: _.filter(desserts, { dessert_type: "cupcake" })[0]
-                        .images[0].url,
-                    },
-                    {
-                      itemName: "cookies",
-                      img: _.filter(desserts, { dessert_type: "cookie" })[0]
-                        .images[0].url,
-                    },
-                    {
-                      itemName: "pies",
-                      img: _.filter(desserts, { dessert_type: "pie" })[0]
-                        .images[0].url,
-                    },
-                  ]}
+                  drawerItems={
+                    [
+                      // {
+                      //   itemName: "cakes",
+                      //   img: _.filter(desserts, { dessert_type: "cake" })[0]
+                      //     .images[0].url,
+                      // },
+                      // {
+                      //   itemName: "cupcakes",
+                      //   img: _.filter(desserts, { dessert_type: "cupcake" })[0]
+                      //     .images[0].url,
+                      // },
+                      // {
+                      //   itemName: "cookies",
+                      //   img: _.filter(desserts, { dessert_type: "cookie" })[0]
+                      //     .images[0].url,
+                      // },
+                      // {
+                      //   itemName: "pies",
+                      //   img: _.filter(desserts, { dessert_type: "pie" })[0]
+                      //     .images[0].url,
+                      // },
+                    ]
+                  }
                   buttons={[{ title: "Shop All", link: "/shop" }]}
                 />
               ) : (
