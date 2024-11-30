@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "paradise_cakes_bucket" {
-  bucket = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
+  bucket = var.environment == "prod" ? "megsparadisecakes.com" : "dev.megsparadisecakes.com"
   tags = {
-    Name = var.environment == "prod" ? "bucket for paradisecakesbymegan.com" : "bucket for dev.paradisecakesbymegan.com"
+    Name = var.environment == "prod" ? "bucket for megsparadisecakes.com" : "bucket for dev.megsparadisecakes.com"
   }
   website {
     index_document = "index.html"

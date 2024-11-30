@@ -8,7 +8,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
     }
 
     domain_name = aws_s3_bucket.paradise_cakes_bucket.website_endpoint
-    origin_id   = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
+    origin_id   = var.environment == "prod" ? "megsparadisecakes.com" : "dev.megsparadisecakes.com"
   }
 
   enabled             = true
@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
     compress               = true
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = var.environment == "prod" ? "paradisecakesbymegan.com" : "dev.paradisecakesbymegan.com"
+    target_origin_id       = var.environment == "prod" ? "megsparadisecakes.com" : "dev.megsparadisecakes.com"
     min_ttl                = 0
     default_ttl            = 86400
     max_ttl                = 31536000
@@ -39,7 +39,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
     response_page_path    = "/index.html"
   }
 
-  aliases = var.environment == "prod" ? ["paradisecakesbymegan.com", "www.paradisecakesbymegan.com"] : ["dev.paradisecakesbymegan.com", "www.dev.paradisecakesbymegan.com"]
+  aliases = var.environment == "prod" ? ["megsparadisecakes.com", "www.megsparadisecakes.com"] : ["dev.megsparadisecakes.com", "www.dev.megsparadisecakes.com"]
 
   restrictions {
     geo_restriction {
@@ -48,7 +48,7 @@ resource "aws_cloudfront_distribution" "pc_cloud_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.paradise_cakes.arn
+    acm_certificate_arn = data.aws_acm_certificate.paradise_cakes.arn
     ssl_support_method  = "sni-only"
   }
 }
