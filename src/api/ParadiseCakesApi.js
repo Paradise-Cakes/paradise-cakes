@@ -3,8 +3,8 @@ import axios from "axios";
 const deployEnv = import.meta.env.VITE_DEPLOY_ENV;
 const API_URL =
   deployEnv === "prod"
-    ? "https://api.paradisecakesbymegan.com/v1"
-    : "https://dev-api.paradisecakesbymegan.com/v1";
+    ? "https://api.megsparadisecakes.com/v1"
+    : "https://dev-api.megsparadisecakes.com/v1";
 
 export const getDessertById = async (dessert_id) => {
   const response = await axios.get(`${API_URL}/desserts/${dessert_id}`);

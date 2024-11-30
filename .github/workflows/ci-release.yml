@@ -68,11 +68,11 @@ jobs:
       - name: Build UI - DEV
         run: VITE_DEPLOY_ENV=dev npm run build
 
-      - name: Invalidate Cache - DEV
-        run: aws cloudfront create-invalidation --distribution-id E23JX3089IKKMA --paths "/*"
+      # - name: Invalidate Cache - DEV
+      #   run: aws cloudfront create-invalidation --distribution-id E23JX3089IKKMA --paths "/*"
 
       - name: Deploy UI - DEV
-        run: aws s3 sync dist/ s3://dev.paradisecakesbymegan.com
+        run: aws s3 sync dist/ s3://dev.megsparadisecakes.com
 
   deploy-prod:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -103,8 +103,8 @@ jobs:
       - name: Build UI - PROD
         run: VITE_DEPLOY_ENV=prod npm run build
 
-      - name: Invalidate Cache - PROD
-        run: aws cloudfront create-invalidation --distribution-id E1L6S8P894D6WX --paths "/*"
+      # - name: Invalidate Cache - PROD
+      #   run: aws cloudfront create-invalidation --distribution-id E1L6S8P894D6WX --paths "/*"
 
       - name: Deploy UI - PROD
-        run: aws s3 sync dist/ s3://paradisecakesbymegan.com
+        run: aws s3 sync dist/ s3://megsparadisecakes.com
