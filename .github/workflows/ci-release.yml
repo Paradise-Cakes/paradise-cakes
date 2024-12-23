@@ -66,7 +66,9 @@ jobs:
         run: npm install
 
       - name: Build UI - DEV
-        run: VITE_DEPLOY_ENV=dev npm run build
+        env:
+          VITE_DEPLOY_ENV: dev
+        run: npm run build
 
       - name: Invalidate Cache - DEV
         run: aws cloudfront create-invalidation --distribution-id ESV4Y27OFJ1EZ --paths "/*"
@@ -101,7 +103,9 @@ jobs:
         run: npm install
 
       - name: Build UI - PROD
-        run: VITE_DEPLOY_ENV=prod npm run build
+        env:
+          VITE_DEPLOY_ENV: prod
+        run: npm run build
 
       - name: Invalidate Cache - PROD
         run: aws cloudfront create-invalidation --distribution-id E11LZS29LR93ZG --paths "/*"
