@@ -15,25 +15,21 @@ import {
   usePostResendConfirmationCode,
 } from "../../../hooks/auth/AuthHook";
 import { useNavigate } from "react-router-dom";
-import { AccountContext } from "../../../context/AccountContext";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
+import { useAppStore } from "../../../store/useAppStore";
+import { useModalStore } from "../../../store/useModalStore";
+import { useAuthStore } from "../../../store/useAuthStore";
+import { first } from "lodash";
 
 export default function SignInForm() {
-  const {
-    setSignInModalOpen,
-    setConfirmationCodeModalOpen,
-    setLoggedInModalOpen,
-    setEmail,
-    setPassword,
-    setLoggedIn,
-    setFirstName,
-    setLastName,
-  } = useContext(AccountContext);
+  const { setUser } = useAppStore();
+  const { closeSignInModal, openLoggedInModal } = useModalStore();
+  const { setEmail, setPassword } = useAuthStore();
   const navigate = useNavigate();
-  const postSignInQuery = usePostSignIn();
   const postResendConfirmationCodeQuery = usePostResendConfirmationCode();
   const theme = useTheme();
+  const postSignInQuery = usePostSignIn();
   const {
     mutateAsync: postSignIn,
     isLoading: isPostSignInLoading,
@@ -70,11 +66,14 @@ export default function SignInForm() {
           userCreds: values,
         });
         console.log(response);
-        setSignInModalOpen(false);
-        setLoggedInModalOpen(true);
-        setLoggedIn(true);
-        setFirstName(response.data.given_name);
-        setLastName(response.data.family_name);
+        closeSignInModal();
+        openLoggedInModal();
+        setUser({
+          firstName: response.data.given_name,
+          lastName: response.data.family_name,
+          loggedIn: true,
+        });
+
         navigate("/");
       } catch (error) {
         console.error(error);

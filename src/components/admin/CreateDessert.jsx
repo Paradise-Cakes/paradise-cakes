@@ -3,7 +3,7 @@ import { Box, Typography, Container } from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
 import {
   usePostDessert,
-  usePostDessertImage,
+  // usePostDessertImage,
 } from "../../hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 export default function CreateDessert() {
   const navigate = useNavigate();
   const postDessertQuery = usePostDessert();
-  const postDessertImageQuery = usePostDessertImage();
+  // const postDessertImageQuery = usePostDessertImage();
   const {
     mutateAsync: postDessertImage,
     isLoading: isPostDessertImageLoading,

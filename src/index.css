@@ -20,6 +20,10 @@ body {
   padding: 0;
 }
 
+/* input {
+  font-family: "Montserrat" !important;
+} */
+
 .MuiContainer-root,
 .MuiContainer-maxWidthFalse,
 .css-udn1tz-MuiContainer-root {

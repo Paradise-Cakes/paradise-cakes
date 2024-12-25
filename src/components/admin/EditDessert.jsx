@@ -4,7 +4,7 @@ import DessertForm from "../forms/dessert/DessertForm";
 import {
   usePatchDessert,
   useGetDessertById,
-  usePostDessertImage,
+  // usePostDessertImage,
 } from "../../hooks/dessert/DessertHook";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ export default function EditDessert() {
   const navigate = useNavigate();
   const getDessertByIdQuery = useGetDessertById(dessertId);
   const patchDessertQuery = usePatchDessert(dessertId);
-  const postDessertImageQuery = usePostDessertImage();
+  // const postDessertImageQuery = usePostDessertImage();
   const {
     data: dessert,
     isLoading: isDessertLoading,

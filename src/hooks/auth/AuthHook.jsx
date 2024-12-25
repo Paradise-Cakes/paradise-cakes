@@ -1,58 +1,34 @@
 import { useMutation, useQueryClient } from "react-query";
-import * as paradiseCakesApi from "../../api/ParadiseCakesApi";
+import * as usersApi from "../../api/UsersApi";
 
-export const usePostSignUp = () => {
+export const usePostConfirmForgotPassword = () => {
   const queryClient = useQueryClient();
-  return useMutation(({ signUp }) => paradiseCakesApi.postSignUp(signUp), {
+  return useMutation(
+    ({ userCreds }) => usersApi.postConfirmForgotPassword(userCreds),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
+      },
+    }
+  );
+};
+
+export const usePostConfirmSignUp = () => {
+  const queryClient = useQueryClient();
+  return useMutation(({ userCreds }) => usersApi.postConfirmSignUp(userCreds), {
     onSuccess: () => {
-      console.log("SUCCESS");
+      queryClient.invalidateQueries("user");
     },
   });
-};
-
-export const usePostConfirmationCode = () => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    ({ userCreds }) => paradiseCakesApi.postConfirmSignUp(userCreds),
-    {
-      onSuccess: () => {
-        console.log("SUCCESS");
-      },
-    }
-  );
-};
-
-export const usePostResendConfirmationCode = () => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    ({ email }) => paradiseCakesApi.postResendConfirmationCode(email),
-    {
-      onSuccess: () => {
-        console.log("SUCCESS");
-      },
-    }
-  );
-};
-
-export const usePostSignIn = () => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    ({ userCreds }) => paradiseCakesApi.postSignIn(userCreds),
-    {
-      onSuccess: () => {
-        console.log("SUCCESS");
-      },
-    }
-  );
 };
 
 export const usePostForgotPassword = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    ({ userCreds }) => paradiseCakesApi.postForgotPassword(userCreds),
+    ({ userCreds }) => usersApi.postForgotPassword(userCreds),
     {
       onSuccess: () => {
-        console.log("SUCCESS");
+        queryClient.invalidateQueries("user");
       },
     }
   );
@@ -60,9 +36,39 @@ export const usePostForgotPassword = () => {
 
 export const usePostLogout = () => {
   const queryClient = useQueryClient();
-  return useMutation(() => paradiseCakesApi.postLogout, {
+  return useMutation(() => usersApi.postLogout(), {
     onSuccess: () => {
-      console.log("LOGGED OUT");
+      queryClient.invalidateQueries("user");
+    },
+  });
+};
+
+export const usePostResendConfirmationCode = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    ({ userCreds }) => usersApi.postResendConfirmationCode(userCreds),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
+      },
+    }
+  );
+};
+
+export const usePostSignIn = () => {
+  const queryClient = useQueryClient();
+  return useMutation(({ userCreds }) => usersApi.postSignIn(userCreds), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("user");
+    },
+  });
+};
+
+export const usePostSignUp = () => {
+  const queryClient = useQueryClient();
+  return useMutation(({ userCreds }) => usersApi.postSignUp(userCreds), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("user");
     },
   });
 };

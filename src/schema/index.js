@@ -1,4 +1,4 @@
-import { object, array, string, number } from "yup";
+import { array, number, object, string } from "yup";
 
 export const signUpSchema = object({
   first_name: string().required(),

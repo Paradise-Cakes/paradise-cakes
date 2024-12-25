@@ -1,14 +1,19 @@
 import React, { useContext } from "react";
 import { Container, Box, Typography, useTheme, Modal } from "@mui/material";
-import { AccountContext } from "../../../context/AccountContext";
 import { CgClose } from "react-icons/cg";
 import ConfirmationCodeForm from "../../forms/auth/ConfirmationCodeForm";
 import { usePostResendConfirmationCode } from "../../../hooks/auth/AuthHook";
+import { useModalStore } from "../../../store/useModalStore";
+import { useAuthStore } from "../../../store/useAuthStore";
 
-export default function ConfirmationCode() {
+export default function ConfirmationCodeModal() {
   const theme = useTheme();
-  const { confirmationCodeModalOpen, setConfirmationCodeModalOpen, email } =
-    useContext(AccountContext);
+  const {
+    openConfirmationCodeModal,
+    closeConfirmationCodeModal,
+    confirmationCodeModalOpen,
+  } = useModalStore();
+  const { email } = useAuthStore();
 
   const postResendConfirmationCodeQuery = usePostResendConfirmationCode();
   const {
@@ -24,7 +29,7 @@ export default function ConfirmationCode() {
     ) {
       return;
     }
-    setConfirmationCodeModalOpen(open);
+    open ? openConfirmationCodeModal() : closeConfirmationCodeModal();
   };
 
   return (
@@ -69,7 +74,7 @@ export default function ConfirmationCode() {
             VERIFICATION
           </Typography>
           <Typography variant="body2" textAlign="center">
-            We sent a code to {email}. Please enter the code below to continue.
+            We sent a code to your email. Please enter it below to continue.
           </Typography>
           <ConfirmationCodeForm />
           <Typography variant="body2" marginTop={"1rem"} textAlign={"center"}>
@@ -79,7 +84,7 @@ export default function ConfirmationCode() {
               onClick={async () => {
                 try {
                   await postResendConfirmationCode({
-                    email: { email: email },
+                    userCreds: { email: email },
                   });
                 } catch (error) {
                   console.error(error);

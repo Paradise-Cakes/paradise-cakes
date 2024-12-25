@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Container,
@@ -14,8 +14,8 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useNavigate } from "react-router-dom";
 import { usePostLogout } from "../../hooks/auth/AuthHook";
-import { AccountContext } from "../../context/AccountContext";
 import _ from "lodash";
+import { useAppStore } from "../../store/useAppStore";
 
 export default function AccountDashboard() {
   const [value, setValue] = useState("dashboard");
@@ -23,15 +23,12 @@ export default function AccountDashboard() {
   const postLogoutQuery = usePostLogout();
   const { mutateAsync: postLogout, isLoading: postLogoutLoading } =
     postLogoutQuery;
-  const { setLoggedIn, firstName, lastName, setFirstName, setLastName } =
-    useContext(AccountContext);
+  const { user, logout } = useAppStore();
 
   const handleLogout = async () => {
     try {
       await postLogout();
-      setLoggedIn(false);
-      setFirstName("");
-      setLastName("");
+      logout();
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -61,7 +58,7 @@ export default function AccountDashboard() {
                 My Account
               </Typography>
               <Typography variant="h3" fontWeight={1000} gutterBottom>
-                HI {_.upperCase(firstName)}!
+                HI {_.upperCase(user.firstName)}!
               </Typography>
               <TabList
                 onChange={(e, newValue) => setValue(newValue)}
@@ -104,7 +101,7 @@ export default function AccountDashboard() {
                   marginBottom={"1rem"}
                 >
                   <Typography fontWeight={1000}>First Name</Typography>
-                  <Typography>{firstName}</Typography>
+                  <Typography>{user.firstName}</Typography>
                 </Box>
                 <Box
                   display="flex"
@@ -112,7 +109,7 @@ export default function AccountDashboard() {
                   marginBottom={"1rem"}
                 >
                   <Typography fontWeight={1000}>Last Name</Typography>
-                  <Typography>{lastName}</Typography>
+                  <Typography>{user.lastName}</Typography>
                 </Box>
               </Paper>
               <Paper elevation={0} sx={{ padding: 4, borderRadius: "8px" }}>

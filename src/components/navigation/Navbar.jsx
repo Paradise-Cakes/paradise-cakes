@@ -12,15 +12,18 @@ import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import AnimatedBanner from "../extras/AnimatedBanner";
 import { VscAccount } from "react-icons/vsc";
-import { AccountContext } from "../../context/AccountContext";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
+import { useModalStore } from "../../store/useModalStore";
+import { useAppStore } from "../../store/useAppStore";
+import { useCartStore } from "../../store/useCartStore";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
-  const { setCartOpen, cartItems } = useContext(CartContext);
-  const { signInModalOpen, setSignInModalOpen, loggedIn } =
-    useContext(AccountContext);
+  const { openCart, cart } = useCartStore();
+
+  const { openSignInModal } = useModalStore();
+  const { user } = useAppStore();
   const navigate = useNavigate();
   const theme = useTheme();
   const getDessertsQuery = useGetDesserts();
@@ -183,10 +186,10 @@ export default function Navbar() {
           >
             <Box
               onClick={() => {
-                if (loggedIn) {
+                if (user.loggedIn) {
                   navigate("/account");
                 } else {
-                  setSignInModalOpen(true);
+                  openSignInModal();
                 }
               }}
             >
@@ -197,7 +200,7 @@ export default function Navbar() {
                 }}
               />
             </Box>
-            <Box onClick={() => setCartOpen(true)}>
+            <Box onClick={() => openCart()}>
               <BsCart2
                 style={{
                   width: "30px",
@@ -206,7 +209,7 @@ export default function Navbar() {
               />
             </Box>
 
-            {cartItems.length > 0 && (
+            {cart.length > 0 && (
               <GoDotFill
                 style={{
                   position: "absolute",

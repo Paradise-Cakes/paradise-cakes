@@ -1,13 +1,11 @@
 import { useQuery, useMutation } from "react-query";
 import {
-  getDesserts,
+  getDessertsByDessertType,
   getDessertById,
-  postDessertImage,
   postDessert,
   patchDessert,
   deleteDessert,
-  getDisplayImages,
-} from "../../api/ParadiseCakesApi";
+} from "../../api/DessertsApi";
 import { useQueryClient } from "react-query";
 
 export const useGetDessertById = (dessert_id) => {
@@ -17,25 +15,9 @@ export const useGetDessertById = (dessert_id) => {
 };
 
 export const useGetDesserts = () => {
-  return useQuery(["desserts"], () => getDesserts(), {
+  return useQuery(["desserts"], () => getDessertsByDessertType("cake"), {
     select: (data) => data.data,
   });
-};
-
-export const useGetDisplayImages = () => {
-  return useQuery(["displayImages"], () => getDisplayImages(), {
-    select: (data) => data.data,
-  });
-};
-
-export const usePostDessertImage = () => {
-  return useMutation(
-    ({ dessertImageData, dessert_id }) =>
-      postDessertImage(dessert_id, dessertImageData),
-    {
-      onSuccess: () => console.log("SUCCESS"),
-    }
-  );
 };
 
 export const usePostDessert = () => {

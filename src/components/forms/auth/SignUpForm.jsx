@@ -11,20 +11,20 @@ import {
   useTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { AccountContext } from "../../../context/AccountContext";
 import { signUpSchema } from "../../../schema";
 import { usePostSignUp } from "../../../hooks/auth/AuthHook";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
 import LoadingButton from "../../extras/LoadingButton";
+import { useModalStore } from "../../../store/useModalStore";
+import { useAppStore } from "../../../store/useAppStore";
+import { useAuthStore } from "../../../store/useAuthStore";
 
 export default function SignUpForm() {
-  const {
-    setConfirmationCodeModalOpen,
-    setSignUpModalOpen,
-    setEmail,
-    setPassword,
-  } = useContext(AccountContext);
+  const { setUser } = useAppStore();
+  const { closeSignUpModal, openConfirmationCodeModal } = useModalStore();
+  const { setEmail, setPassword } = useAuthStore();
+
   const postSignUpQuery = usePostSignUp();
   const [passwordType, setPasswordType] = useState("password");
   const theme = useTheme();
@@ -40,7 +40,6 @@ export default function SignUpForm() {
       last_name: "",
       email: "",
       password: "",
-      // receiveEmails: false,
     },
     validationSchema: signUpSchema,
     validate: async (values) => {
@@ -64,10 +63,10 @@ export default function SignUpForm() {
       setPassword(values.password);
       try {
         const response = await postSignUp({
-          signUp: values,
+          userCreds: values,
         });
-        setConfirmationCodeModalOpen(true);
-        setSignUpModalOpen(false);
+        openConfirmationCodeModal();
+        closeSignUpModal();
       } catch (error) {
         console.error(error);
       }
@@ -107,6 +106,7 @@ export default function SignUpForm() {
               border: "2px solid black",
             },
           },
+          "& .MuiInputBase-input": { fontFamily: "Montserrat" },
         }}
         value={formik.values.first_name}
         onChange={(e) => formik.setFieldValue("first_name", e.target.value)}
@@ -129,6 +129,7 @@ export default function SignUpForm() {
               border: "2px solid black",
             },
           },
+          "& .MuiInputBase-input": { fontFamily: "Montserrat" },
         }}
         value={formik.values.last_name}
         onChange={(e) => formik.setFieldValue("last_name", e.target.value)}
@@ -154,6 +155,7 @@ export default function SignUpForm() {
               border: "2px solid black",
             },
           },
+          "& .MuiInputBase-input": { fontFamily: "Montserrat" },
         }}
         value={formik.values.email}
         onChange={(e) => formik.setFieldValue("email", e.target.value)}
@@ -177,6 +179,7 @@ export default function SignUpForm() {
               border: "2px solid black",
             },
           },
+          "& .MuiInputBase-input": { fontFamily: "Montserrat" },
         }}
         value={formik.values.password}
         onChange={(e) => formik.setFieldValue("password", e.target.value)}

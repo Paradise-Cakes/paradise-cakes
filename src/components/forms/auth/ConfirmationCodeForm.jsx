@@ -8,11 +8,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { AccountContext } from "../../../context/AccountContext";
 import { confirmationCodeSchema } from "../../../schema";
-import { usePostConfirmationCode } from "../../../hooks/auth/AuthHook";
+import { usePostConfirmSignUp } from "../../../hooks/auth/AuthHook";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import _, { set } from "lodash";
+import { useAppStore } from "../../../store/useAppStore";
+import { useAuthStore } from "../../../store/useAuthStore";
+import { useModalStore } from "../../../store/useModalStore";
 
 export function matchIsNumeric(text) {
   const isNumber = typeof text === "number";
@@ -24,23 +26,17 @@ const validateChar = (value, index) => {
 };
 
 export default function ConfirmationCodeForm() {
-  const {
-    setConfirmationCodeModalOpen,
-    setLoggedInModalOpen,
-    email,
-    password,
-    setFirstName,
-    setLastName,
-    setLoggedIn,
-  } = useContext(AccountContext);
-  const postConfirmationCodeQuery = usePostConfirmationCode();
+  const { setUser } = useAppStore();
+  const { email, password } = useAuthStore();
+  const { closeConfirmationCodeModal, openLoggedInModal } = useModalStore();
+  const postConfirmSignUpQuery = usePostConfirmSignUp();
   const theme = useTheme();
 
   const {
-    mutateAsync: postConfirmationCode,
-    isLoading: isPostConfirmationCodeLoading,
-    error: postConfirmationCodeError,
-  } = postConfirmationCodeQuery;
+    mutateAsync: postConfirmSignUp,
+    isLoading: isPostConfirmSignUpLoading,
+    error: postConfirmSignUpError,
+  } = postConfirmSignUpQuery;
 
   const formik = useFormik({
     initialValues: {
@@ -57,15 +53,20 @@ export default function ConfirmationCodeForm() {
     },
     onSubmit: async (values) => {
       try {
-        const response = await postConfirmationCode({
-          userCreds: { ...values, email: email, password: password },
+        const response = await postConfirmSignUp({
+          userCreds: {
+            confirmation_code: values.confirmation_code,
+            email: email,
+            password: password,
+          },
         });
-        console.log(response);
-        setFirstName(response.data.given_name);
-        setLastName(response.data.family_name);
-        setLoggedIn(true);
-        setConfirmationCodeModalOpen(false);
-        setLoggedInModalOpen(true);
+        closeConfirmationCodeModal();
+        openLoggedInModal();
+        setUser({
+          firstName: response.data.given_name,
+          lastName: response.data.family_name,
+          loggedIn: true,
+        });
       } catch (error) {
         console.error(error);
       }
@@ -77,16 +78,16 @@ export default function ConfirmationCodeForm() {
       component="form"
       sx={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}
     >
-      {isPostConfirmationCodeLoading && (
+      {isPostConfirmSignUpLoading && (
         <CircularProgress sx={{ display: "block", margin: "1rem auto" }} />
       )}
-      {postConfirmationCodeError && (
+      {postConfirmSignUpError && (
         <Typography
           marginBottom={"1rem"}
           sx={{ color: theme.palette.error.main }}
           textAlign={"center"}
         >
-          {postConfirmationCodeError?.response?.data?.detail}
+          Something went wrong. Please try again later.
         </Typography>
       )}
       <MuiOtpInput
