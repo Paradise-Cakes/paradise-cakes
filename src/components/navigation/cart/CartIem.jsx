@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import QuantityButton from "../../extras/QuantityButton";
 import { CgClose } from "react-icons/cg";
-import { CartContext } from "../../../context/CartContext";
 import { useCartStore } from "../../../store/useCartStore";
 
 export default function CartItem({

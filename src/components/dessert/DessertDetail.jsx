@@ -20,7 +20,6 @@ import QuantityButton from "../extras/QuantityButton";
 import { useGetDessertById } from "../../hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
-import { CartContext } from "../../context/CartContext";
 import { IngredientsContext } from "../../context/IngredientsContext";
 import Ingredients from "./Ingredients";
 import { useCartStore } from "../../store/useCartStore";

@@ -6,7 +6,6 @@ import { Container, Toolbar, Hidden, useTheme, Button } from "@mui/material";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { BsCart2 } from "react-icons/bs";
 import { DrawerContext } from "../../context/DrawerContext";
-import { CartContext } from "../../context/CartContext";
 import NavLink from "./NavLink";
 import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";

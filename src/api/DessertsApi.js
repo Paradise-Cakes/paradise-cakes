@@ -5,8 +5,8 @@ const API_URL =
   deployEnv === "prod"
     ? "https://desserts-api.megsparadisecakes.com/v1"
     : deployEnv === "dev"
-    ? "https://desserts-dev-api.megsparadisecakes.com/v1"
-    : "http://localhost:8000/v1";
+      ? "https://desserts-dev-api.megsparadisecakes.com/v1"
+      : "http://localhost:8000/v1";
 
 export const deleteDessert = async (dessert_id) => {
   const response = await axios.delete(`${API_URL}/desserts/${dessert_id}`, {

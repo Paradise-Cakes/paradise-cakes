@@ -1,10 +1,7 @@
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
-import {
-  usePostDessert,
-  // usePostDessertImage,
-} from "../../hooks/dessert/DessertHook";
+import { usePostDessert } from "../../hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -12,12 +9,6 @@ import { useNavigate } from "react-router-dom";
 export default function CreateDessert() {
   const navigate = useNavigate();
   const postDessertQuery = usePostDessert();
-  // const postDessertImageQuery = usePostDessertImage();
-  const {
-    mutateAsync: postDessertImage,
-    isLoading: isPostDessertImageLoading,
-    error: postDessertImageError,
-  } = postDessertImageQuery;
   const {
     mutateAsync: postDessert,
     isLoading: isPostDessertLoading,
@@ -63,7 +54,7 @@ export default function CreateDessert() {
         </Typography>
         <DessertForm
           onSubmitForm={createDessert}
-          isPostLoading={isPostDessertImageLoading}
+          // isPostLoading={isPostDessertImageLoading}
         />
       </Box>
     </Container>
