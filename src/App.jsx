@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "./components/navigation/Navbar";
 import NavSideDrawer from "./components/navigation/NavSideDrawer";
 import Cart from "./components/navigation/cart/Cart";
@@ -6,12 +6,20 @@ import About from "./components/about/About";
 import Home from "./components/home/Home";
 import Shop from "./components/shop/Shop";
 import { DrawerProvider } from "./context/DrawerContext";
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 import DessertDetail from "./components/dessert/DessertDetail";
 import CreateDessert from "./components/admin/CreateDessert";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Container } from "@mui/system";
 import { IngredientsProvider } from "./context/IngredientsContext";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
 import CustomOrderForm from "./components/forms/custom-order/CustomOrderForm";
 import SignInModal from "./components/navigation/auth/SignInModal";
 import SignUpModal from "./components/navigation/auth/SignUpModal";
@@ -22,8 +30,22 @@ import ViewDesserts from "./components/admin/ViewDesserts";
 import EditDessert from "./components/admin/EditDessert";
 import Footer from "./components/footer/Footer";
 import NotFound from "./components/NotFound";
+import { useModalStore } from "./store/useModalStore";
 
 const queryClient = new QueryClient();
+
+const ProtectedRoute = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+  const { openSignInModal } = useModalStore();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      openSignInModal();
+    }
+  }, [isAuthenticated]);
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+};
 
 function App() {
   return (
@@ -38,38 +60,42 @@ function App() {
       maxWidth={"false"}
     >
       <QueryClientProvider client={queryClient}>
-        <DrawerProvider drawerOpen={false}>
-          <IngredientsProvider ingredientsOpen={false}>
-            <Navbar />
-            <NavSideDrawer />
-            <SignInModal />
-            <ConfirmationCodeModal />
-            <LoggedInModal />
-            <SignUpModal />
-            <Cart />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/about-me" element={<About />} />
-              <Route
-                path="/admin/desserts/create"
-                element={<CreateDessert />}
-              />
-              <Route
-                path="/admin/edit-dessert/:dessertId"
-                element={<EditDessert />}
-              />
-              <Route path="/admin/desserts" element={<ViewDesserts />} />
-              <Route
-                path="/desserts/cakes/:dessertId/:dessertName"
-                element={<DessertDetail />}
-              />
-              <Route path="/custom-order" element={<CustomOrderForm />} />
-              <Route path="/account" element={<AccountDashboard />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </IngredientsProvider>
-        </DrawerProvider>
+        <AuthProvider isAuthenticated={false}>
+          <DrawerProvider drawerOpen={false}>
+            <IngredientsProvider ingredientsOpen={false}>
+              <Navbar />
+              <NavSideDrawer />
+              <SignInModal />
+              <ConfirmationCodeModal />
+              <LoggedInModal />
+              <SignUpModal />
+              <Cart />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/about-me" element={<About />} />
+                <Route
+                  path="/admin/desserts/create"
+                  element={<CreateDessert />}
+                />
+                <Route
+                  path="/admin/edit-dessert/:dessertId"
+                  element={<EditDessert />}
+                />
+                <Route path="/admin/desserts" element={<ViewDesserts />} />
+                <Route
+                  path="/desserts/cakes/:dessertId/:dessertName"
+                  element={<DessertDetail />}
+                />
+                <Route path="/custom-order" element={<CustomOrderForm />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/account" element={<AccountDashboard />} />
+                </Route>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </IngredientsProvider>
+          </DrawerProvider>
+        </AuthProvider>
       </QueryClientProvider>
       <Footer />
     </Container>

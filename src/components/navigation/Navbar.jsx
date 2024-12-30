@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AppBarLogo from "../../assets/brand.svg";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,16 +13,13 @@ import AnimatedBanner from "../extras/AnimatedBanner";
 import { VscAccount } from "react-icons/vsc";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
-import { useModalStore } from "../../store/useModalStore";
-import { useAppStore } from "../../store/useAppStore";
 import { useCartStore } from "../../store/useCartStore";
+import useProtectedNavigate from "../../hooks/useProtectedNavigate";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
   const { openCart, cart } = useCartStore();
-
-  const { openSignInModal } = useModalStore();
-  const { user } = useAppStore();
+  const protectedNavigate = useProtectedNavigate();
   const navigate = useNavigate();
   const theme = useTheme();
   const getDessertsQuery = useGetDesserts();
@@ -185,11 +182,7 @@ export default function Navbar() {
           >
             <Box
               onClick={() => {
-                if (user.loggedIn) {
-                  navigate("/account");
-                } else {
-                  openSignInModal();
-                }
+                protectedNavigate("/account");
               }}
             >
               <VscAccount

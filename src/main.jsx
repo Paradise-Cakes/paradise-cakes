@@ -11,6 +11,7 @@ import "@fontsource/montserrat/400.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import "./amplifyConfig";
 
 const THEME = createTheme({
   typography: {

@@ -17,13 +17,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
-import { useAppStore } from "../../../store/useAppStore";
 import { useModalStore } from "../../../store/useModalStore";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { first } from "lodash";
 
 export default function SignInForm() {
-  const { setUser } = useAppStore();
   const { closeSignInModal, openLoggedInModal } = useModalStore();
   const { setEmail, setPassword } = useAuthStore();
   const navigate = useNavigate();
@@ -63,17 +61,11 @@ export default function SignInForm() {
       setPassword(values.password);
       try {
         const response = await postSignIn({
-          userCreds: values,
+          username: values.email,
+          password: values.password,
         });
-        console.log(response);
         closeSignInModal();
         openLoggedInModal();
-        setUser({
-          firstName: response.data.given_name,
-          lastName: response.data.family_name,
-          loggedIn: true,
-        });
-
         navigate("/");
       } catch (error) {
         console.error(error);

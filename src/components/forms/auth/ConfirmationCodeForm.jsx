@@ -9,10 +9,12 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { confirmationCodeSchema } from "../../../schema";
-import { usePostConfirmSignUp } from "../../../hooks/auth/AuthHook";
+import {
+  usePostConfirmSignUp,
+  usePostSignIn,
+} from "../../../hooks/auth/AuthHook";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import _, { set } from "lodash";
-import { useAppStore } from "../../../store/useAppStore";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useModalStore } from "../../../store/useModalStore";
 
@@ -26,10 +28,10 @@ const validateChar = (value, index) => {
 };
 
 export default function ConfirmationCodeForm() {
-  const { setUser } = useAppStore();
   const { email, password } = useAuthStore();
   const { closeConfirmationCodeModal, openLoggedInModal } = useModalStore();
   const postConfirmSignUpQuery = usePostConfirmSignUp();
+  const postSignInQuery = usePostSignIn();
   const theme = useTheme();
 
   const {
@@ -37,6 +39,12 @@ export default function ConfirmationCodeForm() {
     isLoading: isPostConfirmSignUpLoading,
     error: postConfirmSignUpError,
   } = postConfirmSignUpQuery;
+
+  const {
+    mutateAsync: postSignIn,
+    isLoading: isPostSignInLoading,
+    error: postSignInError,
+  } = postSignInQuery;
 
   const formik = useFormik({
     initialValues: {
@@ -53,20 +61,17 @@ export default function ConfirmationCodeForm() {
     },
     onSubmit: async (values) => {
       try {
-        const response = await postConfirmSignUp({
-          userCreds: {
-            confirmation_code: values.confirmation_code,
-            email: email,
-            password: password,
-          },
+        await postConfirmSignUp({
+          confirmationCode: values.confirmation_code,
+          username: email,
+          password: password,
+        });
+        await postSignIn({
+          username: email,
+          password: password,
         });
         closeConfirmationCodeModal();
         openLoggedInModal();
-        setUser({
-          firstName: response.data.given_name,
-          lastName: response.data.family_name,
-          loggedIn: true,
-        });
       } catch (error) {
         console.error(error);
       }

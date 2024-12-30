@@ -84,7 +84,7 @@ export default function ConfirmationCodeModal() {
               onClick={async () => {
                 try {
                   await postResendConfirmationCode({
-                    userCreds: { email: email },
+                    username: email,
                   });
                 } catch (error) {
                   console.error(error);

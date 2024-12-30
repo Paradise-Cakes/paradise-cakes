@@ -1,5 +1,14 @@
 import { useMutation, useQueryClient } from "react-query";
 import * as usersApi from "../../api/UsersApi";
+import {
+  signIn,
+  signUp,
+  confirmResetPassword,
+  confirmSignUp,
+  resetPassword,
+  signOut,
+  resendSignUpCode,
+} from "aws-amplify/auth";
 
 export const usePostConfirmForgotPassword = () => {
   const queryClient = useQueryClient();
@@ -15,11 +24,15 @@ export const usePostConfirmForgotPassword = () => {
 
 export const usePostConfirmSignUp = () => {
   const queryClient = useQueryClient();
-  return useMutation(({ userCreds }) => usersApi.postConfirmSignUp(userCreds), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("user");
-    },
-  });
+  return useMutation(
+    ({ confirmationCode, username, password }) =>
+      confirmSignUp({ confirmationCode, username, password }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
+      },
+    }
+  );
 };
 
 export const usePostForgotPassword = () => {
@@ -36,7 +49,7 @@ export const usePostForgotPassword = () => {
 
 export const usePostLogout = () => {
   const queryClient = useQueryClient();
-  return useMutation(() => usersApi.postLogout(), {
+  return useMutation(() => signOut(), {
     onSuccess: () => {
       queryClient.invalidateQueries("user");
     },
@@ -45,30 +58,42 @@ export const usePostLogout = () => {
 
 export const usePostResendConfirmationCode = () => {
   const queryClient = useQueryClient();
+  return useMutation(({ username }) => resendSignUpCode({ username }), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("user");
+    },
+  });
+};
+
+export const usePostSignIn = () => {
+  const queryClient = useQueryClient();
   return useMutation(
-    ({ userCreds }) => usersApi.postResendConfirmationCode(userCreds),
+    ({ username, password }) => signIn({ username, password }),
     {
-      onSuccess: () => {
+      onSuccess: async (data) => {
         queryClient.invalidateQueries("user");
       },
     }
   );
 };
 
-export const usePostSignIn = () => {
-  const queryClient = useQueryClient();
-  return useMutation(({ userCreds }) => usersApi.postSignIn(userCreds), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("user");
-    },
-  });
-};
-
 export const usePostSignUp = () => {
   const queryClient = useQueryClient();
-  return useMutation(({ userCreds }) => usersApi.postSignUp(userCreds), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("user");
-    },
-  });
+  return useMutation(
+    ({ username, password, attributes }) =>
+      signUp({
+        username,
+        password,
+        options: {
+          userAttributes: {
+            ...attributes,
+          },
+        },
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
+      },
+    }
+  );
 };

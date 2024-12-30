@@ -3,11 +3,13 @@ import { Box, Button, Typography, Modal, useTheme } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { useModalStore } from "../../../store/useModalStore";
+import useProtectedNavigate from "../../../hooks/useProtectedNavigate";
 
 export default function LoggedInModal() {
   const { loggedInModalOpen, closeLoggedInModal, openLoggedInModal } =
     useModalStore();
 
+  const protectedNavigate = useProtectedNavigate();
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -76,7 +78,7 @@ export default function LoggedInModal() {
         <Button
           onClick={() => {
             closeLoggedInModal();
-            navigate("/account");
+            protectedNavigate("/account");
           }}
           variant="outlined"
           fullWidth

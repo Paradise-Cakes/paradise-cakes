@@ -17,11 +17,9 @@ import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
 import LoadingButton from "../../extras/LoadingButton";
 import { useModalStore } from "../../../store/useModalStore";
-import { useAppStore } from "../../../store/useAppStore";
 import { useAuthStore } from "../../../store/useAuthStore";
 
 export default function SignUpForm() {
-  const { setUser } = useAppStore();
   const { closeSignUpModal, openConfirmationCodeModal } = useModalStore();
   const { setEmail, setPassword } = useAuthStore();
 
@@ -63,7 +61,13 @@ export default function SignUpForm() {
       setPassword(values.password);
       try {
         const response = await postSignUp({
-          userCreds: values,
+          username: values.email,
+          password: values.password,
+          attributes: {
+            email: values.email,
+            given_name: values.first_name,
+            family_name: values.last_name,
+          },
         });
         openConfirmationCodeModal();
         closeSignUpModal();

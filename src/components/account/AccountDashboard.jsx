@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Container,
@@ -15,7 +15,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { useNavigate } from "react-router-dom";
 import { usePostLogout } from "../../hooks/auth/AuthHook";
 import _ from "lodash";
-import { useAppStore } from "../../store/useAppStore";
+import { fetchUserAttributes } from "aws-amplify/auth";
 
 export default function AccountDashboard() {
   const [value, setValue] = useState("dashboard");
@@ -23,17 +23,28 @@ export default function AccountDashboard() {
   const postLogoutQuery = usePostLogout();
   const { mutateAsync: postLogout, isLoading: postLogoutLoading } =
     postLogoutQuery;
-  const { user, logout } = useAppStore();
+  const [user, setUser] = useState({});
 
   const handleLogout = async () => {
     try {
       await postLogout();
-      logout();
       navigate("/");
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userAttributes = await fetchUserAttributes();
+        setUser(userAttributes);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <Container
@@ -58,7 +69,7 @@ export default function AccountDashboard() {
                 My Account
               </Typography>
               <Typography variant="h3" fontWeight={1000} gutterBottom>
-                HI {_.upperCase(user.firstName)}!
+                HI {_.upperCase(user.given_name)}!
               </Typography>
               <TabList
                 onChange={(e, newValue) => setValue(newValue)}
@@ -101,7 +112,7 @@ export default function AccountDashboard() {
                   marginBottom={"1rem"}
                 >
                   <Typography fontWeight={1000}>First Name</Typography>
-                  <Typography>{user.firstName}</Typography>
+                  <Typography>{user.given_name}</Typography>
                 </Box>
                 <Box
                   display="flex"
@@ -109,7 +120,7 @@ export default function AccountDashboard() {
                   marginBottom={"1rem"}
                 >
                   <Typography fontWeight={1000}>Last Name</Typography>
-                  <Typography>{user.lastName}</Typography>
+                  <Typography>{user.family_name}</Typography>
                 </Box>
               </Paper>
               <Paper elevation={0} sx={{ padding: 4, borderRadius: "8px" }}>

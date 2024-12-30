@@ -17,6 +17,7 @@ export const useGetDessertById = (dessert_id) => {
 export const useGetDesserts = () => {
   return useQuery(["desserts"], () => getDessertsByDessertType("cake"), {
     select: (data) => data.data,
+    enabled: false,
   });
 };
 
