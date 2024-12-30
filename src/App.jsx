@@ -6,14 +6,7 @@ import About from "./components/about/About";
 import Home from "./components/home/Home";
 import Shop from "./components/shop/Shop";
 import { DrawerProvider } from "./context/DrawerContext";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  Outlet,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, Outlet, Navigate } from "react-router-dom";
 import DessertDetail from "./components/dessert/DessertDetail";
 import CreateDessert from "./components/admin/CreateDessert";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -30,22 +23,9 @@ import ViewDesserts from "./components/admin/ViewDesserts";
 import EditDessert from "./components/admin/EditDessert";
 import Footer from "./components/footer/Footer";
 import NotFound from "./components/NotFound";
-import { useModalStore } from "./store/useModalStore";
+import ProtectedRoute from "./guards/AuthGuard";
 
 const queryClient = new QueryClient();
-
-const ProtectedRoute = () => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const { openSignInModal } = useModalStore();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      openSignInModal();
-    }
-  }, [isAuthenticated]);
-
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
-};
 
 function App() {
   return (
@@ -60,7 +40,7 @@ function App() {
       maxWidth={"false"}
     >
       <QueryClientProvider client={queryClient}>
-        <AuthProvider isAuthenticated={false}>
+        <AuthProvider>
           <DrawerProvider drawerOpen={false}>
             <IngredientsProvider ingredientsOpen={false}>
               <Navbar />
