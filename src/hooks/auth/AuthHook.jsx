@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "react-query";
-import * as usersApi from "../../api/UsersApi";
 import {
   signIn,
   signUp,
@@ -10,10 +9,11 @@ import {
   resendSignUpCode,
 } from "aws-amplify/auth";
 
-export const usePostConfirmForgotPassword = () => {
+export const usePostResetPassword = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    ({ userCreds }) => usersApi.postConfirmForgotPassword(userCreds),
+    ({ confirmationCode, username, newPassword }) =>
+      confirmResetPassword({ confirmationCode, username, newPassword }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("user");
@@ -37,14 +37,11 @@ export const usePostConfirmSignUp = () => {
 
 export const usePostForgotPassword = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    ({ userCreds }) => usersApi.postForgotPassword(userCreds),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("user");
-      },
-    }
-  );
+  return useMutation(({ username }) => resetPassword({ username }), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("user");
+    },
+  });
 };
 
 export const usePostLogout = () => {

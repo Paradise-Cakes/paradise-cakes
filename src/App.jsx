@@ -6,7 +6,7 @@ import About from "./components/about/About";
 import Home from "./components/home/Home";
 import Shop from "./components/shop/Shop";
 import { DrawerProvider } from "./context/DrawerContext";
-import { Route, Routes, Outlet, Navigate } from "react-router-dom";
+import { Route, Routes, useSearchParams } from "react-router-dom";
 import DessertDetail from "./components/dessert/DessertDetail";
 import CreateDessert from "./components/admin/CreateDessert";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -16,6 +16,8 @@ import { AuthProvider, AuthContext } from "./context/AuthContext";
 import CustomOrderForm from "./components/forms/custom-order/CustomOrderForm";
 import SignInModal from "./components/navigation/auth/SignInModal";
 import SignUpModal from "./components/navigation/auth/SignUpModal";
+import ResetPasswordModal from "./components/navigation/auth/ResetPasswordModal";
+import SentResetPasswordEmailModal from "./components/navigation/auth/SentResetPasswordEmailModal";
 import ConfirmationCodeModal from "./components/navigation/auth/ConfirmationCodeModal";
 import LoggedInModal from "./components/navigation/auth/LoggedInModal";
 import AccountDashboard from "./components/account/AccountDashboard";
@@ -24,10 +26,26 @@ import EditDessert from "./components/admin/EditDessert";
 import Footer from "./components/footer/Footer";
 import NotFound from "./components/NotFound";
 import ProtectedRoute from "./guards/AuthGuard";
+import ForgotPasswordModal from "./components/navigation/auth/ForgotPasswordModal";
+import { useModalStore } from "./store/useModalStore";
 
 const queryClient = new QueryClient();
 
 function App() {
+  const [searchParams] = useSearchParams();
+  const { openResetPasswordModal, setResetPasswordParams } = useModalStore();
+
+  useEffect(() => {
+    console.log("searchParams", searchParams);
+    if (searchParams.get("reset") === "true") {
+      openResetPasswordModal();
+      setResetPasswordParams({
+        username: searchParams.get("username"),
+        code: searchParams.get("code"),
+      });
+    }
+  }, [searchParams, openResetPasswordModal, setResetPasswordParams]);
+
   return (
     <Container
       sx={{
@@ -49,6 +67,9 @@ function App() {
               <ConfirmationCodeModal />
               <LoggedInModal />
               <SignUpModal />
+              <ForgotPasswordModal />
+              <SentResetPasswordEmailModal />
+              <ResetPasswordModal />
               <Cart />
               <Routes>
                 <Route path="/" element={<Home />} />

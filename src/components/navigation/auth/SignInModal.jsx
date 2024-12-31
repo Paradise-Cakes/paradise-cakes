@@ -20,6 +20,7 @@ export default function SignInModal() {
     closeSignInModal,
     openSignUpModal,
     openSignInModal,
+    openForgotPasswordModal,
   } = useModalStore();
 
   const toggleSignInModal = (open) => (event) => {
@@ -69,7 +70,13 @@ export default function SignInModal() {
             SIGN IN
           </Typography>
           <SignInForm />
-          <Typography sx={{ fontWeight: "800", textAlign: "center" }}>
+          <Typography
+            sx={{ fontWeight: "800", textAlign: "center", cursor: "pointer" }}
+            onClick={() => {
+              closeSignInModal();
+              openForgotPasswordModal();
+            }}
+          >
             Forgot your password?
           </Typography>
           <Box

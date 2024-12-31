@@ -5,6 +5,10 @@ export const useModalStore = create((set) => ({
   signUpModalOpen: false,
   confirmationCodeModalOpen: false,
   loggedInModalOpen: false,
+  forgotPasswordModalOpen: false,
+  resetPasswordModalOpen: false,
+  sentResetPassswordEmailModalOpen: false,
+  resetPasswordParams: null,
 
   openSignInModal: () => set({ signInModalOpen: true }),
   closeSignInModal: () => set({ signInModalOpen: false }),
@@ -18,11 +22,27 @@ export const useModalStore = create((set) => ({
   openLoggedInModal: () => set({ loggedInModalOpen: true }),
   closeLoggedInModal: () => set({ loggedInModalOpen: false }),
 
+  openForgotPasswordModal: () => set({ forgotPasswordModalOpen: true }),
+  closeForgotPasswordModal: () => set({ forgotPasswordModalOpen: false }),
+
+  openResetPasswordModal: () => set({ resetPasswordModalOpen: true }),
+  closeResetPasswordModal: () => set({ resetPasswordModalOpen: false }),
+
+  openSentResetPassswordEmailModal: () =>
+    set({ sentResetPassswordEmailModalOpen: true }),
+  closeSentResetPassswordEmailModal: () =>
+    set({ sentResetPassswordEmailModalOpen: false }),
+
+  setResetPasswordParams: (params) => set({ resetPasswordParams: params }),
+
   closeAllModals: () =>
     set({
       signInModalOpen: false,
       signUpModalOpen: false,
       confirmationCodeModalOpen: false,
       loggedInModalOpen: false,
+      forgotPasswordModalOpen: false,
+      resetPasswordModalOpen: false,
+      sentResetPassswordEmailModalOpen: false,
     }),
 }));
