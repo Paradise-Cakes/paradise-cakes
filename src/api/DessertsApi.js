@@ -1,12 +1,11 @@
 import axios from "axios";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 const deployEnv = import.meta.env.VITE_DEPLOY_ENV;
 const API_URL =
   deployEnv === "prod"
     ? "https://desserts-api.megsparadisecakes.com/v1"
-    : deployEnv === "dev"
-      ? "https://desserts-dev-api.megsparadisecakes.com/v1"
-      : "http://localhost:8000/v1";
+    : "https://desserts-dev-api.megsparadisecakes.com/v1";
 
 export const deleteDessert = async (dessert_id) => {
   const response = await axios.delete(`${API_URL}/desserts/${dessert_id}`, {
@@ -43,10 +42,12 @@ export const patchDessert = async (dessert_id, payload) => {
 };
 
 export const postDessert = async (payload) => {
+  const accessToken = await fetchAuthSession().then((session) =>
+    session?.tokens?.accessToken?.toString()
+  );
   const response = await axios.post(`${API_URL}/desserts`, payload, {
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Bearer: localStorage.getItem("access_token"),
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response;
