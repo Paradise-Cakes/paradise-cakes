@@ -68,6 +68,8 @@ jobs:
       - name: Build UI - DEV
         env:
           VITE_DEPLOY_ENV: dev
+          VITE_COGNITO_USER_POOL_ID: ${{ secrets.DEV_USER_POOL_ID }}
+          VITE_COGNITO_APP_CLIENT_ID: ${{ secrets.DEV_COGNITO_APP_CLIENT_ID }}
         run: npm run build
 
       - name: Invalidate Cache - DEV
@@ -105,6 +107,8 @@ jobs:
       - name: Build UI - PROD
         env:
           VITE_DEPLOY_ENV: prod
+          VITE_COGNITO_USER_POOL_ID: ${{ secrets.PROD_USER_POOL_ID }}
+          VITE_COGNITO_APP_CLIENT_ID: ${{ secrets.PROD_COGNITO_APP_CLIENT_ID }}
         run: npm run build
 
       - name: Invalidate Cache - PROD
