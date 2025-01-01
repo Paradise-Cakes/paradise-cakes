@@ -67,9 +67,9 @@ jobs:
 
       - name: Create .env File
         run: |
-          echo "VITE_DEPLOY_ENV=dev" >> .env.dev
-          echo "VITE_COGNITO_USER_POOL_ID=${{ secrets.DEV_USER_POOL_ID }}" >> .env.dev
-          echo "VITE_COGNITO_APP_CLIENT_ID=${{ secrets.DEV_COGNITO_APP_CLIENT_ID }}" >> .env.dev
+          echo "VITE_DEPLOY_ENV=dev" >> .env
+          echo "VITE_COGNITO_USER_POOL_ID=${{ secrets.DEV_USER_POOL_ID }}" >> .env
+          echo "VITE_COGNITO_APP_CLIENT_ID=${{ secrets.DEV_COGNITO_APP_CLIENT_ID }}" >> .env
 
       - name: Build UI - DEV
         run: npm run build
@@ -108,9 +108,9 @@ jobs:
 
       - name: Create .env File
         run: |
-          echo "VITE_DEPLOY_ENV=prod" >> .env.prod
-          echo "VITE_COGNITO_USER_POOL_ID=${{ secrets.DEV_USER_POOL_ID }}" >> .env.prod
-          echo "VITE_COGNITO_APP_CLIENT_ID=${{ secrets.DEV_COGNITO_APP_CLIENT_ID }}" >> .env.prod
+          echo "VITE_DEPLOY_ENV=prod" >> .env
+          echo "VITE_COGNITO_USER_POOL_ID=${{ secrets.DEV_USER_POOL_ID }}" >> .env
+          echo "VITE_COGNITO_APP_CLIENT_ID=${{ secrets.DEV_COGNITO_APP_CLIENT_ID }}" >> .env
 
       - name: Build UI - PROD
         run: npm run build
