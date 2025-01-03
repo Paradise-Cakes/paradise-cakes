@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
 import NotFound from "../components/NotFound";
 import { ThemeProvider } from "@mui/material/styles";
 import { THEME } from "../main";
