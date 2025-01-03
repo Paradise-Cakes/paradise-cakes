@@ -7,5 +7,5 @@ export const useAuthStore = create((set) => ({
   setEmail: (email) => set({ email }),
   setPassword: (password) => set({ password }),
 
-  clearSensitiveData: () => set({ password: "" }),
+  clearSensitiveData: () => set({ password: "", email: "" }),
 }));

@@ -64,14 +64,26 @@ export const usePostResendConfirmationCode = () => {
 
 export const usePostSignIn = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    ({ username, password }) => signIn({ username, password }),
+  const mutation = useMutation(
+    async ({ username, password }) => {
+      try {
+        const response = await signIn({ username, password });
+        if (!response?.isSignedIn) {
+          throw new Error("UserNotConfirmedException");
+        }
+        return response;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
     {
       onSuccess: async (data) => {
         queryClient.invalidateQueries("user");
       },
     }
   );
+  return mutation;
 };
 
 export const usePostSignUp = () => {

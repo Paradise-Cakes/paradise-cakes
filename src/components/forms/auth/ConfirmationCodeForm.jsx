@@ -17,6 +17,7 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 import _, { set } from "lodash";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useModalStore } from "../../../store/useModalStore";
+import LoadingButton from "../../extras/LoadingButton";
 
 export function matchIsNumeric(text) {
   const isNumber = typeof text === "number";
@@ -28,7 +29,7 @@ const validateChar = (value, index) => {
 };
 
 export default function ConfirmationCodeForm() {
-  const { email, password } = useAuthStore();
+  const { email, password, clearSensitiveData } = useAuthStore();
   const { closeConfirmationCodeModal, openLoggedInModal } = useModalStore();
   const postConfirmSignUpQuery = usePostConfirmSignUp();
   const postSignInQuery = usePostSignIn();
@@ -74,6 +75,7 @@ export default function ConfirmationCodeForm() {
         openLoggedInModal();
       } catch (error) {
         console.error(error);
+        clearSensitiveData();
       }
     },
   });
@@ -108,16 +110,9 @@ export default function ConfirmationCodeForm() {
           type: "tel",
         }}
       />
-      <Button
-        fullWidth
-        variant="contained"
-        color="primary"
-        onClick={formik.handleSubmit}
-        sx={{ marginTop: "1rem" }}
-        type="submit"
-      >
+      <LoadingButton isLoading={isPostConfirmSignUpLoading}>
         Confirm
-      </Button>
+      </LoadingButton>
     </Box>
   );
 }

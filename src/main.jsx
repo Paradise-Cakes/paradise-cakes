@@ -13,7 +13,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./amplifyConfig";
 
-const THEME = createTheme({
+export const THEME = createTheme({
   typography: {
     fontFamily: `"Bebas Neue", "Montserrat", "Archivo Black", "Roboto", "Helvetica", "Arial", sans-serif`,
     fontSize: 14,

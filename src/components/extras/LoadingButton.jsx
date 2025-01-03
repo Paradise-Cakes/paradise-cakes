@@ -14,6 +14,7 @@ export default function LoadingButton({ isLoading, children }) {
         textTransform: "none",
         fontSize: "1rem",
         fontWeight: "800",
+        marginTop: "1rem",
       }}
     >
       {isLoading ? (
