@@ -15,9 +15,12 @@ h6 {
 }
 
 body {
-  font-family: "Montserrat";
   margin: 0;
   padding: 0;
+}
+
+input, textarea, select, li {
+  font-family: "Montserrat" !important; 
 }
 
 .MuiContainer-root,

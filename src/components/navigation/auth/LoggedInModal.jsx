@@ -1,14 +1,28 @@
 import React, { useContext } from "react";
 import { Box, Button, Typography, Modal, useTheme } from "@mui/material";
 import { CgClose } from "react-icons/cg";
-import { AccountContext } from "../../../context/AccountContext";
 import { useNavigate } from "react-router-dom";
+import { useModalStore } from "../../../store/useModalStore";
+import useProtectedNavigate from "../../../hooks/useProtectedNavigate";
 
 export default function LoggedInModal() {
-  const { loggedInModalOpen, setLoggedInModalOpen } =
-    useContext(AccountContext);
+  const { loggedInModalOpen, closeLoggedInModal, openLoggedInModal } =
+    useModalStore();
+
+  const protectedNavigate = useProtectedNavigate();
   const theme = useTheme();
   const navigate = useNavigate();
+
+  const toggleLoggedInModal = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    open ? openLoggedInModal() : closeLoggedInModal();
+  };
+
   return (
     <Modal
       open={loggedInModalOpen}
@@ -17,7 +31,7 @@ export default function LoggedInModal() {
         justifyContent: "center",
         alignItems: "center",
       }}
-      onClose={() => setLoggedInModalOpen(false)}
+      onClose={toggleLoggedInModal(false)}
     >
       <Box
         sx={{
@@ -39,7 +53,7 @@ export default function LoggedInModal() {
             right: "1.5rem",
             cursor: "pointer",
           }}
-          onClick={() => setLoggedInModalOpen(false)}
+          onClick={toggleLoggedInModal(false)}
         />
         <Typography variant="h5" fontWeight={1000} textAlign={"center"}>
           YOU'RE LOGGED IN!
@@ -57,14 +71,14 @@ export default function LoggedInModal() {
             height: "45px",
             fontWeight: "800",
           }}
-          onClick={() => setLoggedInModalOpen(false)}
+          onClick={toggleLoggedInModal(false)}
         >
           CLOSE
         </Button>
         <Button
           onClick={() => {
-            setLoggedInModalOpen(false);
-            navigate("/account");
+            closeLoggedInModal();
+            protectedNavigate("/account");
           }}
           variant="outlined"
           fullWidth

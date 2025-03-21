@@ -8,11 +8,16 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { AccountContext } from "../../../context/AccountContext";
 import { confirmationCodeSchema } from "../../../schema";
-import { usePostConfirmationCode } from "../../../hooks/auth/AuthHook";
+import {
+  usePostConfirmSignUp,
+  usePostSignIn,
+} from "../../../hooks/auth/AuthHook";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import _, { set } from "lodash";
+import { useAuthStore } from "../../../store/useAuthStore";
+import { useModalStore } from "../../../store/useModalStore";
+import LoadingButton from "../../extras/LoadingButton";
 
 export function matchIsNumeric(text) {
   const isNumber = typeof text === "number";
@@ -24,23 +29,23 @@ const validateChar = (value, index) => {
 };
 
 export default function ConfirmationCodeForm() {
-  const {
-    setConfirmationCodeModalOpen,
-    setLoggedInModalOpen,
-    email,
-    password,
-    setFirstName,
-    setLastName,
-    setLoggedIn,
-  } = useContext(AccountContext);
-  const postConfirmationCodeQuery = usePostConfirmationCode();
+  const { email, password, clearSensitiveData } = useAuthStore();
+  const { closeConfirmationCodeModal, openLoggedInModal } = useModalStore();
+  const postConfirmSignUpQuery = usePostConfirmSignUp();
+  const postSignInQuery = usePostSignIn();
   const theme = useTheme();
 
   const {
-    mutateAsync: postConfirmationCode,
-    isLoading: isPostConfirmationCodeLoading,
-    error: postConfirmationCodeError,
-  } = postConfirmationCodeQuery;
+    mutateAsync: postConfirmSignUp,
+    isLoading: isPostConfirmSignUpLoading,
+    error: postConfirmSignUpError,
+  } = postConfirmSignUpQuery;
+
+  const {
+    mutateAsync: postSignIn,
+    isLoading: isPostSignInLoading,
+    error: postSignInError,
+  } = postSignInQuery;
 
   const formik = useFormik({
     initialValues: {
@@ -57,17 +62,20 @@ export default function ConfirmationCodeForm() {
     },
     onSubmit: async (values) => {
       try {
-        const response = await postConfirmationCode({
-          userCreds: { ...values, email: email, password: password },
+        await postConfirmSignUp({
+          confirmationCode: values.confirmation_code,
+          username: email,
+          password: password,
         });
-        console.log(response);
-        setFirstName(response.data.given_name);
-        setLastName(response.data.family_name);
-        setLoggedIn(true);
-        setConfirmationCodeModalOpen(false);
-        setLoggedInModalOpen(true);
+        await postSignIn({
+          username: email,
+          password: password,
+        });
+        closeConfirmationCodeModal();
+        openLoggedInModal();
       } catch (error) {
         console.error(error);
+        clearSensitiveData();
       }
     },
   });
@@ -77,16 +85,16 @@ export default function ConfirmationCodeForm() {
       component="form"
       sx={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}
     >
-      {isPostConfirmationCodeLoading && (
+      {isPostConfirmSignUpLoading && (
         <CircularProgress sx={{ display: "block", margin: "1rem auto" }} />
       )}
-      {postConfirmationCodeError && (
+      {postConfirmSignUpError && (
         <Typography
           marginBottom={"1rem"}
           sx={{ color: theme.palette.error.main }}
           textAlign={"center"}
         >
-          {postConfirmationCodeError?.response?.data?.detail}
+          Something went wrong. Please try again later.
         </Typography>
       )}
       <MuiOtpInput
@@ -102,16 +110,9 @@ export default function ConfirmationCodeForm() {
           type: "tel",
         }}
       />
-      <Button
-        fullWidth
-        variant="contained"
-        color="primary"
-        onClick={formik.handleSubmit}
-        sx={{ marginTop: "1rem" }}
-        type="submit"
-      >
+      <LoadingButton isLoading={isPostConfirmSignUpLoading}>
         Confirm
-      </Button>
+      </LoadingButton>
     </Box>
   );
 }

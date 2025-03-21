@@ -1,20 +1,20 @@
 import React, { useContext, useEffect } from "react";
 import { Button, Box } from "@mui/material";
 import { MdAdd, MdRemove } from "react-icons/md";
-import { CartContext } from "../../context/CartContext";
+import { useCartStore } from "../../store/useCartStore";
 
 export default function QuantityButton({
   quantity,
   setQuantity,
   cartItem = null,
 }) {
-  const { setCartItems } = useContext(CartContext);
+  const { setCart } = useCartStore();
 
   const handleIncrement = () => {
     setQuantity((prev) => prev + 1);
     // Update the quantity in the cart
     if (cartItem) {
-      setCartItems((prev) => {
+      setCart((prev) => {
         return prev.map((item) => {
           if (item.id === cartItem.id && item.size === cartItem.size) {
             return { ...item, quantity: item.quantity + 1 };
@@ -31,7 +31,7 @@ export default function QuantityButton({
     }
     // Update the quantity in the cart
     if (cartItem) {
-      setCartItems((prev) => {
+      setCart((prev) => {
         return prev.map((item) => {
           if (item.id === cartItem.id && item.size === cartItem.size) {
             return { ...item, quantity: item.quantity - 1 };
@@ -44,7 +44,7 @@ export default function QuantityButton({
 
   useEffect(() => {
     if (quantity === 0) {
-      setCartItems((prev) => {
+      setCart((prev) => {
         return prev.filter(
           (item) => item.id !== cartItem.id || item.size !== cartItem.size
         );

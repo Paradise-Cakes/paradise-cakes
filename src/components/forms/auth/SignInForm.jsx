@@ -15,28 +15,24 @@ import {
   usePostResendConfirmationCode,
 } from "../../../hooks/auth/AuthHook";
 import { useNavigate } from "react-router-dom";
-import { AccountContext } from "../../../context/AccountContext";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
+import { useModalStore } from "../../../store/useModalStore";
+import { useAuthStore } from "../../../store/useAuthStore";
+import { first } from "lodash";
 
 export default function SignInForm() {
-  const {
-    setSignInModalOpen,
-    setConfirmationCodeModalOpen,
-    setLoggedInModalOpen,
-    setEmail,
-    setPassword,
-    setLoggedIn,
-    setFirstName,
-    setLastName,
-  } = useContext(AccountContext);
+  const { closeSignInModal, openLoggedInModal, openConfirmationCodeModal } =
+    useModalStore();
+  const { setEmail, setPassword, clearSensitiveData } = useAuthStore();
   const navigate = useNavigate();
-  const postSignInQuery = usePostSignIn();
   const postResendConfirmationCodeQuery = usePostResendConfirmationCode();
   const theme = useTheme();
+  const postSignInQuery = usePostSignIn();
   const {
     mutateAsync: postSignIn,
     isLoading: isPostSignInLoading,
+    isError: isPostSignInError,
     error: postSignInError,
   } = postSignInQuery;
   const [passwordType, setPasswordType] = useState("password");
@@ -67,17 +63,15 @@ export default function SignInForm() {
       setPassword(values.password);
       try {
         const response = await postSignIn({
-          userCreds: values,
+          username: values.email,
+          password: values.password,
         });
-        console.log(response);
-        setSignInModalOpen(false);
-        setLoggedInModalOpen(true);
-        setLoggedIn(true);
-        setFirstName(response.data.given_name);
-        setLastName(response.data.family_name);
+        closeSignInModal();
+        openLoggedInModal();
         navigate("/");
       } catch (error) {
         console.error(error);
+        return error;
       }
     },
   });
@@ -90,18 +84,17 @@ export default function SignInForm() {
     >
       {postSignInError && (
         <Typography textAlign={"center"} color="error">
-          {postSignInError?.response?.data?.detail ===
-          "User is not confirmed" ? (
+          {postSignInError?.message === "UserNotConfirmedException" ? (
             <span style={{ color: theme.palette.error.main }}>
               Email has not been confirmed, confirm{" "}
               <span
                 style={{ fontWeight: "1000", cursor: "pointer" }}
                 onClick={async () => {
-                  setSignInModalOpen(false);
-                  setConfirmationCodeModalOpen(true);
+                  closeSignInModal();
+                  openConfirmationCodeModal();
                   try {
                     await postResendConfirmationCode({
-                      email: { email: formik.values.email },
+                      username: formik.values.email,
                     });
                   } catch (error) {
                     console.error(error);
@@ -112,7 +105,7 @@ export default function SignInForm() {
               </span>
             </span>
           ) : (
-            postSignInError?.response?.data?.detail
+            postSignInError.message
           )}
         </Typography>
       )}

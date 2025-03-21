@@ -2,12 +2,10 @@ import { useQuery, useMutation } from "react-query";
 import {
   getDesserts,
   getDessertById,
-  postDessertImage,
   postDessert,
   patchDessert,
   deleteDessert,
-  getDisplayImages,
-} from "../../api/ParadiseCakesApi";
+} from "../../api/DessertsApi";
 import { useQueryClient } from "react-query";
 
 export const useGetDessertById = (dessert_id) => {
@@ -22,25 +20,9 @@ export const useGetDesserts = () => {
   });
 };
 
-export const useGetDisplayImages = () => {
-  return useQuery(["displayImages"], () => getDisplayImages(), {
-    select: (data) => data.data,
-  });
-};
-
-export const usePostDessertImage = () => {
-  return useMutation(
-    ({ dessertImageData, dessert_id }) =>
-      postDessertImage(dessert_id, dessertImageData),
-    {
-      onSuccess: () => console.log("SUCCESS"),
-    }
-  );
-};
-
 export const usePostDessert = () => {
   return useMutation(({ dessert }) => postDessert(dessert), {
-    onSuccess: () => console.log("SUCCESS"),
+    onSuccess: () => console.log("SUCCESSFUL POST DESSERT"),
   });
 };
 
@@ -49,7 +31,7 @@ export const usePatchDessert = (dessert_id) => {
   return useMutation(({ dessert }) => patchDessert(dessert_id, dessert), {
     onSuccess: () => {
       queryClient.invalidateQueries(["dessert", dessert_id]);
-      console.log("SUCCESS");
+      console.log("SUCCESSFUL PATCH DESSERT");
     },
   });
 };
@@ -59,7 +41,7 @@ export const useDeleteDessert = (dessert_id) => {
   return useMutation(() => deleteDessert(dessert_id), {
     onSuccess: () => {
       queryClient.invalidateQueries(["desserts"]);
-      console.log("SUCCESS");
+      console.log("SUCCESSFUL DELETE DESSERT");
     },
   });
 };

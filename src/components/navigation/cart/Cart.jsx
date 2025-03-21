@@ -10,8 +10,7 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
-import { useContext } from "react";
-import { CartContext } from "../../../context/CartContext";
+import { useCartStore } from "../../../store/useCartStore";
 import { CgClose } from "react-icons/cg";
 import { IoLocationOutline } from "react-icons/io5";
 import CartItem from "./CartIem";
@@ -20,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 export default function Cart() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const { cartOpen, setCartOpen, cartItems } = useContext(CartContext);
+  const { cartOpen, openCart, closeCart, cart } = useCartStore();
 
   const toggleCart = (open) => (event) => {
     if (
@@ -29,12 +28,12 @@ export default function Cart() {
     ) {
       return;
     }
-    setCartOpen(open);
+    open ? openCart() : closeCart();
   };
 
   const calculateCartSubtotal = () => {
     let total = 0;
-    cartItems.forEach((item) => {
+    cart.forEach((item) => {
       total += item.quantity * item.price;
     });
     return total;
@@ -72,7 +71,7 @@ export default function Cart() {
               height: "25px",
               marginRight: "1rem",
             }}
-            onClick={() => setCartOpen(false)}
+            onClick={() => closeCart()}
           />
           <Typography variant="h6" fontWeight={1000} fontSize="1rem">
             YOUR ORDER
@@ -90,7 +89,7 @@ export default function Cart() {
             }}
           />
         </Box>
-        {cartItems.length > 0 && (
+        {cart.length > 0 && (
           <Box
             display={"flex"}
             flexDirection={"column"}
@@ -98,7 +97,7 @@ export default function Cart() {
             sx={{ height: "100%" }}
           >
             <Box>
-              {cartItems?.map((item) => (
+              {cart?.map((item) => (
                 <Box
                   display="flex"
                   justifyContent={"center"}
@@ -195,7 +194,7 @@ export default function Cart() {
           </Box>
         )}
 
-        {cartItems.length === 0 && (
+        {cart.length === 0 && (
           <Box>
             <Typography
               variant="h6"
@@ -216,7 +215,7 @@ export default function Cart() {
               }}
               onClick={() => {
                 navigate("/shop");
-                setCartOpen(false);
+                closeCart();
               }}
             >
               Shop All

@@ -65,8 +65,14 @@ jobs:
       - name: Install UI - DEV
         run: npm install
 
+      - name: Create .env File
+        run: |
+          echo "VITE_DEPLOY_ENV=dev" >> .env
+          echo "VITE_COGNITO_USER_POOL_ID=${{ secrets.DEV_USER_POOL_ID }}" >> .env
+          echo "VITE_COGNITO_APP_CLIENT_ID=${{ secrets.DEV_COGNITO_APP_CLIENT_ID }}" >> .env
+
       - name: Build UI - DEV
-        run: VITE_DEPLOY_ENV=dev npm run build
+        run: npm run build
 
       - name: Invalidate Cache - DEV
         run: aws cloudfront create-invalidation --distribution-id ESV4Y27OFJ1EZ --paths "/*"
@@ -100,8 +106,14 @@ jobs:
       - name: Install UI - PROD
         run: npm install
 
+      - name: Create .env File
+        run: |
+          echo "VITE_DEPLOY_ENV=prod" >> .env
+          echo "VITE_COGNITO_USER_POOL_ID=${{ secrets.DEV_USER_POOL_ID }}" >> .env
+          echo "VITE_COGNITO_APP_CLIENT_ID=${{ secrets.DEV_COGNITO_APP_CLIENT_ID }}" >> .env
+
       - name: Build UI - PROD
-        run: VITE_DEPLOY_ENV=prod npm run build
+        run: npm run build
 
       - name: Invalidate Cache - PROD
         run: aws cloudfront create-invalidation --distribution-id E11LZS29LR93ZG --paths "/*"

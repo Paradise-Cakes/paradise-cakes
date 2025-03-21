@@ -1,4 +1,4 @@
-import { object, array, string, number } from "yup";
+import { array, number, object, string } from "yup";
 
 export const signUpSchema = object({
   first_name: string().required(),
@@ -32,7 +32,7 @@ export const dessertSchema = object({
       size: string()
         .required("size required")
         .min(1, "At least one size is required"),
-      base: number()
+      base_price: number()
         .required("price required")
         .min(1, "At least one price is required"),
     })
@@ -40,4 +40,19 @@ export const dessertSchema = object({
   ingredients: array()
     .of(string().required("Each ingredient must have a name"))
     .min(1, "At least one ingredient is required"),
+});
+
+export const forgotPasswordSchema = object({
+  email: string().required().email(),
+});
+
+export const resetPasswordSchema = object({
+  password: string()
+    .required()
+    .min(8)
+    .max(20)
+    .matches(
+      /(?=.*[0-9])(?=.*[^A-Za-z0-9])/,
+      "password must include at least one number and one special character"
+    ),
 });

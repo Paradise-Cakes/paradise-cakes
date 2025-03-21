@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Container,
   Box,
@@ -9,14 +9,20 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { AccountContext } from "../../../context/AccountContext";
 import { CgClose } from "react-icons/cg";
 import SignInForm from "../../forms/auth/SignInForm";
+import { useModalStore } from "../../../store/useModalStore";
 
-export default function SignIn() {
+export default function SignInModal() {
   const theme = useTheme();
-  const { signInModalOpen, setSignInModalOpen, setSignUpModalOpen } =
-    useContext(AccountContext);
+  const {
+    signInModalOpen,
+    closeSignInModal,
+    openSignUpModal,
+    openSignInModal,
+    openForgotPasswordModal,
+  } = useModalStore();
+
   const toggleSignInModal = (open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -24,7 +30,7 @@ export default function SignIn() {
     ) {
       return;
     }
-    setSignInModalOpen(open);
+    open ? openSignInModal() : closeSignInModal();
   };
 
   return (
@@ -58,13 +64,19 @@ export default function SignIn() {
               right: "1.5rem",
               cursor: "pointer",
             }}
-            onClick={toggleSignInModal(false)}
+            onClick={closeSignInModal}
           />
           <Typography variant="h5" textAlign={"center"} fontWeight={1000}>
             SIGN IN
           </Typography>
           <SignInForm />
-          <Typography sx={{ fontWeight: "800", textAlign: "center" }}>
+          <Typography
+            sx={{ fontWeight: "800", textAlign: "center", cursor: "pointer" }}
+            onClick={() => {
+              closeSignInModal();
+              openForgotPasswordModal();
+            }}
+          >
             Forgot your password?
           </Typography>
           <Box
@@ -101,8 +113,8 @@ export default function SignIn() {
               marginTop: "1rem",
             }}
             onClick={() => {
-              setSignInModalOpen(false);
-              setSignUpModalOpen(true);
+              closeSignInModal();
+              openSignUpModal();
             }}
           >
             Create Account

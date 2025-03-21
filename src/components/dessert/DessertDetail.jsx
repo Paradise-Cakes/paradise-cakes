@@ -20,9 +20,9 @@ import QuantityButton from "../extras/QuantityButton";
 import { useGetDessertById } from "../../hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
-import { CartContext } from "../../context/CartContext";
 import { IngredientsContext } from "../../context/IngredientsContext";
 import Ingredients from "./Ingredients";
+import { useCartStore } from "../../store/useCartStore";
 
 // A function to preload a single image
 function preloadImage(src) {
@@ -43,7 +43,7 @@ export default function DessertDetail() {
     isLoading: isGetDessertLoading,
     isSuccess: isGetDessertSuccess,
   } = getDessertQuery;
-  const { cartItems, setCartItems, setCartOpen } = useContext(CartContext);
+  const { setCart, openCart } = useCartStore();
   const { ingredientsOpen, setIngredientsOpen } =
     useContext(IngredientsContext);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -77,7 +77,7 @@ export default function DessertDetail() {
       (item) => item.dessert_id === dessertId && item.size === size
     );
     if (existingItem) {
-      setCartItems((prev) => {
+      setCart((prev) => {
         return prev.map((item) => {
           if (item.dessert_id === dessertId && item.size === size) {
             return { ...item, quantity: item.quantity + quantity };
@@ -86,11 +86,11 @@ export default function DessertDetail() {
         });
       });
     } else {
-      setCartItems((prev) => {
+      setCart((prev) => {
         return [...prev, cartItem];
       });
     }
-    setCartOpen(true);
+    openCart();
   };
 
   useEffect(() => {

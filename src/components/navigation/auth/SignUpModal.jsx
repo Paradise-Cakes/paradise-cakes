@@ -7,14 +7,18 @@ import {
   Modal,
   useTheme,
 } from "@mui/material";
-import { AccountContext } from "../../../context/AccountContext";
 import { CgClose } from "react-icons/cg";
 import SignUpForm from "../../forms/auth/SignUpForm";
+import { useModalStore } from "../../../store/useModalStore";
 
-export default function SignUp() {
+export default function SignUpModal() {
   const theme = useTheme();
-  const { signUpModalOpen, setSignUpModalOpen, setSignInModalOpen } =
-    useContext(AccountContext);
+  const {
+    signUpModalOpen,
+    openSignUpModal,
+    closeSignUpModal,
+    openSignInModal,
+  } = useModalStore();
   const toggleSignUpModal = (open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -22,7 +26,7 @@ export default function SignUp() {
     ) {
       return;
     }
-    setSignUpModalOpen(open);
+    open ? openSignUpModal() : closeSignUpModal();
   };
 
   return (
@@ -67,8 +71,8 @@ export default function SignUp() {
             <span
               style={{ fontWeight: "800", cursor: "pointer" }}
               onClick={() => {
-                setSignUpModalOpen(false);
-                setSignInModalOpen(true);
+                closeSignUpModal();
+                openSignInModal();
               }}
             >
               Sign In

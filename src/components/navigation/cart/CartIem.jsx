@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import QuantityButton from "../../extras/QuantityButton";
 import { CgClose } from "react-icons/cg";
-import { CartContext } from "../../../context/CartContext";
+import { useCartStore } from "../../../store/useCartStore";
 
 export default function CartItem({
   id,
@@ -14,11 +14,11 @@ export default function CartItem({
 }) {
   const theme = useTheme();
   const [quantity, setQuantity] = useState(itemQuantity);
-  const { setCartItems } = useContext(CartContext);
+  const { setCart } = useCartStore();
 
   // remove the item from the cart that matches the size and dessert
   const handleRemove = () => {
-    setCartItems((prev) => {
+    setCart((prev) => {
       return prev.filter(
         (cartItem) => cartItem.id !== id || cartItem.size !== size
       );

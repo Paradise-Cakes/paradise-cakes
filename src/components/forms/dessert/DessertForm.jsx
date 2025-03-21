@@ -20,13 +20,12 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import { useDropzone } from "react-dropzone";
 import { dessertSchema } from "../../../schema";
 import _ from "lodash";
-import { CircularProgress } from "@mui/material";
+import LoadingButton from "../../extras/LoadingButton";
 
 export default function DessertForm({
   dessert,
   onSubmitForm,
-  isPostLoading,
-  isPatchLoading,
+  isLoading,
 }) {
   const [sizes, setSizes] = useState([]);
   const dessertForm = useFormik({
@@ -37,7 +36,7 @@ export default function DessertForm({
       prices: dessert?.prices || [
         {
           size: "",
-          base: "",
+          base_price: "",
         },
       ],
       ingredients: dessert?.ingredients || [],
@@ -52,7 +51,13 @@ export default function DessertForm({
   const theme = useTheme();
   const onDrop = (acceptedFiles) => {
     const newFiles = dessertForm.values?.images?.concat(acceptedFiles);
-    dessertForm.setFieldValue("images", newFiles);
+    const newImages = newFiles.map((file, index) => ({
+      file: file,
+      file_name: file.name,
+      file_type: file.type,
+      position: index
+    }))
+    dessertForm.setFieldValue("images", newImages);
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const handleSizeChange = (index) => (e) => {
@@ -64,7 +69,7 @@ export default function DessertForm({
 
   const handlePriceChange = (index) => (e) => {
     const updatedPrices = dessertForm.values.prices.map((item, i) =>
-      i === index ? { ...item, base: e.target.value } : item
+      i === index ? { ...item, base_price: e.target.value } : item
     );
     dessertForm.setFieldValue("prices", updatedPrices);
   };
@@ -74,7 +79,7 @@ export default function DessertForm({
       ...dessertForm.values.prices,
       {
         size: "",
-        base: "",
+        base_price: "",
       },
     ]);
   };
@@ -295,18 +300,18 @@ export default function DessertForm({
                 label={"Price"}
                 type="tel"
                 sx={{ marginTop: "1rem", width: "150px" }}
-                value={dessertForm.values.prices[index].base}
+                value={dessertForm.values.prices[index].base_price}
                 onChange={handlePriceChange(index)}
                 onBlur={() =>
-                  dessertForm.setFieldTouched(`prices[${index}].base`)
+                  dessertForm.setFieldTouched(`prices[${index}].base_price`)
                 }
                 error={Boolean(
-                  dessertForm.touched.prices?.[index]?.base &&
-                    dessertForm.errors.prices?.[index]?.base
+                  dessertForm.touched.prices?.[index]?.base_price &&
+                    dessertForm.errors.prices?.[index]?.base_price
                 )}
                 helperText={
-                  dessertForm.touched.prices?.[index]?.base &&
-                  dessertForm.errors.prices?.[index]?.base
+                  dessertForm.touched.prices?.[index]?.base_price &&
+                  dessertForm.errors.prices?.[index]?.base_price
                 }
               />
               <IoCloseCircleSharp
@@ -396,8 +401,8 @@ export default function DessertForm({
                   }}
                 >
                   <img
-                    src={file.url || URL.createObjectURL(file)}
-                    alt={file.name}
+                    src={file?.file?.url || file?.url || URL.createObjectURL(file.file)}
+                    alt={file?.file?.name || file?.file_name}
                     style={{
                       width: "150px",
                       height: "150px",
@@ -452,28 +457,9 @@ export default function DessertForm({
           )}
         </Grid>
       </Grid>
-      {!dessert ? (
-        <Button
-          type="submit"
-          color="success"
-          variant="contained"
-          sx={{
-            marginTop: "2rem",
-            width: "250px",
-          }}
-        >
-          {isPostLoading ? <CircularProgress /> : "Create"}
-        </Button>
-      ) : (
-        <Button
-          type="submit"
-          color="info"
-          variant="contained"
-          sx={{ marginTop: "2rem", width: "250px" }}
-        >
-          {isPatchLoading ? <CircularProgress /> : "Update"}
-        </Button>
-      )}
+      <LoadingButton isLoading={isLoading} fullWidth={false}>
+        {dessert ? "Update" : "Create"}
+      </LoadingButton>
     </Grid>
   );
 }
