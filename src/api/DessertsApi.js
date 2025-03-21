@@ -7,11 +7,10 @@ const API_URL =
     ? "https://desserts-api.megsparadisecakes.com/v1"
     : "https://desserts-dev-api.megsparadisecakes.com/v1";
 
-const accessToken = await fetchAuthSession().then((session) =>
-  session?.tokens?.accessToken?.toString()
-);
-
 export const deleteDessert = async (dessert_id) => {
+  const accessToken = await fetchAuthSession().then((session) =>
+    session?.tokens?.accessToken?.toString()
+  );
   const response = await axios.delete(`${API_URL}/desserts/${dessert_id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -33,6 +32,9 @@ export const getDesserts = async (dessert_type) => {
 };
 
 export const patchDessert = async (dessert_id, payload) => {
+  const accessToken = await fetchAuthSession().then((session) =>
+    session?.tokens?.accessToken?.toString()
+  );
   const response = await axios.patch(
     `${API_URL}/desserts/${dessert_id}`,
     payload,
@@ -46,6 +48,9 @@ export const patchDessert = async (dessert_id, payload) => {
 };
 
 export const postDessert = async (payload) => {
+  const accessToken = await fetchAuthSession().then((session) =>
+    session?.tokens?.accessToken?.toString()
+  );
   const response = await axios.post(`${API_URL}/desserts`, payload, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
