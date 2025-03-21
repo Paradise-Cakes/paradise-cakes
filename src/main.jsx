@@ -11,6 +11,7 @@ import "@fontsource/montserrat/400.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import "./amplifyConfig";
 
 export const THEME = createTheme({
@@ -87,12 +88,38 @@ export const THEME = createTheme({
         },
       },
     },
+    MuiCssBaseline: {
+      styleOverrides: {
+        '@global': {
+          'input, textarea, select, button': {
+            fontFamily: `"Montserrat", sans-serif`,
+          },
+        },
+      },
+    },
+    // Override the MUI Select styles
+    MuiSelect: {
+      styleOverrides: {
+        select: {
+          fontFamily: `"Montserrat", sans-serif`,
+        },
+      },
+    },
+    // Override the MUI MenuItem styles
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontFamily: `"Montserrat", sans-serif`,
+        },
+      },
+    },
   },
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={THEME}>
+      <CssBaseline />
       <BrowserRouter>
         <App />
       </BrowserRouter>

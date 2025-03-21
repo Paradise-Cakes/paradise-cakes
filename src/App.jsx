@@ -36,7 +36,6 @@ function App() {
   const { openResetPasswordModal, setResetPasswordParams } = useModalStore();
 
   useEffect(() => {
-    console.log("searchParams", searchParams);
     if (searchParams.get("reset") === "true") {
       openResetPasswordModal();
       setResetPasswordParams({

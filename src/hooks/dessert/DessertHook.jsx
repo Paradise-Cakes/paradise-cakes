@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "react-query";
 import {
-  getDessertsByDessertType,
+  getDesserts,
   getDessertById,
   postDessert,
   patchDessert,
@@ -15,17 +15,14 @@ export const useGetDessertById = (dessert_id) => {
 };
 
 export const useGetDesserts = () => {
-  return useQuery(["desserts"], () => getDessertsByDessertType("cake"), {
+  return useQuery(["desserts"], () => getDesserts(), {
     select: (data) => data.data,
-    refetchOnWindowFocus: false,
-    cacheTime: Infinity,
-    staleTime: Infinity,
   });
 };
 
 export const usePostDessert = () => {
   return useMutation(({ dessert }) => postDessert(dessert), {
-    onSuccess: () => console.log("SUCCESS"),
+    onSuccess: () => console.log("SUCCESSFUL POST DESSERT"),
   });
 };
 
@@ -34,7 +31,7 @@ export const usePatchDessert = (dessert_id) => {
   return useMutation(({ dessert }) => patchDessert(dessert_id, dessert), {
     onSuccess: () => {
       queryClient.invalidateQueries(["dessert", dessert_id]);
-      console.log("SUCCESS");
+      console.log("SUCCESSFUL PATCH DESSERT");
     },
   });
 };
@@ -44,7 +41,7 @@ export const useDeleteDessert = (dessert_id) => {
   return useMutation(() => deleteDessert(dessert_id), {
     onSuccess: () => {
       queryClient.invalidateQueries(["desserts"]);
-      console.log("SUCCESS");
+      console.log("SUCCESSFUL DELETE DESSERT");
     },
   });
 };

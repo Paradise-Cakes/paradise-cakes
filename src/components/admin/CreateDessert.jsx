@@ -5,6 +5,7 @@ import { usePostDessert } from "../../hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
+import fs from "fs";
 
 export default function CreateDessert() {
   const navigate = useNavigate();
@@ -17,23 +18,22 @@ export default function CreateDessert() {
 
   const createDessert = async (values) => {
     try {
+      const newValues = _.cloneDeep(values);
+        newValues.images.forEach((image) => {
+        if (image.file) {
+          delete image.file;
+        }
+      });
       const dessertResponse = await postDessert({
-        dessert: _.omit(values, ["images"]),
+        dessert: newValues,
       });
 
       for (let i = 0; i < values.images.length; i++) {
-        const imageResponse = await postDessertImage({
-          dessert_id: dessertResponse.data.dessert_id,
-          dessertImageData: {
-            file_type: values.images[i].type,
-            position: i + 1,
-          },
-        });
-        let uploadUrl = imageResponse.data.upload_url;
+        let uploadUrl = dessertResponse.data.images[i].upload_url;
         try {
-          await axios.put(uploadUrl, values.images[i], {
+          await axios.put(uploadUrl, values.images[i].file, {
             headers: {
-              "Content-Type": values.images[i].type,
+              "Content-Type": values.images[i].file_type,
             },
           });
         } catch (uploadError) {
@@ -54,7 +54,7 @@ export default function CreateDessert() {
         </Typography>
         <DessertForm
           onSubmitForm={createDessert}
-          // isPostLoading={isPostDessertImageLoading}
+          isLoading={isPostDessertLoading}
         />
       </Box>
     </Container>

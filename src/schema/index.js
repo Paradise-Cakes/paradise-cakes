@@ -32,7 +32,7 @@ export const dessertSchema = object({
       size: string()
         .required("size required")
         .min(1, "At least one size is required"),
-      base: number()
+      base_price: number()
         .required("price required")
         .min(1, "At least one price is required"),
     })

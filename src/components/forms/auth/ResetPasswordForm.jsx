@@ -41,7 +41,6 @@ export default function ResetPasswordForm({ username, code }) {
     },
     onSubmit: async (values) => {
       try {
-        console.log(username, code);
         await postResetPassword({
           username: username,
           newPassword: values.password,

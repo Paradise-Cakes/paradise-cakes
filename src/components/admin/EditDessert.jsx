@@ -22,11 +22,7 @@ export default function EditDessert() {
     isLoading: isPatchDessertLoading,
     error: patchDessertError,
   } = patchDessertQuery;
-  const {
-    data: postDessertImage,
-    isLoading: isPostDessertImageLoading,
-    error: postDessertImageError,
-  } = postDessertImageQuery;
+
   const updateDessert = async (values) => {
     try {
       await patchDessert({
@@ -54,7 +50,7 @@ export default function EditDessert() {
           <DessertForm
             onSubmitForm={updateDessert}
             dessert={dessert}
-            isPatchLoading={isPatchDessertLoading}
+            isLoading={isPatchDessertLoading}
           />
         )}
       </Box>
