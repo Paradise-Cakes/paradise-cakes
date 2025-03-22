@@ -124,12 +124,12 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       sx={{
         margin: "0 auto",
         justifyContent: { xs: "center", lg: "space-between" },
+        padding: "2rem 0",
       }}
       onSubmit={dessertForm.handleSubmit}
       display={"flex"}
     >
-      {console.log(dessertForm.values.images)}
-      <Grid item lg={3} md={6} sm={8} xs={12}>
+      <Grid item lg={3} md={6} sm={8} xs={12} sx={{ height: "fit-content" }}>
         <TextField
           fullWidth
           label={"Name"}
@@ -317,6 +317,9 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
               />
             </Box>
           ))}
+          <LoadingButton isLoading={isLoading} isDisabled={!dessertForm.dirty}>
+            {dessert ? "Update" : "Create"}
+          </LoadingButton>
         </Box>
       </Grid>
       <Grid
@@ -327,8 +330,8 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
         sm={12}
         sx={{
           display: "flex",
-          marginTop: "2rem",
           justifyContent: "center",
+          height: "fit-content",
         }}
       >
         <Grid
@@ -362,7 +365,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           justifyContent={"space-evenly"}
           alignItems={"space-evenly"}
           padding={"0 10rem"}
-          sx={{ aspectRatio: "4/3", width: "100%" }}
+          sx={{ width: "100%" }}
         >
           {dessertForm.values?.images?.length === 0 ? (
             <Box
@@ -371,8 +374,8 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                 justifyContent: "center",
                 alignItems: "center",
                 border: `5px dashed ${theme.palette.warning.main}`,
-                width: "100%",
-                height: "100%",
+                width: "400px",
+                height: "400px",
               }}
             >
               <Typography variant="h6" textAlign={"center"}>
@@ -446,13 +449,6 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           )}
         </Grid>
       </Grid>
-      <LoadingButton
-        isLoading={isLoading}
-        isDisabled={!dessertForm.dirty}
-        fullWidth={false}
-      >
-        {dessert ? "Update" : "Create"}
-      </LoadingButton>
     </Grid>
   );
 }

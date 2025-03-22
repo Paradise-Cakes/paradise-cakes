@@ -5,7 +5,6 @@ import { usePostDessert } from "../../hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
-import fs from "fs";
 
 export default function CreateDessert() {
   const navigate = useNavigate();
@@ -54,9 +53,14 @@ export default function CreateDessert() {
   };
 
   return (
-    <Container maxWidth="xl">
-      <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>
-        <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
+    <Container>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography variant="h4" align="center">
           New Dessert
         </Typography>
         <DessertForm

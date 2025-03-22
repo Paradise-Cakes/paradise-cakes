@@ -71,7 +71,6 @@ export default function EditDessert() {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        mt={2}
       >
         <Typography variant="h4" align="center">
           Edit Dessert

@@ -48,7 +48,7 @@ function App() {
   return (
     <Container
       sx={{
-        mt: { xs: 16, sm: 16, md: 24 },
+        marginTop: "11rem",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
