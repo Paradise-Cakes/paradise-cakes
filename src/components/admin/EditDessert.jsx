@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, Breadcrumbs, Link } from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
 import axios from "axios";
 import {
@@ -65,7 +65,7 @@ export default function EditDessert() {
   };
 
   return (
-    <Container>
+    <Container maxWidth="lg">
       <Box
         display="flex"
         flexDirection="column"
@@ -75,6 +75,25 @@ export default function EditDessert() {
         <Typography variant="h4" align="center">
           Edit Dessert
         </Typography>
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          sx={{ marginBottom: "1rem", marginRight: "auto" }}
+        >
+          <Link color="inherit" underline="hover" href="/admin/home">
+            Admin Dashboard
+          </Link>
+          <Link color="inherit" underline="hover" href="/admin/desserts">
+            My Desserts
+          </Link>
+          <Link
+            underline="hover"
+            color="text.primary"
+            href={`/admin/desserts/edit-dessert/${dessertId}`}
+            aria-current="page"
+          >
+            Edit Dessert
+          </Link>
+        </Breadcrumbs>
         {!isDessertLoading && (
           <DessertForm
             onSubmitForm={updateDessert}

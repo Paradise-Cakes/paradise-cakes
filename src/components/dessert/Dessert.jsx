@@ -94,7 +94,7 @@ export default function Dessert({
             sx={{
               marginRight: "1rem",
             }}
-            onClick={(event) => navigate(`/admin/edit-dessert/${id}`)}
+            onClick={(event) => navigate(`/admin/desserts/edit-dessert/${id}`)}
           >
             Edit
           </Button>

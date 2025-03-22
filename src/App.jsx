@@ -28,6 +28,7 @@ import NotFound from "./components/NotFound";
 import ProtectedRoute from "./guards/AuthGuard";
 import ForgotPasswordModal from "./components/navigation/auth/ForgotPasswordModal";
 import { useModalStore } from "./store/useModalStore";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -74,12 +75,13 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/about-me" element={<About />} />
+                <Route path="/admin/home" element={<AdminDashboard />} />
                 <Route
                   path="/admin/desserts/create"
                   element={<CreateDessert />}
                 />
                 <Route
-                  path="/admin/edit-dessert/:dessertId"
+                  path="/admin/desserts/edit-dessert/:dessertId"
                   element={<EditDessert />}
                 />
                 <Route path="/admin/desserts" element={<ViewDesserts />} />

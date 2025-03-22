@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Typography, Container, Grid, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Container,
+  Grid,
+  Button,
+  Breadcrumbs,
+  Link as MuiLink,
+} from "@mui/material";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import Dessert from "../dessert/Dessert";
 import { CircularProgress } from "@mui/material";
@@ -13,11 +21,32 @@ export default function ViewDesserts() {
     isSuccess: isGetDessertsSuccess,
   } = getDessertsQuery;
   return (
-    <Container maxWidth="xl">
-      <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>
+    <Container maxWidth="lg">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
           My Desserts
         </Typography>
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          sx={{ marginBottom: "1rem", marginRight: "auto" }}
+        >
+          <MuiLink color="inherit" underline="hover" href="/admin/home">
+            Admin Dashboard
+          </MuiLink>
+          <MuiLink
+            underline="hover"
+            color="text.primary"
+            href="/admin/desserts"
+            aria-current="page"
+          >
+            My Desserts
+          </MuiLink>
+        </Breadcrumbs>
         <Button
           color="success"
           variant="contained"
