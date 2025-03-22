@@ -383,13 +383,19 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
               </Typography>
             </Box>
           ) : (
-            dessertForm.values?.images?.map((file, index) => {
-              return (
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+              }}
+            >
+              {dessertForm.values?.images?.map((file, index) => (
                 <Box
                   key={index}
                   sx={{
                     position: "relative",
                     borderRadius: "12px",
+                    margin: "1rem",
                   }}
                 >
                   <img
@@ -444,8 +450,8 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                     </Select>
                   </FormControl>
                 </Box>
-              );
-            })
+              ))}
+            </Box>
           )}
         </Grid>
       </Grid>
