@@ -18,22 +18,29 @@ export default function CreateDessert() {
 
   const createDessert = async (values) => {
     try {
-      const newValues = _.cloneDeep(values);
-        newValues.images.forEach((image) => {
-        if (image.file) {
-          delete image.file;
-        }
-      });
-      const dessertResponse = await postDessert({
-        dessert: newValues,
+      const formattedValues = {
+        ...values,
+        images: values.images.map((image, index) => {
+          if (image instanceof File) {
+            return {
+              file_name: image.name,
+              file_type: image.type,
+              position: index,
+            };
+          }
+          return image;
+        }),
+      };
+      const postResponse = await postDessert({
+        dessert: formattedValues,
       });
 
       for (let i = 0; i < values.images.length; i++) {
-        let uploadUrl = dessertResponse.data.images[i].upload_url;
+        let uploadUrl = postResponse.data.images[i].upload_url;
         try {
-          await axios.put(uploadUrl, values.images[i].file, {
+          await axios.put(uploadUrl, values.images[i], {
             headers: {
-              "Content-Type": values.images[i].file_type,
+              "Content-Type": values.images[i].type,
             },
           });
         } catch (uploadError) {

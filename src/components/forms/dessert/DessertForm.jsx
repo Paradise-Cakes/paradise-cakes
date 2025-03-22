@@ -22,11 +22,7 @@ import { dessertSchema } from "../../../schema";
 import _ from "lodash";
 import LoadingButton from "../../extras/LoadingButton";
 
-export default function DessertForm({
-  dessert,
-  onSubmitForm,
-  isLoading,
-}) {
+export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
   const [sizes, setSizes] = useState([]);
   const dessertForm = useFormik({
     initialValues: {
@@ -51,13 +47,7 @@ export default function DessertForm({
   const theme = useTheme();
   const onDrop = (acceptedFiles) => {
     const newFiles = dessertForm.values?.images?.concat(acceptedFiles);
-    const newImages = newFiles.map((file, index) => ({
-      file: file,
-      file_name: file.name,
-      file_type: file.type,
-      position: index
-    }))
-    dessertForm.setFieldValue("images", newImages);
+    dessertForm.setFieldValue("images", newFiles);
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const handleSizeChange = (index) => (e) => {
@@ -138,6 +128,7 @@ export default function DessertForm({
       onSubmit={dessertForm.handleSubmit}
       display={"flex"}
     >
+      {console.log(dessertForm.values.images)}
       <Grid item lg={3} md={6} sm={8} xs={12}>
         <TextField
           fullWidth
@@ -368,8 +359,10 @@ export default function DessertForm({
           item
           display={"flex"}
           flexWrap={"wrap"}
-          alignContent={"flex-start"}
-          sx={{ width: "400px", height: "400px" }}
+          justifyContent={"space-evenly"}
+          alignItems={"space-evenly"}
+          padding={"0 10rem"}
+          sx={{ aspectRatio: "4/3", width: "100%" }}
         >
           {dessertForm.values?.images?.length === 0 ? (
             <Box
@@ -394,18 +387,14 @@ export default function DessertForm({
                   sx={{
                     position: "relative",
                     borderRadius: "12px",
-                    marginRight: "1rem",
-                    width: "150px",
-                    height: "150px",
-                    marginBottom: "5rem",
                   }}
                 >
                   <img
-                    src={file?.file?.url || file?.url || URL.createObjectURL(file.file)}
-                    alt={file?.file?.name || file?.file_name}
+                    src={file?.url || URL.createObjectURL(file)}
+                    alt={file?.name || file?.file_name}
                     style={{
-                      width: "150px",
-                      height: "150px",
+                      width: "240px",
+                      height: "180px",
                       display: "block",
                     }}
                   />
@@ -438,8 +427,8 @@ export default function DessertForm({
                             i === index
                               ? dessertForm.values?.images[newIndex]
                               : i === newIndex
-                              ? file
-                              : item
+                                ? file
+                                : item
                         );
                         dessertForm.setFieldValue("images", newFiles);
                       }}
@@ -457,7 +446,11 @@ export default function DessertForm({
           )}
         </Grid>
       </Grid>
-      <LoadingButton isLoading={isLoading} fullWidth={false}>
+      <LoadingButton
+        isLoading={isLoading}
+        isDisabled={!dessertForm.dirty}
+        fullWidth={false}
+      >
         {dessert ? "Update" : "Create"}
       </LoadingButton>
     </Grid>

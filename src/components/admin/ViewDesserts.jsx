@@ -27,9 +27,6 @@ export default function ViewDesserts() {
         >
           New Dessert
         </Button>
-        <Typography variant="h6" sx={{ textAlign: "left" }} gutterBottom>
-          Desserts
-        </Typography>
         {isGetDessertsLoading ? (
           <Box
             sx={{

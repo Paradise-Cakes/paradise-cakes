@@ -6,12 +6,13 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea, Skeleton, Button, Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDeleteDessert } from "../../hooks/dessert/DessertHook";
+import { maxHeight, maxWidth } from "@mui/system";
 
 export default function Dessert({
   id,
   name,
   description,
-  image_url,
+  image_url = "https://placehold.co/400",
   inAdminView = false,
 }) {
   const deleteDessertQuery = useDeleteDessert(id);
@@ -37,7 +38,7 @@ export default function Dessert({
         <CardMedia
           component="img"
           image={image_url}
-          sx={{ maxWidth: "100%", height: "auto" }}
+          sx={{ aspectRatio: "4/3" }}
         />
         <CardContent
           sx={{
