@@ -3,7 +3,7 @@ import { Box, Button, Typography, Modal, useTheme } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { useModalStore } from "../../../store/useModalStore";
-import useProtectedNavigate from "../../../hooks/useProtectedNavigate";
+import { useProtectedNavigate } from "../../../hooks/ProtectedNavigateHook";
 
 export default function LoggedInModal() {
   const { loggedInModalOpen, closeLoggedInModal, openLoggedInModal } =

@@ -9,19 +9,26 @@ import { DrawerContext } from "../../context/DrawerContext";
 import NavLink from "./NavLink";
 import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
+import { LuCakeSlice } from "react-icons/lu";
 import AnimatedBanner from "../extras/AnimatedBanner";
 import { VscAccount } from "react-icons/vsc";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
 import { useCartStore } from "../../store/useCartStore";
-import useProtectedNavigate from "../../hooks/useProtectedNavigate";
+import {
+  useProtectedNavigate,
+  useProtectedAdminNavigate,
+} from "../../hooks/ProtectedNavigateHook";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
   const { openCart, cart } = useCartStore();
   const protectedNavigate = useProtectedNavigate();
+  const protectedAdminNavigate = useProtectedAdminNavigate();
   const navigate = useNavigate();
   const theme = useTheme();
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
   const getDessertsQuery = useGetDesserts();
   const {
     data: desserts,
@@ -175,7 +182,7 @@ export default function Navbar() {
               right: "1%",
               cursor: "pointer",
               display: "flex",
-              width: "80px",
+              width: isAuthenticated && isAdmin ? "120px" : "80px",
               alignItems: "center",
               justifyContent: "space-between",
             }}
@@ -192,16 +199,13 @@ export default function Navbar() {
                 }}
               />
             </Box>
-            <Box onClick={() => openCart()}>
+            <Box onClick={() => openCart()} sx={{ position: "relative" }}>
               <BsCart2
                 style={{
                   width: "30px",
                   height: "30px",
                 }}
               />
-            </Box>
-
-            {cart.length > 0 && (
               <GoDotFill
                 style={{
                   position: "absolute",
@@ -212,6 +216,16 @@ export default function Navbar() {
                   right: "-8px",
                 }}
               />
+            </Box>
+            {isAdmin && isAuthenticated && (
+              <Box onClick={() => protectedAdminNavigate("/admin/home")}>
+                <LuCakeSlice
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                  }}
+                />
+              </Box>
             )}
           </Box>
         </Toolbar>

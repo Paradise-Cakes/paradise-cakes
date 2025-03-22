@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useModalStore } from "../store/useModalStore";
 
-const useProtectedNavigate = () => {
+export const useProtectedNavigate = () => {
   const { isAuthenticated } = useContext(AuthContext);
   const { openSignInModal } = useModalStore();
   const navigate = useNavigate();
@@ -17,4 +17,16 @@ const useProtectedNavigate = () => {
   };
 };
 
-export default useProtectedNavigate;
+export const useProtectedAdminNavigate = () => {
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
+  const { openSignInModal } = useModalStore();
+  const navigate = useNavigate();
+
+  return (path) => {
+    if (isAuthenticated && isAdmin) {
+      navigate(path);
+    } else {
+      openSignInModal();
+    }
+  };
+};
