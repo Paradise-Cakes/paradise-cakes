@@ -1,12 +1,18 @@
 import React from "react";
-import { Box, Typography, Container, Breadcrumbs, Link } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Container,
+  Breadcrumbs,
+  Link as MuiLink,
+} from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
 import axios from "axios";
 import {
   usePatchDessert,
   useGetDessertById,
 } from "../../hooks/dessert/DessertHook";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link as RouterLink } from "react-router-dom";
 
 export default function EditDessert() {
   const { dessertId } = useParams();
@@ -79,20 +85,31 @@ export default function EditDessert() {
           aria-label="breadcrumb"
           sx={{ marginBottom: "1rem", marginRight: "auto" }}
         >
-          <Link color="inherit" underline="hover" href="/admin/home">
+          <MuiLink
+            color="inherit"
+            underline="hover"
+            component={RouterLink}
+            to={"/admin/home"}
+          >
             Admin Dashboard
-          </Link>
-          <Link color="inherit" underline="hover" href="/admin/desserts">
+          </MuiLink>
+          <MuiLink
+            color="inherit"
+            underline="hover"
+            component={RouterLink}
+            to={"/admin/desserts"}
+          >
             My Desserts
-          </Link>
-          <Link
+          </MuiLink>
+          <MuiLink
             underline="hover"
             color="text.primary"
-            href={`/admin/desserts/edit-dessert/${dessertId}`}
+            component={RouterLink}
+            to={`/admin/desserts/edit-dessert/${dessertId}`}
             aria-current="page"
           >
             Edit Dessert
-          </Link>
+          </MuiLink>
         </Breadcrumbs>
         {!isDessertLoading && (
           <DessertForm

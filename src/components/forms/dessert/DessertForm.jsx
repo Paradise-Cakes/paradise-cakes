@@ -367,92 +367,75 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           padding={"0 10rem"}
           sx={{ width: "100%" }}
         >
-          {dessertForm.values?.images?.length === 0 ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: `5px dashed ${theme.palette.warning.main}`,
-                width: "400px",
-                height: "400px",
-              }}
-            >
-              <Typography variant="h6" textAlign={"center"}>
-                Upload images to display here
-              </Typography>
-            </Box>
-          ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-              }}
-            >
-              {dessertForm.values?.images?.map((file, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    position: "relative",
-                    borderRadius: "12px",
-                    margin: "1rem",
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            {dessertForm.values?.images?.map((file, index) => (
+              <Box
+                key={index}
+                sx={{
+                  position: "relative",
+                  borderRadius: "12px",
+                  margin: "1rem",
+                }}
+              >
+                <img
+                  src={file?.url || URL.createObjectURL(file)}
+                  alt={file?.name || file?.file_name}
+                  style={{
+                    width: "240px",
+                    height: "180px",
+                    display: "block",
                   }}
-                >
-                  <img
-                    src={file?.url || URL.createObjectURL(file)}
-                    alt={file?.name || file?.file_name}
-                    style={{
-                      width: "240px",
-                      height: "180px",
-                      display: "block",
-                    }}
-                  />
-                  <IoCloseCircleSharp
-                    style={{
-                      position: "absolute",
-                      top: "0",
-                      right: "0",
-                      width: "30px",
-                      height: "30px",
-                      color: theme.palette.error.main,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      const newFiles = dessertForm.values?.images?.filter(
-                        (item, i) => i !== index && item
+                />
+                <IoCloseCircleSharp
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    right: "0",
+                    width: "30px",
+                    height: "30px",
+                    color: theme.palette.error.main,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    const newFiles = dessertForm.values?.images?.filter(
+                      (item, i) => i !== index && item
+                    );
+                    dessertForm.setFieldValue("images", newFiles);
+                  }}
+                />
+                <FormControl fullWidth>
+                  <Select
+                    labelId="img-order-label"
+                    value={index}
+                    sx={{ marginTop: "0.5rem" }}
+                    onChange={(e) => {
+                      const newIndex = e.target.value;
+                      const newFiles = dessertForm.values?.images?.map(
+                        (item, i) =>
+                          i === index
+                            ? dessertForm.values?.images[newIndex]
+                            : i === newIndex
+                              ? file
+                              : item
                       );
                       dessertForm.setFieldValue("images", newFiles);
                     }}
-                  />
-                  <FormControl fullWidth>
-                    <Select
-                      labelId="img-order-label"
-                      value={index}
-                      sx={{ marginTop: "0.5rem" }}
-                      onChange={(e) => {
-                        const newIndex = e.target.value;
-                        const newFiles = dessertForm.values?.images?.map(
-                          (item, i) =>
-                            i === index
-                              ? dessertForm.values?.images[newIndex]
-                              : i === newIndex
-                                ? file
-                                : item
-                        );
-                        dessertForm.setFieldValue("images", newFiles);
-                      }}
-                    >
-                      {dessertForm.values?.images?.map((_, i) => (
-                        <MenuItem key={i} value={i}>
-                          {i + 1}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              ))}
-            </Box>
-          )}
+                  >
+                    {dessertForm.values?.images?.map((_, i) => (
+                      <MenuItem key={i} value={i}>
+                        {i + 1}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            ))}
+          </Box>
         </Grid>
       </Grid>
     </Grid>

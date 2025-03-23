@@ -1,10 +1,17 @@
 import React from "react";
-import { Box, Typography, Container, Breadcrumbs, Link } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Container,
+  Breadcrumbs,
+  Link as MuiLink,
+} from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
 import { usePostDessert } from "../../hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function CreateDessert() {
   const navigate = useNavigate();
@@ -67,20 +74,31 @@ export default function CreateDessert() {
           aria-label="breadcrumb"
           sx={{ marginBottom: "1rem", marginRight: "auto" }}
         >
-          <Link color="inherit" underline="hover" href="/admin/home">
+          <MuiLink
+            color="inherit"
+            underline="hover"
+            component={RouterLink}
+            to={"/admin/home"}
+          >
             Admin Dashboard
-          </Link>
-          <Link color="inherit" underline="hover" href="/admin/desserts">
+          </MuiLink>
+          <MuiLink
+            color="inherit"
+            underline="hover"
+            component={RouterLink}
+            to={"/admin/desserts"}
+          >
             My Desserts
-          </Link>
-          <Link
+          </MuiLink>
+          <MuiLink
             underline="hover"
             color="text.primary"
-            href="/admin/desserts/create"
+            component={RouterLink}
+            to={"/admin/desserts/create"}
             aria-current="page"
           >
             New Dessert
-          </Link>
+          </MuiLink>
         </Breadcrumbs>
         <DessertForm
           onSubmitForm={createDessert}

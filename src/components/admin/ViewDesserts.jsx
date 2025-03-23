@@ -11,7 +11,7 @@ import {
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import Dessert from "../dessert/Dessert";
 import { CircularProgress } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function ViewDesserts() {
   const getDessertsQuery = useGetDesserts();
@@ -35,13 +35,19 @@ export default function ViewDesserts() {
           aria-label="breadcrumb"
           sx={{ marginBottom: "1rem", marginRight: "auto" }}
         >
-          <MuiLink color="inherit" underline="hover" href="/admin/home">
+          <MuiLink
+            color="inherit"
+            underline="hover"
+            component={RouterLink}
+            to="/admin/home"
+          >
             Admin Dashboard
           </MuiLink>
           <MuiLink
             underline="hover"
             color="text.primary"
-            href="/admin/desserts"
+            component={RouterLink}
+            to="/admin/desserts"
             aria-current="page"
           >
             My Desserts
@@ -51,7 +57,7 @@ export default function ViewDesserts() {
           color="success"
           variant="contained"
           sx={{ display: "block", margin: "0 auto", width: "fit-content" }}
-          component={Link}
+          component={RouterLink}
           to="/admin/desserts/create"
         >
           New Dessert
