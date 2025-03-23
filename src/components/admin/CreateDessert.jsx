@@ -1,11 +1,17 @@
 import React from "react";
-import { Box, Typography, Container } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Container,
+  Breadcrumbs,
+  Link as MuiLink,
+} from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
 import { usePostDessert } from "../../hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
-import fs from "fs";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function CreateDessert() {
   const navigate = useNavigate();
@@ -18,22 +24,29 @@ export default function CreateDessert() {
 
   const createDessert = async (values) => {
     try {
-      const newValues = _.cloneDeep(values);
-        newValues.images.forEach((image) => {
-        if (image.file) {
-          delete image.file;
-        }
-      });
-      const dessertResponse = await postDessert({
-        dessert: newValues,
+      const formattedValues = {
+        ...values,
+        images: values.images.map((image, index) => {
+          if (image instanceof File) {
+            return {
+              file_name: image.name,
+              file_type: image.type,
+              position: index,
+            };
+          }
+          return image;
+        }),
+      };
+      const postResponse = await postDessert({
+        dessert: formattedValues,
       });
 
       for (let i = 0; i < values.images.length; i++) {
-        let uploadUrl = dessertResponse.data.images[i].upload_url;
+        let uploadUrl = postResponse.data.images[i].upload_url;
         try {
-          await axios.put(uploadUrl, values.images[i].file, {
+          await axios.put(uploadUrl, values.images[i], {
             headers: {
-              "Content-Type": values.images[i].file_type,
+              "Content-Type": values.images[i].type,
             },
           });
         } catch (uploadError) {
@@ -47,11 +60,46 @@ export default function CreateDessert() {
   };
 
   return (
-    <Container maxWidth="xl">
-      <Box px={4} sx={{ paddingTop: { xs: "1rem" } }}>
-        <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
+    <Container maxWidth="lg">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography variant="h4" align="center">
           New Dessert
         </Typography>
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          sx={{ marginBottom: "1rem", marginRight: "auto" }}
+        >
+          <MuiLink
+            color="inherit"
+            underline="hover"
+            component={RouterLink}
+            to={"/admin/home"}
+          >
+            Admin Dashboard
+          </MuiLink>
+          <MuiLink
+            color="inherit"
+            underline="hover"
+            component={RouterLink}
+            to={"/admin/desserts"}
+          >
+            My Desserts
+          </MuiLink>
+          <MuiLink
+            underline="hover"
+            color="text.primary"
+            component={RouterLink}
+            to={"/admin/desserts/create"}
+            aria-current="page"
+          >
+            New Dessert
+          </MuiLink>
+        </Breadcrumbs>
         <DessertForm
           onSubmitForm={createDessert}
           isLoading={isPostDessertLoading}

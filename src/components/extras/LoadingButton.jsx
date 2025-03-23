@@ -1,13 +1,13 @@
 import React from "react";
 import { Box, Button, CircularProgress } from "@mui/material";
 
-export default function LoadingButton({ isLoading, children, fullWidth=true }) {
+export default function LoadingButton({ isLoading, isDisabled=false, children, fullWidth=true }) {
   return (
     <Button
       type="submit"
       variant="contained"
       color="primary"
-      disabled={isLoading}
+      disabled={isLoading || isDisabled}
       fullWidth={fullWidth}
       sx={{
         height: "45px",

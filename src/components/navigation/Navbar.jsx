@@ -9,19 +9,26 @@ import { DrawerContext } from "../../context/DrawerContext";
 import NavLink from "./NavLink";
 import { useNavigate } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
+import { LuCakeSlice } from "react-icons/lu";
 import AnimatedBanner from "../extras/AnimatedBanner";
 import { VscAccount } from "react-icons/vsc";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
 import { useCartStore } from "../../store/useCartStore";
-import useProtectedNavigate from "../../hooks/useProtectedNavigate";
+import {
+  useProtectedNavigate,
+  useProtectedAdminNavigate,
+} from "../../hooks/ProtectedNavigateHook";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Navbar() {
   const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
   const { openCart, cart } = useCartStore();
   const protectedNavigate = useProtectedNavigate();
+  const protectedAdminNavigate = useProtectedAdminNavigate();
   const navigate = useNavigate();
   const theme = useTheme();
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
   const getDessertsQuery = useGetDesserts();
   const {
     data: desserts,
@@ -87,39 +94,7 @@ export default function Navbar() {
               }}
             >
               <NavLink title="Home" toLink={"/"} />
-              {!isGetDessertsLoading ? (
-                <NavLink
-                  title="Shop"
-                  toLink={"/shop"}
-                  drawerItems={
-                    [
-                      // {
-                      //   itemName: "cakes",
-                      //   img: _.filter(desserts, { dessert_type: "cake" })[0]
-                      //     .images[0].url,
-                      // },
-                      // {
-                      //   itemName: "cupcakes",
-                      //   img: _.filter(desserts, { dessert_type: "cupcake" })[0]
-                      //     .images[0].url,
-                      // },
-                      // {
-                      //   itemName: "cookies",
-                      //   img: _.filter(desserts, { dessert_type: "cookie" })[0]
-                      //     .images[0].url,
-                      // },
-                      // {
-                      //   itemName: "pies",
-                      //   img: _.filter(desserts, { dessert_type: "pie" })[0]
-                      //     .images[0].url,
-                      // },
-                    ]
-                  }
-                  buttons={[{ title: "Shop All", link: "/shop" }]}
-                />
-              ) : (
-                <NavLink title="Shop" toLink={"/shop"} />
-              )}
+              <NavLink title="Shop" toLink={"/shop"} />
               <NavLink title="Custom Order" toLink={"/custom-order"} />
               <NavLink title="About Me" toLink={"/about-me"} />
             </Box>
@@ -175,7 +150,7 @@ export default function Navbar() {
               right: "1%",
               cursor: "pointer",
               display: "flex",
-              width: "80px",
+              width: isAuthenticated && isAdmin ? "120px" : "80px",
               alignItems: "center",
               justifyContent: "space-between",
             }}
@@ -192,26 +167,35 @@ export default function Navbar() {
                 }}
               />
             </Box>
-            <Box onClick={() => openCart()}>
+            <Box onClick={() => openCart()} sx={{ position: "relative" }}>
               <BsCart2
                 style={{
                   width: "30px",
                   height: "30px",
                 }}
               />
+              {cart.length > 0 && (
+                <GoDotFill
+                  style={{
+                    position: "absolute",
+                    width: "25px",
+                    height: "25px",
+                    color: `${theme.palette.error.main}`,
+                    top: "-4px",
+                    right: "-8px",
+                  }}
+                />
+              )}
             </Box>
-
-            {cart.length > 0 && (
-              <GoDotFill
-                style={{
-                  position: "absolute",
-                  width: "25px",
-                  height: "25px",
-                  color: `${theme.palette.error.main}`,
-                  top: "-4px",
-                  right: "-8px",
-                }}
-              />
+            {isAdmin && isAuthenticated && (
+              <Box onClick={() => protectedAdminNavigate("/admin/home")}>
+                <LuCakeSlice
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                  }}
+                />
+              </Box>
             )}
           </Box>
         </Toolbar>

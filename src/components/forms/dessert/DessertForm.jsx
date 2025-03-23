@@ -22,11 +22,7 @@ import { dessertSchema } from "../../../schema";
 import _ from "lodash";
 import LoadingButton from "../../extras/LoadingButton";
 
-export default function DessertForm({
-  dessert,
-  onSubmitForm,
-  isLoading,
-}) {
+export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
   const [sizes, setSizes] = useState([]);
   const dessertForm = useFormik({
     initialValues: {
@@ -51,13 +47,7 @@ export default function DessertForm({
   const theme = useTheme();
   const onDrop = (acceptedFiles) => {
     const newFiles = dessertForm.values?.images?.concat(acceptedFiles);
-    const newImages = newFiles.map((file, index) => ({
-      file: file,
-      file_name: file.name,
-      file_type: file.type,
-      position: index
-    }))
-    dessertForm.setFieldValue("images", newImages);
+    dessertForm.setFieldValue("images", newFiles);
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const handleSizeChange = (index) => (e) => {
@@ -134,11 +124,12 @@ export default function DessertForm({
       sx={{
         margin: "0 auto",
         justifyContent: { xs: "center", lg: "space-between" },
+        padding: "2rem 0",
       }}
       onSubmit={dessertForm.handleSubmit}
       display={"flex"}
     >
-      <Grid item lg={3} md={6} sm={8} xs={12}>
+      <Grid item lg={3} md={6} sm={8} xs={12} sx={{ height: "fit-content" }}>
         <TextField
           fullWidth
           label={"Name"}
@@ -326,6 +317,9 @@ export default function DessertForm({
               />
             </Box>
           ))}
+          <LoadingButton isLoading={isLoading} isDisabled={!dessertForm.dirty}>
+            {dessert ? "Update" : "Create"}
+          </LoadingButton>
         </Box>
       </Grid>
       <Grid
@@ -336,8 +330,8 @@ export default function DessertForm({
         sm={12}
         sx={{
           display: "flex",
-          marginTop: "2rem",
           justifyContent: "center",
+          height: "fit-content",
         }}
       >
         <Grid
@@ -368,98 +362,82 @@ export default function DessertForm({
           item
           display={"flex"}
           flexWrap={"wrap"}
-          alignContent={"flex-start"}
-          sx={{ width: "400px", height: "400px" }}
+          justifyContent={"space-evenly"}
+          alignItems={"space-evenly"}
+          padding={"0 10rem"}
+          sx={{ width: "100%" }}
         >
-          {dessertForm.values?.images?.length === 0 ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: `5px dashed ${theme.palette.warning.main}`,
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <Typography variant="h6" textAlign={"center"}>
-                Upload images to display here
-              </Typography>
-            </Box>
-          ) : (
-            dessertForm.values?.images?.map((file, index) => {
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    position: "relative",
-                    borderRadius: "12px",
-                    marginRight: "1rem",
-                    width: "150px",
-                    height: "150px",
-                    marginBottom: "5rem",
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            {dessertForm.values?.images?.map((file, index) => (
+              <Box
+                key={index}
+                sx={{
+                  position: "relative",
+                  borderRadius: "12px",
+                  margin: "1rem",
+                }}
+              >
+                <img
+                  src={file?.url || URL.createObjectURL(file)}
+                  alt={file?.name || file?.file_name}
+                  style={{
+                    width: "240px",
+                    height: "180px",
+                    display: "block",
                   }}
-                >
-                  <img
-                    src={file?.file?.url || file?.url || URL.createObjectURL(file.file)}
-                    alt={file?.file?.name || file?.file_name}
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      display: "block",
-                    }}
-                  />
-                  <IoCloseCircleSharp
-                    style={{
-                      position: "absolute",
-                      top: "0",
-                      right: "0",
-                      width: "30px",
-                      height: "30px",
-                      color: theme.palette.error.main,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      const newFiles = dessertForm.values?.images?.filter(
-                        (item, i) => i !== index && item
+                />
+                <IoCloseCircleSharp
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    right: "0",
+                    width: "30px",
+                    height: "30px",
+                    color: theme.palette.error.main,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    const newFiles = dessertForm.values?.images?.filter(
+                      (item, i) => i !== index && item
+                    );
+                    dessertForm.setFieldValue("images", newFiles);
+                  }}
+                />
+                <FormControl fullWidth>
+                  <Select
+                    labelId="img-order-label"
+                    value={index}
+                    sx={{ marginTop: "0.5rem" }}
+                    onChange={(e) => {
+                      const newIndex = e.target.value;
+                      const newFiles = dessertForm.values?.images?.map(
+                        (item, i) =>
+                          i === index
+                            ? dessertForm.values?.images[newIndex]
+                            : i === newIndex
+                              ? file
+                              : item
                       );
                       dessertForm.setFieldValue("images", newFiles);
                     }}
-                  />
-                  <FormControl fullWidth>
-                    <Select
-                      labelId="img-order-label"
-                      value={index}
-                      sx={{ marginTop: "0.5rem" }}
-                      onChange={(e) => {
-                        const newIndex = e.target.value;
-                        const newFiles = dessertForm.values?.images?.map(
-                          (item, i) =>
-                            i === index
-                              ? dessertForm.values?.images[newIndex]
-                              : i === newIndex
-                              ? file
-                              : item
-                        );
-                        dessertForm.setFieldValue("images", newFiles);
-                      }}
-                    >
-                      {dessertForm.values?.images?.map((_, i) => (
-                        <MenuItem key={i} value={i}>
-                          {i + 1}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              );
-            })
-          )}
+                  >
+                    {dessertForm.values?.images?.map((_, i) => (
+                      <MenuItem key={i} value={i}>
+                        {i + 1}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            ))}
+          </Box>
         </Grid>
       </Grid>
-      <LoadingButton isLoading={isLoading} fullWidth={false}>
-        {dessert ? "Update" : "Create"}
-      </LoadingButton>
     </Grid>
   );
 }
