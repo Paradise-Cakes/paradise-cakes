@@ -94,39 +94,7 @@ export default function Navbar() {
               }}
             >
               <NavLink title="Home" toLink={"/"} />
-              {!isGetDessertsLoading ? (
-                <NavLink
-                  title="Shop"
-                  toLink={"/shop"}
-                  drawerItems={
-                    [
-                      // {
-                      //   itemName: "cakes",
-                      //   img: _.filter(desserts, { dessert_type: "cake" })[0]
-                      //     .images[0].url,
-                      // },
-                      // {
-                      //   itemName: "cupcakes",
-                      //   img: _.filter(desserts, { dessert_type: "cupcake" })[0]
-                      //     .images[0].url,
-                      // },
-                      // {
-                      //   itemName: "cookies",
-                      //   img: _.filter(desserts, { dessert_type: "cookie" })[0]
-                      //     .images[0].url,
-                      // },
-                      // {
-                      //   itemName: "pies",
-                      //   img: _.filter(desserts, { dessert_type: "pie" })[0]
-                      //     .images[0].url,
-                      // },
-                    ]
-                  }
-                  buttons={[{ title: "Shop All", link: "/shop" }]}
-                />
-              ) : (
-                <NavLink title="Shop" toLink={"/shop"} />
-              )}
+              <NavLink title="Shop" toLink={"/shop"} />
               <NavLink title="Custom Order" toLink={"/custom-order"} />
               <NavLink title="About Me" toLink={"/about-me"} />
             </Box>
@@ -206,16 +174,18 @@ export default function Navbar() {
                   height: "30px",
                 }}
               />
-              <GoDotFill
-                style={{
-                  position: "absolute",
-                  width: "25px",
-                  height: "25px",
-                  color: `${theme.palette.error.main}`,
-                  top: "-4px",
-                  right: "-8px",
-                }}
-              />
+              {cart.length > 0 && (
+                <GoDotFill
+                  style={{
+                    position: "absolute",
+                    width: "25px",
+                    height: "25px",
+                    color: `${theme.palette.error.main}`,
+                    top: "-4px",
+                    right: "-8px",
+                  }}
+                />
+              )}
             </Box>
             {isAdmin && isAuthenticated && (
               <Box onClick={() => protectedAdminNavigate("/admin/home")}>

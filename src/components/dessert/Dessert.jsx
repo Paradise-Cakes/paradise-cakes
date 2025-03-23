@@ -6,7 +6,6 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea, Skeleton, Button, Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDeleteDessert } from "../../hooks/dessert/DessertHook";
-import { maxHeight, maxWidth } from "@mui/system";
 
 export default function Dessert({
   id,
@@ -14,6 +13,7 @@ export default function Dessert({
   description,
   image_url = "https://placehold.co/400",
   inAdminView = false,
+  isLoading = false,
 }) {
   const deleteDessertQuery = useDeleteDessert(id);
   const theme = useTheme();
@@ -35,11 +35,23 @@ export default function Dessert({
       onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}
     >
       <CardActionArea>
-        <CardMedia
-          component="img"
-          image={image_url}
-          sx={{ aspectRatio: "4/3" }}
-        />
+        {isLoading ? (
+          <Skeleton
+            variant="rectangular"
+            animation="wave"
+            sx={{
+              aspectRatio: "4/3",
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        ) : (
+          <CardMedia
+            component="img"
+            image={image_url}
+            sx={{ aspectRatio: "4/3" }}
+          />
+        )}
         <CardContent
           sx={{
             fontWeight: "800",
@@ -48,33 +60,49 @@ export default function Dessert({
             borderTop: `2px solid ${theme.palette.primary.main}`,
           }}
         >
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              fontWeight: "bold",
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {name?.toUpperCase()}
-          </Typography>
-          <Typography
-            variant="body"
-            component="div"
-            sx={{
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              fontWeight: "400",
-            }}
-          >
-            {description}
-          </Typography>
+          {isLoading ? (
+            <Skeleton
+              variant="text"
+              animation="wave"
+              sx={{ fontSize: "1.25rem", width: "80%", mx: "auto" }}
+            />
+          ) : (
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                fontWeight: "bold",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {name?.toUpperCase()}
+            </Typography>
+          )}
+          {isLoading ? (
+            <Skeleton
+              variant="text"
+              animation="wave"
+              sx={{ fontSize: "1rem", width: "60%", mx: "auto" }}
+            />
+          ) : (
+            <Typography
+              variant="body"
+              component="div"
+              sx={{
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                fontWeight: "400",
+              }}
+            >
+              {description}
+            </Typography>
+          )}
         </CardContent>
       </CardActionArea>
-      {inAdminView && (
+      {inAdminView && !isLoading && (
         <Box
           display={"flex"}
           width={"100%"}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useModalStore } from "../store/useModalStore";
@@ -23,5 +23,5 @@ export const ProtectedUserRoute = () => {
 export const ProtectedAdminRoute = () => {
   const { isAuthenticated, isAdmin } = useContext(AuthContext);
 
-  return isAuthenticated && isAdmin ? <Outlet /> : <NotFound />;
+  return isAuthenticated && isAdmin && <Outlet />;
 };
