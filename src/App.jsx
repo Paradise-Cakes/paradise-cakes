@@ -19,8 +19,11 @@ import ForgotPasswordModal from "./components/navigation/auth/ForgotPasswordModa
 import { useModalStore } from "./store/useModalStore";
 import AppRoutes from "./AppRoutes";
 import { CircularProgress } from "@mui/material";
+import UnderConstruction from "./components/extras/UnderConstruction";
 
 const queryClient = new QueryClient();
+const hostname = window.location.hostname;
+const isDev = hostname.startsWith("dev.") || hostname.startsWith("localhost");
 
 function App() {
   const [searchParams] = useSearchParams();
@@ -40,6 +43,10 @@ function App() {
       });
     }
   }, [searchParams, openResetPasswordModal, setResetPasswordParams]);
+
+  if (!isDev) {
+    return <UnderConstruction />;
+  }
 
   return (
     <Container
