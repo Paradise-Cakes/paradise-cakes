@@ -44,8 +44,8 @@ export default function Ingredients({ ingredients }) {
   };
 
   const doIngredientsContainAllergens = () => {
-    return ingredients.some((ingredient) =>
-      allergens.some((allergen) => ingredient.includes(allergen))
+    return ingredients?.some((ingredient) =>
+      allergens?.some((allergen) => ingredient.includes(allergen))
     );
   };
 
@@ -100,7 +100,7 @@ export default function Ingredients({ ingredients }) {
                 This dessert contains:
               </Typography>
               <Box display={"flex"} width="100%" sx={{ flexWrap: "wrap" }}>
-                {ingredients.map(
+                {ingredients?.map(
                   (ingredient, index) =>
                     isIngredientAllergen(ingredient) && (
                       <Box
@@ -122,7 +122,7 @@ export default function Ingredients({ ingredients }) {
             width="100%"
             sx={{ flexWrap: "wrap", marginBottom: "2rem" }}
           >
-            {ingredients.map((ingredient, index) => (
+            {ingredients?.map((ingredient, index) => (
               <Box sx={{ marginRight: "1rem" }} key={ingredient}>
                 {_.upperCase(ingredient)}
                 {index !== ingredients.length - 1 ? "," : ""}

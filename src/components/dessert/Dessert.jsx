@@ -35,7 +35,7 @@ export default function Dessert({
       onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}
     >
       <CardActionArea>
-        {isLoading ? (
+        {isLoading || isDeleteDessertLoading ? (
           <Skeleton
             variant="rectangular"
             animation="wave"
@@ -60,7 +60,7 @@ export default function Dessert({
             borderTop: `2px solid ${theme.palette.primary.main}`,
           }}
         >
-          {isLoading ? (
+          {isLoading || isDeleteDessertLoading ? (
             <Skeleton
               variant="text"
               animation="wave"
@@ -80,7 +80,7 @@ export default function Dessert({
               {name?.toUpperCase()}
             </Typography>
           )}
-          {isLoading ? (
+          {isLoading || isDeleteDessertLoading ? (
             <Skeleton
               variant="text"
               animation="wave"
