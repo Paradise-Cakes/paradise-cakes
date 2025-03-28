@@ -56,6 +56,7 @@ function App() {
         flexDirection: "column",
         justifyContent: "space-between",
         height: "100vh",
+        border: "1px solid red",
       }}
       maxWidth={"false"}
     >

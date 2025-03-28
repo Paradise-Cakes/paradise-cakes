@@ -40,7 +40,7 @@ export default function Dessert({
             variant="rectangular"
             animation="wave"
             sx={{
-              aspectRatio: "4/3",
+              aspectRatio: "1/1",
               width: "100%",
               height: "100%",
             }}
@@ -49,7 +49,7 @@ export default function Dessert({
           <CardMedia
             component="img"
             image={image_url}
-            sx={{ aspectRatio: "4/3" }}
+            sx={{ aspectRatio: "1/1" }}
           />
         )}
         <CardContent

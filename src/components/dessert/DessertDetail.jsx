@@ -98,13 +98,13 @@ export default function DessertDetail() {
       maxWidth={"false"}
     >
       <Grid container justifyContent="center">
-        <Grid item xs={12} sm={9} md={7}>
+        <Grid item lg={7} xs={10}>
           <Carousel
             images={dessert?.images}
             areImagesLoading={isGetDessertLoading}
           />
         </Grid>
-        <Grid item my={6} xs={10} md={7} lg={4}>
+        <Grid item my={6} xs={10} md={7} lg={3}>
           <Box>
             <Typography variant="h4" fontWeight={1000}>
               {dessert?.name.toUpperCase()}
@@ -121,7 +121,6 @@ export default function DessertDetail() {
                 >
                   Details
                 </Button>
-
                 <Button
                   sx={{
                     marginRight: "1.5rem",

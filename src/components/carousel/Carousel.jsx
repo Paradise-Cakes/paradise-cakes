@@ -9,6 +9,7 @@ import {
   Container,
 } from "@mui/material";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
+import { margin } from "@mui/system";
 
 export default function Carousel({ images, areImagesLoading }) {
   const theme = useTheme();
@@ -43,7 +44,7 @@ export default function Carousel({ images, areImagesLoading }) {
                       borderRadius: "12px",
                       margin: "8px",
                       cursor: "pointer",
-                      aspectRatio: "4/3",
+                      aspectRatio: "1/1",
                       width: "100%",
                       border:
                         index === currentImageIndex
@@ -79,7 +80,7 @@ export default function Carousel({ images, areImagesLoading }) {
               src={images[currentImageIndex]?.url}
               style={{
                 borderRadius: "12px",
-                aspectRatio: "4/3",
+                aspectRatio: "1/1",
                 width: "100%",
                 height: "100%",
               }}
@@ -131,103 +132,110 @@ export default function Carousel({ images, areImagesLoading }) {
     );
   };
 
-  /**
-   * 1. Represents how big the container is that wraps the images
-   * 2. Represents how big the container is for each image
-   */
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        border: "2px solid green",
-        marginTop: "3.5rem",
-      }}
-    >
-      <Grid
-        container
-        item
-        xl={2}
-        lg={9}
-        sm={12}
-        sx={{
-          justifyContent: { md: "center" },
-          border: `2px solid red`,
-        }}
-      >
-        {areImagesLoading
-          ? images?.map((i, index) => (
-              // 1
-              <Grid item xs={12} md={9} my={1}>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
+    <Box sx={{ border: "1px solid blue" }} mt={6}>
+      <Grid container spacing={5} justifyContent="center">
+        <Grid item xs={12} md={2} lg={1.5}>
+          {!areImagesLoading
+            ? images?.map((i, index) => (
+                <Box
+                  key={i.image_id}
+                  onClick={() => handleImageChange(index)}
                   sx={{
-                    pt: "100%",
-                    borderRadius: "12px",
-                    aspectRatio: "4/3",
                     width: "100%",
-                    height: "100%",
-                  }}
-                />
-              </Grid>
-            ))
-          : images?.map((i, index) => (
-              // 2
-              <Grid
-                item
-                xs={12}
-                md={9}
-                my={1}
-                onClick={() => handleImageChange(index)}
-              >
-                <img
-                  src={images[index]?.url}
-                  style={{
+                    aspectRatio: "1/1",
+                    position: "relative",
+                    margin: "8px",
                     borderRadius: "12px",
-                    aspectRatio: "4/3",
-                    width: "100%",
-                    height: "100%",
                     cursor: "pointer",
+                    overflow: "hidden",
                     border:
                       index === currentImageIndex
                         ? `5px solid ${theme.palette.error.main}`
-                        : "",
+                        : "1px solid transparent",
                   }}
-                  alt="dessert"
-                />
-              </Grid>
-            ))}
+                >
+                  <img
+                    src={i.url}
+                    alt={`Image ${index}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
+                  />
+                </Box>
+              ))
+            : images?.map((i, index) => (
+                <Box
+                  key={i.url}
+                  sx={{
+                    width: "100%",
+                    aspectRatio: "1/1",
+                    position: "relative",
+                    margin: "8px",
+                    borderRadius: "12px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Skeleton
+                    variant="rectangular"
+                    animation="wave"
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "12px",
+                    }}
+                  />
+                </Box>
+              ))}
+        </Grid>
+        <Grid item xs={12} md={8} lg={10} sx={{ padding: "0 4rem" }}>
+          <Box
+            sx={{
+              width: "100%",
+              aspectRatio: "1/1",
+              position: "relative",
+              margin: "8px",
+              borderRadius: "12px",
+              overflow: "hidden",
+            }}
+          >
+            {!areImagesLoading ? (
+              <img
+                src={images[currentImageIndex]?.url}
+                alt="dessert"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "12px",
+                }}
+              />
+            ) : (
+              <Skeleton
+                variant="rectangular"
+                animation="wave"
+                width="100%"
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "12px",
+                }}
+              />
+            )}
+          </Box>
+        </Grid>
       </Grid>
-      <Grid container item xs={2} sx={{ border: "2px solid blue" }}>
-        {areImagesLoading ? (
-          <Grid item xs={12} md={12} my={1}>
-            <Skeleton
-              variant="rectangular"
-              width="100%"
-              sx={{
-                pt: "100%",
-                borderRadius: "12px",
-                aspectRatio: "4/3",
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          </Grid>
-        ) : (
-          <Grid item>
-            <img
-              src={images[currentImageIndex]?.url}
-              style={{
-                borderRadius: "12px",
-                aspectRatio: "4/3",
-                width: "900px",
-                height: "600px",
-              }}
-              alt="dessert"
-            />
-          </Grid>
-        )}
-      </Grid>
-    </Container>
+    </Box>
   );
 }
