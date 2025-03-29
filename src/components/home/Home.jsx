@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
 import { Box, Container } from "@mui/system";
-import { Button, useTheme, CircularProgress } from "@mui/material";
+import { Button, useTheme, CircularProgress, Typography } from "@mui/material";
 import { GiFlour } from "react-icons/gi";
 import { MdDeliveryDining } from "react-icons/md";
 import { BsCake2 } from "react-icons/bs";
@@ -31,9 +31,9 @@ export default function Home() {
         <Grid className="home-grid-item-2" item container xl={4}>
           <Box className="home-grid-item-2-box">
             <h1 className="home-hero-heading">Desserts Made from Scratch</h1>
-            <h4 className="home-hero-subheading">
+            <Typography sx={{ fontSize: "1.25rem" }}>
               The perfect dessert everytime, made for you. Place an order today!
-            </h4>
+            </Typography>
             <Button
               className="home-hero-cta-button"
               color="primary"
@@ -54,28 +54,28 @@ export default function Home() {
           <Box className="home-feature-box">
             <GiFlour style={{ width: "50px", height: "50px" }} />
             <h3 className="home-feature-title">Homemade</h3>
-            <h4 className="home-feature-description">
+            <Typography sx={{ fontSize: "1rem", fontFamily: "Montserrat" }}>
               All my desserts are made from scratch with high quality
               ingredients.
-            </h4>
+            </Typography>
           </Box>
         </Grid>
         <Grid item>
           <Box className="home-feature-box">
             <MdDeliveryDining style={{ width: "50px", height: "50px" }} />
             <h3 className="home-feature-title">Local Delivery</h3>
-            <h4 className="home-feature-description">
+            <Typography sx={{ fontSize: "1rem", fontFamily: "Montserrat" }}>
               Delivery is available in the greater Austin, TX area.
-            </h4>
+            </Typography>
           </Box>
         </Grid>
         <Grid item>
           <Box className="home-feature-box">
             <BsCake2 style={{ width: "50px", height: "50px" }} />
             <h3 className="home-feature-title">Customized Desserts</h3>
-            <h4 className="home-feature-description">
+            <Typography sx={{ fontSize: "1rem", fontFamily: "Montserrat" }}>
               Personalize your cake to suit any occasion or preference!
-            </h4>
+            </Typography>
           </Box>
         </Grid>
       </Grid>

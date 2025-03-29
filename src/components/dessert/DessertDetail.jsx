@@ -125,9 +125,9 @@ export default function DessertDetail() {
                   Ingredients
                 </Button>
                 <Ingredients ingredients={dessert?.ingredients} />
-                <h4 sx={{ padding: "2rem 0", fontSize: "1rem" }}>
+                <Typography sx={{ padding: "2rem 0", fontSize: "1rem" }}>
                   {dessert?.description}
-                </h4>
+                </Typography>
               </Box>
             </Box>
             <Typography

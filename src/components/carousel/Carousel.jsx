@@ -204,7 +204,7 @@ export default function Carousel({ images, areImagesLoading }) {
               width: "100%",
               aspectRatio: "1/1",
               position: "relative",
-              margin: "8px",
+              margin: "8px auto",
               borderRadius: "12px",
               overflow: "hidden",
             }}
@@ -244,7 +244,7 @@ export default function Carousel({ images, areImagesLoading }) {
                     position: "absolute",
                     top: "50%",
                     right: "0px",
-                    color: theme.palette.primary.main,
+                    color: "black",
                     cursor: "pointer",
                   }}
                   onClick={() => {
@@ -258,7 +258,7 @@ export default function Carousel({ images, areImagesLoading }) {
                     position: "absolute",
                     top: "50%",
                     left: "0px",
-                    color: theme.palette.primary.main,
+                    color: "black",
                     cursor: "pointer",
                   }}
                   onClick={() => {
