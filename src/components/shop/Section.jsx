@@ -3,7 +3,6 @@ import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Dessert from "../dessert/Dessert";
 import { Container } from "@mui/system";
-import { CircularProgress, Box } from "@mui/material";
 
 export default function Section({
   title,
@@ -15,7 +14,7 @@ export default function Section({
     <Container
       maxWidth="false"
       sx={{
-        margin: "4rem 0 6rem 0",
+        margin: "2rem 0 6rem 0",
       }}
     >
       <Typography
@@ -24,30 +23,15 @@ export default function Section({
       >
         {title.toUpperCase()}
       </Typography>
-      <Grid
-        container
-        sx={{
-          paddingLeft: "3rem",
-          paddingRight: "3rem",
-        }}
-      >
-        <Grid
-          item
-          container
-          xl={6.5}
-          lg={9}
-          sm={12}
-          spacing={2}
-          sx={{ display: "flex", justifyContent: "center" }}
-        >
+      <Grid container>
+        <Grid item container spacing={2}>
           {items?.map((item) => (
             <Grid
               key={item?.dessert_id}
               item
               sx={{ textAlign: "center" }}
               xs={12}
-              md={5}
-              justifyContent={"center"}
+              md={4}
             >
               <Dessert
                 id={item?.dessert_id}
