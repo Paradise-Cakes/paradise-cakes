@@ -91,12 +91,7 @@ export default function DessertDetail() {
   }, [dessert]);
 
   return (
-    <Container
-      sx={{
-        maxWidth: "1800px",
-      }}
-      maxWidth={"false"}
-    >
+    <Container>
       <Grid container justifyContent="center">
         <Grid item lg={7} xs={10}>
           <Carousel

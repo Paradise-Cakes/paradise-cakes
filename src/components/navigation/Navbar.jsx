@@ -41,6 +41,8 @@ export default function Navbar() {
       position="fixed"
       sx={{
         backgroundColor: "#9CAFAF",
+        display: "block",
+        marginBottom: { xs: "0px", md: "20rem" },
       }}
     >
       <AnimatedBanner
@@ -58,7 +60,6 @@ export default function Navbar() {
         }}
       >
         <Toolbar
-          disableGutters
           sx={{
             width: "100%",
             display: "block",

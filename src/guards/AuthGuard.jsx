@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useModalStore } from "../store/useModalStore";
 import Home from "../components/home/Home";
-import NotFound from "../components/NotFound";
 
 export const ProtectedUserRoute = () => {
   const { isAuthenticated } = useContext(AuthContext);

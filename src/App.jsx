@@ -20,6 +20,7 @@ import { useModalStore } from "./store/useModalStore";
 import AppRoutes from "./AppRoutes";
 import { CircularProgress } from "@mui/material";
 import UnderConstruction from "./components/extras/UnderConstruction";
+import { Box } from "@mui/material";
 
 const queryClient = new QueryClient();
 const hostname = window.location.hostname;
@@ -49,42 +50,54 @@ function App() {
   }
 
   return (
-    <Container
-      sx={{
-        marginTop: "11rem",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        height: "100vh",
-        border: "1px solid red",
-      }}
-      maxWidth={"false"}
-    >
-      {isAppReady ? (
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <DrawerProvider drawerOpen={false}>
-              <IngredientsProvider ingredientsOpen={false}>
-                <Navbar />
-                <NavSideDrawer />
-                <SignInModal />
-                <ConfirmationCodeModal />
-                <LoggedInModal />
-                <SignUpModal />
-                <ForgotPasswordModal />
-                <SentResetPasswordEmailModal />
-                <ResetPasswordModal />
-                <Cart />
-                <AppRoutes />
-                <Footer />
-              </IngredientsProvider>
-            </DrawerProvider>
-          </AuthProvider>
-        </QueryClientProvider>
-      ) : (
-        <CircularProgress sx={{ margin: "0 auto" }} />
-      )}
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <DrawerProvider drawerOpen={false}>
+          <IngredientsProvider ingredientsOpen={false}>
+            {/* Flex container that holds the whole app layout */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh", // full screen height
+              }}
+            >
+              <Navbar />
+
+              {/* Main content (grows to fill space) */}
+              <Box
+                component="main"
+                sx={{
+                  flex: 1,
+                  mt: { xs: "8rem", md: "12rem" }, // pushes down from fixed navbar
+                  px: 2,
+                }}
+              >
+                {isAppReady ? (
+                  <>
+                    <NavSideDrawer />
+                    <SignInModal />
+                    <ConfirmationCodeModal />
+                    <LoggedInModal />
+                    <SignUpModal />
+                    <ForgotPasswordModal />
+                    <SentResetPasswordEmailModal />
+                    <ResetPasswordModal />
+                    <Cart />
+                    <AppRoutes />
+                  </>
+                ) : (
+                  <CircularProgress sx={{ margin: "0 auto" }} />
+                )}
+              </Box>
+
+              {/* Footer sticks to bottom if not enough content */}
+              <Footer />
+            </Box>
+          </IngredientsProvider>
+        </DrawerProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

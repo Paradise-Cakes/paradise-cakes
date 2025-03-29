@@ -2,38 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import _ from "lodash";
-import { border, Box, Container } from "@mui/system";
+import { Box, Container } from "@mui/system";
 import { Button, useTheme, CircularProgress } from "@mui/material";
-import { FaRegArrowAltCircleRight } from "react-icons/fa";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Dessert from "../dessert/Dessert";
 import { GiFlour } from "react-icons/gi";
 import { MdDeliveryDining } from "react-icons/md";
 import { BsCake2 } from "react-icons/bs";
-import { FaAngleRight } from "react-icons/fa";
-import { FaAngleLeft } from "react-icons/fa";
-
-function CustomTabPanel(props) {
-  const { children, value, dessertType, ...other } = props;
-
-  return (
-    <Container
-      sx={{
-        marginTop: "3.5rem",
-        marginBottom: "3.5rem",
-        display: value === dessertType ? "block" : "none",
-      }}
-      maxWidth="false"
-      role="tabpanel"
-      id={`simple-tabpanel-${dessertType}`}
-      aria-labelledby={`simple-tab-${dessertType}`}
-      {...other}
-    >
-      {value === dessertType && children}
-    </Container>
-  );
-}
+import { HomeContainer } from "./HomeStyles";
 
 export default function Home() {
   const getDessertsQuery = useGetDesserts();
@@ -136,341 +110,67 @@ export default function Home() {
   }, []);
 
   return (
-    <Container maxWidth="false">
-      <Box>
-        <Grid
-          container
-          sx={{
-            flexWrap: { md: "wrap", lg: "nowrap" },
-            justifyContent: "space-evenly",
-          }}
-        >
-          <Grid
-            item
-            container
-            sx={{
-              marginLeft: "1rem",
-              marginRight: "1rem",
-            }}
-            xl={8}
-            display={"flex"}
-            flexWrap={"nowrap"}
-          >
-            <Grid item sx={{ marginRight: "1rem" }}>
-              <img
-                src={"https://placehold.co/1200x1600"}
-                style={{
-                  borderRadius: "1rem",
-                  width: "100%",
-                }}
-              />
-            </Grid>
-            <Grid item>
-              <img
-                src={"https://placehold.co/1200x1600"}
-                style={{
-                  borderRadius: "1rem",
-                  width: "100%",
-                }}
-              />
-            </Grid>
+    <HomeContainer maxWidth={false}>
+      <Grid className="home-grid-container-1" container>
+        <Grid className="home-grid-item-1" item container xl={8}>
+          <Grid className="home-grid-item-img-1" item>
+            <img src={"https://placehold.co/1200x1600"} />
           </Grid>
-          <Grid
-            item
-            container
-            xl={4}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Box>
-              <h1
-                style={{
-                  fontSize: "3rem",
-                  marginBottom: "0",
-                  textAlign: "center",
-                  marginRight: "1rem",
-                }}
-              >
-                Desserts Made from Scratch
-              </h1>
-              <h4
-                style={{
-                  marginTop: ".5rem",
-                  fontSize: "1.25rem",
-                  textAlign: "center",
-                  marginLeft: "1rem",
-                  marginRight: "1rem",
-                }}
-              >
-                The perfect dessert everytime, made for you. Place an order
-                today!
-              </h4>
-              <Button
-                color="primary"
-                variant="contained"
-                sx={{
-                  borderRadius: "1rem",
-                  fontSize: "1.25rem",
-                  display: "block",
-                  margin: "0 auto",
-                  width: "10rem",
-                }}
-              >
-                Order Now
-              </Button>
-            </Box>
+          <Grid className="home-grid-item-img-2" item>
+            <img src={"https://placehold.co/1200x1600"} />
           </Grid>
         </Grid>
-      </Box>
-      <Box
-        sx={{
-          padding: "4rem",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "2.25rem",
-            marginBottom: "2.5rem",
-          }}
-        >
-          Why order from paradise cakes?
-        </h2>
-        <Grid container justifyContent={"space-evenly"}>
-          <Grid item>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                maxWidth: "250px",
-              }}
-            >
-              <GiFlour style={{ width: "50px", height: "50px" }} />
-              <h3>Homemade</h3>
-              <h4 style={{ textAlign: "center", marginTop: "0" }}>
-                All my desserts are made from scratch with high quality
-                ingredients.
-              </h4>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                maxWidth: "250px",
-              }}
-            >
-              <MdDeliveryDining style={{ width: "50px", height: "50px" }} />
-              <h3>Local Delivery</h3>
-              <h4 style={{ textAlign: "center", marginTop: "0" }}>
-                Delivery is available in the greater Austin, TX area.
-              </h4>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                maxWidth: "250px",
-              }}
-            >
-              <BsCake2 style={{ width: "50px", height: "50px" }} />
-              <h3>Customized Desserts</h3>
-              <h4 style={{ textAlign: "center", marginTop: "0" }}>
-                Personalize your cake to suit any occasion or preference!
-              </h4>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box sx={{ position: "relative" }}>
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "2.25rem",
-            marginTop: "5rem",
-            marginBottom: "2.5rem",
-          }}
-        >
-          Some of my work
-        </h2>
-        <Box
-          sx={{
-            display: "flex",
-            overflowX: "auto",
-            paddingBottom: "1rem",
-          }}
-          ref={scrollContainerRef}
-        >
-          {isRightButtonVisible && (
+        <Grid className="home-grid-item-2" item container xl={4}>
+          <Box className="home-grid-item-2-box">
+            <h1 className="home-hero-heading">Desserts Made from Scratch</h1>
+            <h4 className="home-hero-subheading">
+              The perfect dessert everytime, made for you. Place an order today!
+            </h4>
             <Button
-              variant="contained"
+              className="home-hero-cta-button"
               color="primary"
-              sx={{
-                position: "absolute",
-                opacity: "0.8",
-                right: "0",
-                top: "40%",
-              }}
-              onClick={handleScrollRight}
-            >
-              <FaAngleRight style={{ width: "50px", height: "50px" }} />
-            </Button>
-          )}
-          {isLeftButtonVisible && (
-            <Button
               variant="contained"
-              color="primary"
-              sx={{
-                position: "absolute",
-                opacity: "0.8",
-                left: "0",
-                top: "40%",
-              }}
-              onClick={handleScrollLeft}
             >
-              <FaAngleLeft style={{ width: "50px", height: "50px" }} />
+              Order Now
             </Button>
-          )}
-        </Box>
-      </Box>
-      <Box>
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "2.25rem",
-            marginTop: "5rem",
-            marginBottom: "2.5rem",
-          }}
-        >
-          Shop my bestsellers
-        </h2>
-        <Grid
-          container
-          display={"flex"}
-          justifyContent={"space-evenly"}
-          alignItems={"center"}
-          spacing={3}
-          width={"100%"}
-        >
-          {_.map(_.shuffle(_.slice(desserts, 0, 3)), (d) => (
-            <Grid key={d.dessert_id} item xs={8} sm={3} md={3} lg={3} xl={3}>
-              <Dessert
-                id={d.dessert_id}
-                name={d.name}
-                description={d.description}
-                image_url={d.images[0]?.url}
-              />
-            </Grid>
-          ))}
+          </Box>
         </Grid>
-        <Box
-          display={"flex"}
-          justifyContent={"space-evenly"}
-          alignItems={"center"}
-        ></Box>
-      </Box>
-      {/* <h2 style={{ textAlign: "center", marginBottom: "-1rem" }}>
-        The perfect dessert every time, made for you.
-      </h2>
-      <h2 style={{ textAlign: "center" }}>Place an order today!</h2> */}
-      {/* <Button
-        id="order-now-btn"
-        color="primary"
-        variant="contained"
-        sx={{
-          margin: "0 auto",
-          display: "block",
-          fontSize: "1rem",
-          textAlign: "left",
-          width: "8rem",
-          borderRadius: "2rem",
-        }}
+      </Grid>
+      <h2 className="home-section-title">Why order from paradise cakes?</h2>
+      <Grid
+        className="home-grid-container-2"
+        container
+        justifyContent={"space-evenly"}
       >
-        <Box display="flex" justifyContent={"space-between"}>
-          <span style={{ color: "white" }}>Order now</span>
-          <FaRegArrowAltCircleRight
-            id="order-now-arrow"
-            style={{
-              width: "1.25rem",
-              height: "1.25rem",
-              color: "white",
-              position: "relative",
-              top: "0.2rem",
-              right: "0.5rem",
-            }}
-          />
-        </Box>
-      </Button> */}
-      {/* <Box>
-        <h2 style={{ textAlign: "center" }}>What I make</h2>
-      </Box> */}
-      {/* <Box>
-        <Tabs
-          value={value}
-          onChange={handleTabChange}
-          centered
-          sx={{
-            ".MuiTabs-indicator": {
-              display: "none", // Remove the underline
-            },
-          }}
-        >
-          {_.map(
-            _.sortBy(_.uniqBy(desserts, "dessert_type"), (d) => d.dessert_type),
-            (dessert) => (
-              <Tab
-                key={dessert.dessert_type}
-                label={dessert.dessert_type + "s"}
-                value={dessert.dessert_type}
-                sx={{
-                  fontSize: "1rem",
-                  border: `1px solid ${theme.palette.primary.main}`,
-                  borderRadius: "1rem",
-                  margin: "0 1rem",
-                  "&.Mui-selected": {
-                    color: "white",
-                    backgroundColor: theme.palette.primary.main,
-                  },
-                }}
-              />
-            )
-          )}
-        </Tabs>
-      </Box> */}
-      {/* {isGetDessertsLoading ? (
-        <CircularProgress sx={{ display: "block", margin: "5rem auto" }} />
-      ) : (
-        <Box>
-          {_.map(_.uniqBy(desserts, "dessert_type"), (dessert) => (
-            <CustomTabPanel value={value} dessertType={dessert.dessert_type}>
-              <Grid container spacing={10} justifyContent={"center"}>
-                {_.filter(desserts, { dessert_type: value })?.map((d) => (
-                  <Grid key={d?.dessert_id} item xl={3}>
-                    <Dessert
-                      id={d?.dessert_id}
-                      name={d?.name}
-                      description={d?.description}
-                      image_url={d?.images[0]?.url}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </CustomTabPanel>
-          ))}
-        </Box>
-      )} */}
-    </Container>
+        <Grid item>
+          <Box className="home-feature-box">
+            <GiFlour style={{ width: "50px", height: "50px" }} />
+            <h3 className="home-feature-title">Homemade</h3>
+            <h4 className="home-feature-description">
+              All my desserts are made from scratch with high quality
+              ingredients.
+            </h4>
+          </Box>
+        </Grid>
+        <Grid item>
+          <Box className="home-feature-box">
+            <MdDeliveryDining style={{ width: "50px", height: "50px" }} />
+            <h3 className="home-feature-title">Local Delivery</h3>
+            <h4 className="home-feature-description">
+              Delivery is available in the greater Austin, TX area.
+            </h4>
+          </Box>
+        </Grid>
+        <Grid item>
+          <Box className="home-feature-box">
+            <BsCake2 style={{ width: "50px", height: "50px" }} />
+            <h3 className="home-feature-title">Customized Desserts</h3>
+            <h4 className="home-feature-description">
+              Personalize your cake to suit any occasion or preference!
+            </h4>
+          </Box>
+        </Grid>
+      </Grid>
+    </HomeContainer>
   );
 }

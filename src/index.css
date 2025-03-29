@@ -14,12 +14,6 @@ input, textarea, select, li {
   font-family: "Montserrat" !important; 
 }
 
-.MuiContainer-root,
-.MuiContainer-maxWidthFalse,
-.css-udn1tz-MuiContainer-root {
-  padding: 0 !important;
-}
-
 .MuiToggleButton-root {
   border: 1px solid #555555 !important;
 }

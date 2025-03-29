@@ -27,8 +27,8 @@ export default function Shop() {
   }, [location]);
 
   return (
-    <Box>
-      <Box
+    <Box sx={{ border: "2px solid green" }}>
+      {/* <Box
         sx={{
           backgroundColor: theme.palette.warning.main,
           padding: "1rem 0",
@@ -131,7 +131,7 @@ export default function Shop() {
         </Box>
       ) : (
         <CircularProgress />
-      )}
+      )} */}
     </Box>
   );
 }
