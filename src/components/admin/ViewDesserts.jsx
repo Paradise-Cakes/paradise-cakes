@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -7,10 +7,11 @@ import {
   Button,
   Breadcrumbs,
   Link as MuiLink,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import Dessert from "../dessert/Dessert";
-import { CircularProgress } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function ViewDesserts() {
@@ -20,8 +21,22 @@ export default function ViewDesserts() {
     isLoading: isGetDessertsLoading,
     isSuccess: isGetDessertsSuccess,
   } = getDessertsQuery;
+
+  const [currentTab, setCurrentTab] = useState(0);
+  const dessertCategories = ["all", "cake", "cupcake", "cookie", "pie"];
+  const filteredDesserts =
+    currentTab === 0
+      ? desserts
+      : desserts?.filter(
+          (d) => d.dessert_type?.toLowerCase() === dessertCategories[currentTab]
+        );
+
+  const handleTabChange = (event, newValue) => {
+    setCurrentTab(newValue);
+  };
+
   return (
-    <Container maxWidth="lg">
+    <Container>
       <Box
         display="flex"
         flexDirection="column"
@@ -56,31 +71,39 @@ export default function ViewDesserts() {
         <Button
           color="success"
           variant="contained"
-          sx={{ display: "block", margin: "0 auto", width: "fit-content" }}
+          sx={{
+            display: "block",
+            margin: "0 auto",
+            width: "fit-content",
+            marginBottom: "2rem",
+          }}
           component={RouterLink}
           to="/admin/desserts/create"
         >
           New Dessert
         </Button>
-        <Grid
-          item
-          container
-          xl={6.5}
-          lg={9}
-          sm={12}
-          sx={{
-            justifyContent: { md: "center", lg: "flex-start" },
-            marginTop: { sm: "0.25rem", lg: "0" },
-          }}
-          spacing={5}
-        >
-          {desserts?.map((dessert) => (
+        <Box>
+          <Tabs
+            value={currentTab}
+            onChange={handleTabChange}
+            sx={{ marginBottom: "2rem" }}
+            indicatorColor="primary"
+          >
+            <Tab label="All" sx={{ fontSize: "1rem" }} />
+            <Tab label="Cakes" sx={{ fontSize: "1rem" }} />
+            <Tab label="Cupcakes" sx={{ fontSize: "1rem" }} />
+            <Tab label="Cookies" sx={{ fontSize: "1rem" }} />
+            <Tab label="Pies" sx={{ fontSize: "1rem" }} />
+          </Tabs>
+        </Box>
+        <Grid container spacing={5}>
+          {filteredDesserts?.map((dessert) => (
             <Grid
               key={dessert?.dessert_id}
               item
               sx={{ textAlign: "center" }}
               xs={12}
-              md={6}
+              md={4}
               justifyContent={"center"}
             >
               <Dessert
