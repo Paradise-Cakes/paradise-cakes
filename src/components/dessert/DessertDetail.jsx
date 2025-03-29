@@ -91,19 +91,17 @@ export default function DessertDetail() {
   }, [dessert]);
 
   return (
-    <Container>
-      <Grid container justifyContent="center">
-        <Grid item lg={7} xs={10}>
+    <Container maxWidth="false">
+      <Grid container>
+        <Grid item lg={6} xs={12} sx={{ marginRight: { xs: "0", lg: "5rem" } }}>
           <Carousel
             images={dessert?.images}
             areImagesLoading={isGetDessertLoading}
           />
         </Grid>
-        <Grid item my={6} xs={10} md={7} lg={3}>
-          <Box>
-            <Typography variant="h4" fontWeight={1000}>
-              {dessert?.name.toUpperCase()}
-            </Typography>
+        <Grid item my={6} xs={12} lg={5}>
+          <Box px={3}>
+            <Typography variant="h4">{dessert?.name.toUpperCase()}</Typography>
             <Box display={"flex"} justifyContent="space-between" width={"100%"}>
               <Box>
                 <Button
@@ -111,7 +109,6 @@ export default function DessertDetail() {
                     marginRight: "1.5rem",
                     borderBottom: `2px solid ${theme.palette.primary.main}`,
                     borderRadius: 0,
-                    fontWeight: 800,
                   }}
                 >
                   Details
@@ -122,7 +119,6 @@ export default function DessertDetail() {
                     borderBottom: `2px solid blue`,
                     borderRadius: 0,
                     color: "blue",
-                    fontWeight: 800,
                   }}
                   onClick={() => setIngredientsOpen(true)}
                 >
@@ -185,26 +181,21 @@ export default function DessertDetail() {
                 ))}
               </ToggleButtonGroup>
             )}
-          </Box>
-          <Box>
-            <Grid
-              container
-              alignItems={"center"}
-              justifyContent={"space-between"}
+            <Button
+              variant="contained"
+              onClick={handleAddToCart}
+              sx={{
+                height: "80px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "250px",
+                fontSize: "1.25rem",
+                marginTop: "2rem",
+              }}
             >
-              <Grid item xs={2}>
-                <QuantityButton quantity={quantity} setQuantity={setQuantity} />
-              </Grid>
-              <Grid item xs={7}>
-                <Button
-                  variant="contained"
-                  sx={{ width: "100%", fontWeight: 800 }}
-                  onClick={handleAddToCart}
-                >
-                  Add to Cart - ${price}
-                </Button>
-              </Grid>
-            </Grid>
+              Add to Cart - ${price}
+            </Button>
           </Box>
         </Grid>
       </Grid>

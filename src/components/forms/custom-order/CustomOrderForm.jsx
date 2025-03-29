@@ -34,16 +34,10 @@ export default function CustomOrderForm() {
   return (
     <Container>
       <Box px={8} sx={{ paddingTop: { xs: "1rem" } }}>
-        <Typography
-          variant="h4"
-          sx={{ textAlign: { xs: "center", sm: "start" } }}
-        >
+        <Typography variant="h4" sx={{ textAlign: { xs: "center" } }}>
           Custom Order
         </Typography>
-        <Typography
-          variant="h6"
-          sx={{ textAlign: { xs: "center", sm: "start" } }}
-        >
+        <Typography variant="h6" sx={{ textAlign: { xs: "center" } }}>
           <i>
             Please fill out the form below to place a custom order. Please allow
             2-3 days for a response.
@@ -51,7 +45,7 @@ export default function CustomOrderForm() {
         </Typography>
         <Box
           component={"form"}
-          sx={{ maxWidth: "500px" }}
+          sx={{ maxWidth: "500px", margin: "0 auto" }}
           onSubmit={formik.handleSubmit}
         >
           <TextField
@@ -119,7 +113,6 @@ export default function CustomOrderForm() {
             color="success"
             type="submit"
             sx={{
-              fontWeight: 800,
               marginTop: "1rem",
               width: { xs: "100%", sm: "fit-content" },
               color: "white",

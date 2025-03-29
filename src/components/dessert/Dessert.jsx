@@ -54,7 +54,6 @@ export default function Dessert({
         )}
         <CardContent
           sx={{
-            fontWeight: "800",
             fontSize: "1rem",
             textAlign: "center",
             borderTop: `2px solid ${theme.palette.primary.main}`,
@@ -71,7 +70,6 @@ export default function Dessert({
               variant="h6"
               component="div"
               sx={{
-                fontWeight: "bold",
                 textOverflow: "ellipsis",
                 overflow: "hidden",
                 whiteSpace: "nowrap",
@@ -94,7 +92,6 @@ export default function Dessert({
                 textOverflow: "ellipsis",
                 overflow: "hidden",
                 whiteSpace: "nowrap",
-                fontWeight: "400",
               }}
             >
               {description}

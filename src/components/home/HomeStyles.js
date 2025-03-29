@@ -95,6 +95,5 @@ export const HomeContainer = styled(Container)(({ theme }) => ({
   ".home-feature-description": {
     marginTop: 0,
     fontSize: "1rem",
-    fontWeight: 400,
   },
 }));

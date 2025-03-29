@@ -73,7 +73,7 @@ export default function Cart() {
             }}
             onClick={() => closeCart()}
           />
-          <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+          <Typography variant="h6" fontSize="1rem">
             YOUR ORDER
           </Typography>
           <Box
@@ -185,7 +185,6 @@ export default function Cart() {
                   borderRadius: "1rem",
                   padding: "10px",
                   marginTop: "1rem",
-                  fontWeight: "800",
                 }}
               >
                 ENTER ZIP CODE
@@ -198,7 +197,6 @@ export default function Cart() {
           <Box>
             <Typography
               variant="h6"
-              fontWeight={1000}
               fontSize="1rem"
               sx={{ textAlign: "center" }}
             >
@@ -211,7 +209,6 @@ export default function Cart() {
                 margin: "16px auto",
                 display: "block",
                 width: "fit-content",
-                fontWeight: "800",
               }}
               onClick={() => {
                 navigate("/shop");

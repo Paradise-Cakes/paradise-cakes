@@ -55,7 +55,7 @@ export default function LoggedInModal() {
           }}
           onClick={toggleLoggedInModal(false)}
         />
-        <Typography variant="h5" fontWeight={1000} textAlign={"center"}>
+        <Typography variant="h5" textAlign={"center"}>
           YOU'RE LOGGED IN!
         </Typography>
         <Typography variant="body1" textAlign={"center"}>
@@ -69,7 +69,6 @@ export default function LoggedInModal() {
           sx={{
             marginTop: "1rem",
             height: "45px",
-            fontWeight: "800",
           }}
           onClick={toggleLoggedInModal(false)}
         >
@@ -87,7 +86,6 @@ export default function LoggedInModal() {
             marginTop: "1rem",
             height: "45px",
             backgroundColor: "white",
-            fontWeight: "800",
             "&:hover": {
               backgroundColor: "white",
               color: theme.palette.primary.main,

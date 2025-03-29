@@ -1,13 +1,10 @@
 h1,
 h2,
-h3 {
-  font-family: "Bebas Neue";
-}
-
+h3,
 h4,
 h5,
 h6 {
-  font-family: "Montserrat";
+  font-family: "Bebas Neue";
 }
 
 input, textarea, select, li {

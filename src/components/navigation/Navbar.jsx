@@ -97,7 +97,7 @@ export default function Navbar() {
               <NavLink title="Home" toLink={"/"} />
               <NavLink title="Shop" toLink={"/shop"} />
               <NavLink title="Custom Order" toLink={"/custom-order"} />
-              <NavLink title="About Me" toLink={"/about-me"} />
+              {/* <NavLink title="About Me" toLink={"/about-me"} /> */}
             </Box>
           </Hidden>
           <Hidden mdUp implementation="css">

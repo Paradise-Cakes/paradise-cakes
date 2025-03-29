@@ -69,8 +69,7 @@ function App() {
                 component="main"
                 sx={{
                   flex: 1,
-                  mt: { xs: "8rem", md: "12rem" }, // pushes down from fixed navbar
-                  px: 2,
+                  mt: { xs: "8rem", md: "12rem" },
                 }}
               >
                 {isAppReady ? (

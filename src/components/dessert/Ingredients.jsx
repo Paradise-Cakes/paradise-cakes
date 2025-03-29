@@ -96,7 +96,7 @@ export default function Ingredients({ ingredients }) {
           />
           {doIngredientsContainAllergens() && (
             <Box marginBottom={"2rem"}>
-              <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+              <Typography variant="h6" fontSize="1rem">
                 This dessert contains:
               </Typography>
               <Box display={"flex"} width="100%" sx={{ flexWrap: "wrap" }}>
@@ -114,7 +114,7 @@ export default function Ingredients({ ingredients }) {
               </Box>
             </Box>
           )}
-          <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+          <Typography variant="h6" fontSize="1rem">
             Ingredients:
           </Typography>
           <Box
@@ -131,7 +131,6 @@ export default function Ingredients({ ingredients }) {
           </Box>
           <Typography
             variant="h6"
-            fontWeight={1000}
             fontSize="1rem"
             sx={{ marginBottom: "1rem", textAlign: "center" }}
           >
@@ -140,7 +139,7 @@ export default function Ingredients({ ingredients }) {
           <Button
             color="info"
             variant="contained"
-            sx={{ width: "fit-content", margin: "0 auto", fontWeight: 800 }}
+            sx={{ width: "fit-content", margin: "0 auto" }}
             component={Link}
             to="/custom-order"
           >

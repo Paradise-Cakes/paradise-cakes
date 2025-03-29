@@ -51,7 +51,7 @@ export default function CartItem({
         />
       </Box>
       <Box>
-        <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+        <Typography variant="h6" fontSize="1rem">
           {name} - {size}
         </Typography>
         <Typography variant="h6" fontSize="1rem">

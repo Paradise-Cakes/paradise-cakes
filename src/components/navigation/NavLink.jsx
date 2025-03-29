@@ -12,7 +12,6 @@ export default function NavLink({ title, toLink }) {
         position: "static",
         width: "fit-content",
         padding: "6px",
-        fontWeight: "800",
         fontSize: "1rem",
       }}
       component={Link}

@@ -13,9 +13,17 @@ export default function Section({
 }) {
   return (
     <Container
-      sx={{ marginBottom: "8rem", marginTop: "3rem" }}
       maxWidth="false"
+      sx={{
+        margin: "4rem 0 6rem 0",
+      }}
     >
+      <Typography
+        variant="h3"
+        sx={{ textAlign: "center", marginBottom: "2rem" }}
+      >
+        {title.toUpperCase()}
+      </Typography>
       <Grid
         container
         sx={{
@@ -23,73 +31,34 @@ export default function Section({
           paddingRight: "3rem",
         }}
       >
-        <Grid item md={12} lg={3}>
-          <Typography
-            variant="h4"
-            fontWeight={1000}
-            sx={{
-              paddingBottom: "8px",
-              paddingTop: "24px",
-              textAlign: { xs: "center", lg: "left" },
-            }}
-          >
-            {title.toUpperCase()}
-          </Typography>
-          <Typography
-            sx={{
-              textAlign: { xs: "center", md: "center", lg: "left" },
-              marginRight: "1.5rem",
-              marginBottom: { xs: "1.5rem", md: "0" },
-              fontSize: "1.25rem",
-              fontFamily: "Montserrat",
-            }}
-          >
-            {description}
-          </Typography>
+        <Grid
+          item
+          container
+          xl={6.5}
+          lg={9}
+          sm={12}
+          spacing={2}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          {items?.map((item) => (
+            <Grid
+              key={item?.dessert_id}
+              item
+              sx={{ textAlign: "center" }}
+              xs={12}
+              md={5}
+              justifyContent={"center"}
+            >
+              <Dessert
+                id={item?.dessert_id}
+                name={item?.name}
+                description={item?.description}
+                image_url={item?.images[0]?.url}
+                isLoading={isSectionLoading}
+              />
+            </Grid>
+          ))}
         </Grid>
-        {isSectionLoading ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
-              alignItems: "center",
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        ) : (
-          <Grid
-            item
-            container
-            xl={6.5}
-            lg={9}
-            sm={12}
-            sx={{
-              justifyContent: { md: "center", lg: "flex-start" },
-              marginTop: { sm: "0.25rem", lg: "0" },
-            }}
-            spacing={5}
-          >
-            {items?.map((item) => (
-              <Grid
-                key={item?.dessert_id}
-                item
-                sx={{ textAlign: "center" }}
-                xs={12}
-                md={5}
-                justifyContent={"center"}
-              >
-                <Dessert
-                  id={item?.dessert_id}
-                  name={item?.name}
-                  description={item?.description}
-                  image_url={item?.images[0]?.url}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        )}
       </Grid>
     </Container>
   );

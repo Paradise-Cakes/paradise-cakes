@@ -58,12 +58,18 @@ export default function QuantityButton({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "fit-content",
       }}
       my={2}
     >
       <Button onClick={handleDecrement} startIcon={<MdRemove />} />
-      <span>{quantity}</span>
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        sx={{ width: "64px", height: "32px" }}
+      >
+        {quantity}
+      </Box>
       <Button onClick={handleIncrement} startIcon={<MdAdd />} />
     </Box>
   );

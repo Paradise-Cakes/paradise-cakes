@@ -61,7 +61,7 @@ export default function ResetPasswordModal() {
             }}
             onClick={toggleResetPasswordModal(false)}
           />
-          <Typography variant="h5" fontWeight={1000} textAlign={"center"}>
+          <Typography variant="h5" textAlign={"center"}>
             Set New Password
           </Typography>
           <Typography
