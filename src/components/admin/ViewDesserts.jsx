@@ -9,12 +9,17 @@ import {
   Link as MuiLink,
   Tabs,
   Tab,
+  FormControlLabel,
+  FormGroup,
+  Switch,
+  useTheme,
 } from "@mui/material";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";
 import Dessert from "../dessert/Dessert";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function ViewDesserts() {
+  const theme = useTheme();
   const getDessertsQuery = useGetDesserts();
   const {
     data: desserts,
@@ -27,9 +32,14 @@ export default function ViewDesserts() {
   const filteredDesserts =
     currentTab === 0
       ? desserts
-      : desserts?.filter(
-          (d) => d.dessert_type?.toLowerCase() === dessertCategories[currentTab]
-        );
+      : currentTab === 5
+        ? desserts?.filter((d) => d.visible === true)
+        : currentTab === 6
+          ? desserts?.filter((d) => d.visible === false)
+          : desserts?.filter(
+              (d) =>
+                d.dessert_type.toLowerCase() === dessertCategories[currentTab]
+            );
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
@@ -82,11 +92,20 @@ export default function ViewDesserts() {
         >
           New Dessert
         </Button>
-        <Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            overflow: "auto",
+          }}
+        >
           <Tabs
             value={currentTab}
             onChange={handleTabChange}
-            sx={{ marginBottom: "2rem" }}
+            variant="scrollable"
+            scrollButtons="auto"
+            sx={{ marginBottom: "2rem", minWidth: "max-content" }}
             indicatorColor="primary"
           >
             <Tab label="All" sx={{ fontSize: "1rem" }} />
@@ -94,6 +113,8 @@ export default function ViewDesserts() {
             <Tab label="Cupcakes" sx={{ fontSize: "1rem" }} />
             <Tab label="Cookies" sx={{ fontSize: "1rem" }} />
             <Tab label="Pies" sx={{ fontSize: "1rem" }} />
+            <Tab label="Visible" sx={{ fontSize: "1rem" }} />
+            <Tab label="Hidden" sx={{ fontSize: "1rem" }} />
           </Tabs>
         </Box>
         <Grid container spacing={5}>
@@ -114,6 +135,7 @@ export default function ViewDesserts() {
                 isCoverImageLoaded={true}
                 inAdminView={true}
                 isLoading={isGetDessertsLoading}
+                isVisible={dessert?.visible}
               />
             </Grid>
           ))}

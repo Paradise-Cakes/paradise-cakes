@@ -1,11 +1,15 @@
-import React from "react";
-import { Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea, Skeleton, Button, Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useDeleteDessert } from "../../hooks/dessert/DessertHook";
+import {
+  useDeleteDessert,
+  usePatchDessert,
+} from "../../hooks/dessert/DessertHook";
+import { patch } from "@mui/system";
 
 export default function Dessert({
   id,
@@ -14,6 +18,7 @@ export default function Dessert({
   image_url = "https://placehold.co/400",
   inAdminView = false,
   isLoading = false,
+  isVisible = false,
 }) {
   const deleteDessertQuery = useDeleteDessert(id);
   const theme = useTheme();
@@ -22,7 +27,15 @@ export default function Dessert({
     isLoading: isDeleteDessertLoading,
     error: deleteDessertError,
   } = deleteDessertQuery;
+  const patchDessertQuery = usePatchDessert(id);
+  const {
+    mutateAsync: patchDessert,
+    isLoading: isPatchDessertLoading,
+    error: patchDessertError,
+  } = patchDessertQuery;
+
   const navigate = useNavigate();
+
   return (
     <Card
       key={id}
@@ -102,34 +115,83 @@ export default function Dessert({
       {inAdminView && !isLoading && (
         <Box
           display={"flex"}
-          width={"100%"}
-          justifyContent={"flex-start"}
+          justifyContent="space-between"
           position={"absolute"}
+          width={"100%"}
           sx={{
             top: 0,
             left: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
           }}
           p={2}
           onClick={(event) => event.stopPropagation()}
         >
-          <Button
-            variant="contained"
-            color="success"
-            sx={{
-              marginRight: "1rem",
-            }}
-            onClick={(event) => navigate(`/admin/desserts/edit-dessert/${id}`)}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => deleteDessert()}
-          >
-            Remove
-          </Button>
+          <Box display={"flex"} justifyContent={"flex-start"}>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{
+                marginRight: "1rem",
+              }}
+              onClick={(event) =>
+                navigate(`/admin/desserts/edit-dessert/${id}`)
+              }
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => deleteDessert()}
+            >
+              Remove
+            </Button>
+          </Box>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isVisible}
+                  onChange={async (event) => {
+                    try {
+                      await patchDessert({
+                        dessert: {
+                          visible: event.target.checked,
+                        },
+                      });
+                    } catch (error) {
+                      console.error(
+                        "Failed to update dessert visibility:",
+                        error
+                      );
+                    }
+                  }}
+                  sx={{
+                    "& .MuiSwitch-thumb": {
+                      fontSize: "1.25rem",
+                      color: "white",
+                    },
+                    "& .MuiSwitch-track": {
+                      backgroundColor: "red",
+                    },
+                    "& .Mui-checked .MuiSwitch-thumb": {
+                      color: "white",
+                    },
+                    "& .Mui-checked + .MuiSwitch-track": {
+                      backgroundColor: "green",
+                    },
+                  }}
+                />
+              }
+              label={isVisible ? "Visible" : "Hidden"}
+              sx={{
+                "& .MuiFormControlLabel-label": {
+                  fontSize: "1.25rem",
+                  color: isVisible ? "green" : "red",
+                },
+              }}
+            />
+          </FormGroup>
         </Box>
       )}
     </Card>

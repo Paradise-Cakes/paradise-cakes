@@ -14,6 +14,9 @@ import {
   Grid,
   Chip,
   FormHelperText,
+  FormGroup,
+  FormControlLabel,
+  Switch,
 } from "@mui/material";
 import { IoAddCircle } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
@@ -37,6 +40,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       ],
       ingredients: dessert?.ingredients || [],
       images: dessert?.images || [],
+      visible: dessert?.visible || false,
     },
     validationSchema: dessertSchema,
     onSubmit: async (values) => {
@@ -317,6 +321,40 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
               />
             </Box>
           ))}
+          <FormGroup sx={{ marginTop: "1rem" }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={dessertForm?.values?.visible}
+                  onChange={async (event) => {
+                    dessertForm.setFieldValue("visible", event.target.checked);
+                  }}
+                  sx={{
+                    "& .MuiSwitch-thumb": {
+                      fontSize: "1.25rem",
+                      color: "white",
+                    },
+                    "& .MuiSwitch-track": {
+                      backgroundColor: "red",
+                    },
+                    "& .Mui-checked .MuiSwitch-thumb": {
+                      color: "white",
+                    },
+                    "& .Mui-checked + .MuiSwitch-track": {
+                      backgroundColor: "green",
+                    },
+                  }}
+                />
+              }
+              label={dessertForm?.values?.visible ? "Visible" : "Hidden"}
+              sx={{
+                "& .MuiFormControlLabel-label": {
+                  fontSize: "1.25rem",
+                  color: dessertForm?.values?.visible ? "green" : "red",
+                },
+              }}
+            />
+          </FormGroup>
           <LoadingButton isLoading={isLoading} isDisabled={!dessertForm.dirty}>
             {dessert ? "Update" : "Create"}
           </LoadingButton>

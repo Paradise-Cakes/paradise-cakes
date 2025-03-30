@@ -31,6 +31,7 @@ export const usePatchDessert = (dessert_id) => {
   return useMutation(({ dessert }) => patchDessert(dessert_id, dessert), {
     onSuccess: () => {
       queryClient.invalidateQueries(["dessert", dessert_id]);
+      queryClient.invalidateQueries(["desserts"]);
       console.log("SUCCESSFUL PATCH DESSERT");
     },
   });
