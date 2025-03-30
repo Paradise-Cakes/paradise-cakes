@@ -19,6 +19,7 @@ export default function LoadingButton({
         textTransform: "none",
         fontSize: "1rem",
         marginTop: "1rem",
+        marginBottom: "2rem",
       }}
     >
       {isLoading ? (

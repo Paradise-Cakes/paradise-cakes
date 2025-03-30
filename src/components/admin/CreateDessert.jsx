@@ -60,7 +60,7 @@ export default function CreateDessert() {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="false">
       <Box
         display="flex"
         flexDirection="column"
@@ -72,7 +72,7 @@ export default function CreateDessert() {
         </Typography>
         <Breadcrumbs
           aria-label="breadcrumb"
-          sx={{ marginBottom: "1rem", marginRight: "auto" }}
+          sx={{ marginBottom: "1rem", marginRight: "auto", marginLeft: "2rem" }}
         >
           <MuiLink
             color="inherit"

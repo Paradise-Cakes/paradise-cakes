@@ -129,10 +129,7 @@ export default function ViewDesserts() {
             >
               <Dessert
                 id={dessert?.dessert_id}
-                name={dessert?.name}
-                description={dessert?.description}
-                image_url={dessert?.images[0]?.url}
-                isCoverImageLoaded={true}
+                dessert={dessert}
                 inAdminView={true}
                 isLoading={isGetDessertsLoading}
                 isVisible={dessert?.visible}

@@ -17,6 +17,8 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import { IoAddCircle } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
@@ -41,6 +43,8 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       ingredients: dessert?.ingredients || [],
       images: dessert?.images || [],
       visible: dessert?.visible || false,
+      special_tag: dessert?.special_tag || "",
+      secondary_special_tag: dessert?.secondary_special_tag || "",
     },
     validationSchema: dessertSchema,
     onSubmit: async (values) => {
@@ -126,14 +130,11 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       container
       component={"form"}
       sx={{
-        margin: "0 auto",
-        justifyContent: { xs: "center", lg: "space-between" },
-        padding: "2rem 0",
+        padding: "2rem",
       }}
       onSubmit={dessertForm.handleSubmit}
-      display={"flex"}
     >
-      <Grid item lg={3} md={6} sm={8} xs={12} sx={{ height: "fit-content" }}>
+      <Grid item lg={3} sm={12}>
         <TextField
           fullWidth
           label={"Name"}
@@ -355,7 +356,10 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
               }}
             />
           </FormGroup>
-          <LoadingButton isLoading={isLoading} isDisabled={!dessertForm.dirty}>
+          <LoadingButton
+            isLoading={isLoading}
+            isDisabled={!dessertForm.dirty || dessertForm.isSubmitting}
+          >
             {dessert ? "Update" : "Create"}
           </LoadingButton>
         </Box>
@@ -363,13 +367,10 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       <Grid
         item
         container
-        lg={9}
-        md={12}
+        lg={7}
         sm={12}
         sx={{
-          display: "flex",
           justifyContent: "center",
-          height: "fit-content",
         }}
       >
         <Grid
@@ -475,6 +476,66 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             ))}
           </Box>
         </Grid>
+      </Grid>
+      <Grid
+        item
+        lg={2}
+        sm={12}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0",
+        }}
+      >
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            margin: "0 auto",
+          }}
+        >
+          <Typography variant="h6">Tags</Typography>
+          <FormControl>
+            <RadioGroup
+              value={dessertForm.values.special_tag}
+              onChange={(e) => {
+                dessertForm.setFieldValue("special_tag", e.target.value);
+              }}
+            >
+              <FormControlLabel
+                value="new!"
+                control={<Radio />}
+                label="new!"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="on sale"
+                control={<Radio />}
+                label="on sale"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="best seller"
+                control={<Radio />}
+                label="best seller"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="almost gone!"
+                control={<Radio />}
+                label="almost gone!"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="back in stock!"
+                control={<Radio />}
+                label="back in stock!"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Box>
       </Grid>
     </Grid>
   );

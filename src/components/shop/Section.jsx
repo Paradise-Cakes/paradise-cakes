@@ -31,13 +31,11 @@ export default function Section({
               item
               sx={{ textAlign: "center" }}
               xs={12}
-              md={4}
+              md={3}
             >
               <Dessert
                 id={item?.dessert_id}
-                name={item?.name}
-                description={item?.description}
-                image_url={item?.images[0]?.url}
+                dessert={item}
                 isLoading={isSectionLoading}
               />
             </Grid>

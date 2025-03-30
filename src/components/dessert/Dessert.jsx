@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
+import {
+  FormControlLabel,
+  FormGroup,
+  Switch,
+  Typography,
+  Chip,
+} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -13,9 +19,7 @@ import { patch } from "@mui/system";
 
 export default function Dessert({
   id,
-  name,
-  description,
-  image_url = "https://placehold.co/400",
+  dessert,
   inAdminView = false,
   isLoading = false,
   isVisible = false,
@@ -45,7 +49,7 @@ export default function Dessert({
         position: "relative",
         border: `2px solid ${theme.palette.primary.main}`,
       }}
-      onClick={() => navigate(`/desserts/cakes/${id}/${name}`)}
+      onClick={() => navigate(`/desserts/cakes/${id}/${dessert?.name}`)}
     >
       <CardActionArea>
         {isLoading || isDeleteDessertLoading ? (
@@ -61,7 +65,7 @@ export default function Dessert({
         ) : (
           <CardMedia
             component="img"
-            image={image_url}
+            image={dessert?.images[0]?.url}
             sx={{ aspectRatio: "1/1" }}
           />
         )}
@@ -88,7 +92,22 @@ export default function Dessert({
                 whiteSpace: "nowrap",
               }}
             >
-              {name?.toUpperCase()}
+              {dessert?.name?.toUpperCase()}
+              {dessert?.special_tag && (
+                <Chip
+                  label={dessert?.special_tag}
+                  sx={{
+                    top: "2rem",
+                    left: "2rem",
+                    position: "absolute",
+                    backgroundColor: "white",
+                    fontSize: "1rem",
+                    "& .MuiChip-label": {
+                      color: theme.palette.primary.main,
+                    },
+                  }}
+                />
+              )}
             </Typography>
           )}
           {isLoading || isDeleteDessertLoading ? (
@@ -107,7 +126,7 @@ export default function Dessert({
                 whiteSpace: "nowrap",
               }}
             >
-              {description}
+              {dessert?.description}
             </Typography>
           )}
         </CardContent>
@@ -126,6 +145,22 @@ export default function Dessert({
           p={2}
           onClick={(event) => event.stopPropagation()}
         >
+          {dessert?.special_tag && (
+            <Chip
+              label={dessert?.special_tag}
+              sx={{
+                top: "5.5rem",
+                left: "2rem",
+                position: "absolute",
+                backgroundColor: "white",
+                fontSize: "1rem",
+                "& .MuiChip-label": {
+                  color: theme.palette.primary.main,
+                },
+              }}
+            />
+          )}
+
           <Box display={"flex"} justifyContent={"flex-start"}>
             <Button
               variant="contained"
