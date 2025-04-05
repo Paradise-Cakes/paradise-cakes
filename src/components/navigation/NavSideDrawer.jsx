@@ -37,7 +37,6 @@ export default function NavSideDrawer() {
         <DrawerItem toLink={"/"} text={"home"} />
         <DrawerItem toLink={"/shop"} text={"shop"} />
         <DrawerItem toLink={"/custom-order"} text={"custom order"} />
-        <DrawerItem toLink={"/about-me"} text={"about me"} />
       </List>
     </Drawer>
   );

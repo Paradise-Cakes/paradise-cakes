@@ -97,7 +97,6 @@ export default function Navbar() {
               <NavLink title="Home" toLink={"/"} />
               <NavLink title="Shop" toLink={"/shop"} />
               <NavLink title="Custom Order" toLink={"/custom-order"} />
-              {/* <NavLink title="About Me" toLink={"/about-me"} /> */}
             </Box>
           </Hidden>
           <Hidden mdUp implementation="css">
@@ -114,7 +113,6 @@ export default function Navbar() {
                     width: "25px",
                     height: "25px",
                     cursor: "pointer",
-                    padding: "16px",
                     position: "absolute",
                   }}
                   onClick={() => setDrawerOpen(false)}
@@ -125,7 +123,6 @@ export default function Navbar() {
                     width: "25px",
                     height: "25px",
                     cursor: "pointer",
-                    padding: "16px",
                     position: "absolute",
                   }}
                   onClick={() => setDrawerOpen(true)}
