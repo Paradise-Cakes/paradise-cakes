@@ -54,17 +54,14 @@ function App() {
       <AuthProvider>
         <DrawerProvider drawerOpen={false}>
           <IngredientsProvider ingredientsOpen={false}>
-            {/* Flex container that holds the whole app layout */}
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                minHeight: "100vh", // full screen height
+                minHeight: "100vh",
               }}
             >
               <Navbar />
-
-              {/* Main content (grows to fill space) */}
               <Box
                 component="main"
                 sx={{
@@ -89,8 +86,6 @@ function App() {
                   <CircularProgress sx={{ margin: "0 auto" }} />
                 )}
               </Box>
-
-              {/* Footer sticks to bottom if not enough content */}
               <Footer />
             </Box>
           </IngredientsProvider>

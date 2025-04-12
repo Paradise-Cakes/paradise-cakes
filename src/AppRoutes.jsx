@@ -1,5 +1,4 @@
 import React from "react";
-import About from "./components/about/About";
 import Home from "./components/home/Home";
 import Shop from "./components/shop/Shop";
 import { Route, Routes, useSearchParams } from "react-router-dom";
@@ -18,7 +17,6 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/shop" element={<Shop />} />
-      <Route path="/about-me" element={<About />} />
       <Route
         path="/desserts/cakes/:dessertId/:dessertName"
         element={<DessertDetail />}
