@@ -28,7 +28,20 @@ import _ from "lodash";
 import LoadingButton from "../../extras/LoadingButton";
 
 export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
-  const [sizes, setSizes] = useState([]);
+  const [sizes, setSizes] = useState(() => {
+    switch (dessert?.dessert_type) {
+      case "cake":
+        return ["6 inch", "8 inch", "10 inch"];
+      case "cupcake":
+        return ["Half Dozen", "Dozen"];
+      case "cookie":
+        return ["Dozen"];
+      case "pie":
+        return ["9 inch"];
+      default:
+        return [];
+    }
+  });
   const dessertForm = useFormik({
     initialValues: {
       name: dessert?.name || "",
@@ -113,15 +126,29 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
   };
 
   useEffect(() => {
-    const dessertType = dessertForm.values.dessert_type;
-    if (dessertType === "cake") {
-      setSizes(["6 inch", "8 inch", "10 inch"]);
-    } else if (dessertType === "cupcake") {
-      setSizes(["Half Dozen", "Dozen"]);
-    } else if (dessertType === "cookie") {
-      setSizes(["Dozen"]);
-    } else if (dessertType === "pie") {
-      setSizes(["9 inch"]);
+    switch (dessertForm.values.dessert_type) {
+      case "cake":
+        setSizes(["6 inch", "8 inch", "10 inch"]);
+        break;
+      case "cupcake":
+        setSizes(["Half Dozen", "Dozen"]);
+        break;
+      case "cookie":
+        setSizes(["Dozen"]);
+        break;
+      case "pie":
+        setSizes(["9 inch"]);
+        break;
+      default:
+        setSizes([]);
+    }
+    if (dessertForm.values.dessert_type !== dessert?.dessert_type) {
+      dessertForm.setFieldValue("prices", [
+        {
+          size: "",
+          base_price: "",
+        },
+      ]);
     }
   }, [dessertForm.values.dessert_type]);
 
