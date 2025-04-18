@@ -27,14 +27,11 @@ export default function CreateDessert() {
       const formattedValues = {
         ...values,
         images: values.images.map((image, index) => {
-          if (image instanceof File) {
-            return {
-              file_name: image.name,
-              file_type: image.type,
-              position: index,
-            };
-          }
-          return image;
+          return {
+            file_name: image.name,
+            file_type: image.type,
+            position: index,
+          };
         }),
       };
       const postResponse = await postDessert({

@@ -5,7 +5,6 @@ import Cart from "./components/navigation/cart/Cart";
 import { DrawerProvider } from "./context/DrawerContext";
 import { useSearchParams } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Container } from "@mui/system";
 import { IngredientsProvider } from "./context/IngredientsContext";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import SignInModal from "./components/navigation/auth/SignInModal";

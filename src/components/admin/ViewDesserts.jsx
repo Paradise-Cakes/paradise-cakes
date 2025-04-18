@@ -128,7 +128,6 @@ export default function ViewDesserts() {
               justifyContent={"center"}
             >
               <Dessert
-                id={dessert?.dessert_id}
                 dessert={dessert}
                 inAdminView={true}
                 isLoading={isGetDessertsLoading}

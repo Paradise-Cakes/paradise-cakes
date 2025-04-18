@@ -136,6 +136,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
     >
       <Grid item lg={3} sm={12}>
         <TextField
+          name="dessert-name"
           fullWidth
           label={"Name"}
           sx={{ marginTop: "1rem" }}
@@ -146,6 +147,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           value={dessertForm.values.name}
         />
         <TextField
+          name="dessert-description"
           fullWidth
           label={"Description"}
           multiline
@@ -167,6 +169,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
         <FormControl fullWidth sx={{ marginTop: "1rem" }}>
           <InputLabel id="dessert-type">Dessert Type</InputLabel>
           <Select
+            name="dessert-type"
             fullWidth
             label={"Dessert Type"}
             labelId="dessert-type"
@@ -195,7 +198,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
         <Autocomplete
           sx={{ marginTop: "1rem" }}
           multiple
-          id="ingredients"
+          name="ingredients"
           freeSolo
           options={[]}
           getOptionLabel={(option) => option}
@@ -294,7 +297,6 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
               </FormControl>
               <TextField
                 label={"Price"}
-                type="tel"
                 sx={{ marginTop: "1rem", width: "150px" }}
                 value={dessertForm.values.prices[index].base_price}
                 onChange={handlePriceChange(index)}
@@ -393,7 +395,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             marginBottom: "2rem",
           }}
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps()} data-testid="image-upload-input" />
           <Typography variant="h6">Drag and drop an image here</Typography>
           <IoAddCircle style={{ width: "50px", height: "50px" }} />
         </Grid>

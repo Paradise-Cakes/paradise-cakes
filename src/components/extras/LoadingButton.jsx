@@ -9,6 +9,7 @@ export default function LoadingButton({
 }) {
   return (
     <Button
+      data-testid="create-edit-submit-button"
       type="submit"
       variant="contained"
       color="primary"

@@ -29,7 +29,7 @@ export default function DessertDetail() {
     isLoading: isGetDessertLoading,
     isSuccess: isGetDessertSuccess,
   } = getDessertQuery;
-  const { setCart, openCart } = useCartStore();
+  const { setCart, openCart, cart } = useCartStore();
   const { ingredientsOpen, setIngredientsOpen } =
     useContext(IngredientsContext);
   const [size, setSize] = useState();
@@ -37,17 +37,17 @@ export default function DessertDetail() {
   const handleSizeChange = (event, newSize) => {
     if (newSize !== null) {
       setSize(newSize);
+      // setPrice(price)
       setQuantity(1);
     }
   };
 
   const [quantity, setQuantity] = useState(1);
-  const [tabValue, setTabValue] = useState("details");
   const [price, setPrice] = useState(0);
 
   const calculatePrice = (quantity) => {
     const selectedSize = dessert?.prices.find((price) => price.size === size);
-    return selectedSize?.base * quantity;
+    return selectedSize?.base_price * quantity;
   };
 
   const handleAddToCart = () => {
@@ -58,31 +58,31 @@ export default function DessertDetail() {
       price: price / quantity,
       size: size,
     };
-    const existingItem = cartItems.find(
+
+    const existingItem = cart?.find(
       (item) => item.dessert_id === dessertId && item.size === size
     );
+
     if (existingItem) {
-      setCart((prev) => {
-        return prev.map((item) => {
-          if (item.dessert_id === dessertId && item.size === size) {
-            return { ...item, quantity: item.quantity + quantity };
-          }
-          return item;
-        });
+      const updatedCart = cart?.map((item) => {
+        if (item.dessert_id === dessertId && item.size === size) {
+          return { ...item, quantity: item.quantity + quantity };
+        }
+        return item;
       });
+      setCart(updatedCart);
     } else {
-      setCart((prev) => {
-        return [...prev, cartItem];
-      });
+      setCart([...cart, cartItem]);
     }
+
     openCart();
   };
 
-  useEffect(() => {
-    if (dessert) {
-      setPrice(calculatePrice(quantity));
-    }
-  }, [dessert, size, quantity]);
+  // useEffect(() => {
+  //   if (dessert) {
+  //     setPrice(calculatePrice(quantity));
+  //   }
+  // }, [dessert, size, quantity]);
 
   useEffect(() => {
     if (dessert) {
@@ -91,7 +91,7 @@ export default function DessertDetail() {
   }, [dessert]);
 
   return (
-    <Container maxWidth="false">
+    <Container maxWidth="false" data-testid="dessert-detail">
       <Grid container>
         <Grid item lg={6} xs={12} sx={{ marginRight: { xs: "0", lg: "5rem" } }}>
           <Carousel
@@ -150,7 +150,7 @@ export default function DessertDetail() {
               >
                 {dessert?.prices.map((price) => (
                   <ToggleButton
-                    key={price.base}
+                    key={price.base_price}
                     sx={{
                       textTransform: "none",
                       fontSize: "18px",
@@ -168,7 +168,7 @@ export default function DessertDetail() {
                         marginTop: "-8px",
                       }}
                     >
-                      <b>{price.size}</b> - ${price.base}
+                      <b>{price.size}</b> - ${price.base_price}
                     </Box>
                     <Box
                       sx={{
@@ -182,6 +182,7 @@ export default function DessertDetail() {
               </ToggleButtonGroup>
             )}
             <Button
+              data-testid="dessert-detail-add-to-cart-button"
               variant="contained"
               onClick={handleAddToCart}
               sx={{

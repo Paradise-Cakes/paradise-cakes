@@ -33,7 +33,7 @@ export default function Cart() {
 
   const calculateCartSubtotal = () => {
     let total = 0;
-    cart.forEach((item) => {
+    cart?.forEach((item) => {
       total += item.quantity * item.price;
     });
     return total;
@@ -89,7 +89,7 @@ export default function Cart() {
             }}
           />
         </Box>
-        {cart.length > 0 && (
+        {cart?.length > 0 && (
           <Box
             display={"flex"}
             flexDirection={"column"}

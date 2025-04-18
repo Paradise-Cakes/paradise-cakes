@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   FormControlLabel,
   FormGroup,
@@ -15,23 +15,22 @@ import {
   useDeleteDessert,
   usePatchDessert,
 } from "../../hooks/dessert/DessertHook";
-import { patch } from "@mui/system";
 
 export default function Dessert({
-  id,
   dessert,
   inAdminView = false,
   isLoading = false,
-  isVisible = false,
+  isVisible: initialVisible = false,
 }) {
-  const deleteDessertQuery = useDeleteDessert(id);
+  const [isVisible, setIsVisible] = useState(initialVisible);
+  const deleteDessertQuery = useDeleteDessert(dessert?.dessert_id);
   const theme = useTheme();
   const {
     mutateAsync: deleteDessert,
     isLoading: isDeleteDessertLoading,
     error: deleteDessertError,
   } = deleteDessertQuery;
-  const patchDessertQuery = usePatchDessert(id);
+  const patchDessertQuery = usePatchDessert(dessert?.dessert_id);
   const {
     mutateAsync: patchDessert,
     isLoading: isPatchDessertLoading,
@@ -42,18 +41,22 @@ export default function Dessert({
 
   return (
     <Card
-      key={id}
+      data-testid="dessert-card"
+      key={dessert?.dessert_id}
       sx={{
         borderRadius: "12px",
         boxShadow: 3,
         position: "relative",
         border: `2px solid ${theme.palette.primary.main}`,
       }}
-      onClick={() => navigate(`/desserts/cakes/${id}/${dessert?.name}`)}
+      onClick={() =>
+        navigate(`/desserts/${dessert?.dessert_id}/${dessert?.name}`)
+      }
     >
       <CardActionArea>
         {isLoading || isDeleteDessertLoading ? (
           <Skeleton
+            data-testid="dessert-card-image-skeleton"
             variant="rectangular"
             animation="wave"
             sx={{
@@ -78,6 +81,7 @@ export default function Dessert({
         >
           {isLoading || isDeleteDessertLoading ? (
             <Skeleton
+              data-testid="dessert-card-name-skeleton"
               variant="text"
               animation="wave"
               sx={{ fontSize: "1.25rem", width: "80%", mx: "auto" }}
@@ -112,6 +116,7 @@ export default function Dessert({
           )}
           {isLoading || isDeleteDessertLoading ? (
             <Skeleton
+              data-testid="dessert-card-description-skeleton"
               variant="text"
               animation="wave"
               sx={{ fontSize: "1rem", width: "60%", mx: "auto" }}
@@ -169,7 +174,7 @@ export default function Dessert({
                 marginRight: "1rem",
               }}
               onClick={(event) =>
-                navigate(`/admin/desserts/edit-dessert/${id}`)
+                navigate(`/admin/desserts/edit-dessert/${dessert?.dessert_id}`)
               }
             >
               Edit
@@ -188,12 +193,14 @@ export default function Dessert({
                 <Switch
                   checked={isVisible}
                   onChange={async (event) => {
+                    const newVal = event.target.checked;
                     try {
                       await patchDessert({
                         dessert: {
-                          visible: event.target.checked,
+                          visible: newVal,
                         },
                       });
+                      setIsVisible(newVal);
                     } catch (error) {
                       console.error(
                         "Failed to update dessert visibility:",

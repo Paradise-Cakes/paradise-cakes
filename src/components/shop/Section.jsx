@@ -33,11 +33,7 @@ export default function Section({
               xs={12}
               md={3}
             >
-              <Dessert
-                id={item?.dessert_id}
-                dessert={item}
-                isLoading={isSectionLoading}
-              />
+              <Dessert dessert={item} isLoading={isSectionLoading} />
             </Grid>
           ))}
         </Grid>

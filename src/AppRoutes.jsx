@@ -18,7 +18,7 @@ export default function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/shop" element={<Shop />} />
       <Route
-        path="/desserts/cakes/:dessertId/:dessertName"
+        path="/desserts/:dessertId/:dessertName"
         element={<DessertDetail />}
       />
       <Route path="/custom-order" element={<CustomOrderForm />} />
