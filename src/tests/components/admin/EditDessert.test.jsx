@@ -1,4 +1,4 @@
-import { vi, describe, test, expect } from "vitest";
+import { vi, describe, test, expect, afterEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import EditDessert from "../../../components/admin/EditDessert";
 import { ThemeProvider } from "@mui/material/styles";
@@ -10,6 +10,7 @@ import userEvent from "@testing-library/user-event";
 import { debug } from "vitest-preview";
 import axios from "axios";
 import * as reactRouterDom from "react-router-dom";
+import { upload } from "@testing-library/user-event/dist/cjs/utility/upload.js";
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
@@ -74,6 +75,7 @@ vi.mock("../../../hooks/dessert/DessertHook", () => ({
           file_type: "jpg",
         },
       ],
+      special_tag: "on sale",
     },
     isLoading: false,
     isSuccess: true,
@@ -99,6 +101,10 @@ describe("EditDessert Component", () => {
     global.URL.createObjectURL = vi.fn(() => "mock-url");
   });
 
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   test("renders the edit dessert form", () => {
     renderComponent();
 
@@ -106,5 +112,126 @@ describe("EditDessert Component", () => {
       screen.getByRole("heading", { name: /edit dessert/i })
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /update/i })).toBeInTheDocument();
+  });
+
+  test("calls patchDessert on form submission with data", async () => {
+    patchDessertMock.mockResolvedValue({
+      data: {
+        images: [
+          {
+            upload_url: "https://example.com/upload-url",
+          },
+        ],
+      },
+    });
+
+    renderComponent();
+
+    const dessertTagsInput = screen.getByText(/new!/i);
+    await userEvent.click(dessertTagsInput);
+
+    const updateButton = screen.getByTestId("create-edit-submit-button");
+    await userEvent.click(updateButton);
+
+    expect(patchDessertMock).toHaveBeenCalled();
+  });
+
+  test("handles uploading new image using file input", async () => {
+    renderComponent();
+
+    const dessertImagesInput = screen.getByTestId("image-upload-input");
+    const file = new File(["image"], "dessert.jpg", { type: "image/jpeg" });
+    await userEvent.upload(dessertImagesInput, file);
+
+    expect(dessertImagesInput.files[0]).toEqual(file);
+
+    const updateButton = screen.getByTestId("create-edit-submit-button");
+    await userEvent.click(updateButton);
+
+    expect(patchDessertMock).toHaveBeenCalled();
+  });
+
+  test("handles uploading image to S3 upload URL", async () => {
+    patchDessertMock.mockResolvedValue({
+      data: {
+        images: [
+          {
+            iamge_id: "IMAGE-1",
+            upload_url: "https://example.com/upload-url",
+            url: "https://example.com/image1.jpg",
+            position: 1,
+            file_name: "image1.jpg",
+            file_type: "jpg",
+          },
+          {
+            upload_url: "https://example.com/upload-url-2",
+            url: "https://example.com/image2.jpg",
+            position: 2,
+            file_name: "image2.jpg",
+            file_type: "jpg",
+          },
+        ],
+      },
+    });
+
+    renderComponent();
+
+    const dessertImagesInput = screen.getByTestId("image-upload-input");
+    const file = new File(["image"], "dessert.jpg", { type: "image/jpeg" });
+    await userEvent.upload(dessertImagesInput, file);
+
+    const updateButton = screen.getByTestId("create-edit-submit-button");
+    await userEvent.click(updateButton);
+
+    expect(axios.put).toHaveBeenCalledWith(
+      "https://example.com/upload-url-2",
+      file,
+      {
+        headers: {
+          "Content-Type": file.type,
+        },
+      }
+    );
+  });
+
+  test("handles error during image upload", async () => {
+    patchDessertMock.mockResolvedValue({
+      data: {
+        images: [
+          {
+            image_id: "IMAGE-1",
+            url: "https://example.com/image1.jpg",
+            position: 1,
+            file_name: "image1.jpg",
+            file_type: "jpg",
+            upload_url: "https://example.com/upload-url",
+          },
+          {
+            upload_url: "https://example.com/upload-url-2",
+          },
+        ],
+      },
+    });
+
+    axios.put = vi.fn().mockRejectedValueOnce(new Error("Upload failed"));
+
+    renderComponent();
+
+    const dessertImagesInput = screen.getByTestId("image-upload-input");
+    const file = new File(["image"], "dessert.jpg", { type: "image/jpeg" });
+    await userEvent.upload(dessertImagesInput, file);
+
+    const updateButton = screen.getByTestId("create-edit-submit-button");
+    await userEvent.click(updateButton);
+
+    expect(mockConsoleError).toHaveBeenCalledWith(
+      "Upload error:",
+      expect.any(Error)
+    );
+
+    expect(mockConsoleError).not.toHaveBeenCalledWith(
+      "Error during submission:",
+      expect.anything()
+    );
   });
 });

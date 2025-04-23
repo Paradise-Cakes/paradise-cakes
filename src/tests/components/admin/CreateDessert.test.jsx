@@ -1,5 +1,5 @@
-import { vi, describe, test, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { vi, describe, test, expect, afterEach } from "vitest";
+import { render, screen, within } from "@testing-library/react";
 import CreateDessert from "../../../components/admin/CreateDessert";
 import { ThemeProvider } from "@mui/material/styles";
 import { THEME } from "../../../theme";
@@ -60,7 +60,9 @@ async function fillDessertForm(options) {
   await userEvent.type(dessertIngredients, "Eggs{enter}");
   await userEvent.type(dessertIngredients, "Butter{enter}");
 
-  const dessertSizesInput = screen.getByLabelText(/size/i);
+  const dessertSizesInput = within(
+    screen.getByTestId("dessert-size-select-0")
+  ).getByRole("combobox");
   await userEvent.click(dessertSizesInput);
   await userEvent.click(screen.getByRole("option", { name: "6 inch" }));
 
@@ -85,6 +87,10 @@ async function fillDessertForm(options) {
 describe("CreateDessert Component", () => {
   beforeAll(() => {
     global.URL.createObjectURL = vi.fn(() => "mock-url");
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   test("renders the create dessert form", () => {
@@ -137,7 +143,6 @@ describe("CreateDessert Component", () => {
 
     renderComponent();
     await fillDessertForm({ includeMultipleImages: true });
-    debug();
 
     const createButton = screen.getByTestId("create-edit-submit-button");
     await userEvent.click(createButton);

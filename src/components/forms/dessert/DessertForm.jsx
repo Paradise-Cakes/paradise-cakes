@@ -254,9 +254,10 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <Chip
+                {...getTagProps({ index })}
+                key={`${option}-${index}`}
                 variant="outlined"
                 label={option}
-                {...getTagProps({ index })}
                 onDelete={() => handleDeleteIngredient(option)}
               />
             ))
@@ -302,6 +303,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                 <Select
                   fullWidth
                   label={"Size"}
+                  data-testid={`dessert-size-select-${index}`}
                   labelId="dessert-size"
                   value={dessertForm.values.prices[index].size}
                   onChange={handleSizeChange(index)}
