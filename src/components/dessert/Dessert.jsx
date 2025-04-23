@@ -89,7 +89,6 @@ export default function Dessert({
           ) : (
             <Typography
               variant="h6"
-              component="div"
               sx={{
                 textOverflow: "ellipsis",
                 overflow: "hidden",

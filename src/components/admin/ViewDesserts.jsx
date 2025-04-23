@@ -9,9 +9,6 @@ import {
   Link as MuiLink,
   Tabs,
   Tab,
-  FormControlLabel,
-  FormGroup,
-  Switch,
   useTheme,
 } from "@mui/material";
 import { useGetDesserts } from "../../hooks/dessert/DessertHook";

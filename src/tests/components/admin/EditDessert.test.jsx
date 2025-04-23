@@ -10,7 +10,6 @@ import userEvent from "@testing-library/user-event";
 import { debug } from "vitest-preview";
 import axios from "axios";
 import * as reactRouterDom from "react-router-dom";
-import { upload } from "@testing-library/user-event/dist/cjs/utility/upload.js";
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
