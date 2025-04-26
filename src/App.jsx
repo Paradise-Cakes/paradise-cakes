@@ -21,11 +21,10 @@ import { CircularProgress } from "@mui/material";
 import UnderConstruction from "./components/extras/UnderConstruction";
 import { Box } from "@mui/material";
 
-const queryClient = new QueryClient();
-const hostname = window.location.hostname;
-const isDev = hostname.startsWith("dev.") || hostname.startsWith("localhost");
-
 function App() {
+  const queryClient = new QueryClient();
+  const hostname = window.location.hostname;
+  const isDev = hostname.startsWith("dev.") || hostname.startsWith("localhost");
   const [searchParams] = useSearchParams();
   const { openResetPasswordModal, setResetPasswordParams } = useModalStore();
   const [isAppReady, setIsAppReady] = useState(false);
