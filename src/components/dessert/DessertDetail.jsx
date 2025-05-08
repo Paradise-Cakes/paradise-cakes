@@ -35,9 +35,7 @@ export default function DessertDetail() {
       setSize(newSize);
 
       const selected = dessert?.prices.find((p) => p.size === newSize);
-      if (selected) {
-        setPrice(selected.base_price);
-      }
+      setPrice(selected.base_price);
 
       setQuantity(1);
     }
@@ -49,47 +47,25 @@ export default function DessertDetail() {
   const handleAddToCart = () => {
     const cartItem = {
       ...dessert,
-      id: dessertId,
       quantity: quantity,
       price: price / quantity,
       size: size,
     };
+    let existingItem = false;
 
-    const existingItem = cart?.find(
-      (item) => item.dessert_id === dessertId && item.size === size
-    );
-
-    if (existingItem) {
-      for (let i = 0; i < cart.length; i++) {
-        if (cart[i].dessert_id === dessertId && cart[i].size === size) {
-          cart[i].quantity += quantity;
-          break;
-        }
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].dessert_id === dessertId && cart[i].size === size) {
+        existingItem = true;
+        cart[i].quantity += quantity;
+        break;
       }
     }
 
-    setCart([...cart, cartItem]);
-
-    // const updatedCart = cart?.map((item) => {
-    //   if (item.dessert_id === dessertId && item.size === size) {
-    //     return { ...item, quantity: item.quantity + quantity };
-    //   }
-    //   return item;
-    // });
-    // setCart(updatedCart);
-
-    // if (existingItem) {
-    //   const updatedCart = cart?.map((item) => {
-    //     if (item.dessert_id === dessertId && item.size === size) {
-    //       return { ...item, quantity: item.quantity + quantity };
-    //     }
-    //     return item;
-    //   });
-    //   setCart(updatedCart);
-    // } else {
-    //   setCart([...cart, cartItem]);
-    // }
-
+    if (existingItem) {
+      setCart([...cart]);
+    } else {
+      setCart([...cart, cartItem]);
+    }
     openCart();
   };
 

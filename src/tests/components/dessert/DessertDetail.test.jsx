@@ -6,12 +6,28 @@ import { THEME } from "../../../theme";
 import userEvent from "@testing-library/user-event";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
-import { IngredientsProvider } from "../../../context/IngredientsContext";
+import { IngredientsContext } from "../../../context/IngredientsContext";
+import * as reactRouterDom from "react-router-dom";
 import { debug } from "vitest-preview";
 
 let mockCart = [];
 const mockSetCart = vi.fn();
 const mockOpenCart = vi.fn();
+
+const mockIngredientsContextValue = {
+  ingredientsOpen: false,
+  setIngredientsOpen: vi.fn(),
+};
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useParams: vi.fn(),
+  };
+});
+
+reactRouterDom.useParams.mockReturnValue({ dessertId: "1" });
 
 vi.mock("../../../store/useCartStore", () => ({
   useCartStore: () => ({
@@ -24,7 +40,7 @@ vi.mock("../../../store/useCartStore", () => ({
 vi.mock("../../../hooks/dessert/DessertHook", () => ({
   useGetDessertById: () => ({
     data: {
-      dessert_id: 1,
+      dessert_id: "1",
       name: "Chocolate Cake",
       description: "Delicious chocolate cake",
       images: [
@@ -50,9 +66,9 @@ function renderComponent() {
     <BrowserRouter>
       <QueryClientProvider client={new QueryClient()}>
         <ThemeProvider theme={THEME}>
-          <IngredientsProvider>
+          <IngredientsContext.Provider value={mockIngredientsContextValue}>
             <DessertDetail />
-          </IngredientsProvider>
+          </IngredientsContext.Provider>
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>
@@ -64,10 +80,6 @@ describe("DessertDetail Component", () => {
     mockSetCart.mockClear();
     mockOpenCart.mockClear();
     mockCart = [];
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
   });
 
   test("renders the dessert details", () => {
@@ -103,7 +115,7 @@ describe("DessertDetail Component", () => {
     await userEvent.click(addToCartButton);
     expect(mockSetCart).toHaveBeenCalledWith([
       {
-        dessert_id: 1,
+        dessert_id: "1",
         name: "Chocolate Cake",
         description: "Delicious chocolate cake",
         images: [
@@ -129,7 +141,7 @@ describe("DessertDetail Component", () => {
   test("handles adding same size dessert to cart", async () => {
     mockCart = [
       {
-        dessert_id: 1,
+        dessert_id: "1",
         name: "Chocolate Cake",
         description: "Delicious chocolate cake",
         images: [
@@ -159,7 +171,77 @@ describe("DessertDetail Component", () => {
 
     expect(mockSetCart).toHaveBeenCalledWith([
       {
-        dessert_id: 1,
+        dessert_id: "1",
+        name: "Chocolate Cake",
+        description: "Delicious chocolate cake",
+        images: [
+          {
+            image_id: 1,
+            url: "https://example.com/chocolate-cake.jpg",
+          },
+        ],
+        prices: [
+          { size: "small", base_price: 10 },
+          { size: "medium", base_price: 15 },
+          { size: "large", base_price: 20 },
+        ],
+        special_tag: "FREE",
+        quantity: 2,
+        price: 10,
+        size: "small",
+      },
+    ]);
+    expect(mockOpenCart).toHaveBeenCalled();
+  });
+
+  test("handles opening ingredients modal", async () => {
+    renderComponent();
+
+    const ingredientsButton = screen.getByRole("button", {
+      name: /ingredients/i,
+    });
+    await userEvent.click(ingredientsButton);
+
+    expect(mockIngredientsContextValue.setIngredientsOpen).toHaveBeenCalled();
+  });
+
+  test("handles adding same dessert but with different size to cart", async () => {
+    mockCart = [
+      {
+        dessert_id: "1",
+        name: "Chocolate Cake",
+        description: "Delicious chocolate cake",
+        images: [
+          {
+            image_id: 1,
+            url: "https://example.com/chocolate-cake.jpg",
+          },
+        ],
+        prices: [
+          { size: "small", base_price: 10 },
+          { size: "medium", base_price: 15 },
+          { size: "large", base_price: 20 },
+        ],
+        special_tag: "FREE",
+        quantity: 1,
+        price: 10,
+        size: "small",
+      },
+    ];
+    renderComponent();
+
+    const mediumSizeButton = screen.getByRole("button", { name: /medium/i });
+    await userEvent.click(mediumSizeButton);
+
+    const addToCartButton = screen.getByRole("button", {
+      name: /add to cart/i,
+    });
+
+    await userEvent.click(addToCartButton);
+
+    expect(mockSetCart).toHaveBeenCalledWith([
+      {
+        dessert_id: "1",
         name: "Chocolate Cake",
         description: "Delicious chocolate cake",
         images: [
@@ -179,7 +261,7 @@ describe("DessertDetail Component", () => {
         size: "small",
       },
       {
-        dessert_id: 1,
+        dessert_id: "1",
         name: "Chocolate Cake",
         description: "Delicious chocolate cake",
         images: [
@@ -195,8 +277,8 @@ describe("DessertDetail Component", () => {
         ],
         special_tag: "FREE",
         quantity: 1,
-        price: 10,
-        size: "small",
+        price: 15,
+        size: "medium",
       },
     ]);
     expect(mockOpenCart).toHaveBeenCalled();
