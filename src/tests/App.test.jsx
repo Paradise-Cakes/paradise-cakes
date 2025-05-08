@@ -118,7 +118,6 @@ describe("App Component", () => {
     window.location = { ...originalLocation, hostname: "production.com" };
 
     renderComponent();
-    debug();
 
     expect(
       screen.getByText(

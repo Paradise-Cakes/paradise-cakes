@@ -6,13 +6,10 @@ import {
   Button,
   ToggleButton,
   ToggleButtonGroup,
-  CircularProgress,
   useTheme,
-  Link,
 } from "@mui/material";
 import Carousel from "../carousel/Carousel";
 import _, { set } from "lodash";
-import QuantityButton from "../extras/QuantityButton";
 import { useGetDessertById } from "../../hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
@@ -30,25 +27,24 @@ export default function DessertDetail() {
     isSuccess: isGetDessertSuccess,
   } = getDessertQuery;
   const { setCart, openCart, cart } = useCartStore();
-  const { ingredientsOpen, setIngredientsOpen } =
-    useContext(IngredientsContext);
+  const { setIngredientsOpen } = useContext(IngredientsContext);
   const [size, setSize] = useState();
 
   const handleSizeChange = (event, newSize) => {
     if (newSize !== null) {
       setSize(newSize);
-      // setPrice(price)
+
+      const selected = dessert?.prices.find((p) => p.size === newSize);
+      if (selected) {
+        setPrice(selected.base_price);
+      }
+
       setQuantity(1);
     }
   };
 
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
-
-  const calculatePrice = (quantity) => {
-    const selectedSize = dessert?.prices.find((price) => price.size === size);
-    return selectedSize?.base_price * quantity;
-  };
 
   const handleAddToCart = () => {
     const cartItem = {
@@ -64,31 +60,45 @@ export default function DessertDetail() {
     );
 
     if (existingItem) {
-      const updatedCart = cart?.map((item) => {
-        if (item.dessert_id === dessertId && item.size === size) {
-          return { ...item, quantity: item.quantity + quantity };
+      for (let i = 0; i < cart.length; i++) {
+        if (cart[i].dessert_id === dessertId && cart[i].size === size) {
+          cart[i].quantity += quantity;
+          break;
         }
-        return item;
-      });
-      setCart(updatedCart);
-    } else {
-      setCart([...cart, cartItem]);
+      }
     }
+
+    setCart([...cart, cartItem]);
+
+    // const updatedCart = cart?.map((item) => {
+    //   if (item.dessert_id === dessertId && item.size === size) {
+    //     return { ...item, quantity: item.quantity + quantity };
+    //   }
+    //   return item;
+    // });
+    // setCart(updatedCart);
+
+    // if (existingItem) {
+    //   const updatedCart = cart?.map((item) => {
+    //     if (item.dessert_id === dessertId && item.size === size) {
+    //       return { ...item, quantity: item.quantity + quantity };
+    //     }
+    //     return item;
+    //   });
+    //   setCart(updatedCart);
+    // } else {
+    //   setCart([...cart, cartItem]);
+    // }
 
     openCart();
   };
 
-  // useEffect(() => {
-  //   if (dessert) {
-  //     setPrice(calculatePrice(quantity));
-  //   }
-  // }, [dessert, size, quantity]);
-
   useEffect(() => {
-    if (dessert) {
+    if (dessert && !size) {
       setSize(dessert?.prices[0].size);
+      setPrice(dessert?.prices[0].base_price);
     }
-  }, [dessert]);
+  }, [dessert, size]);
 
   return (
     <Container maxWidth="false" data-testid="dessert-detail">

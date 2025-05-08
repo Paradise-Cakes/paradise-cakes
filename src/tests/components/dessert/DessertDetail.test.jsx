@@ -7,6 +7,19 @@ import userEvent from "@testing-library/user-event";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { IngredientsProvider } from "../../../context/IngredientsContext";
+import { debug } from "vitest-preview";
+
+let mockCart = [];
+const mockSetCart = vi.fn();
+const mockOpenCart = vi.fn();
+
+vi.mock("../../../store/useCartStore", () => ({
+  useCartStore: () => ({
+    setCart: mockSetCart,
+    openCart: mockOpenCart,
+    cart: mockCart,
+  }),
+}));
 
 vi.mock("../../../hooks/dessert/DessertHook", () => ({
   useGetDessertById: () => ({
@@ -32,45 +45,160 @@ vi.mock("../../../hooks/dessert/DessertHook", () => ({
   }),
 }));
 
+function renderComponent() {
+  render(
+    <BrowserRouter>
+      <QueryClientProvider client={new QueryClient()}>
+        <ThemeProvider theme={THEME}>
+          <IngredientsProvider>
+            <DessertDetail />
+          </IngredientsProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
+  );
+}
+
 describe("DessertDetail Component", () => {
+  beforeEach(() => {
+    mockSetCart.mockClear();
+    mockOpenCart.mockClear();
+    mockCart = [];
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   test("renders the dessert details", () => {
-    render(
-      <BrowserRouter>
-        <QueryClientProvider client={new QueryClient()}>
-          <ThemeProvider theme={THEME}>
-            <IngredientsProvider>
-              <DessertDetail />
-            </IngredientsProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
-    );
+    renderComponent();
 
     expect(screen.getByText(/^chocolate cake$/i)).toBeInTheDocument();
     expect(screen.getByText(/^Delicious chocolate cake$/i)).toBeInTheDocument();
   });
 
-  // test("handles toggle size button click", async () => {
-  //   render(
-  //     <BrowserRouter>
-  //       <QueryClientProvider client={new QueryClient()}>
-  //         <ThemeProvider theme={THEME}>
-  //           <IngredientsProvider>
-  //             <DessertDetail />
-  //           </IngredientsProvider>
-  //         </ThemeProvider>
-  //       </QueryClientProvider>
-  //     </BrowserRouter>
-  //   );
+  test("add to cart button updates price based on size of dessert", async () => {
+    renderComponent();
 
-  //   const toggleSizeButton = screen.getByRole("button", {
-  //     name: /large/i,
-  //   });
-  //   screen.debug(toggleSizeButton);
-  //   await userEvent.click(toggleSizeButton);
+    const smallSizeButton = screen.getByRole("button", { name: /small/i });
+    const mediumSizeButton = screen.getByRole("button", { name: /medium/i });
+    const largeSizeButton = screen.getByRole("button", { name: /large/i });
 
-  //   expect(
-  //     screen.getByTestId("dessert-detail-add-to-cart-button")
-  //   ).toHaveTextContent(/add to cart - $20/i);
-  // });
+    await userEvent.click(smallSizeButton);
+    expect(screen.getByText("Add to Cart - $10")).toBeInTheDocument();
+
+    await userEvent.click(mediumSizeButton);
+    expect(screen.getByText("Add to Cart - $15")).toBeInTheDocument();
+
+    await userEvent.click(largeSizeButton);
+    expect(screen.getByText("Add to Cart - $20")).toBeInTheDocument();
+  });
+
+  test("handles adding dessert to cart", async () => {
+    renderComponent();
+
+    const addToCartButton = screen.getByRole("button", {
+      name: /add to cart/i,
+    });
+    await userEvent.click(addToCartButton);
+    expect(mockSetCart).toHaveBeenCalledWith([
+      {
+        dessert_id: 1,
+        name: "Chocolate Cake",
+        description: "Delicious chocolate cake",
+        images: [
+          {
+            image_id: 1,
+            url: "https://example.com/chocolate-cake.jpg",
+          },
+        ],
+        prices: [
+          { size: "small", base_price: 10 },
+          { size: "medium", base_price: 15 },
+          { size: "large", base_price: 20 },
+        ],
+        special_tag: "FREE",
+        quantity: 1,
+        price: 10,
+        size: "small",
+      },
+    ]);
+    expect(mockOpenCart).toHaveBeenCalled();
+  });
+
+  test("handles adding same size dessert to cart", async () => {
+    mockCart = [
+      {
+        dessert_id: 1,
+        name: "Chocolate Cake",
+        description: "Delicious chocolate cake",
+        images: [
+          {
+            image_id: 1,
+            url: "https://example.com/chocolate-cake.jpg",
+          },
+        ],
+        prices: [
+          { size: "small", base_price: 10 },
+          { size: "medium", base_price: 15 },
+          { size: "large", base_price: 20 },
+        ],
+        special_tag: "FREE",
+        quantity: 1,
+        price: 10,
+        size: "small",
+      },
+    ];
+    renderComponent();
+
+    const addToCartButton = screen.getByRole("button", {
+      name: /add to cart/i,
+    });
+
+    await userEvent.click(addToCartButton);
+
+    expect(mockSetCart).toHaveBeenCalledWith([
+      {
+        dessert_id: 1,
+        name: "Chocolate Cake",
+        description: "Delicious chocolate cake",
+        images: [
+          {
+            image_id: 1,
+            url: "https://example.com/chocolate-cake.jpg",
+          },
+        ],
+        prices: [
+          { size: "small", base_price: 10 },
+          { size: "medium", base_price: 15 },
+          { size: "large", base_price: 20 },
+        ],
+        special_tag: "FREE",
+        quantity: 1,
+        price: 10,
+        size: "small",
+      },
+      {
+        dessert_id: 1,
+        name: "Chocolate Cake",
+        description: "Delicious chocolate cake",
+        images: [
+          {
+            image_id: 1,
+            url: "https://example.com/chocolate-cake.jpg",
+          },
+        ],
+        prices: [
+          { size: "small", base_price: 10 },
+          { size: "medium", base_price: 15 },
+          { size: "large", base_price: 20 },
+        ],
+        special_tag: "FREE",
+        quantity: 1,
+        price: 10,
+        size: "small",
+      },
+    ]);
+    expect(mockOpenCart).toHaveBeenCalled();
+  });
 });

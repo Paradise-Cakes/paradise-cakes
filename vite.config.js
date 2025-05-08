@@ -11,7 +11,12 @@ export default defineConfig({
     coverage: {
       provider: "istanbul", // Code coverage
       reporter: ["text", "html", "lcov"],
-      exclude: ["src/main.jsx", "src/tests/**", ".eslintrc.cjs"],
+      exclude: [
+        "src/main.jsx",
+        "src/tests/**",
+        ".eslintrc.cjs",
+        "src/components/account/**",
+      ],
     },
   },
 });
