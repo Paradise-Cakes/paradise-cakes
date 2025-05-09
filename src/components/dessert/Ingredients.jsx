@@ -30,12 +30,6 @@ export default function Ingredients({ ingredients }) {
     useContext(IngredientsContext);
 
   const toggleIngredients = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
     setIngredientsOpen(open);
   };
 
@@ -81,6 +75,7 @@ export default function Ingredients({ ingredients }) {
           }}
         >
           <CgClose
+            data-testid="close-ingredients"
             style={{
               cursor: "pointer",
               width: "25px",
