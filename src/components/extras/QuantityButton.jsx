@@ -25,7 +25,11 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
       }}
       my={2}
     >
-      <Button onClick={handleDecrement} startIcon={<MdRemove />} />
+      <Button
+        data-testid="quantity-dec"
+        onClick={handleDecrement}
+        startIcon={<MdRemove />}
+      />
       <Box
         display={"flex"}
         justifyContent={"center"}
@@ -34,7 +38,11 @@ export default function QuantityButton({ quantity, setQuantity, cartItem }) {
       >
         {quantity}
       </Box>
-      <Button onClick={handleIncrement} startIcon={<MdAdd />} />
+      <Button
+        data-testid="quantity-inc"
+        onClick={handleIncrement}
+        startIcon={<MdAdd />}
+      />
     </Box>
   );
 }

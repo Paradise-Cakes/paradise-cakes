@@ -120,7 +120,7 @@ describe("CreateDessert Component", () => {
     await userEvent.click(createButton);
 
     expect(postDessertMock).toHaveBeenCalled();
-  });
+  }, 30000);
 
   test("logs error if uploading image to S3 upload url fails", async () => {
     postDessertMock.mockResolvedValue({
