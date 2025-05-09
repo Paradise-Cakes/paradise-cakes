@@ -11,7 +11,7 @@ import * as reactRouterDom from "react-router-dom";
 import { debug } from "vitest-preview";
 
 let mockCart = [];
-const mockSetCart = vi.fn();
+const mockAddToCart = vi.fn();
 const mockOpenCart = vi.fn();
 
 const mockIngredientsContextValue = {
@@ -31,7 +31,7 @@ reactRouterDom.useParams.mockReturnValue({ dessertId: "1" });
 
 vi.mock("../../../store/useCartStore", () => ({
   useCartStore: () => ({
-    setCart: mockSetCart,
+    addToCart: mockAddToCart,
     openCart: mockOpenCart,
     cart: mockCart,
   }),
@@ -77,7 +77,7 @@ function renderComponent() {
 
 describe("DessertDetail Component", () => {
   beforeEach(() => {
-    mockSetCart.mockClear();
+    mockAddToCart.mockClear();
     mockOpenCart.mockClear();
     mockCart = [];
   });
@@ -113,28 +113,27 @@ describe("DessertDetail Component", () => {
       name: /add to cart/i,
     });
     await userEvent.click(addToCartButton);
-    expect(mockSetCart).toHaveBeenCalledWith([
-      {
-        dessert_id: "1",
-        name: "Chocolate Cake",
-        description: "Delicious chocolate cake",
-        images: [
-          {
-            image_id: 1,
-            url: "https://example.com/chocolate-cake.jpg",
-          },
-        ],
-        prices: [
-          { size: "small", base_price: 10 },
-          { size: "medium", base_price: 15 },
-          { size: "large", base_price: 20 },
-        ],
-        special_tag: "FREE",
-        quantity: 1,
-        price: 10,
-        size: "small",
-      },
-    ]);
+    expect(mockAddToCart).toHaveBeenCalledWith({
+      id: "1 - small",
+      dessert_id: "1",
+      name: "Chocolate Cake",
+      description: "Delicious chocolate cake",
+      images: [
+        {
+          image_id: 1,
+          url: "https://example.com/chocolate-cake.jpg",
+        },
+      ],
+      prices: [
+        { size: "small", base_price: 10 },
+        { size: "medium", base_price: 15 },
+        { size: "large", base_price: 20 },
+      ],
+      special_tag: "FREE",
+      quantity: 1,
+      price: 10,
+      size: "small",
+    });
     expect(mockOpenCart).toHaveBeenCalled();
   });
 
@@ -169,28 +168,27 @@ describe("DessertDetail Component", () => {
 
     await userEvent.click(addToCartButton);
 
-    expect(mockSetCart).toHaveBeenCalledWith([
-      {
-        dessert_id: "1",
-        name: "Chocolate Cake",
-        description: "Delicious chocolate cake",
-        images: [
-          {
-            image_id: 1,
-            url: "https://example.com/chocolate-cake.jpg",
-          },
-        ],
-        prices: [
-          { size: "small", base_price: 10 },
-          { size: "medium", base_price: 15 },
-          { size: "large", base_price: 20 },
-        ],
-        special_tag: "FREE",
-        quantity: 2,
-        price: 10,
-        size: "small",
-      },
-    ]);
+    expect(mockAddToCart).toHaveBeenCalledWith({
+      id: "1 - small",
+      dessert_id: "1",
+      name: "Chocolate Cake",
+      description: "Delicious chocolate cake",
+      images: [
+        {
+          image_id: 1,
+          url: "https://example.com/chocolate-cake.jpg",
+        },
+      ],
+      prices: [
+        { size: "small", base_price: 10 },
+        { size: "medium", base_price: 15 },
+        { size: "large", base_price: 20 },
+      ],
+      special_tag: "FREE",
+      quantity: 1,
+      price: 10,
+      size: "small",
+    });
     expect(mockOpenCart).toHaveBeenCalled();
   });
 
@@ -208,6 +206,7 @@ describe("DessertDetail Component", () => {
   test("handles adding same dessert but with different size to cart", async () => {
     mockCart = [
       {
+        id: "1 - small",
         dessert_id: "1",
         name: "Chocolate Cake",
         description: "Delicious chocolate cake",
@@ -239,48 +238,27 @@ describe("DessertDetail Component", () => {
 
     await userEvent.click(addToCartButton);
 
-    expect(mockSetCart).toHaveBeenCalledWith([
-      {
-        dessert_id: "1",
-        name: "Chocolate Cake",
-        description: "Delicious chocolate cake",
-        images: [
-          {
-            image_id: 1,
-            url: "https://example.com/chocolate-cake.jpg",
-          },
-        ],
-        prices: [
-          { size: "small", base_price: 10 },
-          { size: "medium", base_price: 15 },
-          { size: "large", base_price: 20 },
-        ],
-        special_tag: "FREE",
-        quantity: 1,
-        price: 10,
-        size: "small",
-      },
-      {
-        dessert_id: "1",
-        name: "Chocolate Cake",
-        description: "Delicious chocolate cake",
-        images: [
-          {
-            image_id: 1,
-            url: "https://example.com/chocolate-cake.jpg",
-          },
-        ],
-        prices: [
-          { size: "small", base_price: 10 },
-          { size: "medium", base_price: 15 },
-          { size: "large", base_price: 20 },
-        ],
-        special_tag: "FREE",
-        quantity: 1,
-        price: 15,
-        size: "medium",
-      },
-    ]);
+    expect(mockAddToCart).toHaveBeenCalledWith({
+      id: "1 - medium",
+      dessert_id: "1",
+      name: "Chocolate Cake",
+      description: "Delicious chocolate cake",
+      images: [
+        {
+          image_id: 1,
+          url: "https://example.com/chocolate-cake.jpg",
+        },
+      ],
+      prices: [
+        { size: "small", base_price: 10 },
+        { size: "medium", base_price: 15 },
+        { size: "large", base_price: 20 },
+      ],
+      special_tag: "FREE",
+      quantity: 1,
+      price: 15,
+      size: "medium",
+    });
     expect(mockOpenCart).toHaveBeenCalled();
   });
 });
