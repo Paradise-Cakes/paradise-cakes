@@ -9,7 +9,11 @@ import { BrowserRouter } from "react-router-dom";
 import { IngredientsContext } from "../../../context/IngredientsContext";
 
 const mockUpdateCartItemQuantity = vi.fn();
-const mockSetQuantity = vi.fn();
+const mockSetQuantity = vi.fn((fn) => {
+  if (typeof fn === "function") {
+    fn(1); // simulate previous value
+  }
+});
 
 const cartItem = {
   id: "1 - medium",

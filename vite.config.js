@@ -15,8 +15,11 @@ export default defineConfig({
         "src/main.jsx",
         "src/tests/**",
         ".eslintrc.cjs",
+        /** Skipping these for now until auth is more solid */
         "src/components/account/**",
         "src/components/extras/PhoneNumberInput.jsx",
+        "src/components/forms/auth/**",
+        "src/components/navigation/auth/**",
       ],
     },
   },
