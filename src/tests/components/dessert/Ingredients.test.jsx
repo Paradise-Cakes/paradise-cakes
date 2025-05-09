@@ -7,7 +7,6 @@ import userEvent from "@testing-library/user-event";
 import { Query, QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { IngredientsContext } from "../../../context/IngredientsContext";
-import { before } from "lodash";
 
 const mockSetIngredientsOpen = vi.fn();
 

@@ -11,7 +11,7 @@ export default function AnimatedBanner({ messages, cycleTime = 5000 }) {
     }, cycleTime);
 
     return () => clearInterval(interval);
-  }, [cycleTime, messages.length]);
+  }, []);
 
   return (
     <Box
