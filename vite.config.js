@@ -16,6 +16,7 @@ export default defineConfig({
         "src/tests/**",
         ".eslintrc.cjs",
         "src/components/account/**",
+        "src/components/extras/PhoneNumberInput.jsx",
       ],
     },
   },
