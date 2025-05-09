@@ -31,7 +31,11 @@ export default function LoadingButton({
             alignItems: "center",
           }}
         >
-          <CircularProgress size={24} color="inherit" />
+          <CircularProgress
+            data-testid="loading-button"
+            size={24}
+            color="inherit"
+          />
         </Box>
       ) : (
         children
