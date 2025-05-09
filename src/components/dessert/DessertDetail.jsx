@@ -26,7 +26,7 @@ export default function DessertDetail() {
     isLoading: isGetDessertLoading,
     isSuccess: isGetDessertSuccess,
   } = getDessertQuery;
-  const { setCart, openCart, cart } = useCartStore();
+  const { addToCart, openCart } = useCartStore();
   const { setIngredientsOpen } = useContext(IngredientsContext);
   const [size, setSize] = useState();
 
@@ -47,25 +47,13 @@ export default function DessertDetail() {
   const handleAddToCart = () => {
     const cartItem = {
       ...dessert,
+      id: `${dessertId} - ${size}`,
       quantity: quantity,
-      price: price / quantity,
+      price: price,
       size: size,
     };
-    let existingItem = false;
 
-    for (let i = 0; i < cart.length; i++) {
-      if (cart[i].dessert_id === dessertId && cart[i].size === size) {
-        existingItem = true;
-        cart[i].quantity += quantity;
-        break;
-      }
-    }
-
-    if (existingItem) {
-      setCart([...cart]);
-    } else {
-      setCart([...cart, cartItem]);
-    }
+    addToCart(cartItem);
     openCart();
   };
 

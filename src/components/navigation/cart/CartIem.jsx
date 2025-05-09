@@ -14,15 +14,11 @@ export default function CartItem({
 }) {
   const theme = useTheme();
   const [quantity, setQuantity] = useState(itemQuantity);
-  const { setCart } = useCartStore();
+  const { removeCartItem } = useCartStore();
 
-  // remove the item from the cart that matches the size and dessert
+  // remove the item from the cart that matches the cart item id
   const handleRemove = () => {
-    setCart((prev) => {
-      return prev.filter(
-        (cartItem) => cartItem.id !== id || cartItem.size !== size
-      );
-    });
+    removeCartItem(id);
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Grid,
   Typography,
@@ -104,7 +104,7 @@ export default function Cart() {
                   key={`${item.dessert_id} - ${item.size}`}
                 >
                   <CartItem
-                    id={item.dessert_id}
+                    id={`${item.dessert_id} - ${item.size}`}
                     name={item.name}
                     size={item.size}
                     price={item.price}
