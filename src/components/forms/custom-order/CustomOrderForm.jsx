@@ -115,7 +115,9 @@ export default function CustomOrderForm() {
               />
             </LocalizationProvider>
           </FormGroup>
-          <LoadingButton isDisabled={false}>Place Order</LoadingButton>
+          <LoadingButton isDisabled={!orderForm.isValid}>
+            Place Order
+          </LoadingButton>
         </Box>
       </Box>
     </Container>
