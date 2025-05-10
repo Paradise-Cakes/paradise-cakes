@@ -42,6 +42,15 @@ export const dessertSchema = object({
     .min(1, "At least one ingredient is required"),
 });
 
+export const customOrderSchema = object({
+  customer_first_name: string().required(),
+  customer_last_name: string().required(),
+  customer_email: string().required().email(),
+  customer_phone_number: string().required(),
+  description: string().required(),
+  delivery_date: string().nullable().required("Delivery date is required"),
+});
+
 export const forgotPasswordSchema = object({
   email: string().required().email(),
 });

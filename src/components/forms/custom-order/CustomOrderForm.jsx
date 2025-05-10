@@ -15,9 +15,11 @@ import { DateTime } from "luxon";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import LoadingButton from "../../extras/LoadingButton";
+import { customOrderSchema } from "../../../schema";
 
 export default function CustomOrderForm() {
-  const formik = useFormik({
+  const orderForm = useFormik({
     initialValues: {
       customer_first_name: "",
       customer_last_name: "",
@@ -26,6 +28,7 @@ export default function CustomOrderForm() {
       description: "",
       delivery_date: null,
     },
+    validationSchema: customOrderSchema,
     onSubmit: (values) => {
       console.log(values);
     },
@@ -46,24 +49,24 @@ export default function CustomOrderForm() {
         <Box
           component={"form"}
           sx={{ maxWidth: "500px", margin: "0 auto" }}
-          onSubmit={formik.handleSubmit}
+          onSubmit={orderForm.handleSubmit}
         >
           <TextField
             fullWidth
             label="First Name"
             sx={{ marginTop: "1rem" }}
-            value={formik.values.customer_first_name}
+            value={orderForm.values.customer_first_name}
             onChange={(e) =>
-              formik.setFieldValue("customer_first_name", e.target.value)
+              orderForm.setFieldValue("customer_first_name", e.target.value)
             }
           />
           <TextField
             fullWidth
             label="Last Name"
             sx={{ marginTop: "1rem" }}
-            value={formik.values.customer_last_name}
+            value={orderForm.values.customer_last_name}
             onChange={(e) =>
-              formik.setFieldValue("customer_last_name", e.target.value)
+              orderForm.setFieldValue("customer_last_name", e.target.value)
             }
           />
           <TextField
@@ -71,15 +74,15 @@ export default function CustomOrderForm() {
             label="Email"
             type="email"
             sx={{ marginTop: "1rem", marginBottom: "1rem" }}
-            value={formik.values.customer_email}
+            value={orderForm.values.customer_email}
             onChange={(e) =>
-              formik.setFieldValue("customer_email", e.target.value)
+              orderForm.setFieldValue("customer_email", e.target.value)
             }
           />
           <PhoneNumberInput
-            value={formik.values.customer_phone_number}
+            value={orderForm.values.customer_phone_number}
             onChange={(value) =>
-              formik.setFieldValue("customer_phone_number", value)
+              orderForm.setFieldValue("customer_phone_number", value)
             }
           />
           <TextField
@@ -92,6 +95,10 @@ export default function CustomOrderForm() {
               maxLength: 265,
             }}
             placeholder="Describe the custom order you would like to place. Please include any specific details such as flavor, color, design or food allergies."
+            value={orderForm.values.description}
+            onChange={(e) =>
+              orderForm.setFieldValue("description", e.target.value)
+            }
           />
           <FormGroup sx={{ marginTop: "1rem" }}>
             <Typography variant="h6" marginBottom="1rem">
@@ -101,25 +108,14 @@ export default function CustomOrderForm() {
               <DateTimePicker
                 label={"Delivery Date"}
                 timezone="system"
-                value={formik.values.delivery_date}
+                value={orderForm.values.delivery_date}
                 onChange={(value) => {
-                  formik.setFieldValue("deliveryDate", value);
+                  orderForm.setFieldValue("delivery_date", value);
                 }}
               />
             </LocalizationProvider>
           </FormGroup>
-          <Button
-            variant="contained"
-            color="success"
-            type="submit"
-            sx={{
-              marginTop: "1rem",
-              width: { xs: "100%", sm: "fit-content" },
-              color: "white",
-            }}
-          >
-            Place Order
-          </Button>
+          <LoadingButton isDisabled={false}>Place Order</LoadingButton>
         </Box>
       </Box>
     </Container>
