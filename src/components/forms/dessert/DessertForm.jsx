@@ -104,13 +104,12 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
     }
   };
 
-  const handleKeyDownIngredient = (event, newValue) => {
+  const handleKeyDownIngredient = (event) => {
+    const newValue = event.target.value.toUpperCase();
     if (
-      event.key === "Enter" &&
-      newValue &&
+      newValue?.trim() != "" &&
       !dessertForm.values.ingredients.includes(newValue)
     ) {
-      event.preventDefault();
       dessertForm.setFieldValue("ingredients", [
         ...dessertForm.values.ingredients,
         newValue,
@@ -215,12 +214,6 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             <MenuItem value={"cookie"}>Cookie</MenuItem>
             <MenuItem value={"pie"}>Pie</MenuItem>
           </Select>
-          {dessertForm.touched.dessert_type &&
-            dessertForm.errors.dessert_type && (
-              <FormHelperText error>
-                {dessertForm.errors.dessert_type}
-              </FormHelperText>
-            )}
         </FormControl>
         <Autocomplete
           sx={{ marginTop: "1rem" }}
@@ -228,12 +221,16 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           name="ingredients"
           freeSolo
           options={[]}
-          getOptionLabel={(option) => option}
           inputValue={dessertForm.values.currentInputValue || ""}
           onInputChange={(event, newValue) => {
             dessertForm.setFieldValue("currentInputValue", newValue);
           }}
-          onKeyDown={handleKeyDownIngredient}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleKeyDownIngredient(e);
+            }
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -263,9 +260,6 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             ))
           }
           value={dessertForm.values.ingredients}
-          onChange={(event, newValue) => {
-            dessertForm.setFieldValue("ingredients", newValue);
-          }}
         />
         <Box sx={{ marginTop: "1.5rem" }}>
           <Box
@@ -276,6 +270,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           >
             <Typography variant="h5">Sizing and Pricing</Typography>
             <IoAddCircle
+              data-testid="add-price-button"
               style={{
                 width: "40px",
                 height: "40px",
@@ -317,14 +312,9 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                     </MenuItem>
                   ))}
                 </Select>
-                {dessertForm.touched?.prices?.[index]?.size &&
-                  dessertForm.errors?.prices?.[index]?.size && (
-                    <FormHelperText error>
-                      {dessertForm.errors?.prices[index]?.size}
-                    </FormHelperText>
-                  )}
               </FormControl>
               <TextField
+                data-testid={`dessert-price-input-${index}`}
                 label={"Price"}
                 sx={{ marginTop: "1rem", width: "150px" }}
                 value={dessertForm.values.prices[index].base_price}
@@ -332,16 +322,9 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                 onBlur={() =>
                   dessertForm.setFieldTouched(`prices[${index}].base_price`)
                 }
-                error={Boolean(
-                  dessertForm.touched.prices?.[index]?.base_price &&
-                    dessertForm.errors.prices?.[index]?.base_price
-                )}
-                helperText={
-                  dessertForm.touched.prices?.[index]?.base_price &&
-                  dessertForm.errors.prices?.[index]?.base_price
-                }
               />
               <IoCloseCircleSharp
+                data-testid={`remove-price-button-${index}`}
                 style={{
                   width: "30px",
                   height: "30px",
@@ -357,6 +340,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             <FormControlLabel
               control={
                 <Switch
+                  data-testid="dessert-visible-switch"
                   checked={dessertForm?.values?.visible}
                   onChange={async (event) => {
                     dessertForm.setFieldValue("visible", event.target.checked);
@@ -445,6 +429,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           >
             {dessertForm.values?.images?.map((file, index) => (
               <Box
+                data-testid={`image-preview-${index}`}
                 key={index}
                 sx={{
                   position: "relative",
@@ -462,6 +447,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                   }}
                 />
                 <IoCloseCircleSharp
+                  data-testid={`remove-image-button-${index}`}
                   style={{
                     position: "absolute",
                     top: "0",
@@ -480,6 +466,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                 />
                 <FormControl fullWidth>
                   <Select
+                    data-testid={`image-order-select-${index}`}
                     labelId="img-order-label"
                     value={index}
                     sx={{ marginTop: "0.5rem" }}
