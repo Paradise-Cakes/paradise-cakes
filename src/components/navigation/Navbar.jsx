@@ -29,12 +29,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const theme = useTheme();
   const { isAuthenticated, isAdmin } = useContext(AuthContext);
-  const getDessertsQuery = useGetDesserts();
-  const {
-    data: desserts,
-    isLoading: isGetDessertsLoading,
-    isSuccess: isGetDessertsSuccess,
-  } = getDessertsQuery;
 
   return (
     <AppBar
@@ -52,120 +46,81 @@ export default function Navbar() {
           "Custom orders available",
         ]}
       />
-      <Container
-        maxWidth={"false"}
-        sx={{
-          margin: 0,
-          width: "100%",
-        }}
-      >
-        <Toolbar
+      <Toolbar sx={{ display: "flex", flexDirection: "column" }}>
+        <Box
           sx={{
+            justifyContent: "space-between",
+            display: "flex",
             width: "100%",
-            display: "block",
+            height: "100%",
+            position: "relative",
+            marginTop: "20px",
           }}
         >
-          <Hidden mdDown implementation="css">
-            <Box
-              style={{
-                textAlign: "center",
-                display: "block",
-                position: "relative",
-                top: "10px",
-              }}
-            >
-              <img
-                src={AppBarLogo}
-                width="120px"
-                style={{
-                  cursor: "pointer",
-                  userSelect: "none",
-                }}
-                onClick={() => navigate("/")}
-              />
-            </Box>
-            <Box
-              sx={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                textAlign: "center",
-                display: "flex",
-                width: "600px",
-                justifyContent: "space-between",
-              }}
-            >
-              <NavLink title="Home" toLink={"/"} />
-              <NavLink title="Shop" toLink={"/shop"} />
-              <NavLink title="Custom Order" toLink={"/custom-order"} />
-            </Box>
-          </Hidden>
-          <Hidden mdUp implementation="css">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              {drawerOpen ? (
-                <CgClose
-                  style={{
-                    width: "25px",
-                    height: "25px",
-                    cursor: "pointer",
-                    position: "absolute",
-                  }}
-                  onClick={() => setDrawerOpen(false)}
-                />
-              ) : (
-                <CgMenu
-                  style={{
-                    width: "25px",
-                    height: "25px",
-                    cursor: "pointer",
-                    position: "absolute",
-                  }}
-                  onClick={() => setDrawerOpen(true)}
-                />
-              )}
-              <img
-                src={AppBarLogo}
-                width="120px"
-                style={{
-                  cursor: "pointer",
-                  userSelect: "none",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                }}
-                onClick={() => navigate("/")}
-              />
-            </div>
-          </Hidden>
           <Box
             sx={{
-              position: "absolute",
-              top: "25%",
-              right: "1%",
+              width: "30px",
+              height: "30px",
               cursor: "pointer",
-              display: "flex",
-              width: isAuthenticated && isAdmin ? "120px" : "80px",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "center",
+              visibility: { xs: "visible", md: "hidden" },
             }}
           >
+            {drawerOpen ? (
+              <CgClose
+                style={{ width: "100%", height: "100%" }}
+                onClick={() => setDrawerOpen(false)}
+              />
+            ) : (
+              <CgMenu
+                style={{ width: "100%", height: "100%" }}
+                onClick={() => setDrawerOpen(true)}
+              />
+            )}
+          </Box>
+          <Box
+            sx={{
+              width: "100px",
+              height: "50px",
+              cursor: "pointer",
+              userSelect: "none",
+              position: "absolute",
+              left: "50%",
+              right: "50%",
+              bottom: "0%",
+              transform: "translate(-50%)",
+            }}
+          >
+            <img
+              style={{ width: "100%", height: "100%" }}
+              alt="app-logo-1"
+              src={AppBarLogo}
+              onClick={() => navigate("/")}
+            />
+          </Box>
+          <Box display={"flex"} gap={1.5}>
             <Box
               onClick={() => {
                 protectedNavigate("/account");
               }}
+              sx={{
+                width: "30px",
+                height: "30px",
+                cursor: "pointer",
+              }}
             >
               <VscAccount
                 style={{
-                  width: "30px",
-                  height: "30px",
+                  width: "100%",
+                  height: "100%",
                 }}
               />
             </Box>
-            <Box onClick={() => openCart()} sx={{ position: "relative" }}>
+            <Box
+              onClick={() => openCart()}
+              sx={{ position: "relative", cursor: "pointer" }}
+            >
               <BsCart2
                 style={{
                   width: "30px",
@@ -186,18 +141,36 @@ export default function Navbar() {
               )}
             </Box>
             {isAdmin && isAuthenticated && (
-              <Box onClick={() => protectedAdminNavigate("/admin/home")}>
+              <Box
+                onClick={() => protectedAdminNavigate("/admin/home")}
+                sx={{ width: "30px", height: "30px", cursor: "pointer" }}
+              >
                 <LuCakeSlice
                   style={{
-                    width: "30px",
-                    height: "30px",
+                    width: "100%",
+                    height: "100%",
                   }}
                 />
               </Box>
             )}
           </Box>
-        </Toolbar>
-      </Container>
+        </Box>
+        <Box
+          sx={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            textAlign: "center",
+            display: "flex",
+            width: "600px",
+            justifyContent: "space-between",
+            display: { xs: "none", md: "flex" },
+          }}
+        >
+          <NavLink title="Home" toLink={"/"} />
+          <NavLink title="Shop" toLink={"/shop"} />
+          <NavLink title="Custom Order" toLink={"/custom-order"} />
+        </Box>
+      </Toolbar>
     </AppBar>
   );
 }

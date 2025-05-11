@@ -4,24 +4,13 @@ import { DrawerContext } from "../../context/DrawerContext";
 import DrawerItem from "./DrawerItem";
 
 export default function NavSideDrawer() {
-  const { drawerOpen, setDrawerOpen } = useContext(DrawerContext);
-
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
+  const { drawerOpen } = useContext(DrawerContext);
 
   return (
     <Drawer
       hideBackdrop={true}
       anchor="left"
       open={drawerOpen}
-      onClose={toggleDrawer(false)}
       PaperProps={{
         sx: {
           position: "relative",
