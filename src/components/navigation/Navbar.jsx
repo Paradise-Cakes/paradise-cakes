@@ -69,11 +69,13 @@ export default function Navbar() {
           >
             {drawerOpen ? (
               <CgClose
+                data-testid="menu-button-close"
                 style={{ width: "100%", height: "100%" }}
                 onClick={() => setDrawerOpen(false)}
               />
             ) : (
               <CgMenu
+                data-testid="menu-button-open"
                 style={{ width: "100%", height: "100%" }}
                 onClick={() => setDrawerOpen(true)}
               />
@@ -101,6 +103,7 @@ export default function Navbar() {
           </Box>
           <Box display={"flex"} gap={1.5}>
             <Box
+              data-testid="account-button"
               onClick={() => {
                 protectedNavigate("/account");
               }}
@@ -118,6 +121,7 @@ export default function Navbar() {
               />
             </Box>
             <Box
+              data-testid="cart-button"
               onClick={() => openCart()}
               sx={{ position: "relative", cursor: "pointer" }}
             >
@@ -142,6 +146,7 @@ export default function Navbar() {
             </Box>
             {isAdmin && isAuthenticated && (
               <Box
+                data-testid="admin-button"
                 onClick={() => protectedAdminNavigate("/admin/home")}
                 sx={{ width: "30px", height: "30px", cursor: "pointer" }}
               >
@@ -160,7 +165,6 @@ export default function Navbar() {
             marginLeft: "auto",
             marginRight: "auto",
             textAlign: "center",
-            display: "flex",
             width: "600px",
             justifyContent: "space-between",
             display: { xs: "none", md: "flex" },
