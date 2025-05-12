@@ -59,6 +59,7 @@ export default function CartItem({
           cartItem={{ id, name, size, price }}
         />
         <CgClose
+          data-testid="remove-cart-item"
           style={{
             cursor: "pointer",
             width: "25px",

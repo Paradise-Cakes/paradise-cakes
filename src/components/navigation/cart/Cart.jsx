@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Typography,
@@ -19,17 +19,8 @@ import { useNavigate } from "react-router-dom";
 export default function Cart() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const { cartOpen, openCart, closeCart, cart } = useCartStore();
-
-  const toggleCart = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    open ? openCart() : closeCart();
-  };
+  const { cartOpen, closeCart, cart } = useCartStore();
+  const [zip, setZip] = useState("");
 
   const calculateCartSubtotal = () => {
     let total = 0;
@@ -44,7 +35,7 @@ export default function Cart() {
       hideBackdrop={false}
       anchor="right"
       open={cartOpen}
-      onClose={toggleCart(false)}
+      onClose={closeCart}
       sx={{
         position: "relative",
       }}
@@ -65,6 +56,7 @@ export default function Cart() {
           }}
         >
           <CgClose
+            data-testid="close-cart"
             style={{
               cursor: "pointer",
               width: "25px",
@@ -135,6 +127,7 @@ export default function Cart() {
                   Delivery Zip
                 </Typography>
                 <TextField
+                  data-testid="zip-code"
                   sx={{ width: "120px" }}
                   InputProps={{
                     startAdornment: (
@@ -147,9 +140,10 @@ export default function Cart() {
                     inputMode: "numeric",
                     pattern: "[0-9]*",
                   }}
+                  value={zip}
                   onChange={(e) => {
-                    const value = e.target.value;
-                    e.target.value = value.replace(/[^0-9]/g, "");
+                    const value = e.target.value.replace(/[^0-9]/g, "");
+                    setZip(value);
                   }}
                 />
               </Box>
@@ -203,6 +197,7 @@ export default function Cart() {
               Your cart is empty, start shopping now!
             </Typography>
             <Button
+              data-testid="shop-all-button"
               color="dark"
               variant="contained"
               sx={{
