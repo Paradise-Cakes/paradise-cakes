@@ -66,12 +66,12 @@ export default function SignInModal() {
             }}
             onClick={closeSignInModal}
           />
-          <Typography variant="h5" textAlign={"center"} fontWeight={1000}>
+          <Typography variant="h5" textAlign={"center"}>
             SIGN IN
           </Typography>
           <SignInForm />
           <Typography
-            sx={{ fontWeight: "800", textAlign: "center", cursor: "pointer" }}
+            sx={{ textAlign: "center", cursor: "pointer" }}
             onClick={() => {
               closeSignInModal();
               openForgotPasswordModal();
@@ -89,7 +89,7 @@ export default function SignInModal() {
               marginBottom: "2rem",
             }}
           />
-          <Typography variant="h5" textAlign={"center"} fontWeight={1000}>
+          <Typography variant="h5" textAlign={"center"}>
             SIGN UP
           </Typography>
           <Typography
@@ -109,7 +109,6 @@ export default function SignInModal() {
               height: "45px",
               textTransform: "none",
               fontSize: "1rem",
-              fontWeight: "800",
               marginTop: "1rem",
             }}
             onClick={() => {

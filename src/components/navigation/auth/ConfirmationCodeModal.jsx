@@ -68,7 +68,6 @@ export default function ConfirmationCodeModal() {
           <Typography
             variant="h5"
             textAlign="center"
-            fontWeight={1000}
             sx={{ marginBottom: "1rem" }}
           >
             VERIFICATION

@@ -4,9 +4,7 @@ const deployEnv = import.meta.env.VITE_DEPLOY_ENV;
 const API_URL =
   deployEnv === "prod"
     ? "https://orders-api.megsparadisecakes.com/v1"
-    : deployEnv === "dev"
-    ? "https://orders-dev-api.megsparadisecakes.com/v1"
-    : "http://localhost:8001/v1";
+    : "https://orders-dev-api.megsparadisecakes.com/v1";
 
 export const getOrderById = async (order_id) => {
   const response = await axios.get(`${API_URL}/orders/${order_id}`);

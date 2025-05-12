@@ -14,15 +14,11 @@ export default function CartItem({
 }) {
   const theme = useTheme();
   const [quantity, setQuantity] = useState(itemQuantity);
-  const { setCart } = useCartStore();
+  const { removeCartItem } = useCartStore();
 
-  // remove the item from the cart that matches the size and dessert
+  // remove the item from the cart that matches the cart item id
   const handleRemove = () => {
-    setCart((prev) => {
-      return prev.filter(
-        (cartItem) => cartItem.id !== id || cartItem.size !== size
-      );
-    });
+    removeCartItem(id);
   };
 
   return (
@@ -51,7 +47,7 @@ export default function CartItem({
         />
       </Box>
       <Box>
-        <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+        <Typography variant="h6" fontSize="1rem">
           {name} - {size}
         </Typography>
         <Typography variant="h6" fontSize="1rem">
@@ -63,6 +59,7 @@ export default function CartItem({
           cartItem={{ id, name, size, price }}
         />
         <CgClose
+          data-testid="remove-cart-item"
           style={{
             cursor: "pointer",
             width: "25px",

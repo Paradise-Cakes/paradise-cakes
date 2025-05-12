@@ -5,7 +5,6 @@ import Cart from "./components/navigation/cart/Cart";
 import { DrawerProvider } from "./context/DrawerContext";
 import { useSearchParams } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Container } from "@mui/system";
 import { IngredientsProvider } from "./context/IngredientsContext";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import SignInModal from "./components/navigation/auth/SignInModal";
@@ -20,12 +19,12 @@ import { useModalStore } from "./store/useModalStore";
 import AppRoutes from "./AppRoutes";
 import { CircularProgress } from "@mui/material";
 import UnderConstruction from "./components/extras/UnderConstruction";
-
-const queryClient = new QueryClient();
-const hostname = window.location.hostname;
-const isDev = hostname.startsWith("dev.") || hostname.startsWith("localhost");
+import { Box } from "@mui/material";
 
 function App() {
+  const queryClient = new QueryClient();
+  const hostname = window.location.hostname;
+  const isDev = hostname.startsWith("dev.") || hostname.startsWith("localhost");
   const [searchParams] = useSearchParams();
   const { openResetPasswordModal, setResetPasswordParams } = useModalStore();
   const [isAppReady, setIsAppReady] = useState(false);
@@ -49,41 +48,48 @@ function App() {
   }
 
   return (
-    <Container
-      sx={{
-        marginTop: "11rem",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        height: "100vh",
-      }}
-      maxWidth={"false"}
-    >
-      {isAppReady ? (
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <DrawerProvider drawerOpen={false}>
-              <IngredientsProvider ingredientsOpen={false}>
-                <Navbar />
-                <NavSideDrawer />
-                <SignInModal />
-                <ConfirmationCodeModal />
-                <LoggedInModal />
-                <SignUpModal />
-                <ForgotPasswordModal />
-                <SentResetPasswordEmailModal />
-                <ResetPasswordModal />
-                <Cart />
-                <AppRoutes />
-                <Footer />
-              </IngredientsProvider>
-            </DrawerProvider>
-          </AuthProvider>
-        </QueryClientProvider>
-      ) : (
-        <CircularProgress sx={{ margin: "0 auto" }} />
-      )}
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <DrawerProvider drawerOpen={false}>
+          <IngredientsProvider ingredientsOpen={false}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+              }}
+            >
+              <Navbar />
+              <Box
+                component="main"
+                sx={{
+                  flex: 1,
+                  mt: { xs: "8rem", md: "12rem" },
+                }}
+              >
+                {isAppReady ? (
+                  <>
+                    <NavSideDrawer />
+                    <SignInModal />
+                    <ConfirmationCodeModal />
+                    <LoggedInModal />
+                    <SignUpModal />
+                    <ForgotPasswordModal />
+                    <SentResetPasswordEmailModal />
+                    <ResetPasswordModal />
+                    <Cart />
+                    <AppRoutes />
+                  </>
+                ) : (
+                  <CircularProgress sx={{ margin: "0 auto" }} />
+                )}
+              </Box>
+              <Footer />
+            </Box>
+          </IngredientsProvider>
+        </DrawerProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -23,6 +23,7 @@ export default function DrawerItem({ toLink, text }) {
       }}
     >
       <ListItemButton
+        data-testid="drawer-item"
         onClick={() => {
           navigate(toLink);
           setDrawerOpen(false);
@@ -30,9 +31,7 @@ export default function DrawerItem({ toLink, text }) {
         sx={{
           paddingTop: "16px",
           paddingBottom: "16px",
-          "& .MuiTypography-root": {
-            fontWeight: "1000",
-          },
+          "& .MuiTypography-root": {},
           "&:hover": {
             backgroundColor: "white",
             "& .MuiTypography-root": {

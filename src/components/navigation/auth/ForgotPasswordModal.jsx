@@ -66,7 +66,7 @@ export default function ForgotPasswordModal() {
             onClick={toggleForgotPasswordModal(false)}
           />
           <Box>
-            <Typography variant="h5" fontWeight={1000} textAlign={"center"}>
+            <Typography variant="h5" textAlign={"center"}>
               FORGOT PASSWORD?
             </Typography>
             <Typography
@@ -81,7 +81,7 @@ export default function ForgotPasswordModal() {
           </Box>
           <Box>
             <Typography
-              sx={{ fontWeight: "800", textAlign: "center", cursor: "pointer" }}
+              sx={{ textAlign: "center", cursor: "pointer" }}
               onClick={() => {
                 closeForgotPasswordModal();
                 openSignInModal();

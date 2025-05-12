@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Typography,
@@ -19,21 +19,12 @@ import { useNavigate } from "react-router-dom";
 export default function Cart() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const { cartOpen, openCart, closeCart, cart } = useCartStore();
-
-  const toggleCart = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    open ? openCart() : closeCart();
-  };
+  const { cartOpen, closeCart, cart } = useCartStore();
+  const [zip, setZip] = useState("");
 
   const calculateCartSubtotal = () => {
     let total = 0;
-    cart.forEach((item) => {
+    cart?.forEach((item) => {
       total += item.quantity * item.price;
     });
     return total;
@@ -44,7 +35,7 @@ export default function Cart() {
       hideBackdrop={false}
       anchor="right"
       open={cartOpen}
-      onClose={toggleCart(false)}
+      onClose={closeCart}
       sx={{
         position: "relative",
       }}
@@ -65,6 +56,7 @@ export default function Cart() {
           }}
         >
           <CgClose
+            data-testid="close-cart"
             style={{
               cursor: "pointer",
               width: "25px",
@@ -73,7 +65,7 @@ export default function Cart() {
             }}
             onClick={() => closeCart()}
           />
-          <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+          <Typography variant="h6" fontSize="1rem">
             YOUR ORDER
           </Typography>
           <Box
@@ -89,7 +81,7 @@ export default function Cart() {
             }}
           />
         </Box>
-        {cart.length > 0 && (
+        {cart?.length > 0 && (
           <Box
             display={"flex"}
             flexDirection={"column"}
@@ -104,7 +96,7 @@ export default function Cart() {
                   key={`${item.dessert_id} - ${item.size}`}
                 >
                   <CartItem
-                    id={item.dessert_id}
+                    id={`${item.dessert_id} - ${item.size}`}
                     name={item.name}
                     size={item.size}
                     price={item.price}
@@ -135,6 +127,7 @@ export default function Cart() {
                   Delivery Zip
                 </Typography>
                 <TextField
+                  data-testid="zip-code"
                   sx={{ width: "120px" }}
                   InputProps={{
                     startAdornment: (
@@ -147,9 +140,10 @@ export default function Cart() {
                     inputMode: "numeric",
                     pattern: "[0-9]*",
                   }}
+                  value={zip}
                   onChange={(e) => {
-                    const value = e.target.value;
-                    e.target.value = value.replace(/[^0-9]/g, "");
+                    const value = e.target.value.replace(/[^0-9]/g, "");
+                    setZip(value);
                   }}
                 />
               </Box>
@@ -185,7 +179,6 @@ export default function Cart() {
                   borderRadius: "1rem",
                   padding: "10px",
                   marginTop: "1rem",
-                  fontWeight: "800",
                 }}
               >
                 ENTER ZIP CODE
@@ -198,20 +191,19 @@ export default function Cart() {
           <Box>
             <Typography
               variant="h6"
-              fontWeight={1000}
               fontSize="1rem"
               sx={{ textAlign: "center" }}
             >
               Your cart is empty, start shopping now!
             </Typography>
             <Button
+              data-testid="shop-all-button"
               color="dark"
               variant="contained"
               sx={{
                 margin: "16px auto",
                 display: "block",
                 width: "fit-content",
-                fontWeight: "800",
               }}
               onClick={() => {
                 navigate("/shop");

@@ -25,9 +25,7 @@ export const getDessertById = async (dessert_id) => {
 };
 
 export const getDesserts = async (dessert_type) => {
-  const response = await axios.get(
-    `${API_URL}/desserts`
-  );
+  const response = await axios.get(`${API_URL}/desserts`);
   return response;
 };
 

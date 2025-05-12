@@ -7,6 +7,7 @@ import {
   Divider,
   Box,
   Button,
+  Skeleton,
 } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -23,7 +24,7 @@ export default function AccountDashboard() {
   const postLogoutQuery = usePostLogout();
   const { mutateAsync: postLogout, isLoading: postLogoutLoading } =
     postLogoutQuery;
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -68,9 +69,14 @@ export default function AccountDashboard() {
               <Typography variant="h6" gutterBottom>
                 My Account
               </Typography>
-              <Typography variant="h3" fontWeight={1000} gutterBottom>
-                HI {_.upperCase(user.given_name)}!
-              </Typography>
+              {!user ? (
+                <Skeleton variant="text" animation="wave" />
+              ) : (
+                <Typography variant="h3" gutterBottom>
+                  HI {_.upperCase(user.given_name)}!
+                </Typography>
+              )}
+
               <TabList
                 onChange={(e, newValue) => setValue(newValue)}
                 sx={{ marginBottom: 2 }}
@@ -111,16 +117,24 @@ export default function AccountDashboard() {
                   justifyContent={"space-between"}
                   marginBottom={"1rem"}
                 >
-                  <Typography fontWeight={1000}>First Name</Typography>
-                  <Typography>{user.given_name}</Typography>
+                  <Typography>First Name</Typography>
+                  {!user ? (
+                    <Skeleton variant="text" animation="wave" width={"8rem"} />
+                  ) : (
+                    <Typography>{user.given_name}</Typography>
+                  )}
                 </Box>
                 <Box
                   display="flex"
                   justifyContent={"space-between"}
                   marginBottom={"1rem"}
                 >
-                  <Typography fontWeight={1000}>Last Name</Typography>
-                  <Typography>{user.family_name}</Typography>
+                  <Typography>Last Name</Typography>
+                  {!user ? (
+                    <Skeleton variant="text" animation="wave" width={"8rem"} />
+                  ) : (
+                    <Typography>{user.family_name}</Typography>
+                  )}
                 </Box>
               </Paper>
               <Paper elevation={0} sx={{ padding: 4, borderRadius: "8px" }}>
@@ -132,7 +146,7 @@ export default function AccountDashboard() {
               </Paper>
             </TabPanel>
             <TabPanel value="order_history">
-              <Typography variant="h5" fontWeight={1000} marginBottom={"1rem"}>
+              <Typography variant="h5" marginBottom={"1rem"}>
                 ORDER HISTORY
               </Typography>
               <Typography>
@@ -140,7 +154,6 @@ export default function AccountDashboard() {
                 <span
                   style={{
                     cursor: "pointer",
-                    fontWeight: "1000",
                     color: "blue",
                   }}
                   onClick={() => navigate("/")}

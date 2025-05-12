@@ -27,14 +27,11 @@ export default function CreateDessert() {
       const formattedValues = {
         ...values,
         images: values.images.map((image, index) => {
-          if (image instanceof File) {
-            return {
-              file_name: image.name,
-              file_type: image.type,
-              position: index,
-            };
-          }
-          return image;
+          return {
+            file_name: image.name,
+            file_type: image.type,
+            position: index,
+          };
         }),
       };
       const postResponse = await postDessert({
@@ -60,7 +57,7 @@ export default function CreateDessert() {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="false">
       <Box
         display="flex"
         flexDirection="column"
@@ -72,7 +69,7 @@ export default function CreateDessert() {
         </Typography>
         <Breadcrumbs
           aria-label="breadcrumb"
-          sx={{ marginBottom: "1rem", marginRight: "auto" }}
+          sx={{ marginBottom: "1rem", marginRight: "auto", marginLeft: "2rem" }}
         >
           <MuiLink
             color="inherit"

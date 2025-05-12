@@ -1,9 +1,15 @@
 import React from "react";
 import { Box, Button, CircularProgress } from "@mui/material";
 
-export default function LoadingButton({ isLoading, isDisabled=false, children, fullWidth=true }) {
+export default function LoadingButton({
+  isLoading,
+  isDisabled = false,
+  children,
+  fullWidth = true,
+}) {
   return (
     <Button
+      data-testid="create-edit-submit-button"
       type="submit"
       variant="contained"
       color="primary"
@@ -13,8 +19,8 @@ export default function LoadingButton({ isLoading, isDisabled=false, children, f
         height: "45px",
         textTransform: "none",
         fontSize: "1rem",
-        fontWeight: "800",
         marginTop: "1rem",
+        marginBottom: "2rem",
       }}
     >
       {isLoading ? (
@@ -23,10 +29,13 @@ export default function LoadingButton({ isLoading, isDisabled=false, children, f
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            fontWeight: "800",
           }}
         >
-          <CircularProgress size={24} color="inherit" />
+          <CircularProgress
+            data-testid="loading-button"
+            size={24}
+            color="inherit"
+          />
         </Box>
       ) : (
         children

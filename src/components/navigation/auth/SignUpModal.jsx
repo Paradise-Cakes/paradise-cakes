@@ -62,14 +62,14 @@ export default function SignUpModal() {
             }}
             onClick={toggleSignUpModal(false)}
           />
-          <Typography variant="h5" textAlign={"center"} fontWeight={1000}>
+          <Typography variant="h5" textAlign={"center"}>
             CREATE AN ACCOUNT
           </Typography>
           <SignUpForm />
           <Typography sx={{ textAlign: "center", fontSize: "1rem" }}>
             Already have an account?{" "}
             <span
-              style={{ fontWeight: "800", cursor: "pointer" }}
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 closeSignUpModal();
                 openSignInModal();

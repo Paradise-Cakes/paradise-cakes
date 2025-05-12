@@ -88,7 +88,7 @@ export default function SignInForm() {
             <span style={{ color: theme.palette.error.main }}>
               Email has not been confirmed, confirm{" "}
               <span
-                style={{ fontWeight: "1000", cursor: "pointer" }}
+                style={{ cursor: "pointer" }}
                 onClick={async () => {
                   closeSignInModal();
                   openConfirmationCodeModal();

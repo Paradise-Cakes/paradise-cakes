@@ -80,7 +80,6 @@ export default function ForgotPasswordModal() {
               height: "45px",
               textTransform: "none",
               fontSize: "1rem",
-              fontWeight: "800",
             }}
             onClick={toggleSentResetPassswordEmailModal(false)}
           >

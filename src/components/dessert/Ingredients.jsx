@@ -30,12 +30,6 @@ export default function Ingredients({ ingredients }) {
     useContext(IngredientsContext);
 
   const toggleIngredients = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
     setIngredientsOpen(open);
   };
 
@@ -44,8 +38,8 @@ export default function Ingredients({ ingredients }) {
   };
 
   const doIngredientsContainAllergens = () => {
-    return ingredients.some((ingredient) =>
-      allergens.some((allergen) => ingredient.includes(allergen))
+    return ingredients?.some((ingredient) =>
+      allergens?.some((allergen) => ingredient.includes(allergen))
     );
   };
 
@@ -81,6 +75,7 @@ export default function Ingredients({ ingredients }) {
           }}
         >
           <CgClose
+            data-testid="close-ingredients"
             style={{
               cursor: "pointer",
               width: "25px",
@@ -96,11 +91,11 @@ export default function Ingredients({ ingredients }) {
           />
           {doIngredientsContainAllergens() && (
             <Box marginBottom={"2rem"}>
-              <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+              <Typography variant="h6" fontSize="1rem">
                 This dessert contains:
               </Typography>
               <Box display={"flex"} width="100%" sx={{ flexWrap: "wrap" }}>
-                {ingredients.map(
+                {ingredients?.map(
                   (ingredient, index) =>
                     isIngredientAllergen(ingredient) && (
                       <Box
@@ -114,7 +109,7 @@ export default function Ingredients({ ingredients }) {
               </Box>
             </Box>
           )}
-          <Typography variant="h6" fontWeight={1000} fontSize="1rem">
+          <Typography variant="h6" fontSize="1rem">
             Ingredients:
           </Typography>
           <Box
@@ -122,7 +117,7 @@ export default function Ingredients({ ingredients }) {
             width="100%"
             sx={{ flexWrap: "wrap", marginBottom: "2rem" }}
           >
-            {ingredients.map((ingredient, index) => (
+            {ingredients?.map((ingredient, index) => (
               <Box sx={{ marginRight: "1rem" }} key={ingredient}>
                 {_.upperCase(ingredient)}
                 {index !== ingredients.length - 1 ? "," : ""}
@@ -131,7 +126,6 @@ export default function Ingredients({ ingredients }) {
           </Box>
           <Typography
             variant="h6"
-            fontWeight={1000}
             fontSize="1rem"
             sx={{ marginBottom: "1rem", textAlign: "center" }}
           >
@@ -140,7 +134,7 @@ export default function Ingredients({ ingredients }) {
           <Button
             color="info"
             variant="contained"
-            sx={{ width: "fit-content", margin: "0 auto", fontWeight: 800 }}
+            sx={{ width: "fit-content", margin: "0 auto" }}
             component={Link}
             to="/custom-order"
           >

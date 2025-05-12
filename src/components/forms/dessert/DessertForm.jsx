@@ -14,6 +14,11 @@ import {
   Grid,
   Chip,
   FormHelperText,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import { IoAddCircle } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
@@ -23,7 +28,20 @@ import _ from "lodash";
 import LoadingButton from "../../extras/LoadingButton";
 
 export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
-  const [sizes, setSizes] = useState([]);
+  const [sizes, setSizes] = useState(() => {
+    switch (dessert?.dessert_type) {
+      case "cake":
+        return ["6 inch", "8 inch", "10 inch"];
+      case "cupcake":
+        return ["Half Dozen", "Dozen"];
+      case "cookie":
+        return ["Dozen"];
+      case "pie":
+        return ["9 inch"];
+      default:
+        return [];
+    }
+  });
   const dessertForm = useFormik({
     initialValues: {
       name: dessert?.name || "",
@@ -37,6 +55,9 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       ],
       ingredients: dessert?.ingredients || [],
       images: dessert?.images || [],
+      visible: dessert?.visible || false,
+      special_tag: dessert?.special_tag || "",
+      secondary_special_tag: dessert?.secondary_special_tag || "",
     },
     validationSchema: dessertSchema,
     onSubmit: async (values) => {
@@ -83,13 +104,12 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
     }
   };
 
-  const handleKeyDownIngredient = (event, newValue) => {
+  const handleKeyDownIngredient = (event) => {
+    const newValue = event.target.value.toUpperCase();
     if (
-      event.key === "Enter" &&
-      newValue &&
+      newValue?.trim() != "" &&
       !dessertForm.values.ingredients.includes(newValue)
     ) {
-      event.preventDefault();
       dessertForm.setFieldValue("ingredients", [
         ...dessertForm.values.ingredients,
         newValue,
@@ -105,15 +125,29 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
   };
 
   useEffect(() => {
-    const dessertType = dessertForm.values.dessert_type;
-    if (dessertType === "cake") {
-      setSizes(["6 inch", "8 inch", "10 inch"]);
-    } else if (dessertType === "cupcake") {
-      setSizes(["Half Dozen", "Dozen"]);
-    } else if (dessertType === "cookie") {
-      setSizes(["Dozen"]);
-    } else if (dessertType === "pie") {
-      setSizes(["9 inch"]);
+    switch (dessertForm.values.dessert_type) {
+      case "cake":
+        setSizes(["6 inch", "8 inch", "10 inch"]);
+        break;
+      case "cupcake":
+        setSizes(["Half Dozen", "Dozen"]);
+        break;
+      case "cookie":
+        setSizes(["Dozen"]);
+        break;
+      case "pie":
+        setSizes(["9 inch"]);
+        break;
+      default:
+        setSizes([]);
+    }
+    if (dessertForm.values.dessert_type !== dessert?.dessert_type) {
+      dessertForm.setFieldValue("prices", [
+        {
+          size: "",
+          base_price: "",
+        },
+      ]);
     }
   }, [dessertForm.values.dessert_type]);
 
@@ -122,15 +156,13 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       container
       component={"form"}
       sx={{
-        margin: "0 auto",
-        justifyContent: { xs: "center", lg: "space-between" },
-        padding: "2rem 0",
+        padding: "2rem",
       }}
       onSubmit={dessertForm.handleSubmit}
-      display={"flex"}
     >
-      <Grid item lg={3} md={6} sm={8} xs={12} sx={{ height: "fit-content" }}>
+      <Grid item lg={3} sm={12}>
         <TextField
+          name="dessert-name"
           fullWidth
           label={"Name"}
           sx={{ marginTop: "1rem" }}
@@ -141,6 +173,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           value={dessertForm.values.name}
         />
         <TextField
+          name="dessert-description"
           fullWidth
           label={"Description"}
           multiline
@@ -162,6 +195,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
         <FormControl fullWidth sx={{ marginTop: "1rem" }}>
           <InputLabel id="dessert-type">Dessert Type</InputLabel>
           <Select
+            name="dessert-type"
             fullWidth
             label={"Dessert Type"}
             labelId="dessert-type"
@@ -180,25 +214,23 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             <MenuItem value={"cookie"}>Cookie</MenuItem>
             <MenuItem value={"pie"}>Pie</MenuItem>
           </Select>
-          {dessertForm.touched.dessert_type &&
-            dessertForm.errors.dessert_type && (
-              <FormHelperText error>
-                {dessertForm.errors.dessert_type}
-              </FormHelperText>
-            )}
         </FormControl>
         <Autocomplete
           sx={{ marginTop: "1rem" }}
           multiple
-          id="ingredients"
+          name="ingredients"
           freeSolo
           options={[]}
-          getOptionLabel={(option) => option}
           inputValue={dessertForm.values.currentInputValue || ""}
           onInputChange={(event, newValue) => {
             dessertForm.setFieldValue("currentInputValue", newValue);
           }}
-          onKeyDown={handleKeyDownIngredient}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleKeyDownIngredient(e);
+            }
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -219,17 +251,15 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <Chip
+                {...getTagProps({ index })}
+                key={`${option}-${index}`}
                 variant="outlined"
                 label={option}
-                {...getTagProps({ index })}
                 onDelete={() => handleDeleteIngredient(option)}
               />
             ))
           }
           value={dessertForm.values.ingredients}
-          onChange={(event, newValue) => {
-            dessertForm.setFieldValue("ingredients", newValue);
-          }}
         />
         <Box sx={{ marginTop: "1.5rem" }}>
           <Box
@@ -240,6 +270,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           >
             <Typography variant="h5">Sizing and Pricing</Typography>
             <IoAddCircle
+              data-testid="add-price-button"
               style={{
                 width: "40px",
                 height: "40px",
@@ -267,6 +298,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                 <Select
                   fullWidth
                   label={"Size"}
+                  data-testid={`dessert-size-select-${index}`}
                   labelId="dessert-size"
                   value={dessertForm.values.prices[index].size}
                   onChange={handleSizeChange(index)}
@@ -280,32 +312,19 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                     </MenuItem>
                   ))}
                 </Select>
-                {dessertForm.touched?.prices?.[index]?.size &&
-                  dessertForm.errors?.prices?.[index]?.size && (
-                    <FormHelperText error>
-                      {dessertForm.errors?.prices[index]?.size}
-                    </FormHelperText>
-                  )}
               </FormControl>
               <TextField
+                data-testid={`dessert-price-input-${index}`}
                 label={"Price"}
-                type="tel"
                 sx={{ marginTop: "1rem", width: "150px" }}
                 value={dessertForm.values.prices[index].base_price}
                 onChange={handlePriceChange(index)}
                 onBlur={() =>
                   dessertForm.setFieldTouched(`prices[${index}].base_price`)
                 }
-                error={Boolean(
-                  dessertForm.touched.prices?.[index]?.base_price &&
-                    dessertForm.errors.prices?.[index]?.base_price
-                )}
-                helperText={
-                  dessertForm.touched.prices?.[index]?.base_price &&
-                  dessertForm.errors.prices?.[index]?.base_price
-                }
               />
               <IoCloseCircleSharp
+                data-testid={`remove-price-button-${index}`}
                 style={{
                   width: "30px",
                   height: "30px",
@@ -317,7 +336,45 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
               />
             </Box>
           ))}
-          <LoadingButton isLoading={isLoading} isDisabled={!dessertForm.dirty}>
+          <FormGroup sx={{ marginTop: "1rem" }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  data-testid="dessert-visible-switch"
+                  checked={dessertForm?.values?.visible}
+                  onChange={async (event) => {
+                    dessertForm.setFieldValue("visible", event.target.checked);
+                  }}
+                  sx={{
+                    "& .MuiSwitch-thumb": {
+                      fontSize: "1.25rem",
+                      color: "white",
+                    },
+                    "& .MuiSwitch-track": {
+                      backgroundColor: "red",
+                    },
+                    "& .Mui-checked .MuiSwitch-thumb": {
+                      color: "white",
+                    },
+                    "& .Mui-checked + .MuiSwitch-track": {
+                      backgroundColor: "green",
+                    },
+                  }}
+                />
+              }
+              label={dessertForm?.values?.visible ? "Visible" : "Hidden"}
+              sx={{
+                "& .MuiFormControlLabel-label": {
+                  fontSize: "1.25rem",
+                  color: dessertForm?.values?.visible ? "green" : "red",
+                },
+              }}
+            />
+          </FormGroup>
+          <LoadingButton
+            isLoading={isLoading}
+            isDisabled={!dessertForm.dirty || dessertForm.isSubmitting}
+          >
             {dessert ? "Update" : "Create"}
           </LoadingButton>
         </Box>
@@ -325,13 +382,10 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       <Grid
         item
         container
-        lg={9}
-        md={12}
+        lg={7}
         sm={12}
         sx={{
-          display: "flex",
           justifyContent: "center",
-          height: "fit-content",
         }}
       >
         <Grid
@@ -354,7 +408,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             marginBottom: "2rem",
           }}
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps()} data-testid="image-upload-input" />
           <Typography variant="h6">Drag and drop an image here</Typography>
           <IoAddCircle style={{ width: "50px", height: "50px" }} />
         </Grid>
@@ -375,6 +429,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           >
             {dessertForm.values?.images?.map((file, index) => (
               <Box
+                data-testid={`image-preview-${index}`}
                 key={index}
                 sx={{
                   position: "relative",
@@ -392,6 +447,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                   }}
                 />
                 <IoCloseCircleSharp
+                  data-testid={`remove-image-button-${index}`}
                   style={{
                     position: "absolute",
                     top: "0",
@@ -410,6 +466,7 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
                 />
                 <FormControl fullWidth>
                   <Select
+                    data-testid={`image-order-select-${index}`}
                     labelId="img-order-label"
                     value={index}
                     sx={{ marginTop: "0.5rem" }}
@@ -437,6 +494,66 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
             ))}
           </Box>
         </Grid>
+      </Grid>
+      <Grid
+        item
+        lg={2}
+        sm={12}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0",
+        }}
+      >
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            margin: "0 auto",
+          }}
+        >
+          <Typography variant="h6">Tags</Typography>
+          <FormControl>
+            <RadioGroup
+              value={dessertForm.values.special_tag}
+              onChange={(e) => {
+                dessertForm.setFieldValue("special_tag", e.target.value);
+              }}
+            >
+              <FormControlLabel
+                value="new!"
+                control={<Radio />}
+                label="new!"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="on sale"
+                control={<Radio />}
+                label="on sale"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="best seller"
+                control={<Radio />}
+                label="best seller"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="almost gone!"
+                control={<Radio />}
+                label="almost gone!"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+              <FormControlLabel
+                value="back in stock!"
+                control={<Radio />}
+                label="back in stock!"
+                sx={{ "& .MuiFormControlLabel-label": { fontSize: "1.25rem" } }}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Box>
       </Grid>
     </Grid>
   );
