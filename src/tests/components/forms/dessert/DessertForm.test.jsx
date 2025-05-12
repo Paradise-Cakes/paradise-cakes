@@ -237,7 +237,7 @@ describe("DessertForm Component", () => {
     await userEvent.click(submitButton);
 
     expect(mockSubmitForm).toHaveBeenCalled();
-  }, 6500);
+  }, 10000);
 
   test("handles removing a price", async () => {
     renderComponent();

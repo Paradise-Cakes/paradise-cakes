@@ -23,6 +23,7 @@ export default function DrawerItem({ toLink, text }) {
       }}
     >
       <ListItemButton
+        data-testid="drawer-item"
         onClick={() => {
           navigate(toLink);
           setDrawerOpen(false);
