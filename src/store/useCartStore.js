@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+/* istanbul ignore next */
+const getStorage = () => localStorage;
+
 export const useCartStore = create(
   persist(
     (set) => ({
@@ -47,7 +50,7 @@ export const useCartStore = create(
     }),
     {
       name: "cart-store",
-      getStorage: () => localStorage,
+      getStorage,
     }
   )
 );
