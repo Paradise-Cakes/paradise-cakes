@@ -115,9 +115,10 @@ export default function ResetPasswordForm({ username, code }) {
           formik.touched.confirmPassword && formik.errors.confirmPassword
         }
       />
-      <LoadingButton isLoading={isPostResetPasswordLoading}>
-        Reset My Password
-      </LoadingButton>
+      <LoadingButton
+        isLoading={isPostResetPasswordLoading}
+        label={"Reset My Password"}
+      />
     </Box>
   );
 }

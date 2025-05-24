@@ -374,9 +374,8 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
           <LoadingButton
             isLoading={isLoading}
             isDisabled={!dessertForm.dirty || dessertForm.isSubmitting}
-          >
-            {dessert ? "Update" : "Create"}
-          </LoadingButton>
+            label={dessert ? "Update" : "Create"}
+          />
         </Box>
       </Grid>
       <Grid

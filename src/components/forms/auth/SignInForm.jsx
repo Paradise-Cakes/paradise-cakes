@@ -185,7 +185,7 @@ export default function SignInForm() {
           ),
         }}
       />
-      <LoadingButton isLoading={isPostSignInLoading}>Sign In</LoadingButton>
+      <LoadingButton isLoading={isPostSignInLoading} label={"Sign In"} />
     </Box>
   );
 }

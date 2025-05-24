@@ -110,9 +110,7 @@ export default function ConfirmationCodeForm() {
           type: "tel",
         }}
       />
-      <LoadingButton isLoading={isPostConfirmSignUpLoading}>
-        Confirm
-      </LoadingButton>
+      <LoadingButton isLoading={isPostConfirmSignUpLoading} label={"Confirm"} />
     </Box>
   );
 }

@@ -1,10 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Box, Button, CircularProgress } from "@mui/material";
 
 export default function LoadingButton({
   isLoading,
   isDisabled = false,
-  children,
+  label,
   fullWidth = true,
 }) {
   return (
@@ -38,8 +40,15 @@ export default function LoadingButton({
           />
         </Box>
       ) : (
-        children
+        label
       )}
     </Button>
   );
 }
+
+LoadingButton.propTypes = {
+  isLoading: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  label: PropTypes.string,
+  fullWidth: PropTypes.bool,
+};

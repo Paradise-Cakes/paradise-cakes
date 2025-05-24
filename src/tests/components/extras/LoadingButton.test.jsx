@@ -14,9 +14,7 @@ function renderComponent(isDisabled) {
       <QueryClientProvider client={new QueryClient()}>
         <ThemeProvider theme={THEME}>
           <IngredientsContext.Provider value={undefined}>
-            <LoadingButton isDisabled={isDisabled}>
-              <div>Loading...</div>
-            </LoadingButton>
+            <LoadingButton isDisabled={isDisabled} label={"Loading..."} />
           </IngredientsContext.Provider>
         </ThemeProvider>
       </QueryClientProvider>
@@ -30,9 +28,7 @@ function renderComponentDefaults(isLoading) {
       <QueryClientProvider client={new QueryClient()}>
         <ThemeProvider theme={THEME}>
           <IngredientsContext.Provider value={undefined}>
-            <LoadingButton isLoading={isLoading}>
-              <div>Loading...</div>
-            </LoadingButton>
+            <LoadingButton isLoading={isLoading} label={"Loading..."} />
           </IngredientsContext.Provider>
         </ThemeProvider>
       </QueryClientProvider>

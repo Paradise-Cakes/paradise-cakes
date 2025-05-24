@@ -82,9 +82,10 @@ export default function ForgotPasswordForm() {
           "& .MuiInputBase-input": { fontFamily: "Montserrat" },
         }}
       />
-      <LoadingButton isLoading={isPostForgotPasswordLoading}>
-        Reset My Password
-      </LoadingButton>
+      <LoadingButton
+        isLoading={isPostForgotPasswordLoading}
+        label={"Reset My Password"}
+      />
     </Box>
   );
 }

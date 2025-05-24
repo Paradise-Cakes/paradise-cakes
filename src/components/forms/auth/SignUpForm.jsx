@@ -225,7 +225,7 @@ export default function SignUpForm() {
           label="By creating an account, you agree to receive emails about your order. You can unsubscribe at any time."
         />
       </FormGroup> */}
-      <LoadingButton isLoading={isPostSignUpLoading}>Sign Up</LoadingButton>
+      <LoadingButton isLoading={isPostSignUpLoading} label={"Sign Up"} />
     </Box>
   );
 }

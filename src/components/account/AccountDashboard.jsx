@@ -16,7 +16,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { useNavigate } from "react-router-dom";
 import { usePostLogout } from "../../hooks/auth/AuthHook";
 import _ from "lodash";
-import { fetchUserAttributes } from "aws-amplify/auth";
+import { getUserAttributes } from "#utils/amplify";
 
 export default function AccountDashboard() {
   const [value, setValue] = useState("dashboard");
@@ -38,7 +38,7 @@ export default function AccountDashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const userAttributes = await fetchUserAttributes();
+        const userAttributes = await getUserAttributes();
         setUser(userAttributes);
       } catch (error) {
         console.error(error);
