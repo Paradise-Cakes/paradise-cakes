@@ -12,7 +12,7 @@ const getDessertsMock = vi.fn();
 const deleteDessertMock = vi.fn();
 const patchDessertMock = vi.fn();
 
-vi.mock("../../../hooks/dessert/DessertHook", () => ({
+vi.mock("#hooks/dessert/DessertHook", () => ({
   useGetDesserts: () => getDessertsMock(),
   useDeleteDessert: () => ({
     mutateAsync: deleteDessertMock,

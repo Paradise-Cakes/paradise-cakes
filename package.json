@@ -91,6 +91,10 @@
     "#utils/amplify": {
       "storybook": "./src/utils/amplify.mock.js",
       "default": "./src/utils/amplify.js"
+    },
+    "#hooks/dessert/DessertHook": {
+      "storybook": "./src/hooks/dessert/DessertHook.mock.jsx",
+      "default": "./src/hooks/dessert/DessertHook.jsx"
     }
   }
 }

@@ -29,7 +29,7 @@ const mockConsoleError = vi
   .spyOn(console, "error")
   .mockImplementation(() => {});
 
-vi.mock("../../../hooks/dessert/DessertHook", () => ({
+vi.mock("#hooks/dessert/DessertHook", () => ({
   usePatchDessert: () => ({
     mutateAsync: patchDessertMock,
     isLoading: false,

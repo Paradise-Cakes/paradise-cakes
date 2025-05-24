@@ -8,10 +8,7 @@ import {
 } from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
 import axios from "axios";
-import {
-  usePatchDessert,
-  useGetDessertById,
-} from "../../hooks/dessert/DessertHook";
+import { usePatchDessert, useGetDessertById } from "#hooks/dessert/DessertHook";
 import { useParams, useNavigate, Link as RouterLink } from "react-router-dom";
 
 export default function EditDessert() {

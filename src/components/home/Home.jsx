@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Grid from "@mui/material/Grid";
-import { useGetDesserts } from "../../hooks/dessert/DessertHook";
+import { useGetDesserts } from "#hooks/dessert/DessertHook";
 import _ from "lodash";
 import { Box, Container } from "@mui/system";
 import { Button, useTheme, CircularProgress, Typography } from "@mui/material";

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Carousel from "../carousel/Carousel";
 import _, { set } from "lodash";
-import { useGetDessertById } from "../../hooks/dessert/DessertHook";
+import { useGetDessertById } from "#hooks/dessert/DessertHook";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
 import { IngredientsContext } from "../../context/IngredientsContext";

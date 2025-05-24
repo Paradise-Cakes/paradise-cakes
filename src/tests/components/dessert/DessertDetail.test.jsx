@@ -37,7 +37,7 @@ vi.mock("../../../store/useCartStore", () => ({
   }),
 }));
 
-vi.mock("../../../hooks/dessert/DessertHook", () => ({
+vi.mock("#hooks/dessert/DessertHook", () => ({
   useGetDessertById: () => ({
     data: {
       dessert_id: "1",

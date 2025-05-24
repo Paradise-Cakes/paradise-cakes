@@ -14,7 +14,7 @@ import {
   usePostDessert,
   usePatchDessert,
   useDeleteDessert,
-} from "../../../hooks/dessert/DessertHook";
+} from "#hooks/dessert/DessertHook";
 import * as api from "../../../../src/api/DessertsApi";
 
 const createWrapper = () => {

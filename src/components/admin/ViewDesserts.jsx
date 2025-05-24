@@ -11,7 +11,7 @@ import {
   Tab,
   useTheme,
 } from "@mui/material";
-import { useGetDesserts } from "../../hooks/dessert/DessertHook";
+import { useGetDesserts } from "#hooks/dessert/DessertHook";
 import Dessert from "../dessert/Dessert";
 import { Link as RouterLink } from "react-router-dom";
 

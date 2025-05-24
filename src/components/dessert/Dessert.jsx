@@ -11,10 +11,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea, Skeleton, Button, Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {
-  useDeleteDessert,
-  usePatchDessert,
-} from "../../hooks/dessert/DessertHook";
+import { useDeleteDessert, usePatchDessert } from "#hooks/dessert/DessertHook";
 
 export default function Dessert({
   dessert,

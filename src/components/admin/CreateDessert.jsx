@@ -7,7 +7,7 @@ import {
   Link as MuiLink,
 } from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
-import { usePostDessert } from "../../hooks/dessert/DessertHook";
+import { usePostDessert } from "#hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";

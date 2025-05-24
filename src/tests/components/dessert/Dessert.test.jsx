@@ -11,7 +11,7 @@ const mockPatchDessert = vi.fn().mockResolvedValue({});
 const mockDeleteDessert = vi.fn().mockResolvedValue({});
 const mockConsole = vi.spyOn(console, "error").mockImplementation(() => {});
 
-vi.mock("../../../hooks/dessert/DessertHook", () => ({
+vi.mock("#hooks/dessert/DessertHook", () => ({
   usePatchDessert: () => ({
     mutateAsync: mockPatchDessert,
     isLoading: false,

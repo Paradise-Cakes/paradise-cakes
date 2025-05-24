@@ -12,7 +12,7 @@ import { GoDotFill } from "react-icons/go";
 import { LuCakeSlice } from "react-icons/lu";
 import AnimatedBanner from "../extras/AnimatedBanner";
 import { VscAccount } from "react-icons/vsc";
-import { useGetDesserts } from "../../hooks/dessert/DessertHook";
+import { useGetDesserts } from "#hooks/dessert/DessertHook";
 import _ from "lodash";
 import { useCartStore } from "../../store/useCartStore";
 import {
