@@ -26,3 +26,4 @@ coverage
 .env
 
 .vitest-preview/*
+*storybook.log
