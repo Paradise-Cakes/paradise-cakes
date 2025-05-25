@@ -93,7 +93,7 @@ export default function Dessert({
               }}
             >
               {dessert?.name?.toUpperCase()}
-              {dessert?.special_tag && (
+              {dessert?.special_tag && !inAdminView && (
                 <Chip
                   label={dessert?.special_tag}
                   sx={{
@@ -143,7 +143,8 @@ export default function Dessert({
             left: 0,
             backgroundColor: "rgba(0, 0, 0, 0.8)",
           }}
-          p={2}
+          py={2}
+          px={1}
           onClick={(event) => event.stopPropagation()}
         >
           {dessert?.special_tag && (
@@ -183,7 +184,7 @@ export default function Dessert({
               Remove
             </Button>
           </Box>
-          <FormGroup>
+          <FormGroup sx={{ marginRight: "1rem" }}>
             <FormControlLabel
               control={
                 <Switch

@@ -1,7 +1,7 @@
 import ViewDesserts from "../../../components/admin/ViewDesserts";
 
 import { useGetDesserts } from "../../../hooks/dessert/DessertHook.mock";
-import { desserts } from "./mockDesserts";
+import { desserts } from "../../mocks/mockDesserts";
 
 export default {
   component: ViewDesserts,

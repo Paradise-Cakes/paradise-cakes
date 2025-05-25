@@ -29,6 +29,7 @@ export const desserts = [
         file_type: "jpg",
       },
     ],
+    special_tag: "new!",
   },
   {
     dessert_id: "DESSERT-2",
@@ -60,6 +61,7 @@ export const desserts = [
         file_type: "jpg",
       },
     ],
+    special_tag: "new!",
   },
   {
     dessert_id: "DESSERT-3",
@@ -91,6 +93,7 @@ export const desserts = [
         file_type: "jpg",
       },
     ],
+    special_tag: "new!",
   },
   {
     dessert_id: "DESSERT-4",
@@ -122,5 +125,6 @@ export const desserts = [
         file_type: "jpg",
       },
     ],
+    special_tag: "new!",
   },
 ];
