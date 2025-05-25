@@ -6,10 +6,13 @@ export default {
 };
 
 export const WithUser = {
-  async beforeEach() {
-    getUserAttributes.mockReturnValue({
-      given_name: "John",
-      family_name: "Doe",
-    });
-  },
+  decorators: [
+    (Story) => {
+      getUserAttributes.mockReturnValue({
+        given_name: "John",
+        family_name: "Doe",
+      });
+      return <Story />;
+    },
+  ],
 };

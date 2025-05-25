@@ -4,7 +4,7 @@ export default {
   component: DessertForm,
 };
 
-export const Base = {};
+export const Create = {};
 
 export const Edit = {
   args: {
@@ -24,11 +24,11 @@ export const Edit = {
       images: [
         {
           image_id: 1,
-          url: "https://picsum.photos/200",
+          url: "https://picsum.photos/id/237/200/300",
         },
         {
           image_id: 2,
-          url: "https://picsum.photos/200",
+          url: "https://picsum.photos/id/238/200/300",
         },
       ],
       prices: [

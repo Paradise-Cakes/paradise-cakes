@@ -6,13 +6,3 @@ export default {
 };
 
 export const Base = {};
-
-export const Submitting = {
-  async beforeEach() {
-    usePostDessert.mockReturnValue({
-      mutateAsync: async () => Promise.resolve(),
-      isLoading: true,
-      error: null,
-    });
-  },
-};
