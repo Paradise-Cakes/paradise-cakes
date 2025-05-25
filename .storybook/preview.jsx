@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "@mui/material/styles";
@@ -16,11 +16,15 @@ import "@fontsource/montserrat/400.css";
 export default {
   decorators: [
     (Story, { parameters }) => {
+      const [ingredientsOpen, setIngredientsOpen] = useState(false);
+
       return (
         <BrowserRouter>
           <QueryClientProvider client={new QueryClient()}>
             <ThemeProvider theme={THEME}>
-              <IngredientsContext.Provider value={undefined}>
+              <IngredientsContext.Provider
+                value={{ ingredientsOpen, setIngredientsOpen }}
+              >
                 <Story />
               </IngredientsContext.Provider>
             </ThemeProvider>
@@ -30,4 +34,15 @@ export default {
     },
   ],
   tags: ["autodocs"],
+  parameters: {
+    layout: "fullscreen", // or "padded", "centered"
+    docs: {
+      canvas: {
+        styles: {
+          width: "1280px",
+          height: "800px",
+        },
+      },
+    },
+  },
 };

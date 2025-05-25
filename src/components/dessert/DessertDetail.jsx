@@ -75,7 +75,7 @@ export default function DessertDetail() {
         </Grid>
         <Grid item my={6} xs={12} lg={5}>
           <Box px={3}>
-            <Typography variant="h4">{dessert?.name.toUpperCase()}</Typography>
+            <Typography variant="h4">{dessert?.name?.toUpperCase()}</Typography>
             <Box display={"flex"} justifyContent="space-between" width={"100%"}>
               <Box>
                 <Button
@@ -110,7 +110,7 @@ export default function DessertDetail() {
             >
               Select Size:
             </Typography>
-            {dessert?.prices.length > 1 && (
+            {dessert?.prices?.length > 1 && (
               <ToggleButtonGroup
                 className="toggle-button-size"
                 sx={{

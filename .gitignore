@@ -27,3 +27,4 @@ coverage
 
 .vitest-preview/*
 *storybook.log
+*.vscode
