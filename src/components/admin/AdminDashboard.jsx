@@ -46,6 +46,16 @@ export default function AdminDashboard() {
         >
           View My Desserts
         </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          color="error"
+          component={Link}
+          to="/admin/orders"
+          sx={{ marginTop: "1.25rem", fontSize: "1.25rem" }}
+        >
+          View Orders
+        </Button>
       </Box>
     </Container>
   );

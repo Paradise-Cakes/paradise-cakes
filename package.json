@@ -39,6 +39,7 @@
     "mui-one-time-password-input": "^2.0.2",
     "react": "^18.2.0",
     "react-animate-height": "^3.2.2",
+    "react-datepicker": "^8.7.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.12.0",
@@ -83,6 +84,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-import-sort": "^0.0.7",
     "prop-types": "^15.8.1",
+    "sass": "^1.92.1",
     "storybook": "^8.6.14",
     "vite": "^4.4.5",
     "vitest": "^2.1.8"

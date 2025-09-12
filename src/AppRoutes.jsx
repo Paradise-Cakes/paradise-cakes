@@ -11,6 +11,7 @@ import EditDessert from "./components/admin/EditDessert";
 import NotFound from "./components/NotFound";
 import { ProtectedUserRoute, ProtectedAdminRoute } from "./guards/AuthGuard";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import Orders from "./components/admin/Orders";
 
 export default function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ export default function AppRoutes() {
       </Route>
       <Route element={<ProtectedAdminRoute />}>
         <Route path="/admin/home" element={<AdminDashboard />} />
+        <Route path="/admin/orders" element={<Orders />} />
         <Route path="/admin/desserts" element={<ViewDesserts />} />
         <Route path="/admin/desserts/create" element={<CreateDessert />} />
         <Route
