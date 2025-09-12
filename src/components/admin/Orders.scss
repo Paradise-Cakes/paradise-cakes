@@ -31,4 +31,71 @@
     display: flex;
     gap: 1rem;
   }
+
+  .cats {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+
+    .cat {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .order {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        padding-bottom: 0;
+        height: fit-content;
+        margin-bottom: 1rem;
+
+        &.MuiPaper-root {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .MuiBox-root {
+          margin-bottom: 0.5rem;
+          padding: 0.5rem;
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid black;
+          }
+        }
+
+        .header {
+          display: flex;
+          align-items: center;
+          width: 100%;
+
+          .MuiTypography-root {
+            padding: 0;
+            text-wrap: wrap;
+          }
+        }
+      }
+    }
+
+    .MuiPaper-root {
+      width: 275px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      border-radius: 1rem;
+      padding: 1rem;
+
+      .MuiChip-root {
+        padding: 0rem 0.5rem;
+      }
+
+      .MuiTypography-root {
+        font-weight: 600;
+      }
+    }
+  }
 }
