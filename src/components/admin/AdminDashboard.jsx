@@ -1,62 +1,47 @@
-import React from "react";
-import { Container, Box, Typography, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Container, Box, Typography, Button, Tab, Tabs } from "@mui/material";
+import ViewDesserts from "./ViewDesserts";
+import CreateDessert from "./CreateDessert";
+import Orders from "./Orders";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Box hidden={value !== index} sx={{ padding: "2rem", width: "100%" }}>
+      {value === index && <Box>{children}</Box>}
+    </Box>
+  );
+}
 
 export default function AdminDashboard() {
+  const [tabValue, setTabValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
   return (
-    <Container maxWidth="lg">
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
+    <Box className="admin-dashboard">
+      <Tabs
+        orientation="vertical"
+        value={tabValue}
+        onChange={handleTabChange}
+        className="main-tabs"
       >
-        <Typography variant="h4" align="center">
-          My Dashboard
-        </Typography>
-      </Box>
-      <Typography
-        variant="h6"
-        sx={{
-          fontFamily: "Montserrat",
-          marginTop: "1rem",
-          textAlign: "center",
-        }}
-      >
-        Welcome to the Admin Dashboard
-      </Typography>
-      <Box sx={{ maxWidth: "300px", margin: "0 auto" }}>
-        <Button
-          fullWidth
-          variant="contained"
-          color="info"
-          component={Link}
-          to="/admin/desserts/create"
-          sx={{ marginTop: "1.25rem", fontSize: "1.25rem", color: "black" }}
-        >
-          Add Dessert
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          color="success"
-          component={Link}
-          to="/admin/desserts"
-          sx={{ marginTop: "1.25rem", fontSize: "1.25rem" }}
-        >
-          View My Desserts
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          color="error"
-          component={Link}
-          to="/admin/orders"
-          sx={{ marginTop: "1.25rem", fontSize: "1.25rem" }}
-        >
-          View Orders
-        </Button>
-      </Box>
-    </Container>
+        <Tab label="View Desserts" />
+        <Tab label="Add Dessert" />
+        <Tab label="View Orders" />
+      </Tabs>
+      <TabPanel value={tabValue} index={0}>
+        <ViewDesserts />
+      </TabPanel>
+      <TabPanel value={tabValue} index={1}>
+        <CreateDessert />
+      </TabPanel>
+      <TabPanel value={tabValue} index={2}>
+        <Orders />
+      </TabPanel>
+    </Box>
   );
 }

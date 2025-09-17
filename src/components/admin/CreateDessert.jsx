@@ -1,17 +1,10 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Container,
-  Breadcrumbs,
-  Link as MuiLink,
-} from "@mui/material";
+import { Box, Typography, Container, Link as MuiLink } from "@mui/material";
 import DessertForm from "../forms/dessert/DessertForm";
 import { usePostDessert } from "#hooks/dessert/DessertHook";
 import axios from "axios";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
-import { Link as RouterLink } from "react-router-dom";
 
 export default function CreateDessert() {
   const navigate = useNavigate();
@@ -57,51 +50,14 @@ export default function CreateDessert() {
   };
 
   return (
-    <Container maxWidth="false">
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography variant="h4" align="center">
-          New Dessert
-        </Typography>
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          sx={{ marginBottom: "1rem", marginRight: "auto", marginLeft: "2rem" }}
-        >
-          <MuiLink
-            color="inherit"
-            underline="hover"
-            component={RouterLink}
-            to={"/admin/home"}
-          >
-            Admin Dashboard
-          </MuiLink>
-          <MuiLink
-            color="inherit"
-            underline="hover"
-            component={RouterLink}
-            to={"/admin/desserts"}
-          >
-            My Desserts
-          </MuiLink>
-          <MuiLink
-            underline="hover"
-            color="text.primary"
-            component={RouterLink}
-            to={"/admin/desserts/create"}
-            aria-current="page"
-          >
-            New Dessert
-          </MuiLink>
-        </Breadcrumbs>
-        <DessertForm
-          onSubmitForm={createDessert}
-          isLoading={isPostDessertLoading}
-        />
-      </Box>
-    </Container>
+    <Box>
+      <Typography variant="h4" align="center">
+        New Dessert
+      </Typography>
+      <DessertForm
+        onSubmitForm={createDessert}
+        isLoading={isPostDessertLoading}
+      />
+    </Box>
   );
 }

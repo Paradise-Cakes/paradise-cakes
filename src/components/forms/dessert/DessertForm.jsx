@@ -157,6 +157,8 @@ export default function DessertForm({ dessert, onSubmitForm, isLoading }) {
       component={"form"}
       sx={{
         padding: "2rem",
+        height: "100vh",
+        marginBottom: "5rem",
       }}
       onSubmit={dessertForm.handleSubmit}
     >

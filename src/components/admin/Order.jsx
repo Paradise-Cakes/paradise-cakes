@@ -1,14 +1,20 @@
-import { Paper, Box, Typography, Chip } from "@mui/material";
+import {
+  Paper,
+  Box,
+  Typography,
+  Chip,
+  Button,
+  IconButton,
+} from "@mui/material";
 import React from "react";
-import { FaRegCircleUser } from "react-icons/fa6";
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 
-export default function Order() {
+export default function Order(props) {
   return (
     <Paper elevation={2} className="order">
-      <Box className="header">
-        <FaRegCircleUser fontSize="2rem" />
+      <Box className="cat-header">
         <Typography variant="h6">Johnny Doeman</Typography>
-        <Chip label="Paid" color="success" />
+        <Chip label={props.label} color={props.color} />
       </Box>
       <Box>
         <Typography>Order ID:</Typography>
@@ -25,6 +31,23 @@ export default function Order() {
       <Box>
         <Typography>Price:</Typography>
         <Typography>$56.89</Typography>
+      </Box>
+      <Box className="actions">
+        {props.status === "NEW" && (
+          <IconButton color="warning">
+            <FaArrowAltCircleRight />
+          </IconButton>
+        )}
+        {props.status === "IN_PROGRESS" && (
+          <>
+            <IconButton color="info">
+              <FaArrowAltCircleLeft />
+            </IconButton>
+            <IconButton color="error">
+              <FaArrowAltCircleRight />
+            </IconButton>
+          </>
+        )}
       </Box>
     </Paper>
   );

@@ -12,7 +12,6 @@ export default function Footer() {
         sx={{
           height: "100px",
           borderTop: "2px solid black",
-          marginTop: "10rem",
           backgroundColor: `${theme.palette.warning.main}`,
           display: "flex",
           justifyContent: "space-between",

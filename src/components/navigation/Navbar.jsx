@@ -32,11 +32,13 @@ export default function Navbar() {
 
   return (
     <AppBar
-      position="fixed"
+      position="sticky"
       sx={{
         backgroundColor: "#9CAFAF",
         display: "block",
-        marginBottom: { xs: "0px", md: "20rem" },
+        height: "10rem",
+        top: 0,
+        zIndex: "1100",
       }}
     >
       <AnimatedBanner

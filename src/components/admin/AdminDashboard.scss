@@ -1,0 +1,23 @@
+.admin-dashboard {
+  display: flex;
+  position: relative;
+
+  .main-tabs {
+    margin-right: 2rem;
+    background-color: #e6efee;
+
+    .MuiButtonBase-root {
+      padding: 1rem;
+      font-size: 1.25rem;
+
+      &.Mui-selected {
+        background-color: #a3bfd8;
+        color: #ffffff;
+      }
+    }
+
+    .MuiTabs-scroller {
+      width: 250px;
+    }
+  }
+}

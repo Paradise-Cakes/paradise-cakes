@@ -60,13 +60,7 @@ function App() {
               }}
             >
               <Navbar />
-              <Box
-                component="main"
-                sx={{
-                  flex: 1,
-                  mt: { xs: "8rem", md: "12rem" },
-                }}
-              >
+              <Box>
                 {isAppReady ? (
                   <>
                     <NavSideDrawer />

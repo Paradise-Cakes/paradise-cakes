@@ -68,54 +68,22 @@ export default function EditDessert() {
   };
 
   return (
-    <Container maxWidth="false">
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography variant="h4" align="center">
-          Edit Dessert
-        </Typography>
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          sx={{ marginBottom: "1rem", marginRight: "auto", marginLeft: "2rem" }}
-        >
-          <MuiLink
-            color="inherit"
-            underline="hover"
-            component={RouterLink}
-            to={"/admin/home"}
-          >
-            Admin Dashboard
-          </MuiLink>
-          <MuiLink
-            color="inherit"
-            underline="hover"
-            component={RouterLink}
-            to={"/admin/desserts"}
-          >
-            My Desserts
-          </MuiLink>
-          <MuiLink
-            underline="hover"
-            color="text.primary"
-            component={RouterLink}
-            to={`/admin/desserts/edit-dessert/${dessertId}`}
-            aria-current="page"
-          >
-            Edit Dessert
-          </MuiLink>
-        </Breadcrumbs>
-        {!isDessertLoading && (
-          <DessertForm
-            onSubmitForm={updateDessert}
-            dessert={dessert}
-            isLoading={isPatchDessertLoading}
-          />
-        )}
-      </Box>
-    </Container>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Typography variant="h4" align="center">
+        Edit Dessert
+      </Typography>
+      {!isDessertLoading && (
+        <DessertForm
+          onSubmitForm={updateDessert}
+          dessert={dessert}
+          isLoading={isPatchDessertLoading}
+        />
+      )}
+    </Box>
   );
 }
