@@ -4,7 +4,36 @@
   align-items: center;
   gap: 0.5rem;
 
-  .MuiTabs-root {
+  .date-tabs {
     min-height: 0;
+
+    .MuiButtonBase-root {
+      border: 1px solid #9cafaf;
+      margin: 0 0.25rem;
+      min-height: 0;
+      height: 32px;
+
+      &.Mui-selected {
+        background-color: #9cafaf;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .date-range-picker {
+    .date-tabs {
+      width: 100%;
+      .MuiTabs-flexContainer {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .MuiButtonBase-root {
+        width: 100%;
+        margin: 0.25rem 0;
+      }
+    }
   }
 }

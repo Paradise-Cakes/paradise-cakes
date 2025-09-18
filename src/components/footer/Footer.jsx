@@ -6,8 +6,8 @@ import { FaInstagram } from "react-icons/fa";
 export default function Footer() {
   const theme = useTheme();
   return (
-    <footer>
-      <Grid
+    <footer style={{ position: "absolute", bottom: 0, width: "100%" }}>
+      {/* <Grid
         container
         sx={{
           height: "100px",
@@ -17,10 +17,9 @@ export default function Footer() {
           justifyContent: "space-between",
           alignItems: "center",
           padding: "0 1rem",
-          flexWrap: "nowrap",
         }}
       >
-        <Grid item sx={{ width: "367px" }}>
+        <Grid item>
           <a
             href="https://www.instagram.com/megs.soup/"
             target="_blank"
@@ -29,7 +28,7 @@ export default function Footer() {
             <FaInstagram size={24} />
           </a>
         </Grid>
-        <Grid item sx={{ width: "367px", textAlign: "center" }}>
+        <Grid item>
           <img
             src={Logo}
             alt="Paradise Cakes logo"
@@ -39,16 +38,13 @@ export default function Footer() {
             }}
           />
         </Grid>
-        <Grid
-          item
-          sx={{ width: "367px", textAlign: { xs: "center", sm: "end" } }}
-        >
+        <Grid item>
           <p>
             &copy; {new Date().getFullYear()} Paradise Cakes. All rights
             reserved.
           </p>
         </Grid>
-      </Grid>
+      </Grid> */}
     </footer>
   );
 }

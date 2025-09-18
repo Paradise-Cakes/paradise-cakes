@@ -15,6 +15,7 @@ import { THEME } from "./theme.js";
 import CssBaseline from "@mui/material/CssBaseline";
 import "./amplifyConfig";
 import "./styles/autoload-styles.ts";
+import "./styles/breakpoints.scss";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

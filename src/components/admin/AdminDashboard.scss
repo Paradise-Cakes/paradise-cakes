@@ -1,10 +1,11 @@
 .admin-dashboard {
   display: flex;
+  justify-content: center;
   position: relative;
 
   .main-tabs {
-    margin-right: 2rem;
-    background-color: #e6efee;
+    margin-top: 4rem;
+    width: 250px;
 
     .MuiButtonBase-root {
       padding: 1rem;
@@ -15,9 +16,20 @@
         color: #ffffff;
       }
     }
+  }
+}
 
-    .MuiTabs-scroller {
-      width: 250px;
+@media (max-width: $large-tablet) {
+  .admin-dashboard {
+    flex-direction: column;
+
+    .main-tabs {
+      margin-top: 1.25rem;
+      width: 100%;
+
+      .MuiButtonBase-root {
+        max-width: none;
+      }
     }
   }
 }

@@ -52,13 +52,7 @@ function App() {
       <AuthProvider>
         <DrawerProvider drawerOpen={false}>
           <IngredientsProvider ingredientsOpen={false}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                minHeight: "100vh",
-              }}
-            >
+            <Box>
               <Navbar />
               <Box>
                 {isAppReady ? (

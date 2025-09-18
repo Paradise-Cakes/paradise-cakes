@@ -5,10 +5,17 @@ import CreateDessert from "./CreateDessert";
 import Orders from "./Orders";
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index } = props;
 
   return (
-    <Box hidden={value !== index} sx={{ padding: "2rem", width: "100%" }}>
+    <Box
+      hidden={value !== index}
+      sx={{
+        padding: "2rem",
+        width: "100%",
+        maxWidth: "1300px",
+      }}
+    >
       {value === index && <Box>{children}</Box>}
     </Box>
   );

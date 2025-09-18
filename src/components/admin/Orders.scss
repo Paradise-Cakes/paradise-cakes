@@ -8,6 +8,8 @@
     top: 12rem;
     padding: 1rem;
     width: 100%;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
 
     .header {
       display: flex;
@@ -16,19 +18,6 @@
 
       .MuiInputBase-root {
         border-radius: 1rem;
-        width: 350px;
-      }
-
-      .MuiButtonBase-root {
-        border: 1px solid #9cafaf;
-        margin: 0 0.25rem;
-        min-height: 0;
-        height: 32px;
-
-        &.Mui-selected {
-          background-color: #9cafaf;
-          color: #ffffff;
-        }
       }
 
       .MuiTabs-root {
@@ -40,6 +29,20 @@
       .controls {
         display: flex;
         gap: 1rem;
+        width: 100%;
+        align-items: flex-end;
+
+        > :first-child {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .date-range-picker {
+          .react-datepicker-wrapper {
+            flex-grow: 0;
+          }
+        }
       }
     }
 
@@ -76,6 +79,9 @@
       }
     }
   }
+  .accordion-cats {
+    display: none;
+  }
 }
 
 .orders-list {
@@ -87,23 +93,18 @@
   padding-right: 1rem;
   margin-top: 1rem;
 
-  .MuiBox-root {
-    flex-grow: 1;
-    max-width: 275px;
-  }
-
   .order {
     display: flex;
     flex-direction: column;
     padding-bottom: 0;
     height: fit-content;
     margin-bottom: 1rem;
-    height: fit-content;
     border-radius: 1rem;
+    min-width: 200px;
 
     &.MuiPaper-root {
-      padding-left: 0;
-      padding-right: 0;
+      flex-grow: 1;
+      max-width: 275px;
     }
 
     .MuiBox-root {
@@ -125,8 +126,104 @@
       height: 30px;
 
       .MuiButtonBase-root {
-        svg {
-          font-size: 2rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .orders {
+    .search-filter {
+      .header {
+        .controls {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    }
+
+    .accordion-cats {
+      .new-accord-orders-list {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media (max-width: $large-tablet) {
+  .orders {
+    .search-filter {
+      .cats {
+        display: none;
+      }
+    }
+    .orders-list {
+      display: none;
+    }
+    .accordion-cats {
+      display: block;
+      margin-top: 1rem;
+
+      .MuiPaper-root {
+        margin-bottom: 0.5rem;
+      }
+
+      .MuiPaper-root:nth-child(1) {
+        background-color: #a3bfd8;
+      }
+
+      .MuiPaper-root:nth-child(2) {
+        background-color: #cdcbbc;
+      }
+
+      .MuiPaper-root:nth-child(3) {
+        background-color: #ddafac;
+      }
+
+      .MuiPaper-root:nth-child(4) {
+        background-color: #a3d8a3;
+      }
+
+      .new-accord-orders-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        .order {
+          display: flex;
+          flex-direction: column;
+          padding-bottom: 0;
+          height: fit-content;
+          margin-bottom: 1rem;
+          border-radius: 1rem;
+          width: 250px;
+          background-color: white;
+
+          .MuiBox-root {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+
+            &:not(:last-child) {
+              border-bottom: 1px solid black;
+            }
+          }
+
+          .actions {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            padding: 0;
+            height: 30px;
+
+            .MuiButtonBase-root {
+              margin-left: 0.5rem;
+              margin-right: 0.5rem;
+            }
+          }
         }
       }
     }

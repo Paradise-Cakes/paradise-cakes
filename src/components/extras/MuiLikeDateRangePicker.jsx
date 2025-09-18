@@ -157,7 +157,7 @@ export default function MuiLikeDateRangePicker({ label = "Date range" }) {
           <DateField label={label} placeholder="Select a date range" />
         }
       />
-      <Tabs value={tabValue} onChange={handleTabChange}>
+      <Tabs className="date-tabs" value={tabValue} onChange={handleTabChange}>
         <Tab label="Due this week" onClick={() => setQuick("week")} />
         <Tab label="Due this month" onClick={() => setQuick("month")} />
         <Tab label="Custom" onClick={() => setQuick("clear")} />

@@ -7,7 +7,6 @@ import {
   IconButton,
 } from "@mui/material";
 import React from "react";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 
 export default function Order(props) {
   return (
@@ -34,18 +33,28 @@ export default function Order(props) {
       </Box>
       <Box className="actions">
         {props.status === "NEW" && (
-          <IconButton color="warning">
-            <FaArrowAltCircleRight />
-          </IconButton>
+          <Button variant="contained" color="warning">
+            In-Prog
+          </Button>
         )}
         {props.status === "IN_PROGRESS" && (
           <>
-            <IconButton color="info">
-              <FaArrowAltCircleLeft />
-            </IconButton>
-            <IconButton color="error">
-              <FaArrowAltCircleRight />
-            </IconButton>
+            <Button variant="contained" color="info">
+              New
+            </Button>
+            <Button variant="contained" color="error">
+              Ready
+            </Button>
+          </>
+        )}
+        {props.status === "READY" && (
+          <>
+            <Button variant="contained" color="warning">
+              In-Prog
+            </Button>
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
           </>
         )}
       </Box>
