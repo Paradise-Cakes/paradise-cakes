@@ -1,0 +1,65 @@
+.view-desserts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .__new-dessert-btn {
+    margin-bottom: 1rem;
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+    margin-bottom: 2rem;
+  }
+
+  .__tabs-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+
+    .MuiTabs-root {
+      margin-bottom: 2rem;
+      min-width: max-content;
+
+      .MuiButtonBase-root {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .__desserts-container {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .dessert {
+      max-width: 400px;
+    }
+  }
+}
+
+@media (max-width: $large-tablet) {
+  .view-desserts {
+    .__desserts-container {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .dessert {
+        max-width: 500px;
+      }
+    }
+  }
+}
+
+@media (max-width: $large-mobile) {
+  .view-desserts {
+    .__desserts-container {
+      .dessert {
+        width: 80%;
+      }
+    }
+  }
+}

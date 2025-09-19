@@ -8,14 +8,7 @@ function TabPanel(props) {
   const { children, value, index } = props;
 
   return (
-    <Box
-      hidden={value !== index}
-      sx={{
-        padding: "2rem",
-        width: "100%",
-        maxWidth: "1300px",
-      }}
-    >
+    <Box hidden={value !== index} className="__tab-panel">
       {value === index && <Box>{children}</Box>}
     </Box>
   );
@@ -34,7 +27,7 @@ export default function AdminDashboard() {
         orientation="vertical"
         value={tabValue}
         onChange={handleTabChange}
-        className="main-tabs"
+        className="__main-tabs"
       >
         <Tab label="View Desserts" />
         <Tab label="Add Dessert" />

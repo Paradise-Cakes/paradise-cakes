@@ -40,15 +40,10 @@ export default function Dessert({
     <Card
       data-testid="dessert-card"
       key={dessert?.dessert_id}
-      sx={{
-        borderRadius: "12px",
-        boxShadow: 3,
-        position: "relative",
-        border: `2px solid ${theme.palette.primary.main}`,
-      }}
       onClick={() =>
         navigate(`/desserts/${dessert?.dessert_id}/${dessert?.name}`)
       }
+      className="dessert"
     >
       <CardActionArea>
         {isLoading || isDeleteDessertLoading ? (

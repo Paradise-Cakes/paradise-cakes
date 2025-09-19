@@ -42,73 +42,47 @@ export default function ViewDesserts() {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Box className="view-desserts">
       <Typography variant="h4" sx={{ textAlign: "center" }} gutterBottom>
         My Desserts
       </Typography>
       <Button
+        className="__new-dessert-btn"
         color="success"
         variant="contained"
-        sx={{
-          display: "block",
-          margin: "0 auto",
-          width: "fit-content",
-          marginBottom: "2rem",
-        }}
         component={RouterLink}
         to="/admin/desserts/create"
       >
         New Dessert
       </Button>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          overflow: "auto",
-        }}
-      >
+      <Box className="__tabs-container">
         <Tabs
           value={currentTab}
           onChange={handleTabChange}
           variant="scrollable"
           scrollButtons="auto"
-          sx={{ marginBottom: "2rem", minWidth: "max-content" }}
           indicatorColor="primary"
         >
-          <Tab label="All" sx={{ fontSize: "1rem" }} />
-          <Tab label="Cakes" sx={{ fontSize: "1rem" }} />
-          <Tab label="Cupcakes" sx={{ fontSize: "1rem" }} />
-          <Tab label="Cookies" sx={{ fontSize: "1rem" }} />
-          <Tab label="Pies" sx={{ fontSize: "1rem" }} />
-          <Tab label="Visible" sx={{ fontSize: "1rem" }} />
-          <Tab label="Hidden" sx={{ fontSize: "1rem" }} />
+          <Tab label="All" />
+          <Tab label="Cakes" />
+          <Tab label="Cupcakes" />
+          <Tab label="Cookies" />
+          <Tab label="Pies" />
+          <Tab label="Visible" />
+          <Tab label="Hidden" />
         </Tabs>
       </Box>
-      <Grid container spacing={5}>
+      <Box className="__desserts-container">
         {filteredDesserts?.map((dessert) => (
-          <Grid
+          <Dessert
             key={dessert?.dessert_id}
-            item
-            sx={{ textAlign: "center" }}
-            xs={12}
-            md={4}
-            justifyContent={"center"}
-          >
-            <Dessert
-              dessert={dessert}
-              inAdminView={true}
-              isLoading={isGetDessertsLoading}
-              isVisible={dessert?.visible}
-            />
-          </Grid>
+            dessert={dessert}
+            inAdminView={true}
+            isLoading={isGetDessertsLoading}
+            isVisible={dessert?.visible}
+          />
         ))}
-      </Grid>
+      </Box>
     </Box>
   );
 }

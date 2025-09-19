@@ -1,0 +1,60 @@
+.carousel {
+  display: flex;
+  margin-top: 4rem;
+
+  .__mini-images-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 300px;
+
+    .__mini-image-container {
+      border-radius: 12px;
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+      }
+    }
+    .MuiSkeleton-root {
+      border-radius: 12px;
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  .__main-image-container {
+    position: relative;
+
+    .__right-arrow,
+    .__left-arrow {
+      width: 64px;
+      height: 64px;
+      color: black;
+      position: absolute;
+      cursor: pointer;
+    }
+
+    .__right-arrow {
+      top: 50%;
+      right: 0px;
+    }
+
+    .__left-arrow {
+      top: 50%;
+      left: 0px;
+    }
+
+    .MuiSkeleton-root,
+    img {
+      border-radius: 12px;
+      width: 600px;
+      height: 600px;
+    }
+  }
+}

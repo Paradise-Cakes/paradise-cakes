@@ -48,12 +48,7 @@ export default function AccountDashboard() {
   }, []);
 
   return (
-    <Container
-      maxWidth="false"
-      sx={{
-        maxWidth: "1500px",
-      }}
-    >
+    <Container>
       <TabContext value={value}>
         <Grid
           container

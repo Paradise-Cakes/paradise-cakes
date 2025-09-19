@@ -3,7 +3,13 @@
   justify-content: center;
   position: relative;
 
-  .main-tabs {
+  .__tab-panel {
+    padding: 2rem;
+    width: 100%;
+    max-width: 1400px;
+  }
+
+  .__main-tabs {
     margin-top: 4rem;
     width: 250px;
 
@@ -23,7 +29,7 @@
   .admin-dashboard {
     flex-direction: column;
 
-    .main-tabs {
+    .__main-tabs {
       margin-top: 1.25rem;
       width: 100%;
 
