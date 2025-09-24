@@ -1,5 +1,6 @@
 .carousel {
   display: flex;
+  gap: 1rem;
   margin-top: 4rem;
 
   .__mini-images-container {
@@ -7,12 +8,13 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    width: 300px;
+    margin-left: 1rem;
+    box-sizing: initial;
 
     .__mini-image-container {
       border-radius: 12px;
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
       cursor: pointer;
 
       img {
@@ -26,6 +28,10 @@
       width: 150px;
       height: 150px;
     }
+  }
+
+  .__mini-images-container-bottom {
+    display: none;
   }
 
   .__main-image-container {
@@ -56,5 +62,82 @@
       width: 600px;
       height: 600px;
     }
+  }
+}
+
+@media (max-width: $laptop) {
+  .carousel {
+    .__mini-images-container {
+      .__mini-image-container {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    .__main-image-container {
+      aspect-ratio: 1 / 1; // 👈 keep the main photo square
+      width: clamp(300px, 50vw, 600px);
+
+      .MuiSkeleton-root,
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .carousel {
+    margin-top: 16rem;
+    flex-direction: column;
+    align-items: center;
+
+    .__mini-images-container {
+      display: none;
+    }
+
+    .__mini-images-container-bottom {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+      box-sizing: initial;
+
+      .__mini-image-container {
+        border-radius: 12px;
+        width: 120px;
+        height: 120px;
+        cursor: pointer;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+        }
+      }
+      .MuiSkeleton-root {
+        border-radius: 12px;
+        width: 150px;
+        height: 150px;
+      }
+    }
+    .__main-image-container {
+      aspect-ratio: 1 / 1; // 👈 keep the main photo square
+      width: clamp(300px, 90vw, 500px);
+
+      .MuiSkeleton-root,
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: $large-mobile) {
+  .carousel {
+    margin-top: 10rem;
   }
 }

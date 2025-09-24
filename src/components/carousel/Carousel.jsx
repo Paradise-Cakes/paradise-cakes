@@ -29,14 +29,15 @@ export default function Carousel({ images, areImagesLoading }) {
               </Box>
             ))
           : images?.map((i, index) => (
-              <Skeleton
-                data-testid="carousel-mini-image-skeleton"
-                variant="rectangular"
-                animation="wave"
-              />
+              <Box className="__mini-image-container">
+                <Skeleton
+                  data-testid="carousel-mini-image-skeleton"
+                  variant="rectangular"
+                  animation="wave"
+                />
+              </Box>
             ))}
       </Box>
-
       <Box className="__main-image-container">
         {!areImagesLoading ? (
           <img
@@ -71,6 +72,32 @@ export default function Carousel({ images, areImagesLoading }) {
             }}
           />
         )}
+      </Box>
+      <Box className="__mini-images-container-bottom">
+        {!areImagesLoading
+          ? images?.map((i, index) => (
+              <Box
+                className="__mini-image-container"
+                key={i.image_id}
+                onClick={() => handleImageChange(index)}
+                sx={{
+                  border:
+                    index === currentImageIndex &&
+                    `5px solid ${theme.palette.error.main}`,
+                }}
+              >
+                <img src={i.url} alt={`Image ${index}`} />
+              </Box>
+            ))
+          : images?.map((i, index) => (
+              <Box className="__mini-image-container">
+                <Skeleton
+                  data-testid="carousel-mini-image-skeleton"
+                  variant="rectangular"
+                  animation="wave"
+                />
+              </Box>
+            ))}
       </Box>
     </Box>
   );
